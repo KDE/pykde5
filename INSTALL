@@ -1,0 +1,34 @@
+
+PyKDE 5 currently requires the following:
+
+* A recent Python (3.3.0 are what I've been testing with)
+
+* SIP version 4.15.3 or later. (Earlier versions may or may not work.)
+  http://www.riverbankcomputing.co.uk/sip/index.php
+
+* PyQt 5.1.1 or later. Also available at Riverbank Computing.
+
+* KDE Frameworks 5 and development headers etc.
+
+Depending on how you work, you might want to install the extra python
+modules into a separate Python interpreter installation. Make sure
+that the Python interpreter that you want to use is the first one
+found on your $PATH or explicitly specify a python executable as an
+argument to cmake (option -DPYTHON_EXECUTABLE=/usr/bin/python etc).
+
+By default, the supplied tools (pykdeuic4) are installed both as a
+Python version depdendent name (e.g. pykdeuic4-2.7 for Python 2.7) and
+a symlink to $BIN_INSTALL_DIR/pykdeuic4, but like Python's own "make
+altinstall" this can be overriddent by passing -DPYKDEUIC4_ALTINSTALL=TRUE
+to the CMake options: in such a case, only the version dependent name is
+installed.
+
+Once everything is built and installed, run the following in this
+current directory as a test:
+
+    python importTest.py
+
+If the importTest.py works without any error messages, then your
+installation is in good shape. Congratulations.
+
+-- Simon Edwards <simon@simonzone.com>

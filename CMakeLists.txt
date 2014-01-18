@@ -20,7 +20,7 @@ include(PythonMacros)
 include(FeatureSummary)
 include(ECMSetupVersion)
 
-find_package(KF5 CONFIG REQUIRED Auth)
+find_package(KF5 CONFIG REQUIRED Auth ItemModels)
 
 #option(PYKDEUIC4_ALTINSTALL "Enable parallel-installation of the PyKDE4 tools" FALSE)
 
@@ -34,8 +34,6 @@ set_package_properties(PythonInterp PROPERTIES
                        DESCRIPTION "The Python interpreter"
                        URL "http://www.python.org" TYPE REQUIRED
                        PURPOSE "Required to build PyKDE4")
-
-#include_directories(${KDE4_INCLUDES})
 
 find_package(SIP)
 set_package_properties(SIP PROPERTIES DESCRIPTION "The SIP binding generator"
@@ -83,6 +81,9 @@ else (PYTHON_VERSION_MAJOR GREATER 2)
     endif()
 endif ()
 
+include_directories(
+    ${SIP_INCLUDE_DIR})
+
 add_definitions(-D_REENTRANT -DSIP_PROTECTED_IS_PUBLIC -Dprotected=public)
 
 ###############################################################################
@@ -90,9 +91,14 @@ add_definitions(-D_REENTRANT -DSIP_PROTECTED_IS_PUBLIC -Dprotected=public)
 ###############################################################################
 
 # kauth
-file(GLOB kauth_files_sip sip/kauth/*.sip)
-set(SIP_EXTRA_FILES_DEPEND ${kauth_files_sip})
-add_sip_python_module(PyKDE5.kauth sip/kauth/kauthmod.sip KF5::Auth)
+#file(GLOB kauth_files_sip sip/kauth/*.sip)
+#set(SIP_EXTRA_FILES_DEPEND ${kauth_files_sip})
+#add_sip_python_module(PyKDE5.kauth sip/kauth/kauthmod.sip KF5::Auth)
+
+# kitemmodels
+file(GLOB kitemmodels_files_sip sip/kitemmodels/*.sip)
+set(SIP_EXTRA_FILES_DEPEND ${kitemmodels_files_sip})
+add_sip_python_module(PyKDE5.kitemmodels sip/kitemmodels/kitemmodelsmod.sip KF5::ItemModels)
 
 set(PYKDE_MODULES "kauth")
 ###############################################################################

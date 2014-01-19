@@ -6,7 +6,7 @@ find_package(ECM 0.0.9 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-find_package(Qt5 5.2.0 CONFIG REQUIRED Widgets DBus)
+find_package(Qt5 5.2.0 CONFIG REQUIRED Core Widgets DBus Gui)
 include(KDEInstallDirs)
 include(KDEFrameworkCompilerSettings)
 include(KDECMakeSettings)
@@ -20,7 +20,7 @@ include(PythonMacros)
 include(FeatureSummary)
 include(ECMSetupVersion)
 
-find_package(KF5 CONFIG REQUIRED Auth ItemModels)
+find_package(KF5 CONFIG REQUIRED Auth ItemModels ItemViews)
 
 #option(PYKDEUIC4_ALTINSTALL "Enable parallel-installation of the PyKDE4 tools" FALSE)
 
@@ -81,8 +81,16 @@ else (PYTHON_VERSION_MAJOR GREATER 2)
     endif()
 endif ()
 
+get_property(qt5core_include TARGET Qt5::Core PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
+get_property(qt5gui_include TARGET Qt5::Gui PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
+get_property(qt5widgets_include TARGET Qt5::Widgets PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
+
 include_directories(
-    ${SIP_INCLUDE_DIR})
+    ${SIP_INCLUDE_DIR}
+    ${qt5core_include}
+    ${qt5gui_include}
+    ${qt5widgets_include}
+)
 
 add_definitions(-D_REENTRANT -DSIP_PROTECTED_IS_PUBLIC -Dprotected=public)
 
@@ -100,7 +108,13 @@ file(GLOB kitemmodels_files_sip sip/kitemmodels/*.sip)
 set(SIP_EXTRA_FILES_DEPEND ${kitemmodels_files_sip})
 add_sip_python_module(PyKDE5.kitemmodels sip/kitemmodels/kitemmodelsmod.sip KF5::ItemModels)
 
-set(PYKDE_MODULES "kauth")
+# kitemviews
+file(GLOB kitemviews_files_sip sip/kitemviews/*.sip)
+set(SIP_EXTRA_FILES_DEPEND ${kitemviews_files_sip})
+add_sip_python_module(PyKDE5.kitemviews sip/kitemviews/kitemviewsmod.sip KF5::ItemViews)
+
+set(PYKDE_MODULES "kitemmodels kitemviews")
+
 ###############################################################################
 
 python_install(__init__.py ${PYTHON_SITE_PACKAGES_INSTALL_DIR}/PyKDE5)

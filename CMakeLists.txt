@@ -20,7 +20,7 @@ include(PythonMacros)
 include(FeatureSummary)
 include(ECMSetupVersion)
 
-find_package(KF5 CONFIG REQUIRED Auth ItemModels ItemViews)
+find_package(KF5 CONFIG REQUIRED Auth ItemModels ItemViews Archive)
 
 #option(PYKDEUIC4_ALTINSTALL "Enable parallel-installation of the PyKDE4 tools" FALSE)
 
@@ -113,7 +113,12 @@ file(GLOB kitemviews_files_sip sip/kitemviews/*.sip)
 set(SIP_EXTRA_FILES_DEPEND ${kitemviews_files_sip})
 add_sip_python_module(PyKDE5.kitemviews sip/kitemviews/kitemviewsmod.sip KF5::ItemViews)
 
-set(PYKDE_MODULES "kitemmodels kitemviews")
+# karchive
+file(GLOB karchive_files_sip sip/karchive/*.sip)
+set(SIP_EXTRA_FILES_DEPEND ${karchive_files_sip})
+add_sip_python_module(PyKDE5.karchive sip/karchive/karchivemod.sip KF5::Archive)
+
+set(PYKDE_MODULES "kitemmodels kitemviews karchive")
 
 ###############################################################################
 

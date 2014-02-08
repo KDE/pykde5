@@ -20,7 +20,7 @@ include(PythonMacros)
 include(FeatureSummary)
 include(ECMSetupVersion)
 
-find_package(KF5 CONFIG REQUIRED Auth ItemModels ItemViews Archive)
+find_package(KF5 CONFIG REQUIRED Auth ItemModels ItemViews Archive Plotting)
 
 #option(PYKDEUIC4_ALTINSTALL "Enable parallel-installation of the PyKDE4 tools" FALSE)
 
@@ -118,7 +118,12 @@ file(GLOB karchive_files_sip sip/karchive/*.sip)
 set(SIP_EXTRA_FILES_DEPEND ${karchive_files_sip})
 add_sip_python_module(PyKDE5.karchive sip/karchive/karchivemod.sip KF5::Archive)
 
-set(PYKDE_MODULES "kitemmodels kitemviews karchive")
+# kplotting
+file(GLOB kplottin_files_sip sip/kplotting/*.sip)
+set(SIP_EXTRA_FILES_DEPEND ${kplotting_files_sip})
+add_sip_python_module(PyKDE5.kplotting sip/kplotting/kplottingmod.sip KF5::Plotting)
+
+set(PYKDE_MODULES "kitemmodels kitemviews karchive kplotting")
 
 ###############################################################################
 

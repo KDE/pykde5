@@ -20,7 +20,7 @@ include(PythonMacros)
 include(FeatureSummary)
 include(ECMSetupVersion)
 
-find_package(KF5 CONFIG REQUIRED Auth ItemModels ItemViews Archive Plotting)
+find_package(KF5 CONFIG REQUIRED Auth ItemModels ItemViews Archive Plotting Solid)
 
 #option(PYKDEUIC4_ALTINSTALL "Enable parallel-installation of the PyKDE4 tools" FALSE)
 
@@ -85,11 +85,15 @@ get_property(qt5core_include TARGET Qt5::Core PROPERTY INTERFACE_INCLUDE_DIRECTO
 get_property(qt5gui_include TARGET Qt5::Gui PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
 get_property(qt5widgets_include TARGET Qt5::Widgets PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
 
+get_property(solid_include TARGET KF5::Solid PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
+# Soild is being difficult. Lets set it here explicitly.
+
 include_directories(
     ${SIP_INCLUDE_DIR}
     ${qt5core_include}
     ${qt5gui_include}
     ${qt5widgets_include}
+    ${solid_include}/solid
 )
 
 add_definitions(-D_REENTRANT -DSIP_PROTECTED_IS_PUBLIC -Dprotected=public)
@@ -123,7 +127,14 @@ file(GLOB kplottin_files_sip sip/kplotting/*.sip)
 set(SIP_EXTRA_FILES_DEPEND ${kplotting_files_sip})
 add_sip_python_module(PyKDE5.kplotting sip/kplotting/kplottingmod.sip KF5::Plotting)
 
-set(PYKDE_MODULES "kitemmodels kitemviews karchive kplotting")
+# solid
+file(GLOB solid_files_sip sip/solid/*.sip)
+set(SIP_EXTRA_FILES_DEPEND ${solid_files_sip})
+
+
+add_sip_python_module(PyKDE5.solid sip/solid/solidmod.sip KF5::Solid)
+
+set(PYKDE_MODULES "kitemmodels kitemviews karchive kplotting solid")
 
 ###############################################################################
 

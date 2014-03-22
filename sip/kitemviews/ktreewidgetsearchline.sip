@@ -53,17 +53,3 @@ protected:
     virtual bool            canChooseColumnsCheck ();
     virtual bool            event (QEvent* event);
 };
-class KTreeWidgetSearchLineWidget : QWidget
-{
-%TypeHeaderCode
-#include <ktreewidgetsearchline.h>
-%End
-
-public:
-    explicit                KTreeWidgetSearchLineWidget (QWidget* parent = 0, QTreeWidget* treeWidget = 0);
-    ~KTreeWidgetSearchLineWidget ();
-    KTreeWidgetSearchLine*  searchLine () const;
-protected:
-    virtual void            createWidgets ();
-    virtual KTreeWidgetSearchLine*  createSearchLine (QTreeWidget* treeWidget) const;
-};

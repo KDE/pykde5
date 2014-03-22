@@ -17,22 +17,17 @@
 // Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-%Module PyKDE5.kitemviews
-
-%ModuleHeaderCode
-#pragma GCC visibility push(default)
+class KTreeWidgetSearchLineWidget : QWidget
+{
+%TypeHeaderCode
+#include <ktreewidgetsearchlinewidget.h>
 %End
 
-%Import QtCore/QtCoremod.sip
-%Import QtGui/QtGuimod.sip
-%Import QtWidgets/QtWidgetsmod.sip
-
-%Include kcategorizedsortfilterproxymodel.sip
-%Include kcategorizedview.sip
-%Include kcategorydrawer.sip
-%Include kextendableitemdelegate.sip
-%Include kfilterproxysearchline.sip
-%Include klistwidgetsearchline.sip
-%Include ktreewidgetsearchline.sip
-%Include ktreewidgetsearchlinewidget.sip
-%Include kwidgetitemdelegate.sip
+public:
+    explicit                KTreeWidgetSearchLineWidget (QWidget* parent = 0, QTreeWidget* treeWidget = 0);
+    ~KTreeWidgetSearchLineWidget ();
+    KTreeWidgetSearchLine*  searchLine () const;
+protected:
+    virtual void            createWidgets ();
+    virtual KTreeWidgetSearchLine*  createSearchLine (QTreeWidget* treeWidget) const;
+};

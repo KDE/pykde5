@@ -88,12 +88,17 @@ get_property(qt5widgets_include TARGET Qt5::Widgets PROPERTY INTERFACE_INCLUDE_D
 get_property(solid_include TARGET KF5::Solid PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
 # Soild is being difficult. Lets set it here explicitly.
 
+get_property(kf5sonnetcore_include TARGET KF5::SonnetCore PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
+get_property(kf5sonnetui_include TARGET KF5::SonnetUi PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
+
 include_directories(
     ${SIP_INCLUDE_DIR}
     ${qt5core_include}
     ${qt5gui_include}
     ${qt5widgets_include}
     ${solid_include}/solid
+    ${kf5sonnetcore_include}/SonnetCore/sonnet
+    ${kf5sonnetcore_include}/SonnetUi/sonnet
 )
 
 add_definitions(-D_REENTRANT -DSIP_PROTECTED_IS_PUBLIC -Dprotected=public)
@@ -138,12 +143,11 @@ set(SIP_EXTRA_FILES_DEPEND ${kcoreaddons_files_sip})
 add_sip_python_module(PyKDE5.kcoreaddons sip/kcoreaddons/kcoreaddonsmod.sip KF5::CoreAddons)
 
 # sonnet
-#file(GLOB sonnet_files_sip sip/sonnet/*.sip)
-#set(SIP_EXTRA_FILES_DEPEND ${sonnet_files_sip})
-#add_sip_python_module(PyKDE5.sonnet sip/sonnet/sonnetmod.sip KF5::SonnetCore KF5::SonnetUi)
+file(GLOB sonnet_files_sip sip/sonnet/*.sip)
+set(SIP_EXTRA_FILES_DEPEND ${sonnet_files_sip})
+add_sip_python_module(PyKDE5.sonnet sip/sonnet/sonnetmod.sip KF5::SonnetCore KF5::SonnetUi)
 
-
-set(PYKDE_MODULES "kitemmodels kitemviews karchive kplotting solid kcoreaddons")
+set(PYKDE_MODULES "kitemmodels kitemviews karchive kplotting solid kcoreaddons sonnet")
 
 ###############################################################################
 

@@ -20,7 +20,7 @@ include(PythonMacros)
 include(FeatureSummary)
 include(ECMSetupVersion)
 
-find_package(KF5 CONFIG REQUIRED Auth ItemModels ItemViews Archive Plotting Solid CoreAddons Sonnet)
+find_package(KF5 CONFIG REQUIRED Auth ItemModels ItemViews Archive Plotting Solid CoreAddons Sonnet GuiAddons)
 
 #option(PYKDEUIC4_ALTINSTALL "Enable parallel-installation of the PyKDE4 tools" FALSE)
 
@@ -137,7 +137,7 @@ file(GLOB solid_files_sip sip/solid/*.sip)
 set(SIP_EXTRA_FILES_DEPEND ${solid_files_sip})
 add_sip_python_module(PyKDE5.solid sip/solid/solidmod.sip KF5::Solid)
 
-## kcoreaddons
+# kcoreaddons
 file(GLOB kcoreaddons_files_sip sip/kcoreaddons/*.sip)
 set(SIP_EXTRA_FILES_DEPEND ${kcoreaddons_files_sip})
 add_sip_python_module(PyKDE5.kcoreaddons sip/kcoreaddons/kcoreaddonsmod.sip KF5::CoreAddons)
@@ -147,7 +147,12 @@ file(GLOB sonnet_files_sip sip/sonnet/*.sip)
 set(SIP_EXTRA_FILES_DEPEND ${sonnet_files_sip})
 add_sip_python_module(PyKDE5.sonnet sip/sonnet/sonnetmod.sip KF5::SonnetCore KF5::SonnetUi)
 
-set(PYKDE_MODULES "kitemmodels kitemviews karchive kplotting solid kcoreaddons sonnet")
+# kguiaddons
+file(GLOB kguiaddons_files_sip sip/kguiaddons/*.sip)
+set(SIP_EXTRA_FILES_DEPEND ${kguiaddons_files_sip})
+add_sip_python_module(PyKDE5.kguiaddons sip/kguiaddons/kguiaddonsmod.sip KF5::GuiAddons)
+
+set(PYKDE_MODULES "kitemmodels kitemviews karchive kplotting solid kcoreaddons sonnet kguiaddons")
 
 ###############################################################################
 

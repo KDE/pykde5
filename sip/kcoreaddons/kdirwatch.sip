@@ -50,7 +50,6 @@ public:
     {
         FAM,
         INotify,
-        DNotify,
         Stat,
         QFSWatch
     };

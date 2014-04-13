@@ -43,7 +43,7 @@ public:
         Hexagon,
         Asterisk,
         Star,
-        UnknwonPoint
+        UnknownPoint
     };
     explicit                KPlotObject (const QColor& color = Qt::white, KPlotObject::PlotType otype = KPlotObject::PlotType::Points, double size = 2, KPlotObject::PointStyle ps = KPlotObject::PointStyle::Circle);
     ~KPlotObject ();

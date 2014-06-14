@@ -26,19 +26,22 @@
 %Import typedefs.sip
 %Import QtCore/QtCoremod.sip
 
-%Include kfilesystemtype_p.sip
 %Include kaboutdata.sip
 %Include kautosavefile.sip
 %Include kbackup.sip
 %Include kcompositejob.sip
+%Include kdelibs4migration.sip
 %Include kdirwatch.sip
-// FIXME doesn't compile, problem in the .h file.
-// %Include kformat.sip
+%Include kexportplugin.sip
+%Include kfilesystemtype_p.sip
+%Include kformat.sip
 %Include kjob.sip
 %Include kjobtrackerinterface.sip
 %Include kjobuidelegate.sip
 %Include kmacroexpander.sip
 %Include kmessage.sip
+%Include kpluginfactory.sip
+%Include kpluginloader.sip
 %Include kprocess.sip
 %Include krandom.sip
 %Include krandomsequence.sip

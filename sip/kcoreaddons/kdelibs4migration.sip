@@ -17,20 +17,16 @@
 // Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-class KRandomSequence
+class Kdelibs4Migration
 {
 %TypeHeaderCode
-#include <krandomsequence.h>
+#include <kdelibs4migration.h>
 %End
 
 public:
-    explicit                KRandomSequence (long lngSeed = 0);
-    virtual ~KRandomSequence ();
-                            KRandomSequence (const KRandomSequence& a);
-    void                    setSeed (long lngSeed = 0);
-    double                  getDouble ();
-    unsigned long           getLong (unsigned long max);
-    bool                    getBool ();
-    void                    modulate (int i);
-//ig    KRandomSequence&        operator= (const KRandomSequence& a);
+    explicit                Kdelibs4Migration ();
+    ~Kdelibs4Migration ();
+    bool                    kdeHomeFound () const;
+    QString                 locateLocal (const char* type, const QString& filename) const;
+    QString                 saveLocation (const char* type, const QString& suffix = QString()) const;
 };

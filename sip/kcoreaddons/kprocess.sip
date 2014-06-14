@@ -42,8 +42,6 @@ public:
     void                    clearEnvironment ();
     void                    setProgram (const QString& exe, const QStringList& args = QStringList());
     void                    setProgram (const QStringList& argv);
-    KProcess&               operator<< (const QString& arg);
-    KProcess&               operator<< (const QStringList& args);
     void                    clearProgram ();
     void                    setShellCommand (const QString& cmd);
     QStringList             program () const;
@@ -57,4 +55,7 @@ public:
     int                     pid () const;
 protected:
 //ig                            KProcess (KProcessPrivate* d, QObject* parent);
+public:
+    KProcess&               operator<< (const QString& arg);
+    KProcess&               operator<< (const QStringList& args);
 };

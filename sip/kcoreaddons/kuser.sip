@@ -19,6 +19,57 @@
 
 typedef uid_t K_UID;
 typedef gid_t K_GID;
+
+//force
+struct KUserId
+{
+%TypeHeaderCode
+#include <kuser.h>
+%End
+                            KUserId ();
+    explicit                KUserId (K_UID uid);
+                            KUserId (const KUserId& other);
+    ~KUserId ();
+public:
+    bool                    isValid () const;
+    K_UID                   nativeId () const;
+    QString                 toString () const;
+    bool                    operator== (const KUserId& other) const;
+    bool                    operator!= (const KUserId& other) const;
+%ConvertToSubClassCode
+    // CTSCC for subclasses of 'KUserId'
+    sipType = NULL;
+
+    if (dynamic_cast<KUserId*>(sipCpp))
+        sipType = sipType_KUserId;
+%End
+};
+
+struct KGroupId
+{
+%TypeHeaderCode
+#include <kuser.h>
+%End
+                            KGroupId ();
+    explicit                KGroupId (K_UID uid);
+                            KGroupId (const KGroupId& other);
+    ~KGroupId ();
+public:
+    bool                    isValid () const;
+    K_GID                   nativeId () const;
+    QString                 toString () const;
+    bool                    operator== (const KGroupId& other) const;
+    bool                    operator!= (const KGroupId& other) const;
+%ConvertToSubClassCode
+    // CTSCC for subclasses of 'KGroupId'
+    sipType = NULL;
+
+    if (dynamic_cast<KGroupId*>(sipCpp))
+        sipType = sipType_KGroupId;
+%End
+};
+//end
+
 class KUser
 {
 %TypeHeaderCode
@@ -37,19 +88,14 @@ public:
     explicit                KUser (const char* name);
 //ig    explicit                KUser (const passwd* p);
                             KUser (const KUser& user);
-//ig    KUser&                  operator= (const KUser& user);
-    bool                    operator== (const KUser& user) const;
-    bool                    operator!= (const KUser& user) const;
     bool                    isValid () const;
-    K_UID                   uid () const;
-    K_GID                   gid () const;
     bool                    isSuperUser () const;
     QString                 loginName () const;
     QString                 homeDir () const;
     QString                 faceIconPath () const;
     QString                 shell () const;
-    QList<KUserGroup>       groups () const;
-    QStringList             groupNames () const;
+    QList<KUserGroup>       groups (uint maxCount = 0xffffffff) const;
+    QStringList             groupNames (uint maxCount = 0xffffffff) const;
     enum UserProperty
     {
         FullName,
@@ -59,9 +105,16 @@ public:
     };
     QVariant                property (KUser::UserProperty which) const;
     ~KUser ();
-    static QList<KUser>     allUsers ();
-    static QStringList      allUserNames ();
+    static QList<KUser>     allUsers (uint maxCount = 0xffffffff);
+    static QStringList      allUserNames (uint maxCount = 0xffffffff);
+    explicit                KUser (KUserId uid);
+ //ig   KUser&                  operator= (const KUser& user);
+    bool                    operator== (const KUser& user) const;
+    bool                    operator!= (const KUser& user) const;
+    KUserId                 userId () const;
+    KGroupId                groupId () const;
 };
+
 class KUserGroup
 {
 %TypeHeaderCode
@@ -75,15 +128,24 @@ public:
     explicit                KUserGroup (K_GID gid);
 //ig    explicit                KUserGroup (const group* g);
                             KUserGroup (const KUserGroup& group);
+    bool                    isValid () const;
+    QString                 name () const;
+    QList<KUser>            users (uint maxCount = 0xffffffff) const;
+    QStringList             userNames (uint maxCount = 0xffffffff) const;
+    ~KUserGroup ();
+    static QList<KUserGroup>  allGroups (uint maxCount = 0xffffffff);
+    static QStringList      allGroupNames (uint maxCount = 0xffffffff);
+    explicit                KUserGroup (KGroupId gid);
 //ig    KUserGroup&             operator= (const KUserGroup& group);
     bool                    operator== (const KUserGroup& group) const;
     bool                    operator!= (const KUserGroup& group) const;
-    bool                    isValid () const;
-    K_GID                   gid () const;
-    QString                 name () const;
-    QList<KUser>            users () const;
-    QStringList             userNames () const;
-    ~KUserGroup ();
-    static QList<KUserGroup>  allGroups ();
-    static QStringList      allGroupNames ();
+    KGroupId                groupId () const;
 };
+
+
+//bool KUser::            operator!= (const KUser& other) const;
+//bool KUserGroup::       operator!= (const KUserGroup& other) const;
+%ModuleHeaderCode
+//ctscc
+#include <kuser.h>
+%End

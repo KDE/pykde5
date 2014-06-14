@@ -17,11 +17,6 @@
 // Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-//namespace KCrash
-//{
-//ig void                    defaultCrashHandler (int sig);
-//};
-
 class KAboutPerson
 {
 %TypeHeaderCode
@@ -53,28 +48,6 @@ public:
     static void             setApplicationData (const KAboutData& aboutData);
     static void             registerPluginData (const KAboutData& aboutData);
     static KAboutData*      pluginData (const QString& componentName);
-    enum LicenseKey
-    {
-        License_Custom,
-        License_File,
-        License_Unknown,
-        License_GPL,
-        License_GPL_V2,
-        License_LGPL,
-        License_LGPL_V2,
-        License_BSD,
-        License_Artistic,
-        License_QPL,
-        License_QPL_V1_0,
-        License_GPL_V3,
-        License_LGPL_V3
-    };
-    enum NameFormat
-    {
-        ShortName,
-        FullName
-    };
-                            KAboutData (const QString& componentName, const QString& catalogName, const QString& displayName, const QString& version, const QString& shortDescription = QString(), KAboutData::LicenseKey licenseType = KAboutData::LicenseKey::License_Unknown, const QString& copyrightStatement = QString(), const QString& otherText = QString(), const QString& homePageAddress = QString(), const QString& bugsEmailAddress = QLatin1String("submit@bugs.kde.org"));
                             KAboutData (const KAboutData& other);
     ~KAboutData ();
     KAboutData&             addAuthor (const QString& name, const QString& task = QString(), const QString& emailAddress = QString(), const QString& webAddress = QString(), const QString& ocsUsername = QString());
@@ -91,9 +64,6 @@ public:
     KAboutData&             setOcsProvider (const QString& providerUrl);
     KAboutData&             setVersion (const QByteArray& version);
     KAboutData&             setShortDescription (const QString& shortDescription);
-    KAboutData&             setCatalogName (const QString& catalogName);
-    KAboutData&             setLicense (KAboutData::LicenseKey licenseKey);
-    KAboutData&             addLicense (KAboutData::LicenseKey licenseKey);
     KAboutData&             setCopyrightStatement (const QString& copyrightStatement);
     KAboutData&             setOtherText (const QString& otherText);
     KAboutData&             setHomepage (const QString& homepage);
@@ -111,7 +81,6 @@ public:
     QString                 version () const;
     const char*             internalVersion () const;
     QString                 shortDescription () const;
-    QString                 catalogName () const;
     QString                 homepage () const;
     QString                 bugAddress () const;
     const char*             internalBugAddress () const;
@@ -120,8 +89,6 @@ public:
     QList<KAboutPerson>     translators () const;
     static QString          aboutTranslationTeam ();
     QString                 otherText () const;
-    QString                 license () const;
-    QString                 licenseName (KAboutData::NameFormat formatName) const;
     QList<KAboutLicense>    licenses () const;
     QString                 copyrightStatement () const;
     QString                 customAuthorPlainText () const;
@@ -131,7 +98,11 @@ public:
     KAboutData&             unsetCustomAuthorText ();
 //ig    bool                    setupCommandLine (QCommandLineParser* parser);
 //ig    void                    processCommandLine (QCommandLineParser* parser);
+                            KAboutData (const QString& componentName, const QString& displayName, const QString& version, const QString& shortDescription, KAboutLicense::LicenseKey licenseType, const QString& copyrightStatement = QString(), const QString& otherText = QString(), const QString& homePageAddress = QString(), const QString& bugsEmailAddress = QLatin1String("submit@bugs.kde.org"));
+                            KAboutData (const QString& componentName, const QString& displayName, const QString& version);
 //ig    KAboutData&             operator= (const KAboutData& other);
+    KAboutData&             setLicense (KAboutLicense::LicenseKey licenseKey);
+    KAboutData&             addLicense (KAboutLicense::LicenseKey licenseKey);
 };
 class KAboutLicense
 {
@@ -143,12 +114,34 @@ public:
                             KAboutLicense (const KAboutLicense& other);
     ~KAboutLicense ();
     QString                 text () const;
-    QString                 name (KAboutData::NameFormat formatName) const;
-    KAboutData::LicenseKey  key () const;
+    KAboutLicense::LicenseKey  key () const;
     static KAboutLicense    byKeyword (const QString& keyword);
 private:
-    explicit                KAboutLicense (KAboutData::LicenseKey licenseType, const KAboutData* aboutData);
     explicit                KAboutLicense (const KAboutData* aboutData);
 public:
+    enum LicenseKey
+    {
+        Custom,
+        File,
+        Unknown,
+        GPL,
+        GPL_V2,
+        LGPL,
+        LGPL_V2,
+        BSDL,
+        Artistic,
+        QPL,
+        QPL_V1_0,
+        GPL_V3,
+        LGPL_V3
+    };
+    enum NameFormat
+    {
+        ShortName,
+        FullName
+    };
 //ig    KAboutLicense&          operator= (const KAboutLicense& other);
+    QString                 name (KAboutLicense::NameFormat formatName) const;
+private:
+    explicit                KAboutLicense (KAboutLicense::LicenseKey licenseType, const KAboutData* aboutData);
 };

@@ -84,9 +84,9 @@ signals:
     void                    suspended (KJob* job);
     void                    resumed (KJob* job);
     void                    result (KJob* job);
-//end
 
 // FIXME
+//end
 //ig    void                    description (KJob* job, const QString& title, const QPair<QString,QString>& field1 = qMakePair(QString(),QString()), const QPair<QString,QString>& field2 = qMakePair(QString(),QString()));
     void                    infoMessage (KJob* job, const QString& plain, const QString& rich = QString());
     void                    warning (KJob* job, const QString& plain, const QString& rich = QString());

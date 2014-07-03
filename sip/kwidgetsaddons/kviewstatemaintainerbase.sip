@@ -17,35 +17,19 @@
 // Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-%Module PyKDE5.kcoreaddons
-
-%ModuleHeaderCode
-#pragma GCC visibility push(default)
+class KViewStateMaintainerBase : QObject
+{
+%TypeHeaderCode
+#include <kviewstatemaintainerbase.h>
 %End
 
-%Import typedefs.sip
-%Import QtCore/QtCoremod.sip
-
-%Include kaboutdata.sip
-%Include kautosavefile.sip
-%Include kbackup.sip
-%Include kcompositejob.sip
-%Include kdelibs4migration.sip
-%Include kdirwatch.sip
-%Include kexportplugin.sip
-%Include kformat.sip
-%Include kjob.sip
-%Include kjobtrackerinterface.sip
-%Include kjobuidelegate.sip
-%Include kmacroexpander.sip
-%Include kmessage.sip
-%Include kpluginfactory.sip
-%Include kpluginloader.sip
-%Include kprocess.sip
-%Include krandom.sip
-%Include krandomsequence.sip
-%Include kshareddatacache.sip
-%Include kshell.sip
-%Include kstringhandler.sip
-%Include kurlmimedata.sip
-%Include kuser.sip
+public:
+                            KViewStateMaintainerBase (QObject* parent = 0);
+    ~KViewStateMaintainerBase ();
+    void                    setSelectionModel (QItemSelectionModel* selectionModel);
+    QItemSelectionModel*    selectionModel () const;
+    void                    setView (QAbstractItemView* view);
+    QAbstractItemView*      view () const;
+    virtual void            saveState ()=0;
+    virtual void            restoreState ()=0;
+};

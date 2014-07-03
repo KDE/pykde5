@@ -17,35 +17,14 @@
 // Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-%Module PyKDE5.kcoreaddons
-
-%ModuleHeaderCode
-#pragma GCC visibility push(default)
+class KToolBarSpacerAction : QWidgetAction
+{
+%TypeHeaderCode
+#include <ktoolbarspaceraction.h>
 %End
 
-%Import typedefs.sip
-%Import QtCore/QtCoremod.sip
-
-%Include kaboutdata.sip
-%Include kautosavefile.sip
-%Include kbackup.sip
-%Include kcompositejob.sip
-%Include kdelibs4migration.sip
-%Include kdirwatch.sip
-%Include kexportplugin.sip
-%Include kformat.sip
-%Include kjob.sip
-%Include kjobtrackerinterface.sip
-%Include kjobuidelegate.sip
-%Include kmacroexpander.sip
-%Include kmessage.sip
-%Include kpluginfactory.sip
-%Include kpluginloader.sip
-%Include kprocess.sip
-%Include krandom.sip
-%Include krandomsequence.sip
-%Include kshareddatacache.sip
-%Include kshell.sip
-%Include kstringhandler.sip
-%Include kurlmimedata.sip
-%Include kuser.sip
+public:
+    explicit                KToolBarSpacerAction (QObject* parent);
+    virtual ~KToolBarSpacerAction ();
+    QWidget*                createWidget (QWidget* parent);
+};

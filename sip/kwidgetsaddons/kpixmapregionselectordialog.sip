@@ -17,25 +17,19 @@
 // Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-namespace Solid
-{
-class NetworkShare : Solid::DeviceInterface
+class KPixmapRegionSelectorDialog : QDialog
 {
 %TypeHeaderCode
-#include <networkshare.h>
+#include <kpixmapregionselectordialog.h>
 %End
 
-    explicit                NetworkShare (QObject* backendObject);
 public:
-    virtual ~NetworkShare ();
-    enum ShareType
-    {
-        Unknown,
-        Nfs,
-        Cifs
-    };
-    static Solid::DeviceInterface::Type  deviceInterfaceType ();
-    Solid::NetworkShare::ShareType  type () const;
-    QUrl                    url () const;
-};
+    explicit                KPixmapRegionSelectorDialog (QWidget* parent = 0);
+    ~KPixmapRegionSelectorDialog ();
+    KPixmapRegionSelectorWidget*  pixmapRegionSelectorWidget () const;
+    static QRect            getSelectedRegion (const QPixmap& pixmap, QWidget* parent = 0L);
+    static QRect            getSelectedRegion (const QPixmap& pixmap, int aspectRatioWidth, int aspectRatioHeight, QWidget* parent = 0L);
+    static QImage           getSelectedImage (const QPixmap& pixmap, QWidget* parent = 0L);
+    static QImage           getSelectedImage (const QPixmap& pixmap, int aspectRatioWidth, int aspectRatioHeight, QWidget* parent = 0L);
+    void                    adjustRegionSelectorWidgetSizeToFitScreen ();
 };

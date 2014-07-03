@@ -39,19 +39,8 @@ public:
         OpticalDisc,
         Camera,
         PortableMediaPlayer,
-        NetworkInterface,
-        AcAdapter,
         Battery,
-        Button,
-        AudioInterface,
-        DvbInterface,
-        Video,
-        SerialInterface,
-        SmartCardReader,
-        InternetGateway,
         NetworkShare,
-        Keyboard,
-        PointingDevice,
         Last
     };
     virtual ~DeviceInterface ();

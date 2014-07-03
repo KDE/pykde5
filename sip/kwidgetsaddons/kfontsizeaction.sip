@@ -17,35 +17,21 @@
 // Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-%Module PyKDE5.kcoreaddons
-
-%ModuleHeaderCode
-#pragma GCC visibility push(default)
+class KFontSizeAction : KSelectAction
+{
+%TypeHeaderCode
+#include <kfontsizeaction.h>
 %End
 
-%Import typedefs.sip
-%Import QtCore/QtCoremod.sip
-
-%Include kaboutdata.sip
-%Include kautosavefile.sip
-%Include kbackup.sip
-%Include kcompositejob.sip
-%Include kdelibs4migration.sip
-%Include kdirwatch.sip
-%Include kexportplugin.sip
-%Include kformat.sip
-%Include kjob.sip
-%Include kjobtrackerinterface.sip
-%Include kjobuidelegate.sip
-%Include kmacroexpander.sip
-%Include kmessage.sip
-%Include kpluginfactory.sip
-%Include kpluginloader.sip
-%Include kprocess.sip
-%Include krandom.sip
-%Include krandomsequence.sip
-%Include kshareddatacache.sip
-%Include kshell.sip
-%Include kstringhandler.sip
-%Include kurlmimedata.sip
-%Include kuser.sip
+public:
+    explicit                KFontSizeAction (QObject* parent);
+                            KFontSizeAction (const QString& text, QObject* parent);
+                            KFontSizeAction (const QIcon& icon, const QString& text, QObject* parent);
+    virtual ~KFontSizeAction ();
+    int                     fontSize () const;
+    void                    setFontSize (int size);
+signals:
+    void                    fontSizeChanged (int);
+protected:
+    virtual void            actionTriggered (QAction* action);
+};

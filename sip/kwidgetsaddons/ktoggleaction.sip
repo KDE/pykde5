@@ -17,35 +17,18 @@
 // Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-%Module PyKDE5.kcoreaddons
-
-%ModuleHeaderCode
-#pragma GCC visibility push(default)
+class KToggleAction : QAction
+{
+%TypeHeaderCode
+#include <ktoggleaction.h>
 %End
 
-%Import typedefs.sip
-%Import QtCore/QtCoremod.sip
-
-%Include kaboutdata.sip
-%Include kautosavefile.sip
-%Include kbackup.sip
-%Include kcompositejob.sip
-%Include kdelibs4migration.sip
-%Include kdirwatch.sip
-%Include kexportplugin.sip
-%Include kformat.sip
-%Include kjob.sip
-%Include kjobtrackerinterface.sip
-%Include kjobuidelegate.sip
-%Include kmacroexpander.sip
-%Include kmessage.sip
-%Include kpluginfactory.sip
-%Include kpluginloader.sip
-%Include kprocess.sip
-%Include krandom.sip
-%Include krandomsequence.sip
-%Include kshareddatacache.sip
-%Include kshell.sip
-%Include kstringhandler.sip
-%Include kurlmimedata.sip
-%Include kuser.sip
+public:
+    explicit                KToggleAction (QObject* parent);
+                            KToggleAction (const QString& text, QObject* parent);
+                            KToggleAction (const QIcon& icon, const QString& text, QObject* parent);
+    virtual ~KToggleAction ();
+    void                    setCheckedState (const KGuiItem& checkedItem);
+protected:
+    virtual void            slotToggled (bool checked);
+};

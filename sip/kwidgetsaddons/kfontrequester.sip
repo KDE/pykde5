@@ -17,20 +17,24 @@
 // Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-%ModuleHeaderCode
-#include <kfilesystemtype_p.h>
+class KFontRequester : QWidget
+{
+%TypeHeaderCode
+#include <kfontrequester.h>
 %End
 
-namespace KFileSystemType
-{
-enum Type
-{
-    Unknown,
-    Nfs,
-    Smb,
-    Fat,
-    Ramfs,
-    Other
-};
-KFileSystemType::Type   fileSystemType (const QString& path);
+public:
+    explicit                KFontRequester (QWidget* parent = 0L, bool onlyFixed = 0);
+    ~KFontRequester ();
+    QFont                   font () const;
+    bool                    isFixedOnly () const;
+    QString                 sampleText () const;
+    QString                 title () const;
+    QLabel*                 label () const;
+    QPushButton*            button () const;
+    virtual void            setFont (const QFont& font, bool onlyFixed = 0);
+    virtual void            setSampleText (const QString& text);
+    virtual void            setTitle (const QString& title);
+signals:
+    void                    fontSelected (const QFont& font);
 };

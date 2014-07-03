@@ -45,11 +45,6 @@ public:
     explicit                Predicate (const Solid::DeviceInterface::Type& ifaceType);
     explicit                Predicate (const QString& ifaceName);
     ~Predicate ();
-//ig    Solid::Predicate&       operator= (const Solid::Predicate& other);
-    Solid::Predicate        operator& (const Solid::Predicate& other);
-    Solid::Predicate&       operator&= (const Solid::Predicate& other);
-    Solid::Predicate        operator| (const Solid::Predicate& other);
-    Solid::Predicate&       operator|= (const Solid::Predicate& other);
     bool                    isValid () const;
     bool                    matches (const Solid::Device& device) const;
     QSet<Solid::DeviceInterface::Type>  usedTypes () const;
@@ -62,5 +57,10 @@ public:
     Solid::Predicate::ComparisonOperator  comparisonOperator () const;
     Solid::Predicate        firstOperand () const;
     Solid::Predicate        secondOperand () const;
+//ig    Solid::Predicate&       operator= (const Solid::Predicate& other);
+    Solid::Predicate        operator& (const Solid::Predicate& other);
+    Solid::Predicate&       operator&= (const Solid::Predicate& other);
+    Solid::Predicate        operator| (const Solid::Predicate& other);
+    Solid::Predicate&       operator|= (const Solid::Predicate& other);
 };
 };

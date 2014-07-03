@@ -43,7 +43,8 @@ public:
     {
         NoCharge,
         Charging,
-        Discharging
+        Discharging,
+        FullyCharged
     };
     enum Technology
     {
@@ -74,10 +75,24 @@ public:
 signals:
     void                    chargePercentChanged (int value, const QString& udi);
     void                    capacityChanged (int value, const QString& udi);
-    void                    chargeStateChanged (int newState, const QString& udi);
-    void                    plugStateChanged (bool newState, const QString& udi);
     void                    energyChanged (double energy, const QString& udi);
     void                    energyRateChanged (double energyRate, const QString& udi);
     void                    powerSupplyStateChanged (bool newState, const QString& udi);
+public:
+    bool                    isPresent () const;
+    qlonglong               timeToEmpty () const;
+    qlonglong               timeToFull () const;
+    double                  temperature () const;
+    bool                    isRecalled () const;
+    QString                 recallVendor () const;
+    QString                 recallUrl () const;
+    QString                 serial () const;
+signals:
+    void                    presentStateChanged (bool newState, const QString& udi);
+    void                    chargeStateChanged (int newState, const QString& udi);
+    void                    timeToEmptyChanged (qlonglong time, const QString& udi);
+    void                    timeToFullChanged (qlonglong time, const QString& udi);
+    void                    voltageChanged (double voltage, const QString& udi);
+    void                    temperatureChanged (double temperature, const QString& udi);
 };
 };

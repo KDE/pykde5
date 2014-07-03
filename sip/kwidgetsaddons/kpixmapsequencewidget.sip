@@ -17,35 +17,19 @@
 // Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-%Module PyKDE5.kcoreaddons
-
-%ModuleHeaderCode
-#pragma GCC visibility push(default)
+class KPixmapSequenceWidget : QWidget
+{
+%TypeHeaderCode
+#include <kpixmapsequencewidget.h>
 %End
 
-%Import typedefs.sip
-%Import QtCore/QtCoremod.sip
-
-%Include kaboutdata.sip
-%Include kautosavefile.sip
-%Include kbackup.sip
-%Include kcompositejob.sip
-%Include kdelibs4migration.sip
-%Include kdirwatch.sip
-%Include kexportplugin.sip
-%Include kformat.sip
-%Include kjob.sip
-%Include kjobtrackerinterface.sip
-%Include kjobuidelegate.sip
-%Include kmacroexpander.sip
-%Include kmessage.sip
-%Include kpluginfactory.sip
-%Include kpluginloader.sip
-%Include kprocess.sip
-%Include krandom.sip
-%Include krandomsequence.sip
-%Include kshareddatacache.sip
-%Include kshell.sip
-%Include kstringhandler.sip
-%Include kurlmimedata.sip
-%Include kuser.sip
+public:
+                            KPixmapSequenceWidget (QWidget* parent = 0);
+                            KPixmapSequenceWidget (const KPixmapSequence& seq, QWidget* parent = 0);
+    ~KPixmapSequenceWidget ();
+    KPixmapSequence         sequence () const;
+    int                     interval () const;
+    QSize                   sizeHint () const;
+    void                    setSequence (const KPixmapSequence& seq);
+    void                    setInterval (int msecs);
+};

@@ -33,7 +33,6 @@ public:
     explicit                Device (const QString& udi = QString());
                             Device (const Solid::Device& device);
     ~Device ();
-//ig    Solid::Device&          operator= (const Solid::Device& device);
     bool                    isValid () const;
     QString                 udi () const;
     QString                 parentUdi () const;
@@ -46,5 +45,6 @@ public:
     bool                    isDeviceInterface (const Solid::DeviceInterface::Type& type) const;
 //ig    Solid::DeviceInterface*  asDeviceInterface (const Solid::DeviceInterface::Type& type);
     const Solid::DeviceInterface*  asDeviceInterface (const Solid::DeviceInterface::Type& type) const;
+//ig    Solid::Device&          operator= (const Solid::Device& device);
 };
 };

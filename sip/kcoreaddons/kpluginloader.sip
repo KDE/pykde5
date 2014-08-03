@@ -56,9 +56,3 @@ public:
 private:
                             KPluginName (const QString& name, bool isError);
 };
-//ig                        KPluginName::KPluginName (const QString& name);
-//ig                        KPluginName::KPluginName (const QString& name, bool isError);
-//ig QString                 KPluginName::name () const;
-//ig bool                    KPluginName::isValid () const;
-//ig QString                 KPluginName::errorString () const;
-//ig KPluginName             KPluginName::fromErrorString (const QString& errorString);

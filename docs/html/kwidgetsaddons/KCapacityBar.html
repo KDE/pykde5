@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KCapacityBar</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KCapacityBar Class Reference</h1>
+<code>from PyKDE5.kwidgetsaddons import *</code>
+<p>
+Inherits: QWidget &#x2192; QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+<p>This widget shows a bar which is filled to show the level of usage of
+a certain device.
+</p>
+<p>
+This widget represents a bar which goal is to show the level of usage of a
+device. Its look is similar to a progress bar, but different, because this
+widget does not want to give a notion of progress.
+</p>
+<p>
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 4.2
+</dd></dl> </p>
+<p>
+<div align="center"><img src="../images/kcapacitybar.png" /><p><strong> "KDE Capacity Bar" </strong></p></div>
+</p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Rafael Fernández López &lt;ereslibre@kde.org&gt; </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#DrawTextMode">DrawTextMode</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;DrawTextInline, DrawTextOutline&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KCapacityBar">__init__</a> (self, KCapacityBar::DrawTextMode drawTextMode=KCapacityBar.DrawTextMode.DrawTextOutline, QWidget parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#barHeight">barHeight</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#continuous">continuous</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#drawCapacityBar">drawCapacityBar</a> (self, QPainter p, QRect rect)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KCapacityBar::DrawTextMode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#drawTextMode">drawTextMode</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#fillFullBlocks">fillFullBlocks</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::Alignment</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#horizontalTextAlignment">horizontalTextAlignment</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QSize&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#minimumSizeHint">minimumSizeHint</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#paintEvent">paintEvent</a> (self, QPaintEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setBarHeight">setBarHeight</a> (self, int barHeight)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setContinuous">setContinuous</a> (self, bool continuous)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDrawTextMode">setDrawTextMode</a> (self, KCapacityBar::DrawTextMode mode)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setFillFullBlocks">setFillFullBlocks</a> (self, bool fillFullBlocks)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setHorizontalTextAlignment">setHorizontalTextAlignment</a> (self, <a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::Alignment</a> textAlignment)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setText">setText</a> (self, QString text)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setValue">setValue</a> (self, int value)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#text">text</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#value">value</a> (self)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KCapacityBar"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KCapacityBar::DrawTextMode&nbsp;</td>
+<td class="paramname"><em>drawTextMode=KCapacityBar.DrawTextMode.DrawTextOutline</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Capacity bar constructor.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>drawTextMode</em>&nbsp;</td><td> If any text set, whether to draw it into the capacity bar
+or not.
+
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> The parent of the widget.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="barHeight"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int barHeight</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> The preferred height of the capacity bar.
+</dd></dl>
+</p></div></div><a class="anchor" name="continuous"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool continuous</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> Whether the fill of the capacity bar should be continuous or
+block-based.
+</dd></dl>
+</p></div></div><a class="anchor" name="drawCapacityBar"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> drawCapacityBar</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QPainter&nbsp;</td>
+<td class="paramname"><em>p</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QRect&nbsp;</td>
+<td class="paramname"><em>rect</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This method allows you to draw the widget, directly, for example on
+item delegates. You only need the painter object and the rect where
+this widget should be drawn.
+</p></div></div><a class="anchor" name="drawTextMode"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KCapacityBar::DrawTextMode drawTextMode</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>The way text is drawn, inside the capacity bar or outside of it
+</p></div></div><a class="anchor" name="fillFullBlocks"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool fillFullBlocks</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> Whether the last block shown can be cut off when necessary.
+</dd></dl>
+</p></div></div><a class="anchor" name="horizontalTextAlignment"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::Alignment</a> horizontalTextAlignment</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> The horizontal alignment for the text that will be drawn.
+</dd></dl>
+</p></div></div><a class="anchor" name="minimumSizeHint"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QSize minimumSizeHint</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="paintEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> paintEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QPaintEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="setBarHeight"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setBarHeight</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>barHeight</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the height (in pixels) of the bar.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>barHeight</em>&nbsp;</td><td> The preferred height (in pixels) of the capacity bar.
+</td></tr>
+</table></dl>
+<p> <dl class="note" compact><dt><b>Note:</b></dt><dd> If you set a certain text and the capacity bar is in inline mode,
+the height of the bar will be the maximum of the font height and
+this value.
+</dd></dl> </p>
+<p>
+<dl class="note" compact><dt><b>Note:</b></dt><dd> If you set a certain text and the capacity bar is in outline mode,
+the height of the whole capacity bar will be bigger than this
+value. Take in count the height of this widget is got from adding
+the bar height, the font metrics height and a small separator
+between the bar and the outline text.
+</dd></dl> </p>
+<p>
+<dl class="note" compact><dt><b>Note:</b></dt><dd> Its value is 12 pixels by default.
+</dd></dl>
+</p></div></div><a class="anchor" name="setContinuous"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setContinuous</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>continuous</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets whether the fill of the capacity bar should be continuous or in
+block mode.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>continuous</em>&nbsp;</td><td> If true, the fill of the capacity bar is done in a
+continuous way. In other case, the fill is done with
+separated blocks.
+</td></tr>
+</table></dl>
+<p> <dl class="note" compact><dt><b>Note:</b></dt><dd> Its value is true by default.
+</dd></dl>
+</p></div></div><a class="anchor" name="setDrawTextMode"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDrawTextMode</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KCapacityBar::DrawTextMode&nbsp;</td>
+<td class="paramname"><em>mode</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the way text is drawn if any is set
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>drawTextMode</em>&nbsp;</td><td> If any text set, whether to draw it into the capacity bar
+or not.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setFillFullBlocks"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setFillFullBlocks</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>fillFullBlocks</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>When the capacity bar is non-continuous, sets whether the last block
+shown should be drawn full or can be cut off (depending on the capacity
+bar width, and the value set on it).
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>fillFullBlocks</em>&nbsp;</td><td> If true, the last block drawn will be fully filled,
+on other case, the last block drawn could be cut off.
+</td></tr>
+</table></dl>
+<p> <dl class="note" compact><dt><b>Note:</b></dt><dd> This method is only relevant if the capacity bar is in
+non-continuous mode.
+</dd></dl> </p>
+<p>
+<dl class="note" compact><dt><b>Note:</b></dt><dd> Its value is true by default.
+</dd></dl> </p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setContinuous, continuous
+</dd></dl>
+</p></div></div><a class="anchor" name="setHorizontalTextAlignment"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setHorizontalTextAlignment</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::Alignment</a>&nbsp;</td>
+<td class="paramname"><em>textAlignment</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>If the capacity bar is in outline text mode, draw the text with
+<b>textAlignment</b> alignment.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>textAlignment</em>&nbsp;</td><td> Sets the horizontal alignment for the text if
+the capacity bar is in outline text mode.
+</td></tr>
+</table></dl>
+<p> <dl class="note" compact><dt><b>Note:</b></dt><dd> If <b>textAlignemt</b> contains vertical alignment flags, they will be
+ignored.
+</dd></dl> </p>
+<p>
+<dl class="note" compact><dt><b>Note:</b></dt><dd> If the capacity bar is in inline text mode, the text is always
+centered, and both vertical and horizontal flags set through this
+method are ignored.
+</dd></dl> </p>
+<p>
+<dl class="note" compact><dt><b>Note:</b></dt><dd> Its value is centered by default.
+</dd></dl>
+</p></div></div><a class="anchor" name="setText"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setText</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the text for the capacity bar.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> The text that the capacity bar will show.
+</td></tr>
+</table></dl>
+<p> <dl class="note" compact><dt><b>Note:</b></dt><dd> This is an empty string by default.
+</dd></dl>
+</p></div></div><a class="anchor" name="setValue"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setValue</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>value</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Capacity bar fill value.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>value</em>&nbsp;</td><td> This parameter can take values from 0 to 100.
+</td></tr>
+</table></dl>
+<p> <dl class="note" compact><dt><b>Note:</b></dt><dd> Its value is 0 by default.
+</dd></dl>
+</p></div></div><a class="anchor" name="text"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString text</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> The text that the capacity bar will show.
+</dd></dl>
+</p></div></div><a class="anchor" name="value"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int value</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> The fill value of the capacity bar.
+</dd></dl>
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="DrawTextMode"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">DrawTextMode</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>DrawTextInline</em>&nbsp;=&nbsp;0</td><td><tr><td valign="top"><em>DrawTextOutline</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KTreeWidgetSearchLine</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KTreeWidgetSearchLine Class Reference</h1>
+<code>from PyKDE5.kitemviews import *</code>
+<p>
+Inherits: QLineEdit &#x2192; QWidget &#x2192; QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+<p>This class makes it easy to add a search line for filtering the items in
+listviews based on a simple text search.
+</p>
+<p>
+No changes to the application other than instantiating this class with
+appropriate QTreeWidgets should be needed.
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Signals</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#hiddenChanged">hiddenChanged</a> (QTreeWidgetItem a0, bool a1)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#searchUpdated">searchUpdated</a> (QString searchString)</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KTreeWidgetSearchLine">__init__</a> (self, QWidget parent=0, QTreeWidget treeWidget=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KTreeWidgetSearchLine">__init__</a> (self, QWidget parent, [QTreeWidget] treeWidgets)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addTreeWidget">addTreeWidget</a> (self, QTreeWidget treeWidget)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#canChooseColumnsCheck">canChooseColumnsCheck</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::CaseSensitivity</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#caseSensitivity">caseSensitivity</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#connectTreeWidget">connectTreeWidget</a> (self, QTreeWidget a0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#contextMenuEvent">contextMenuEvent</a> (self, QContextMenuEvent a0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#disconnectTreeWidget">disconnectTreeWidget</a> (self, QTreeWidget a0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#event">event</a> (self, QEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#itemMatches">itemMatches</a> (self, QTreeWidgetItem item, QString pattern)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#keepParentsVisible">keepParentsVisible</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#removeTreeWidget">removeTreeWidget</a> (self, QTreeWidget treeWidget)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[int]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#searchColumns">searchColumns</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setCaseSensitivity">setCaseSensitivity</a> (self, <a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::CaseSensitivity</a> caseSensitivity)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setKeepParentsVisible">setKeepParentsVisible</a> (self, bool value)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setSearchColumns">setSearchColumns</a> (self, [int] columns)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTreeWidget">setTreeWidget</a> (self, QTreeWidget treeWidget)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTreeWidgets">setTreeWidgets</a> (self, [QTreeWidget] treeWidgets)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QTreeWidget&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#treeWidget">treeWidget</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[QTreeWidget]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#treeWidgets">treeWidgets</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#updateSearch">updateSearch</a> (self, QString pattern=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#updateSearch">updateSearch</a> (self, QTreeWidget treeWidget)</td></tr>
+</table>
+<hr><h2>Signal Documentation</h2><a class="anchor" name="hiddenChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> hiddenChanged</td>
+<td>(</td>
+<td class="paramtype">QTreeWidgetItem&nbsp;</td>
+<td class="paramname"><em>a0</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>a1</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted whenever an item gets hidden or unhidden due
+to it not matching or matching the search string.
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("hiddenChanged(QTreeWidgetItem*, bool)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="searchUpdated"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> searchUpdated</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>searchString</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when user finished entering filter text or
+when he made a pause long enough, after the QTreeWidget items got filtered
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>searchString</em>&nbsp;</td><td> is the text currently entered by the user
+</td></tr> </table></dl>
+<p> <dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("searchUpdated(const QString&)"), target_slot)</code></dd></dl></div></div><hr><h2>Method Documentation</h2><a class="anchor" name="KTreeWidgetSearchLine"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent=0</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTreeWidget&nbsp;</td>
+<td class="paramname"><em>treeWidget=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructs a KTreeWidgetSearchLine with <b>treeWidget</b> being the QTreeWidget to
+be filtered.
+</p>
+<p>
+If <b>treeWidget</b> is null then the widget will be disabled until listviews
+are set with setTreeWidget(), setTreeWidgets() or added with addTreeWidget().
+</p></div></div><a class="anchor" name="KTreeWidgetSearchLine"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">[QTreeWidget]&nbsp;</td>
+<td class="paramname"><em>treeWidgets</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructs a KTreeWidgetSearchLine with <b>treeWidgets</b> being the list of
+pointers to QTreeWidgets to be filtered.
+</p>
+<p>
+If <b>treeWidgets</b> is empty then the widget will be disabled until listviews
+are set with setTreeWidget(), setTreeWidgets() or added with addTreeWidget().
+</p></div></div><a class="anchor" name="addTreeWidget"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> addTreeWidget</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTreeWidget&nbsp;</td>
+<td class="paramname"><em>treeWidget</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Adds a QTreeWidget to the list of listviews filtered by this search line.
+If <b>treeWidget</b> is null then the widget will be disabled.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> treeWidget(), setTreeWidgets(), removeTreeWidget()
+</dd></dl>
+</p></div></div><a class="anchor" name="canChooseColumnsCheck"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool canChooseColumnsCheck</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Checks columns in all listviews and decides whether choosing columns to
+filter on makes any sense.
+</p>
+<p>
+Returns false if either of the following is true:
+* there are no listviews connected,
+* the listviews have different numbers of columns,
+* the listviews have only one column,
+* the listviews differ in column labels.
+</p>
+<p>
+Otherwise it returns true.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setSearchColumns()
+</dd></dl>
+</p></div></div><a class="anchor" name="caseSensitivity"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::CaseSensitivity</a> caseSensitivity</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns true if the search is case sensitive. This defaults to false.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setCaseSensitive()
+</dd></dl>
+</p></div></div><a class="anchor" name="connectTreeWidget"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> connectTreeWidget</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTreeWidget&nbsp;</td>
+<td class="paramname"><em>a0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Connects signals of this listview to the appropriate slots of the search
+line.
+</p></div></div><a class="anchor" name="contextMenuEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> contextMenuEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QContextMenuEvent&nbsp;</td>
+<td class="paramname"><em>a0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Re-implemented for internal reasons. API not affected.
+</p></div></div><a class="anchor" name="disconnectTreeWidget"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> disconnectTreeWidget</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTreeWidget&nbsp;</td>
+<td class="paramname"><em>a0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Disconnects signals of a listviews from the search line.
+</p></div></div><a class="anchor" name="event"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool event</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Re-implemented for internal reasons. API not affected.
+</p></div></div><a class="anchor" name="itemMatches"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool itemMatches</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTreeWidgetItem&nbsp;</td>
+<td class="paramname"><em>item</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>pattern</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Returns true if <b>item</b> matches the search <b>pattern.</b> This will be evaluated
+based on the value of caseSensitive(). This can be overridden in
+subclasses to implement more complicated matching schemes.
+</p></div></div><a class="anchor" name="keepParentsVisible"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool keepParentsVisible</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>If this is true (the default) then the parents of matched items will also
+be shown.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setKeepParentsVisible()
+</dd></dl>
+</p></div></div><a class="anchor" name="removeTreeWidget"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> removeTreeWidget</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTreeWidget&nbsp;</td>
+<td class="paramname"><em>treeWidget</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Removes a QTreeWidget from the list of listviews filtered by this search
+line. Does nothing if <b>treeWidget</b> is 0 or is not filtered by the quick search
+line.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> listVew(), setTreeWidgets(), addTreeWidget()
+</dd></dl>
+</p></div></div><a class="anchor" name="searchColumns"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[int] searchColumns</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the current list of columns that will be searched. If the
+returned list is empty all visible columns will be searched.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setSearchColumns
+</dd></dl>
+</p></div></div><a class="anchor" name="setCaseSensitivity"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setCaseSensitivity</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::CaseSensitivity</a>&nbsp;</td>
+<td class="paramname"><em>caseSensitivity</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Make the search case sensitive or case insensitive.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> caseSenstivity()
+</dd></dl>
+</p></div></div><a class="anchor" name="setKeepParentsVisible"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setKeepParentsVisible</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>value</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>When a search is active on a list that's organized into a tree view if
+a parent or ancesestor of an item is does not match the search then it
+will be hidden and as such so too will any children that match.
+</p>
+<p>
+If this is set to true (the default) then the parents of matching items
+will be shown.
+</p>
+<p>
+<dl class="warning" compact><dt><b>Warning:</b></dt><dd> setKeepParentsVisible(true) does not have the expected effect
+on items being added to or removed from the view while a search is active.
+When a new search starts afterwards the behavior will be normal.
+</dd></dl> </p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> keepParentsVisible
+</dd></dl>
+</p></div></div><a class="anchor" name="setSearchColumns"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setSearchColumns</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">[int]&nbsp;</td>
+<td class="paramname"><em>columns</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the list of columns to be searched. The default is to search all,
+visible columns which can be restored by passing <b>columns</b> as an empty
+list.
+If listviews to be filtered have different numbers or labels of columns
+this method has no effect.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> searchColumns
+</dd></dl>
+</p></div></div><a class="anchor" name="setTreeWidget"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTreeWidget</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTreeWidget&nbsp;</td>
+<td class="paramname"><em>treeWidget</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the QTreeWidget that is filtered by this search line, replacing any
+previously filtered listviews. If <b>treeWidget</b> is null then the widget will be
+disabled.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> treeWidget(), setTreeWidgets()
+</dd></dl>
+</p></div></div><a class="anchor" name="setTreeWidgets"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTreeWidgets</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">[QTreeWidget]&nbsp;</td>
+<td class="paramname"><em>treeWidgets</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets QTreeWidgets that are filtered by this search line, replacing any
+previously filtered listviews. If <b>treeWidgets</b> is empty then the widget will
+be disabled.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> treeWidgets(), addTreeWidget(), setTreeWidget()
+</dd></dl>
+</p></div></div><a class="anchor" name="treeWidget"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QTreeWidget treeWidget</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the listview that is currently filtered by the search.
+If there are multiple listviews filtered, it returns 0.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setTreeWidget(), treeWidgets()
+</dd></dl>
+</p></div></div><a class="anchor" name="treeWidgets"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[QTreeWidget] treeWidgets</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the list of pointers to listviews that are currently filtered by
+the search.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setTreeWidgets(), addTreeWidget(), treeWidget()
+</dd></dl>
+</p></div></div><a class="anchor" name="updateSearch"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> updateSearch</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>pattern=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Updates search to only make visible appropriate items in <b>treeWidget.</b> If
+<b>treeWidget</b> is null then nothing is done.
+</p></div></div><a class="anchor" name="updateSearch"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> updateSearch</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTreeWidget&nbsp;</td>
+<td class="paramname"><em>treeWidget</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Updates search to only make visible appropriate items in <b>treeWidget.</b> If
+<b>treeWidget</b> is null then nothing is done.
+</p></div></div>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

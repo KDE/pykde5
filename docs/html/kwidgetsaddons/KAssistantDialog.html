@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KAssistantDialog</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KAssistantDialog Class Reference</h1>
+<code>from PyKDE5.kwidgetsaddons import *</code>
+<p>
+Inherits: KPageDialog &#x2192; QDialog &#x2192; QWidget &#x2192; QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+<p>This class provides a framework for assistant dialogs.
+</p>
+<p>
+An assistant dialog consists of a sequence of pages.
+Its purpose is to guide the user (assist) through a process step by step.
+Assistant dialogs are useful for complex or infrequently occurring tasks
+that people may find difficult to learn or do.
+Sometimes a task requires too many input fields to fit them on a single dialog.
+</p>
+<p>
+Create and populate dialog pages that inherit from QWidget and add them
+to the assistant dialog using addPage().
+</p>
+<p>
+The functions next() and back() are virtual and may be reimplemented to
+override the default actions of the next and back buttons.
+</p>
+<p>
+<div align="center"><img src="../images/kassistantdialog.png" /><p><strong> "KDE Assistant Dialog" </strong></p></div>
+</p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Olivier Goffart &lt;ogoffart at kde.org&gt; </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KAssistantDialog">__init__</a> (self, QWidget parent=0, <a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::WindowFlags</a> flags=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KAssistantDialog">__init__</a> (self, KPageWidget widget, QWidget parent=0, <a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::WindowFlags</a> flags=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#back">back</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QPushButton&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#backButton">backButton</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QPushButton&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#finishButton">finishButton</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isAppropriate">isAppropriate</a> (self, KPageWidgetItem page)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isValid">isValid</a> (self, KPageWidgetItem page)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#next">next</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QPushButton&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#nextButton">nextButton</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setAppropriate">setAppropriate</a> (self, KPageWidgetItem page, bool appropriate)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setValid">setValid</a> (self, KPageWidgetItem page, bool enable)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#showEvent">showEvent</a> (self, QShowEvent event)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KAssistantDialog"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent=0</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::WindowFlags</a>&nbsp;</td>
+<td class="paramname"><em>flags=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Construct a new assistant dialog with <b>parent</b> as parent.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> is the parent of the widget.
+</td></tr> </table></dl>
+<p> <b>flags</b> -  the window flags to give to the assistant dialog. The
+default of zero is usually what you want.
+</p></div></div><a class="anchor" name="KAssistantDialog"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KPageWidget&nbsp;</td>
+<td class="paramname"><em>widget</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent=0</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::WindowFlags</a>&nbsp;</td>
+<td class="paramname"><em>flags=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Construct an assistant dialog from a single widget.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>widget</em>&nbsp;</td><td> the widget to construct the dialog with
+
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> the parent of the assistant dialog
+</td></tr> </table></dl>
+<p> <b>flags</b> -  the window flags to use when creating the widget. The default
+of zero is usually fine.
+</p>
+<p>
+Calls the KPageDialog(KPageWidget *widget, QWidget *parent, Qt.WindowFlags flags) constructor
+</p></div></div><a class="anchor" name="back"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> back</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Called when the user clicks the Back button.
+</p>
+<p>
+This function will show the preceding relevant page in the sequence.
+Do nothing if the current page is the first page in the sequence.
+</p></div></div><a class="anchor" name="backButton"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QPushButton backButton</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> the finish button
+</dd></dl>
+</p></div></div><a class="anchor" name="finishButton"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QPushButton finishButton</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> the finish button
+</dd></dl>
+</p></div></div><a class="anchor" name="isAppropriate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isAppropriate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KPageWidgetItem&nbsp;</td>
+<td class="paramname"><em>page</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Check if a page is appropriate for use in the assistant dialog.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>page</em>&nbsp;</td><td> is the page to check the appropriateness of.
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> true if <b>page</b> is appropriate, false if it is not
+</dd></dl>
+</p></div></div><a class="anchor" name="isValid"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isValid</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KPageWidgetItem&nbsp;</td>
+<td class="paramname"><em>page</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>return if a page is valid
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setValid
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>page</em>&nbsp;</td><td> the page to check the validity of
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="next"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> next</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Called when the user clicks the Next/Finish button.
+</p>
+<p>
+This function will show the next relevant page in the sequence.
+If the current page is the last page, it will call accept()
+</p></div></div><a class="anchor" name="nextButton"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QPushButton nextButton</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> the next button
+</dd></dl>
+</p></div></div><a class="anchor" name="setAppropriate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setAppropriate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KPageWidgetItem&nbsp;</td>
+<td class="paramname"><em>page</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>appropriate</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Specify whether a page is appropriate.
+</p>
+<p>
+A page is considered inappropriate if it should not be shown due to
+the contents of other pages making it inappropriate.
+</p>
+<p>
+A page which is inappropriate will not be shown.
+</p>
+<p>
+The last page in an assistant dialog should always be appropriate
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>page</em>&nbsp;</td><td> the page to set as appropriate
+
+<tr><td></td><td valign="top"><em>appropriate</em>&nbsp;</td><td> flag indicating the appropriateness of the page.
+If <b>appropriate</b> is true, then <b>page</b> is appropriate and will be
+shown in the assistant dialog. If false, <b>page</b> will not be shown.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setValid"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setValid</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KPageWidgetItem&nbsp;</td>
+<td class="paramname"><em>page</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>enable</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Specify if the content of the page is valid, and if the next button may be enabled on this page.
+By default all pages are valid.
+</p>
+<p>
+This will disable or enable the next button on the specified page
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>page</em>&nbsp;</td><td> the page on which the next button will be enabled/disable
+
+<tr><td></td><td valign="top"><em>enable</em>&nbsp;</td><td> if true the next button will be enabled, if false it will be disabled
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="showEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> showEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QShowEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

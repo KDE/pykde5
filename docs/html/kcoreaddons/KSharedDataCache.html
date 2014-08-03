@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KSharedDataCache</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KSharedDataCache Class Reference</h1>
+<code>from PyKDE5.kcoreaddons import *</code>
+<p>
+
+
+
+<h2>Detailed Description</h2>
+
+<p>A simple data cache which uses shared memory to quickly access data
+stored on disk.
+</p>
+<p>
+This class is meant to be used with KImageCache and similar classes but can
+be used directly if used with care.
+</p>
+<p>
+Example usage:
+</p>
+<p>
+<pre class="fragment">
+ QString loadTranslatedDocument(KSharedDataCache *cache) {
+
+   // Find the data
+   QByteArray document;
+
+   if (!cache-&gt;find("translated-doc-template", &amp;document)) {
+     // Entry is not cached, manually generate and then add to cache.
+     document = translateDocument(globalTemplate());
+     cache-&gt;insert(document);
+   }
+
+   // Don't forget to encode/decode properly
+   return QString.fromUtf8(document);
+ }
+</pre>
+</p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Michael Pyne &lt;mpyne@kde.org&gt; </dd></dl>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> KImageCache
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 4.5
+</dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#EvictionPolicy">EvictionPolicy</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;NoEvictionPreference, EvictLeastRecentlyUsed, EvictLeastOftenUsed, EvictOldest&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KSharedDataCache">__init__</a> (self, QString cacheName, unsigned defaultCacheSize, unsigned expectedItemSize=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#clear">clear</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#contains">contains</a> (self, QString key)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KSharedDataCache::EvictionPolicy&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#evictionPolicy">evictionPolicy</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#find">find</a> (self, QString key, QByteArray destination)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">unsigned&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#freeSize">freeSize</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#insert">insert</a> (self, QString key, QByteArray data)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setEvictionPolicy">setEvictionPolicy</a> (self, KSharedDataCache::EvictionPolicy newPolicy)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTimestamp">setTimestamp</a> (self, unsigned newTimestamp)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">unsigned&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timestamp">timestamp</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">unsigned&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#totalSize">totalSize</a> (self)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#deleteCache">deleteCache</a> (QString cacheName)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KSharedDataCache"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>cacheName</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">unsigned&nbsp;</td>
+<td class="paramname"><em>defaultCacheSize</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">unsigned&nbsp;</td>
+<td class="paramname"><em>expectedItemSize=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Attaches to a shared cache, creating it if necessary. If supported, this
+data cache will be shared across all processes using this cache (with
+subsequent memory savings). If shared memory is unsupported or a
+failure occurs, caching will still be supported, but only in the same
+process, and only using the same KSharedDataCache object.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>cacheName</em>&nbsp;</td><td> Name of the cache to use/share.
+
+<tr><td></td><td valign="top"><em>defaultCacheSize</em>&nbsp;</td><td> Amount of data to be able to store, in bytes. The
+actual size will be slightly larger on disk due to accounting
+overhead. If the cache already existed then it &lt;em&gt;will not&lt;/em&gt; be
+resized. For this reason you should specify some reasonable size.
+
+<tr><td></td><td valign="top"><em>expectedItemSize</em>&nbsp;</td><td> The average size of an item that would be stored
+in the cache, in bytes. Choosing an average size of zero bytes causes
+KSharedDataCache to use whatever it feels is the best default for the
+system.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="clear"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> clear</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Removes all entries from the cache.
+</p></div></div><a class="anchor" name="contains"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool contains</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>key</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Returns true if the cache currently contains the image for the given
+filename.
+</p>
+<p>
+NOTE: Calling this function is threadsafe, but it is in general not
+possible to guarantee the image stays cached immediately afterwards,
+so if you need the result use find().
+</p></div></div><a class="anchor" name="evictionPolicy"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KSharedDataCache::EvictionPolicy evictionPolicy</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> The removal policy in use by the shared cache.
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> EvictionPolicy
+</dd></dl>
+</p></div></div><a class="anchor" name="find"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool find</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>key</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QByteArray&nbsp;</td>
+<td class="paramname"><em>destination</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Returns the data in the cache named by <b>key</b> (even if it's some other
+process's data named with the same key!), stored in <b>destination.</b> If there is
+no entry named by <b>key</b> then <b>destination</b> is left unchanged. The return value
+is used to tell what happened.
+</p>
+<p>
+If you simply want to verify whether an entry is present in the cache then
+see contains().
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>key</em>&nbsp;</td><td> The key to find in the cache.
+
+<tr><td></td><td valign="top"><em>destination</em>&nbsp;</td><td> Is set to the value of <b>key</b> in the cache if <b>key</b> is
+present, left unchanged otherwise.
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> true if <b>key</b> was present in the cache (@p destination will also be
+updated), false if <b>key</b> was not present (@p destination will be
+unchanged).
+</dd></dl>
+</p></div></div><a class="anchor" name="freeSize"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">unsigned freeSize</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the amount of free space in the cache, in bytes. Due to
+implementation details it is possible to still not be able to fit an
+entry in the cache at any given time even if it is smaller than the
+amount of space remaining.
+</p></div></div><a class="anchor" name="insert"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool insert</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>key</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QByteArray&nbsp;</td>
+<td class="paramname"><em>data</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Attempts to insert the entry <b>data</b> into the shared cache, named by
+<b>key,</b> and returns true only if successful.
+</p>
+<p>
+Note that even if the insert was successful, that the newly added entry
+may be evicted by other processes contending for the cache.
+</p></div></div><a class="anchor" name="setEvictionPolicy"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setEvictionPolicy</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KSharedDataCache::EvictionPolicy&nbsp;</td>
+<td class="paramname"><em>newPolicy</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the entry removal policy for the shared cache to
+<b>newPolicy.</b> The default is EvictionPolicy.NoEvictionPreference.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> EvictionPolicy
+</dd></dl>
+</p></div></div><a class="anchor" name="setTimestamp"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTimestamp</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">unsigned&nbsp;</td>
+<td class="paramname"><em>newTimestamp</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the shared timestamp of the cache. Timestamping is supported to
+allow applications to more effectively "version" the data stored in the
+cache. However, the timestamp is shared with &lt;em&gt;all&lt;/em&gt; applications
+using the cache so you should always be prepared for invalid
+timestamps.
+</p>
+<p>
+When the cache is first created (note that this is different from
+attaching to an existing shared cache on disk), the cache timestamp is
+initialized to the time returned by time(2). KSharedDataCache will
+not update the timestamp again, it is only updated through this method.
+</p>
+<p>
+Example:
+<pre class="fragment">
+ QImage loadCachedImage(const QString &amp;key)
+ {
+     // Check timestamp
+     if (m_sharedCache-&gt;timestamp() &lt; m_currentThemeTimestamp) {
+         // Cache is stale, clean it out.
+         m_sharedCache-&gt;clear();
+         m_sharedCache-&gt;setTimestamp(m_currentThemeTimestamp);
+     }
+
+     // Check cache and load image as usual...
+ }
+</pre>
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>newTimestamp</em>&nbsp;</td><td> The new timestamp to mark the shared cache with.
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> timestamp()
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 4.6
+</dd></dl>
+</p></div></div><a class="anchor" name="timestamp"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">unsigned timestamp</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> The shared timestamp of the cache. The interpretation of the
+timestamp returned is up to the application. KSharedDataCache
+will initialize the timestamp to the time returned by time(2)
+on cache creation, but KSharedDataCache will not touch the
+timestamp again.
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setTimestamp()
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 4.6
+</dd></dl>
+</p></div></div><a class="anchor" name="totalSize"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">unsigned totalSize</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the usable cache size in bytes. The actual amount of memory
+used will be slightly larger than this to account for required
+accounting overhead.
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="deleteCache"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> deleteCache</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>cacheName</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Removes the underlying file from the cache. Note that this is *all* that this
+function does. The shared memory segment is still attached and will still contain
+all the data until all processes currently attached remove the mapping.
+</p>
+<p>
+In order to remove the data see clear().
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="EvictionPolicy"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">EvictionPolicy</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>NoEvictionPreference</em>&nbsp;=&nbsp;0</td><td><tr><td valign="top"><em>EvictLeastRecentlyUsed</em>&nbsp;</td><td><tr><td valign="top"><em>EvictLeastOftenUsed</em>&nbsp;</td><td><tr><td valign="top"><em>EvictOldest</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

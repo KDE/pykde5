@@ -1,0 +1,3087 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KMessageBox</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KMessageBox Namespace Reference</h1>
+<code>from PyKDE5.kwidgetsaddons.KMessageBox import *</code>
+<p>
+<h2>Detailed Description</h2>
+<p>Easy message dialog box.
+</p>
+<p>
+Provides convenience functions for some i18n'ed standard dialogs,
+as well as audible notification via KNotification
+</p>
+<p>
+The text in message boxes is wrapped automatically. The text may either
+be plaintext or richtext. If the text is plaintext, a newline-character
+may be used to indicate the end of a paragraph.
+</p>
+<p>
+<div align="center"><img src="../images/kmessagebox.png" /><p><strong> "KDE Message Box (using questionYesNo())" </strong></p></div>
+</p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Waldo Bastian (bastian@kde.org) </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#ButtonCode">ButtonCode</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;Ok, Cancel, Yes, No, Continue&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#DialogType">DialogType</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;QuestionYesNo, WarningYesNo, WarningContinueCancel, WarningYesNoCancel, Information, Sorry, Error, QuestionYesNoCancel&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#Option">Option</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;Notify, AllowLink, Dangerous, PlainCaption, NoExec, WindowModal&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#about">about</a> (QWidget parent, QString text, QString caption=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QDialogButtonBox::StandardButton&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#createKMessageBox">createKMessageBox</a> (QDialog dialog, QDialogButtonBox buttons, QMessageBox::Icon icon, QString text, QStringList strlist, QString ask, bool checkboxReturn, KMessageBox::Options options, QString details=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QDialogButtonBox::StandardButton&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#createKMessageBox">createKMessageBox</a> (QDialog dialog, QDialogButtonBox buttons, QIcon icon, QString text, QStringList strlist, QString ask, bool checkboxReturn, KMessageBox::Options options, QString details=QString(), QMessageBox::Icon notifyType=QMessageBox.Information)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#detailedError">detailedError</a> (QWidget parent, QString text, QString details, QString caption=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#detailedErrorWId">detailedErrorWId</a> (WId parent_id, QString text, QString details, QString caption=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#detailedSorry">detailedSorry</a> (QWidget parent, QString text, QString details, QString caption=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#detailedSorryWId">detailedSorryWId</a> (WId parent_id, QString text, QString details, QString caption=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#enableAllMessages">enableAllMessages</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#enableMessage">enableMessage</a> (QString dontShowAgainName)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#error">error</a> (QWidget parent, QString text, QString caption=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#errorList">errorList</a> (QWidget parent, QString text, QStringList strlist, QString caption=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#errorListWId">errorListWId</a> (WId parent_id, QString text, QStringList strlist, QString caption=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#errorWId">errorWId</a> (WId parent_id, QString text, QString caption=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#information">information</a> (QWidget parent, QString text, QString caption=QString(), QString dontShowAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#informationList">informationList</a> (QWidget parent, QString text, QStringList strlist, QString caption=QString(), QString dontShowAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#informationListWId">informationListWId</a> (WId parent_id, QString text, QStringList strlist, QString caption=QString(), QString dontShowAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#informationWId">informationWId</a> (WId parent_id, QString text, QString caption=QString(), QString dontShowAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#messageBox">messageBox</a> (QWidget parent, KMessageBox::DialogType type, QString text, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), KGuiItem buttonCancel=KStandardGuiItem.cancel(), QString dontShowAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#messageBoxWId">messageBoxWId</a> (WId parent_id, KMessageBox::DialogType type, QString text, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), KGuiItem buttonCancel=KStandardGuiItem.cancel(), QString dontShowAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#questionYesNo">questionYesNo</a> (QWidget parent, QString text, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#questionYesNoCancel">questionYesNoCancel</a> (QWidget parent, QString text, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), KGuiItem buttonCancel=KStandardGuiItem.cancel(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#questionYesNoCancelWId">questionYesNoCancelWId</a> (WId parent_id, QString text, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), KGuiItem buttonCancel=KStandardGuiItem.cancel(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#questionYesNoList">questionYesNoList</a> (QWidget parent, QString text, QStringList strlist, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#questionYesNoListWId">questionYesNoListWId</a> (WId parent_id, QString text, QStringList strlist, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#questionYesNoWId">questionYesNoWId</a> (WId parent_id, QString text, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#saveDontShowAgainContinue">saveDontShowAgainContinue</a> (QString dontShowAgainName)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#saveDontShowAgainYesNo">saveDontShowAgainYesNo</a> (QString dontShowAgainName, KMessageBox::ButtonCode result)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDontShowAgainConfig">setDontShowAgainConfig</a> (KConfig cfg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDontShowAgainInterface">setDontShowAgainInterface</a> (KMessageBoxDontAskAgainInterface dontAskAgainInterface)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setNotifyInterface">setNotifyInterface</a> (KMessageBoxNotifyInterface notifyInterface)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#shouldBeShownContinue">shouldBeShownContinue</a> (QString dontShowAgainName)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#shouldBeShownYesNo">shouldBeShownYesNo</a> (QString dontShowAgainName, KMessageBox::ButtonCode result)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#sorry">sorry</a> (QWidget parent, QString text, QString caption=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#sorryWId">sorryWId</a> (WId parent_id, QString text, QString caption=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#warningContinueCancel">warningContinueCancel</a> (QWidget parent, QString text, QString caption=QString(), KGuiItem buttonContinue=KStandardGuiItem.cont(), KGuiItem buttonCancel=KStandardGuiItem.cancel(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#warningContinueCancelList">warningContinueCancelList</a> (QWidget parent, QString text, QStringList strlist, QString caption=QString(), KGuiItem buttonContinue=KStandardGuiItem.cont(), KGuiItem buttonCancel=KStandardGuiItem.cancel(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#warningContinueCancelListWId">warningContinueCancelListWId</a> (WId parent_id, QString text, QStringList strlist, QString caption=QString(), KGuiItem buttonContinue=KStandardGuiItem.cont(), KGuiItem buttonCancel=KStandardGuiItem.cancel(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#warningContinueCancelWId">warningContinueCancelWId</a> (WId parent_id, QString text, QString caption=QString(), KGuiItem buttonContinue=KStandardGuiItem.cont(), KGuiItem buttonCancel=KStandardGuiItem.cancel(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#warningYesNo">warningYesNo</a> (QWidget parent, QString text, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Options(KMessageBox.Notify|KMessageBox.Dangerous))</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#warningYesNoCancel">warningYesNoCancel</a> (QWidget parent, QString text, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), KGuiItem buttonCancel=KStandardGuiItem.cancel(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#warningYesNoCancelList">warningYesNoCancelList</a> (QWidget parent, QString text, QStringList strlist, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), KGuiItem buttonCancel=KStandardGuiItem.cancel(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#warningYesNoCancelListWId">warningYesNoCancelListWId</a> (WId parent_id, QString text, QStringList strlist, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), KGuiItem buttonCancel=KStandardGuiItem.cancel(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#warningYesNoCancelWId">warningYesNoCancelWId</a> (WId parent_id, QString text, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), KGuiItem buttonCancel=KStandardGuiItem.cancel(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Notify)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#warningYesNoList">warningYesNoList</a> (QWidget parent, QString text, QStringList strlist, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Options(KMessageBox.Notify|KMessageBox.Dangerous))</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#warningYesNoListWId">warningYesNoListWId</a> (WId parent_id, QString text, QStringList strlist, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Options(KMessageBox.Notify|KMessageBox.Dangerous))</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KMessageBox::ButtonCode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#warningYesNoWId">warningYesNoWId</a> (WId parent_id, QString text, QString caption=QString(), KGuiItem buttonYes=KStandardGuiItem.yes(), KGuiItem buttonNo=KStandardGuiItem.no(), QString dontAskAgainName=QString(), KMessageBox::Options options=KMessageBox.Options(KMessageBox.Notify|KMessageBox.Dangerous))</td></tr>
+</table>
+<hr><h2>Enumeration Documentation</h2><a class="anchor" name="ButtonCode"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">ButtonCode</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Button types.
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>Ok</em>&nbsp;=&nbsp;1</td><td><tr><td valign="top"><em>Cancel</em>&nbsp;=&nbsp;2</td><td><tr><td valign="top"><em>Yes</em>&nbsp;=&nbsp;3</td><td><tr><td valign="top"><em>No</em>&nbsp;=&nbsp;4</td><td><tr><td valign="top"><em>Continue</em>&nbsp;=&nbsp;5</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="DialogType"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">DialogType</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>QuestionYesNo</em>&nbsp;=&nbsp;1</td><td><tr><td valign="top"><em>WarningYesNo</em>&nbsp;=&nbsp;2</td><td><tr><td valign="top"><em>WarningContinueCancel</em>&nbsp;=&nbsp;3</td><td><tr><td valign="top"><em>WarningYesNoCancel</em>&nbsp;=&nbsp;4</td><td><tr><td valign="top"><em>Information</em>&nbsp;=&nbsp;5</td><td><tr><td valign="top"><em>Sorry</em>&nbsp;=&nbsp;7</td><td><tr><td valign="top"><em>Error</em>&nbsp;=&nbsp;8</td><td><tr><td valign="top"><em>QuestionYesNoCancel</em>&nbsp;=&nbsp;9</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="Option"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">Option</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>EditTime</em>&nbsp;=&nbsp;0x0001</td><td><tr><td valign="top"><em>SelectTime</em>&nbsp;=&nbsp;0x0002</td><td><tr><td valign="top"><em>ForceTime</em>&nbsp;=&nbsp;0x0004</td><td><tr><td valign="top"><em>WarnOnInvalid</em>&nbsp;=&nbsp;0x0008</td><td></table>
+</dl>
+</div></div><p><hr><h2>Function Documentation</h2><a class="anchor" name="about"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> about</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display an "About" dialog.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("About &lt;appname&gt;").
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+
+</table></dl>
+<p> Your program wants to show some general information about the application
+like the authors's names and email addresses.
+</p>
+<p>
+The default button is "&amp;OK".
+</p>
+<p>
+NOTE: The ok button will always have the i18n'ed text '&amp;OK'.
+</p></div></div><a class="anchor" name="createKMessageBox"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QDialogButtonBox::StandardButton createKMessageBox</td>
+<td>(</td>
+<td class="paramtype">QDialog&nbsp;</td>
+<td class="paramname"><em>dialog</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDialogButtonBox&nbsp;</td>
+<td class="paramname"><em>buttons</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QMessageBox::Icon&nbsp;</td>
+<td class="paramname"><em>icon</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>ask</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>checkboxReturn</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>details=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Create content and layout of a standard dialog
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dialog</em>&nbsp;</td><td> The parent dialog base
+
+<tr><td></td><td valign="top"><em>icon</em>&nbsp;</td><td> A QPixmap containing the icon to be displayed in the
+dialog next to the text.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>strlist</em>&nbsp;</td><td> List of strings to be written in the listbox.
+If the list is empty, it doesn't show any listbox
+
+<tr><td></td><td valign="top"><em>ask</em>&nbsp;</td><td> The text of the checkbox. If empty none will be shown.
+
+<tr><td></td><td valign="top"><em>checkboxReturn</em>&nbsp;</td><td> The result of the checkbox. If it's initially
+true then the checkbox will be checked by default.
+May be 0.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+
+<tr><td></td><td valign="top"><em>details</em>&nbsp;</td><td> Detailed message string.
+
+<tr><td></td><td valign="top"><em>notifyType</em>&nbsp;</td><td> The type of notification to send when this message
+is presentend.
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> A QDialogButtonBox.StandardButton button code, not a KMessageBox
+button code, based on the buttonmask given to the constructor of
+the <b>dialog</b> (ie. will return QDialogButtonBox.Yes instead of
+KMessageBox.Yes). Will return QDialogButtonBox.NoButton if the
+message box is queued for display instead of exec()ed immediately
+or if the option NoExec is set.
+</dd></dl> <dl class="note" compact><dt><b>Note:</b></dt><dd> Unless NoExec is used,
+the <b>dialog</b> that is passed in is deleted by this
+function. Do not delete it yourself.
+</dd></dl>
+</p></div></div><a class="anchor" name="createKMessageBox"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QDialogButtonBox::StandardButton createKMessageBox</td>
+<td>(</td>
+<td class="paramtype">QDialog&nbsp;</td>
+<td class="paramname"><em>dialog</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDialogButtonBox&nbsp;</td>
+<td class="paramname"><em>buttons</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QIcon&nbsp;</td>
+<td class="paramname"><em>icon</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>ask</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>checkboxReturn</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>details=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QMessageBox::Icon&nbsp;</td>
+<td class="paramname"><em>notifyType=QMessageBox.Information</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Create content and layout of a standard dialog
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dialog</em>&nbsp;</td><td> The parent dialog base
+
+<tr><td></td><td valign="top"><em>icon</em>&nbsp;</td><td> A QPixmap containing the icon to be displayed in the
+dialog next to the text.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>strlist</em>&nbsp;</td><td> List of strings to be written in the listbox.
+If the list is empty, it doesn't show any listbox
+
+<tr><td></td><td valign="top"><em>ask</em>&nbsp;</td><td> The text of the checkbox. If empty none will be shown.
+
+<tr><td></td><td valign="top"><em>checkboxReturn</em>&nbsp;</td><td> The result of the checkbox. If it's initially
+true then the checkbox will be checked by default.
+May be 0.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+
+<tr><td></td><td valign="top"><em>details</em>&nbsp;</td><td> Detailed message string.
+
+<tr><td></td><td valign="top"><em>notifyType</em>&nbsp;</td><td> The type of notification to send when this message
+is presentend.
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> A QDialogButtonBox.StandardButton button code, not a KMessageBox
+button code, based on the buttonmask given to the constructor of
+the <b>dialog</b> (ie. will return QDialogButtonBox.Yes instead of
+KMessageBox.Yes). Will return QDialogButtonBox.NoButton if the
+message box is queued for display instead of exec()ed immediately
+or if the option NoExec is set.
+</dd></dl> <dl class="note" compact><dt><b>Note:</b></dt><dd> Unless NoExec is used,
+the <b>dialog</b> that is passed in is deleted by this
+function. Do not delete it yourself.
+</dd></dl>
+</p></div></div><a class="anchor" name="detailedError"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> detailedError</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>details</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Displays an "Error" dialog with a "Details &gt;&gt;" button.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>details</em>&nbsp;</td><td> Detailed message string.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Error").
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+</table></dl>
+<p> Your program messed up and now it's time to inform the user.
+To be used for important things like "Sorry, I deleted your hard disk."
+</p>
+<p>
+The <b>details</b> message can contain additional information about
+the problem and can be shown on request to advanced/interested users.
+</p>
+<p>
+If your program detects the action specified by the user is somehow
+not allowed, this should never be reported with error(). Use sorry()
+instead to explain to the user that this action is not allowed.
+</p>
+<p>
+The default button is "&amp;OK". Pressing "Esc" selects the OK-button.
+</p>
+<p>
+NOTE: The OK button will always have the i18n'ed text '&amp;OK'.
+</p></div></div><a class="anchor" name="detailedErrorWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> detailedErrorWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>details</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="detailedSorry"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> detailedSorry</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>details</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Displays a "Sorry" dialog with a "Details &gt;&gt;" button.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>details</em>&nbsp;</td><td> Detailed message string.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Sorry").
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+</table></dl>
+<p> Either your program messed up and asks for understanding
+or your user did something stupid.
+</p>
+<p>
+To be used for small problems like
+"Sorry, I can't find the file you specified."
+</p>
+<p>
+And then <b>details</b> can contain something like
+"foobar.txt was not found in any of
+the following directories:
+/usr/bin,/usr/local/bin,/usr/sbin"
+</p>
+<p>
+The default button is "&amp;OK". Pressing "Esc" selects the OK-button.
+</p>
+<p>
+NOTE: The ok button will always have the i18n'ed text '&amp;OK'.
+</p></div></div><a class="anchor" name="detailedSorryWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> detailedSorryWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>details</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="enableAllMessages"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> enableAllMessages</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname">)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Enable all messages which have been turned off with the
+<b>dontShowAgainName</b> feature.
+</p></div></div><a class="anchor" name="enableMessage"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> enableMessage</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontShowAgainName</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Re-enable a specific <b>dontShowAgainName</b> messages that had
+previously been turned off.
+<dl class="see" compact><dt><b>See also:</b></dt><dd> saveDontShowAgainYesNo()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> saveDontShowAgainContinue()
+</dd></dl>
+</p></div></div><a class="anchor" name="error"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> error</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display an "Error" dialog.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Error").
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+</table></dl>
+<p> Your program messed up and now it's time to inform the user.
+To be used for important things like "Sorry, I deleted your hard disk."
+</p>
+<p>
+If your program detects the action specified by the user is somehow
+not allowed, this should never be reported with error(). Use sorry()
+instead to explain to the user that this action is not allowed.
+</p>
+<p>
+The default button is "&amp;OK". Pressing "Esc" selects the OK-button.
+</p>
+<p>
+NOTE: The OK button will always have the i18n'ed text '&amp;OK'.
+</p></div></div><a class="anchor" name="errorList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> errorList</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display an "Error" dialog with a listbox.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>strlist</em>&nbsp;</td><td> List of strings to be written in the listbox. If the
+list is empty, it doesn't show any listbox, working
+as error().
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Error").
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+</table></dl>
+<p> Your program messed up and now it's time to inform the user.
+To be used for important things like "Sorry, I deleted your hard disk."
+</p>
+<p>
+If your program detects the action specified by the user is somehow
+not allowed, this should never be reported with error(). Use sorry()
+instead to explain to the user that this action is not allowed.
+</p>
+<p>
+The default button is "&amp;OK". Pressing "Esc" selects the OK-button.
+</p>
+<p>
+NOTE: The OK button will always have the i18n'ed text '&amp;OK'.
+</p></div></div><a class="anchor" name="errorListWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> errorListWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="errorWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> errorWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="information"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> information</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontShowAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display an "Information" dialog.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Information").
+
+<tr><td></td><td valign="top"><em>dontShowAgainName</em>&nbsp;</td><td> If provided, a checkbox is added with which
+further notifications can be turned off.
+The string is used to lookup and store the setting
+in the applications config file.
+The setting is stored in the "Notification Messages" group.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+
+</table></dl>
+<p> Your program wants to tell the user something.
+To be used for things like:
+"Your bookmarks have been rearranged."
+</p>
+<p>
+The default button is "&amp;OK". Pressing "Esc" selects the OK-button.
+</p>
+<p>
+NOTE: The OK button will always have the i18n'ed text '&amp;OK'.
+</p></div></div><a class="anchor" name="informationList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> informationList</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontShowAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display an "Information" dialog with a listbox.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>strlist</em>&nbsp;</td><td> List of strings to be written in the listbox. If the
+list is empty, it doesn't show any listbox, working
+as information.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Information").
+
+<tr><td></td><td valign="top"><em>dontShowAgainName</em>&nbsp;</td><td> If provided, a checkbox is added with which
+further notifications can be turned off.
+The string is used to lookup and store the setting
+in the applications config file.
+The setting is stored in the "Notification Messages" group.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+
+</table></dl>
+<p> Your program wants to tell the user something.
+To be used for things like:
+"The following bookmarks have been rearranged:"
+</p>
+<p>
+The default button is "&amp;OK". Pressing "Esc" selects the OK-button.
+</p>
+<p>
+NOTE: The OK button will always have the i18n'ed text '&amp;OK'.
+</p></div></div><a class="anchor" name="informationListWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> informationListWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontShowAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="informationWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> informationWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontShowAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="messageBox"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode messageBox</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::DialogType&nbsp;</td>
+<td class="paramname"><em>type</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonCancel=KStandardGuiItem.cancel()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontShowAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Alternate method to show a messagebox:
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>type</em>&nbsp;</td><td> type of message box: QuestionYesNo, WarningYesNo, WarningContinueCancel...
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title.
+
+<tr><td></td><td valign="top"><em>buttonYes</em>&nbsp;</td><td> The text for the first button.
+The default is KStandardGuiItem.yes().
+
+<tr><td></td><td valign="top"><em>buttonNo</em>&nbsp;</td><td> The text for the second button.
+The default is KStandardGuiItem.no().
+
+<tr><td></td><td valign="top"><em>buttonCancel</em>&nbsp;</td><td> The text for the third button.
+The default is KStandardGuiItem.cancel().
+
+<tr><td></td><td valign="top"><em>dontShowAskAgainName</em>&nbsp;</td><td> If provided, a checkbox is added with which
+further questions/information can be turned off. If turned off
+all questions will be automatically answered with the
+last answer (either Yes or No), if the message box needs an answer.
+The string is used to lookup and store the setting
+in the applications config file.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+Note: for ContinueCancel, buttonYes is the continue button and buttonNo is unused.
+and for Information, none is used.
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> a button code, as defined in KMessageBox.
+</dd></dl>
+</p></div></div><a class="anchor" name="messageBoxWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode messageBoxWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::DialogType&nbsp;</td>
+<td class="paramname"><em>type</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonCancel=KStandardGuiItem.cancel()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontShowAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="questionYesNo"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode questionYesNo</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display a simple "question" dialog.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Question").
+
+<tr><td></td><td valign="top"><em>buttonYes</em>&nbsp;</td><td> The text for the first button.
+The default is KStandardGuiItem.yes().
+
+<tr><td></td><td valign="top"><em>buttonNo</em>&nbsp;</td><td> The text for the second button.
+The default is KStandardGuiItem.no().
+
+<tr><td></td><td valign="top"><em>dontAskAgainName</em>&nbsp;</td><td> If provided, a checkbox is added with which
+further confirmation can be turned off.
+The string is used to lookup and store the setting
+in the applications config file.
+The setting is stored in the "Notification Messages" group.
+If <b>dontAskAgainName</b> starts with a ':' then the setting
+is stored in the global config file.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Option
+</td></tr>
+</table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> 'Yes' is returned if the Yes-button is pressed. 'No' is returned
+if the No-button is pressed.
+</dd></dl> </p>
+<p>
+To be used for questions like "Do you have a printer?"
+</p>
+<p>
+The default button is "Yes". Pressing "Esc" selects "No".
+</p></div></div><a class="anchor" name="questionYesNoCancel"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode questionYesNoCancel</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonCancel=KStandardGuiItem.cancel()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display a simple "question" dialog.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Question").
+
+<tr><td></td><td valign="top"><em>buttonYes</em>&nbsp;</td><td> The text for the first button.
+The default is KStandardGuiItem.yes().
+
+<tr><td></td><td valign="top"><em>buttonNo</em>&nbsp;</td><td> The text for the second button.
+The default is KStandardGuiItem.no().
+
+<tr><td></td><td valign="top"><em>buttonCancel</em>&nbsp;</td><td> The text for the third button.
+The default is KStandardGuiItem.cancel().
+
+<tr><td></td><td valign="top"><em>dontAskAgainName</em>&nbsp;</td><td> If provided, a checkbox is added with which
+further confirmation can be turned off.
+The string is used to lookup and store the setting
+in the applications config file.
+The setting is stored in the "Notification Messages" group.
+If <b>dontAskAgainName</b> starts with a ':' then the setting
+is stored in the global config file.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+</table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> 'Yes' is returned if the Yes-button is pressed. 'No' is returned
+if the No-button is pressed.
+</dd></dl> </p>
+<p>
+To be used for questions like "Do you want to discard the message or save it for later?",
+</p>
+<p>
+The default button is "Yes". Pressing "Esc" selects "Cancel".
+</p></div></div><a class="anchor" name="questionYesNoCancelWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode questionYesNoCancelWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonCancel=KStandardGuiItem.cancel()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="questionYesNoList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode questionYesNoList</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display a "question" dialog with a listbox to show information to the user
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>strlist</em>&nbsp;</td><td> List of strings to be written in the listbox. If the list is
+empty, it doesn't show any listbox, working as questionYesNo.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Question").
+
+<tr><td></td><td valign="top"><em>buttonYes</em>&nbsp;</td><td> The text for the first button.
+The default is KStandardGuiItem.yes().
+
+<tr><td></td><td valign="top"><em>buttonNo</em>&nbsp;</td><td> The text for the second button.
+The default is KStandardGuiItem.no().
+
+<tr><td></td><td valign="top"><em>dontAskAgainName</em>&nbsp;</td><td> If provided, a checkbox is added with which
+further confirmation can be turned off.
+The string is used to lookup and store the setting
+in the applications config file.
+The setting is stored in the "Notification Messages" group.
+If <b>dontAskAgainName</b> starts with a ':' then the setting
+is stored in the global config file.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+</table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> 'Yes' is returned if the Yes-button is pressed. 'No' is returned
+if the No-button is pressed.
+</dd></dl> </p>
+<p>
+To be used for questions like "Do you really want to delete these files?"
+And show the user exactly which files are going to be deleted in case
+he presses "Yes"
+</p>
+<p>
+The default button is "Yes". Pressing "Esc" selects "No".
+</p></div></div><a class="anchor" name="questionYesNoListWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode questionYesNoListWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="questionYesNoWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode questionYesNoWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="saveDontShowAgainContinue"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> saveDontShowAgainContinue</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontShowAgainName</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Save the fact that the continue/cancel message box should not be shown
+again.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dontShowAgainName</em>&nbsp;</td><td> the name that identify the message box. If
+empty, this method does nothing.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="saveDontShowAgainYesNo"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> saveDontShowAgainYesNo</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontShowAgainName</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::ButtonCode&nbsp;</td>
+<td class="paramname"><em>result</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Save the fact that the yes/no message box should not be shown again.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dontShowAgainName</em>&nbsp;</td><td> the name that identify the message box. If
+empty, this method does nothing.
+
+<tr><td></td><td valign="top"><em>result</em>&nbsp;</td><td> the value (Yes or No) that should be used as the result
+for the message box.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setDontShowAgainConfig"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDontShowAgainConfig</td>
+<td>(</td>
+<td class="paramtype">KConfig&nbsp;</td>
+<td class="paramname"><em>cfg</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Use <b>cfg</b> for all settings related to the dontShowAgainName feature.
+If <b>cfg</b> is 0 (default) KGlobal.config() will be used.
+</p></div></div><a class="anchor" name="setDontShowAgainInterface"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDontShowAgainInterface</td>
+<td>(</td>
+<td class="paramtype">KMessageBoxDontAskAgainInterface&nbsp;</td>
+<td class="paramname"><em>dontAskAgainInterface</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Use <b>dontAskAgainInterface</b> for all settings related to the donShowAgain feature.
+This method does not take ownership of <b>dontAskAgainInterface.</b>
+</p>
+<p>
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p></div></div><a class="anchor" name="setNotifyInterface"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setNotifyInterface</td>
+<td>(</td>
+<td class="paramtype">KMessageBoxNotifyInterface&nbsp;</td>
+<td class="paramname"><em>notifyInterface</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Use <b>notifyInterface</b> to send notifications.
+This method does not take ownership of <b>notifyInterface.</b>
+</p>
+<p>
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p></div></div><a class="anchor" name="shouldBeShownContinue"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool shouldBeShownContinue</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontShowAgainName</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the corresponding continue/cancel message box should be
+shown.
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dontShowAgainName</em>&nbsp;</td><td> the name that identify the message box. If
+empty, true is always returned.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="shouldBeShownYesNo"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool shouldBeShownYesNo</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontShowAgainName</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::ButtonCode&nbsp;</td>
+<td class="paramname"><em>result</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the corresponding yes/no message box should be shown.
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dontShowAgainName</em>&nbsp;</td><td> the name that identify the message box. If
+empty, true is always returned.
+
+<tr><td></td><td valign="top"><em>result</em>&nbsp;</td><td> is set to the result (Yes or No) that was chosen the last
+time the message box was shown. Only meaningful, if the message box
+should not be shown.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="sorry"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> sorry</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display an "Sorry" dialog.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Sorry").
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see OptionsType
+</td></tr>
+</table></dl>
+<p> Either your program messed up and asks for understanding
+or your user did something stupid.
+</p>
+<p>
+To be used for small problems like
+"Sorry, I can't find the file you specified."
+</p>
+<p>
+The default button is "&amp;OK". Pressing "Esc" selects the OK-button.
+</p>
+<p>
+NOTE: The ok button will always have the i18n'ed text '&amp;OK'.
+</p></div></div><a class="anchor" name="sorryWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> sorryWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="warningContinueCancel"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode warningContinueCancel</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonContinue=KStandardGuiItem.cont()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonCancel=KStandardGuiItem.cancel()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display a "warning" dialog.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Warning").
+
+<tr><td></td><td valign="top"><em>buttonContinue</em>&nbsp;</td><td> The text for the first button.
+The default is KStandardGuiItem.cont().
+
+<tr><td></td><td valign="top"><em>buttonCancel</em>&nbsp;</td><td> The text for the second button.
+The default is KStandardGuiItem.cancel().
+
+<tr><td></td><td valign="top"><em>dontAskAgainName</em>&nbsp;</td><td> If provided, a checkbox is added with which
+further confirmation can be turned off.
+The string is used to lookup and store the setting
+in the applications config file.
+The setting is stored in the "Notification Messages" group.
+If <b>dontAskAgainName</b> starts with a ':' then the setting
+is stored in the global config file.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+</table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> <b>Continue</b> is returned if the Continue-button is pressed.
+</dd></dl> <b>Cancel</b> is returned if the Cancel-button is pressed.
+</p>
+<p>
+To be used for questions like "You are about to Print. Are you sure?"
+the continueButton should then be labeled "Print".
+</p>
+<p>
+The default button is buttonContinue. Pressing "Esc" selects "Cancel".
+</p></div></div><a class="anchor" name="warningContinueCancelList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode warningContinueCancelList</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonContinue=KStandardGuiItem.cont()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonCancel=KStandardGuiItem.cancel()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display a "warning" dialog with a listbox to show information to the user.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>strlist</em>&nbsp;</td><td> List of strings to be written in the listbox. If the
+list is empty, it doesn't show any listbox, working
+as warningContinueCancel.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Warning").
+
+<tr><td></td><td valign="top"><em>buttonContinue</em>&nbsp;</td><td> The text for the first button.
+The default is KStandardGuiItem.cont().
+
+<tr><td></td><td valign="top"><em>buttonCancel</em>&nbsp;</td><td> The text for the second button.
+The default is KStandardGuiItem.cancel().
+
+<tr><td></td><td valign="top"><em>dontAskAgainName</em>&nbsp;</td><td> If provided, a checkbox is added with which
+further confirmation can be turned off.
+The string is used to lookup and store the setting
+in the applications config file.
+The setting is stored in the "Notification Messages" group.
+If <b>dontAskAgainName</b> starts with a ':' then the setting
+is stored in the global config file.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+</table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> <b>Continue</b> is returned if the Continue-button is pressed.
+</dd></dl> <b>Cancel</b> is returned if the Cancel-button is pressed.
+</p>
+<p>
+To be used for questions like "You are about to Print. Are you sure?"
+the continueButton should then be labeled "Print".
+</p>
+<p>
+The default button is buttonContinue. Pressing "Esc" selects "Cancel".
+</p></div></div><a class="anchor" name="warningContinueCancelListWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode warningContinueCancelListWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonContinue=KStandardGuiItem.cont()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonCancel=KStandardGuiItem.cancel()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="warningContinueCancelWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode warningContinueCancelWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonContinue=KStandardGuiItem.cont()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonCancel=KStandardGuiItem.cancel()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="warningYesNo"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode warningYesNo</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Options(KMessageBox.Notify|KMessageBox.Dangerous)</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display a "warning" dialog.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Warning").
+
+<tr><td></td><td valign="top"><em>buttonYes</em>&nbsp;</td><td> The text for the first button.
+The default is KStandardGuiItem.yes().
+
+<tr><td></td><td valign="top"><em>buttonNo</em>&nbsp;</td><td> The text for the second button.
+The default is KStandardGuiItem.no().
+
+<tr><td></td><td valign="top"><em>dontAskAgainName</em>&nbsp;</td><td> If provided, a checkbox is added with which
+further confirmation can be turned off.
+The string is used to lookup and store the setting
+in the applications config file.
+The setting is stored in the "Notification Messages" group.
+If <b>dontAskAgainName</b> starts with a ':' then the setting
+is stored in the global config file.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+</table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> <b>Yes</b> is returned if the Yes-button is pressed. <b>No</b> is returned
+if the No-button is pressed.
+</dd></dl> </p>
+<p>
+To be used for questions "Shall I update your configuration?"
+The text should explain the implication of both options.
+</p>
+<p>
+The default button is "No". Pressing "Esc" selects "No".
+</p></div></div><a class="anchor" name="warningYesNoCancel"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode warningYesNoCancel</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonCancel=KStandardGuiItem.cancel()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display a Yes/No/Cancel "warning" dialog.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Warning").
+
+<tr><td></td><td valign="top"><em>buttonYes</em>&nbsp;</td><td> The text for the first button.
+The default is KStandardGuiItem.yes().
+
+<tr><td></td><td valign="top"><em>buttonNo</em>&nbsp;</td><td> The text for the second button.
+The default is KStandardGuiItem.no().
+
+<tr><td></td><td valign="top"><em>buttonCancel</em>&nbsp;</td><td> The text for the third button.
+The default is KStandardGuiItem.cancel().
+
+<tr><td></td><td valign="top"><em>dontAskAgainName</em>&nbsp;</td><td> If provided, a checkbox is added with which
+further questions can be turned off. If turned off
+all questions will be automatically answered with the
+last answer (either Yes or No).
+The string is used to lookup and store the setting
+in the applications config file.
+The setting is stored in the "Notification Messages" group.
+If <b>dontAskAgainName</b> starts with a ':' then the setting
+is stored in the global config file.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+</table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> <b>Yes</b> is returned if the Yes-button is pressed. <b>No</b> is returned
+if the No-button is pressed. <b>Cancel</b> is retunred if the Cancel-
+button is pressed.
+</dd></dl> </p>
+<p>
+To be used for questions "Do you want to save your changes?"
+The text should explain the implication of choosing 'No'.
+</p>
+<p>
+The default button is "Yes". Pressing "Esc" selects "Cancel"
+</p></div></div><a class="anchor" name="warningYesNoCancelList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode warningYesNoCancelList</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonCancel=KStandardGuiItem.cancel()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display a Yes/No/Cancel "warning" dialog with a listbox to show information
+to the user.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>strlist</em>&nbsp;</td><td> List of strings to be written in the listbox. If the
+list is empty, it doesn't show any listbox, working
+as warningYesNoCancel.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Warning").
+
+<tr><td></td><td valign="top"><em>buttonYes</em>&nbsp;</td><td> The text for the first button.
+The default is KStandardGuiItem.yes().
+
+<tr><td></td><td valign="top"><em>buttonNo</em>&nbsp;</td><td> The text for the second button.
+The default is KStandardGuiItem.no().
+
+<tr><td></td><td valign="top"><em>buttonCancel</em>&nbsp;</td><td> The text for the third button.
+The default is KStandardGuiItem.cancel().
+
+<tr><td></td><td valign="top"><em>dontAskAgainName</em>&nbsp;</td><td> If provided, a checkbox is added with which
+further questions can be turned off. If turned off
+all questions will be automatically answered with the
+last answer (either Yes or No).
+The string is used to lookup and store the setting
+in the applications config file.
+The setting is stored in the "Notification Messages" group.
+If <b>dontAskAgainName</b> starts with a ':' then the setting
+is stored in the global config file.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+</table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> <b>Yes</b> is returned if the Yes-button is pressed. <b>No</b> is returned
+if the No-button is pressed. <b>Cancel</b> is retunred if the Cancel-
+button is pressed.
+</dd></dl> </p>
+<p>
+To be used for questions "Do you want to save your changes?"
+The text should explain the implication of choosing 'No'.
+</p>
+<p>
+The default button is "Yes". Pressing "Esc" selects "Cancel"
+</p></div></div><a class="anchor" name="warningYesNoCancelListWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode warningYesNoCancelListWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonCancel=KStandardGuiItem.cancel()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="warningYesNoCancelWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode warningYesNoCancelWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonCancel=KStandardGuiItem.cancel()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Notify</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="warningYesNoList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode warningYesNoList</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Options(KMessageBox.Notify|KMessageBox.Dangerous)</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Display a "warning" dialog with a listbox to show information to the user
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> Parent widget.
+
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> Message string.
+
+<tr><td></td><td valign="top"><em>strlist</em>&nbsp;</td><td> List of strings to be written in the listbox. If the list is
+empty, it doesn't show any listbox, working as questionYesNo.
+
+<tr><td></td><td valign="top"><em>caption</em>&nbsp;</td><td> Message box title. The application name is added to
+the title. The default title is i18n("Question").
+
+<tr><td></td><td valign="top"><em>buttonYes</em>&nbsp;</td><td> The text for the first button.
+The default is KStandardGuiItem.yes().
+
+<tr><td></td><td valign="top"><em>buttonNo</em>&nbsp;</td><td> The text for the second button.
+The default is KStandardGuiItem.no().
+
+<tr><td></td><td valign="top"><em>dontAskAgainName</em>&nbsp;</td><td> If provided, a checkbox is added with which
+further confirmation can be turned off.
+The string is used to lookup and store the setting
+in the applications config file.
+The setting is stored in the "Notification Messages" group.
+If <b>dontAskAgainName</b> starts with a ':' then the setting
+is stored in the global config file.
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> see Options
+</td></tr>
+</table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> 'Yes' is returned if the Yes-button is pressed. 'No' is returned
+if the No-button is pressed.
+</dd></dl> </p>
+<p>
+To be used for questions like "Do you really want to delete these files?"
+And show the user exactly which files are going to be deleted in case
+he presses "Yes"
+</p>
+<p>
+The default button is "No". Pressing "Esc" selects "No".
+</p></div></div><a class="anchor" name="warningYesNoListWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode warningYesNoListWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>strlist</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Options(KMessageBox.Notify|KMessageBox.Dangerous)</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div><a class="anchor" name="warningYesNoWId"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KMessageBox::ButtonCode warningYesNoWId</td>
+<td>(</td>
+<td class="paramtype">WId&nbsp;</td>
+<td class="paramname"><em>parent_id</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>caption=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonYes=KStandardGuiItem.yes()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KGuiItem&nbsp;</td>
+<td class="paramname"><em>buttonNo=KStandardGuiItem.no()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>dontAskAgainName=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KMessageBox::Options&nbsp;</td>
+<td class="paramname"><em>options=KMessageBox.Options(KMessageBox.Notify|KMessageBox.Dangerous)</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This function accepts the window id of the parent window, instead
+of QWidget*. It should be used only when necessary.
+</p></div></div>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

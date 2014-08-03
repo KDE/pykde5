@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KBreadcrumbSelectionModel</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KBreadcrumbSelectionModel Class Reference</h1>
+<code>from PyKDE5.kitemmodels import *</code>
+<p>
+Inherits: QItemSelectionModel &#x2192; QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+<p>KBreadcrumbSelectionModel kbreadcrumbselectionmodel.h
+</p>
+<p>
+Selects the parents of selected items to create breadcrumbs
+</p>
+<p>
+For example, if the tree is
+@verbatim
+- A
+- B
+- - C
+- - D
+- - - E
+- - - - F
+@endverbatim
+</p>
+<p>
+and E is selected, the selection can contain
+</p>
+<p>
+@verbatim
+- B
+- D
+@endverbatim
+</p>
+<p>
+or
+</p>
+<p>
+@verbatim
+- B
+- D
+- E
+@endverbatim
+</p>
+<p>
+if isActualSelectionIncluded is true.
+</p>
+<p>
+The depth of the selection may also be set. For example if the breadcrumbLength is 1:
+</p>
+<p>
+@verbatim
+- D
+- E
+@endverbatim
+</p>
+<p>
+And if breadcrumbLength is 2:
+</p>
+<p>
+@verbatim
+- B
+- D
+- E
+@endverbatim
+</p>
+<p>
+A KBreadcrumbsProxyModel with a breadcrumbLength of 0 and including the actual selection is
+the same as a KSelectionProxyModel in the KSelectionProxyModel.ExactSelection configuration.
+</p>
+<p>
+<pre class="fragment">
+view1-&gt;setModel(rootModel);
+
+QItemSelectionModel *breadcrumbSelectionModel = new QItemSelectionModel(rootModel, this);
+
+KBreadcrumbSelectionModel *breadcrumbProxySelector = new KBreadcrumbSelectionModel(breadcrumbSelectionModel, rootModel, this);
+
+view1-&gt;setSelectionModel(breadcrumbProxySelector);
+
+KSelectionProxyModel *breadcrumbSelectionProxyModel = new KSelectionProxyModel( breadcrumbSelectionModel, this);
+breadcrumbSelectionProxyModel-&gt;setSourceModel( rootModel );
+breadcrumbSelectionProxyModel-&gt;setFilterBehavior( KSelectionProxyModel.ExactSelection );
+
+view2-&gt;setModel(breadcrumbSelectionProxyModel);
+</pre>
+</p>
+<p>
+<div align="center"><img src="../images/kbreadcrumbselectionmodel.png" /><p><strong> "KBreadcrumbSelectionModel in several configurations" </strong></p></div>
+</p>
+<p>
+This can work in two directions. One option is for a single selection in the KBreadcrumbSelectionModel to invoke
+the breadcrumb selection in its constructor argument.
+</p>
+<p>
+The other is for a selection in the itemselectionmodel in the constructor argument to cause a breadcrumb selection
+in <b>this.</b>
+</p>
+<p>
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 4.5
+</dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#BreadcrumbTarget">BreadcrumbTarget</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;MakeBreadcrumbSelectionInOther, MakeBreadcrumbSelectionInSelf&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KBreadcrumbSelectionModel">__init__</a> (self, QItemSelectionModel selectionModel, QObject parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KBreadcrumbSelectionModel">__init__</a> (self, QItemSelectionModel selectionModel, KBreadcrumbSelectionModel::BreadcrumbTarget target, QObject parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#breadcrumbLength">breadcrumbLength</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isActualSelectionIncluded">isActualSelectionIncluded</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#select">select</a> (self, QModelIndex index, QItemSelectionModel::SelectionFlags command)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#select">select</a> (self, QItemSelection selection, QItemSelectionModel::SelectionFlags command)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setActualSelectionIncluded">setActualSelectionIncluded</a> (self, bool isActualSelectionIncluded)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setBreadcrumbLength">setBreadcrumbLength</a> (self, int breadcrumbLength)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KBreadcrumbSelectionModel"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QItemSelectionModel&nbsp;</td>
+<td class="paramname"><em>selectionModel</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="KBreadcrumbSelectionModel"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QItemSelectionModel&nbsp;</td>
+<td class="paramname"><em>selectionModel</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KBreadcrumbSelectionModel::BreadcrumbTarget&nbsp;</td>
+<td class="paramname"><em>target</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="breadcrumbLength"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int breadcrumbLength</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the depth that the breadcrumb selection should go to.
+</p></div></div><a class="anchor" name="isActualSelectionIncluded"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isActualSelectionIncluded</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns whether the actual selection in included in the proxy.
+</p>
+<p>
+The default is true.
+</p></div></div><a class="anchor" name="select"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> select</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>index</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QItemSelectionModel::SelectionFlags&nbsp;</td>
+<td class="paramname"><em>command</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="select"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> select</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QItemSelection&nbsp;</td>
+<td class="paramname"><em>selection</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QItemSelectionModel::SelectionFlags&nbsp;</td>
+<td class="paramname"><em>command</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="setActualSelectionIncluded"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setActualSelectionIncluded</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>isActualSelectionIncluded</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set whether the actual selection in included in the proxy to <b>isActualSelectionIncluded.</b>
+</p></div></div><a class="anchor" name="setBreadcrumbLength"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setBreadcrumbLength</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>breadcrumbLength</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the depth that the breadcrumb selection should go to.
+</p>
+<p>
+If the <b>breadcrumbLength</b> is -1, all breadcrumbs are selected.
+The default is -1
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="BreadcrumbTarget"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">BreadcrumbTarget</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>MakeBreadcrumbSelectionInOther</em>&nbsp;</td><td><tr><td valign="top"><em>MakeBreadcrumbSelectionInSelf</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

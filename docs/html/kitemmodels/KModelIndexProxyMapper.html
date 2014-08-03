@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KModelIndexProxyMapper</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KModelIndexProxyMapper Class Reference</h1>
+<code>from PyKDE5.kitemmodels import *</code>
+<p>
+Inherits: QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+<p>This class facilitates easy mapping of indexes and selections through proxy models.
+</p>
+<p>
+In a complex system of proxy models there can be a need to map indexes and selections between them,
+and sometimes to do so without knowledge of the path from one model to another.
+</p>
+<p>
+For example,
+</p>
+<p>
+@verbatim
+Root model
+|
+/ \
+Proxy 1 Proxy 3
+| |
+Proxy 2 Proxy 4
+@endverbatim
+</p>
+<p>
+If there is a need to map indexes between proxy 2 and proxy 4, a KModelIndexProxyMapper can be created
+to facilitate mapping of indexes between them.
+</p>
+<p>
+<pre class="fragment">
+   m_indexMapper = new KModelIndexProxyMapper(proxy2, proxy4, this);
+
+  ...
+
+   const QModelIndex proxy4Index = m_mapLeftToRight(proxy2-&gt;index(0, 0));
+   Q_ASSERT(proxy4Index.model() == proxy4);
+</pre>
+</p>
+<p>
+Note that the aim is to achieve black box connections so that there is no need for application code to
+know the structure of proxy models in the path between left and right and attempt to manually map them.
+</p>
+<p>
+@verbatim
+Root model
+|
+---------------
+| Black Box |
+---------------
+| |
+Proxy 2 Proxy 4
+@endverbatim
+</p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Stephen Kelly &lt;steveire@gmail.com&gt; </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KModelIndexProxyMapper">__init__</a> (self, QAbstractItemModel leftModel, QAbstractItemModel rightModel, QObject parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QModelIndex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mapLeftToRight">mapLeftToRight</a> (self, QModelIndex index)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QModelIndex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mapRightToLeft">mapRightToLeft</a> (self, QModelIndex index)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QItemSelection&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mapSelectionLeftToRight">mapSelectionLeftToRight</a> (self, QItemSelection selection)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QItemSelection&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mapSelectionRightToLeft">mapSelectionRightToLeft</a> (self, QItemSelection selection)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KModelIndexProxyMapper"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QAbstractItemModel&nbsp;</td>
+<td class="paramname"><em>leftModel</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QAbstractItemModel&nbsp;</td>
+<td class="paramname"><em>rightModel</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructor
+</p></div></div><a class="anchor" name="mapLeftToRight"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QModelIndex mapLeftToRight</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>index</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Maps the <b>index</b> from the left model to the right model.
+</p></div></div><a class="anchor" name="mapRightToLeft"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QModelIndex mapRightToLeft</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>index</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Maps the <b>index</b> from the right model to the left model.
+</p></div></div><a class="anchor" name="mapSelectionLeftToRight"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QItemSelection mapSelectionLeftToRight</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QItemSelection&nbsp;</td>
+<td class="paramname"><em>selection</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Maps the <b>selection</b> from the left model to the right model.
+</p></div></div><a class="anchor" name="mapSelectionRightToLeft"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QItemSelection mapSelectionRightToLeft</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QItemSelection&nbsp;</td>
+<td class="paramname"><em>selection</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Maps the <b>selection</b> from the right model to the left model.
+</p></div></div>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

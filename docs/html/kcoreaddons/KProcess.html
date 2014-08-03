@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KProcess</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KProcess Class Reference</h1>
+<code>from PyKDE5.kcoreaddons import *</code>
+<p>
+Inherits: QProcess &#x2192; QIODevice &#x2192; QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+<p>\class KProcess kprocess.h &lt;KProcess&gt;
+</p>
+<p>
+Child process invocation, monitoring and control.
+</p>
+<p>
+This class extends QProcess by some useful functionality, overrides
+some defaults with saner values and wraps parts of the API into a more
+accessible one.
+Only use KProcess if you need the extra features, otherwise QProcess
+is the preferred way of spawning child processes.
+</p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Oswald Buddenhagen &lt;ossi@kde.org&gt; </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#OutputChannelMode">OutputChannelMode</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;SeparateChannels, MergedChannels, ForwardedChannels, OnlyStdoutChannel, OnlyStderrChannel&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KProcess">__init__</a> (self, QObject parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#clearEnvironment">clearEnvironment</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#clearProgram">clearProgram</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#execute">execute</a> (self, int msecs=-1)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KProcess&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#operator <<">operator <<</a> (self, QString arg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KProcess&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#operator <<">operator <<</a> (self, QStringList args)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KProcess::OutputChannelMode&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#outputChannelMode">outputChannelMode</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#pid">pid</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QStringList&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#program">program</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setEnv">setEnv</a> (self, QString name, QString value, bool overwrite=1)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setNextOpenMode">setNextOpenMode</a> (self, QIODevice::OpenMode mode)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setOutputChannelMode">setOutputChannelMode</a> (self, KProcess::OutputChannelMode mode)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setProgram">setProgram</a> (self, QString exe, QStringList args=QStringList())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setProgram">setProgram</a> (self, QStringList argv)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setShellCommand">setShellCommand</a> (self, QString cmd)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#start">start</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#startDetached">startDetached</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#unsetEnv">unsetEnv</a> (self, QString name)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#execute">execute</a> (QString exe, QStringList args=QStringList(), int msecs=-1)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#execute">execute</a> (QStringList argv, int msecs=-1)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#startDetached">startDetached</a> (QString exe, QStringList args=QStringList())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#startDetached">startDetached</a> (QStringList argv)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KProcess"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructor
+</p></div></div><a class="anchor" name="clearEnvironment"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> clearEnvironment</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Empties the process' environment.
+</p>
+<p>
+Note that LD_LIBRARY_PATH/DYLD_LIBRARY_PATH is automatically added
+on *NIX.
+</p>
+<p>
+This function must be called before starting the process.
+</p></div></div><a class="anchor" name="clearProgram"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> clearProgram</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Clear the program and command line argument list.
+</p></div></div><a class="anchor" name="execute"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int execute</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>msecs=-1</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>argv</em>&nbsp;</td><td> the program to execute and the command line arguments
+for the program, one per list element
+
+<tr><td></td><td valign="top"><em>msecs</em>&nbsp;</td><td> time to wait for process to exit before killing it
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> -2 if the process could not be started, -1 if it crashed,
+otherwise its exit code
+</dd></dl>
+</p></div></div><a class="anchor" name="operator <<"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KProcess operator <<</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>arg</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="operator <<"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KProcess operator <<</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>args</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="outputChannelMode"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KProcess::OutputChannelMode outputChannelMode</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Query how the output channels of the child process are handled.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the output channel handling mode
+</dd></dl>
+</p></div></div><a class="anchor" name="pid"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int pid</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Obtain the process' ID as known to the system.
+</p>
+<p>
+Unlike with QProcess.pid(), this is a real PID also on Windows.
+</p>
+<p>
+This function can be called only while the process is running.
+It cannot be applied to detached processes.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the process ID
+</dd></dl>
+</p></div></div><a class="anchor" name="program"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QStringList program</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Obtain the currently set program and arguments.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> a list, the first element being the program, the remaining ones
+being command line arguments to the program.
+</dd></dl>
+</p></div></div><a class="anchor" name="setEnv"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setEnv</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>name</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>value</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>overwrite=1</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Adds the variable <b>name</b> to the process' environment.
+</p>
+<p>
+This function must be called before starting the process.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>name</em>&nbsp;</td><td> the name of the environment variable
+
+<tr><td></td><td valign="top"><em>value</em>&nbsp;</td><td> the new value for the environment variable
+
+<tr><td></td><td valign="top"><em>overwrite</em>&nbsp;</td><td> if false and the environment variable is already
+set, the old value will be preserved
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setNextOpenMode"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setNextOpenMode</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QIODevice::OpenMode&nbsp;</td>
+<td class="paramname"><em>mode</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the QIODevice open mode the process will be opened in.
+</p>
+<p>
+This function must be called before starting the process, obviously.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>mode</em>&nbsp;</td><td> the open mode. Note that this mode is automatically
+"reduced" according to the channel modes and redirections.
+The default is QIODevice.ReadWrite.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setOutputChannelMode"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setOutputChannelMode</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KProcess::OutputChannelMode&nbsp;</td>
+<td class="paramname"><em>mode</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set how to handle the output channels of the child process.
+</p>
+<p>
+The default is ForwardedChannels, which is unlike in QProcess.
+Do not request more than you actually handle, as this output is
+simply lost otherwise.
+</p>
+<p>
+This function must be called before starting the process.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>mode</em>&nbsp;</td><td> the output channel handling mode
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setProgram"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setProgram</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>exe</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>args=QStringList()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>argv</em>&nbsp;</td><td> the program to execute and the command line arguments
+for the program, one per list element
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setProgram"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setProgram</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>argv</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>argv</em>&nbsp;</td><td> the program to execute and the command line arguments
+for the program, one per list element
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setShellCommand"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setShellCommand</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>cmd</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set a command to execute through a shell (a POSIX sh on *NIX
+and cmd.exe on Windows).
+</p>
+<p>
+Using this for anything but user-supplied commands is usually a bad
+idea, as the command's syntax depends on the platform.
+Redirections including pipes, etc. are better handled by the
+respective functions provided by QProcess.
+</p>
+<p>
+If KProcess determines that the command does not really need a
+shell, it will trasparently execute it without one for performance
+reasons.
+</p>
+<p>
+This function must be called before starting the process, obviously.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>cmd</em>&nbsp;</td><td> the command to execute through a shell.
+The caller must make sure that all filenames etc. are properly
+quoted when passed as argument. Failure to do so often results in
+serious security holes. See KShell.quoteArg().
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="start"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> start</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Start the process.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> QProcess.start(const QString &amp;, const QStringList &amp;, OpenMode)
+</dd></dl>
+</p></div></div><a class="anchor" name="startDetached"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int startDetached</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>argv</em>&nbsp;</td><td> the program to start and the command line arguments
+for the program, one per list element
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the PID of the started process or 0 on error
+</dd></dl>
+</p></div></div><a class="anchor" name="unsetEnv"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> unsetEnv</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>name</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Removes the variable <b>name</b> from the process' environment.
+</p>
+<p>
+This function must be called before starting the process.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>name</em>&nbsp;</td><td> the name of the environment variable
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="execute"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int execute</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>exe</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>args=QStringList()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>msecs=-1</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>argv</em>&nbsp;</td><td> the program to execute and the command line arguments
+for the program, one per list element
+
+<tr><td></td><td valign="top"><em>msecs</em>&nbsp;</td><td> time to wait for process to exit before killing it
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> -2 if the process could not be started, -1 if it crashed,
+otherwise its exit code
+</dd></dl>
+</p></div></div><a class="anchor" name="execute"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int execute</td>
+<td>(</td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>argv</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>msecs=-1</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>argv</em>&nbsp;</td><td> the program to execute and the command line arguments
+for the program, one per list element
+
+<tr><td></td><td valign="top"><em>msecs</em>&nbsp;</td><td> time to wait for process to exit before killing it
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> -2 if the process could not be started, -1 if it crashed,
+otherwise its exit code
+</dd></dl>
+</p></div></div><a class="anchor" name="startDetached"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int startDetached</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>exe</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>args=QStringList()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>argv</em>&nbsp;</td><td> the program to start and the command line arguments
+for the program, one per list element
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the PID of the started process or 0 on error
+</dd></dl>
+</p></div></div><a class="anchor" name="startDetached"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int startDetached</td>
+<td>(</td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>argv</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>argv</em>&nbsp;</td><td> the program to start and the command line arguments
+for the program, one per list element
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the PID of the started process or 0 on error
+</dd></dl>
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="OutputChannelMode"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">OutputChannelMode</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Modes in which the output channels can be opened.
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>SeparateChannels</em>&nbsp;=&nbsp;QProcess::SeparateChannels</td><td><tr><td valign="top"><em>MergedChannels</em>&nbsp;=&nbsp;QProcess::MergedChannels</td><td><tr><td valign="top"><em>ForwardedChannels</em>&nbsp;=&nbsp;QProcess::ForwardedChannels</td><td><tr><td valign="top"><em>OnlyStdoutChannel</em>&nbsp;=&nbsp;QProcess::ForwardedErrorChannel</td><td><tr><td valign="top"><em>OnlyStderrChannel</em>&nbsp;=&nbsp;QProcess::ForwardedOutputChannel</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

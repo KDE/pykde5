@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KPageView</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KPageView Class Reference</h1>
+<code>from PyKDE5.kwidgetsaddons import *</code>
+<p>
+Inherits: QWidget &#x2192; QObject<br />
+Subclasses: KPageWidget<br />
+
+<h2>Detailed Description</h2>
+
+<p>A base class which can handle multiple pages.
+</p>
+<p>
+This class provides a widget base class which handles multiple
+pages and allows the user to switch between these pages in
+different ways.
+</p>
+<p>
+Currently, <b>Auto,</b> <b>Plain,</b> <b>List,</b> <b>Tree</b> and <b>Tabbed</b> face
+types are available. <dl class="see" compact><dt><b>See also:</b></dt><dd> KPageWidget
+</dd></dl> </p>
+<p>
+<b>Example:</b>\n
+</p>
+<p>
+<pre class="fragment">
+  KPageModel *model = new MyPageModel();
+
+  KPageView *view = new KPageView( this );
+  view-&gt;setModel( model );
+
+  view-&gt;setFaceType( KPageView.List );
+</pre>
+</p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Tobias Koenig (tokoe@kde.org) </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#FaceType">FaceType</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;Auto, Plain, List, Tree, Tabbed&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Signals</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#currentPageChanged">currentPageChanged</a> (QModelIndex current, QModelIndex previous)</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KPageView">__init__</a> (self, QWidget parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QAbstractItemView&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#createView">createView</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QModelIndex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#currentPage">currentPage</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KPageView::FaceType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#faceType">faceType</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QAbstractItemDelegate&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#itemDelegate">itemDelegate</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QAbstractItemModel&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#model">model</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setCurrentPage">setCurrentPage</a> (self, QModelIndex index)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDefaultWidget">setDefaultWidget</a> (self, QWidget widget)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setFaceType">setFaceType</a> (self, KPageView::FaceType faceType)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setItemDelegate">setItemDelegate</a> (self, QAbstractItemDelegate delegate)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setModel">setModel</a> (self, QAbstractItemModel model)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#showPageHeader">showPageHeader</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::Alignment</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#viewPosition">viewPosition</a> (self)</td></tr>
+</table>
+<hr><h2>Signal Documentation</h2><a class="anchor" name="currentPageChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> currentPageChanged</td>
+<td>(</td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>current</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>previous</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted whenever the current page changes.
+The previous page index is replaced by the current index.
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("currentPageChanged(const QModelIndex&, const QModelIndex&)"), target_slot)</code></dd></dl></div></div><hr><h2>Method Documentation</h2><a class="anchor" name="KPageView"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Creates a page view with given parent.
+</p></div></div><a class="anchor" name="createView"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QAbstractItemView createView</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the navigation view, depending on the current
+face type.
+</p>
+<p>
+This method can be reimplemented to provide custom
+navigation views.
+</p></div></div><a class="anchor" name="currentPage"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QModelIndex currentPage</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the index for the current page or an invalid index
+if no current page exists.
+</p></div></div><a class="anchor" name="faceType"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KPageView::FaceType faceType</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the face type of the page view.
+</p></div></div><a class="anchor" name="itemDelegate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QAbstractItemDelegate itemDelegate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the item delegate of the page view.
+</p></div></div><a class="anchor" name="model"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QAbstractItemModel model</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the model of the page view.
+</p></div></div><a class="anchor" name="setCurrentPage"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setCurrentPage</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>index</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the page with </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>index</em>&nbsp;</td><td> to be the current page and emits
+the <dl class="see" compact><dt><b>See also:</b></dt><dd> currentPageChanged signal.
+</dd></dl>
+</p></div></div><a class="anchor" name="setDefaultWidget"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDefaultWidget</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>widget</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the <b>widget</b> which will be shown when a page is selected
+that has no own widget set.
+</p></div></div><a class="anchor" name="setFaceType"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setFaceType</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KPageView::FaceType&nbsp;</td>
+<td class="paramname"><em>faceType</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the face type of the page view.
+</p></div></div><a class="anchor" name="setItemDelegate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setItemDelegate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QAbstractItemDelegate&nbsp;</td>
+<td class="paramname"><em>delegate</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the item </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>delegate</em>&nbsp;</td><td> which can be used customize
+the page view.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setModel"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setModel</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QAbstractItemModel&nbsp;</td>
+<td class="paramname"><em>model</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the <b>model</b> of the page view.
+</p>
+<p>
+The model has to provide data for the roles defined in KPageModel.Role.
+</p></div></div><a class="anchor" name="showPageHeader"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool showPageHeader</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns whether the page header should be visible.
+</p>
+<p>
+This method can be reimplemented for adapting custom
+views.
+</p></div></div><a class="anchor" name="viewPosition"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::Alignment</a> viewPosition</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the position where the navigation view should be
+located according to the page stack.
+</p>
+<p>
+This method can be reimplemented for adapting custom
+views.
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="FaceType"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">FaceType</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>This enum is used to decide which type of navigation view
+shall be used in the page view.
+</p>
+<p>
+<li> Auto - Depending on the number of pages in the model, </li>
+the Plain (one page), the List (several pages)
+or the Tree face (nested pages) will be used.
+This is the default face type.
+<li> Plain - No navigation view will be visible and only the </li>
+first page of the model will be shown.
+</p>
+<p>
+<li> List - An icon list is used as navigation view. </li>
+</p>
+<p>
+<li> Tree - A tree list is used as navigation view. </li>
+</p>
+<p>
+<li> Tabbed - A tab widget is used as navigation view. </li>
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>Auto</em>&nbsp;</td><td><tr><td valign="top"><em>Plain</em>&nbsp;</td><td><tr><td valign="top"><em>List</em>&nbsp;</td><td><tr><td valign="top"><em>Tree</em>&nbsp;</td><td><tr><td valign="top"><em>Tabbed</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

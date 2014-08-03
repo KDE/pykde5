@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Solid.GenericInterface</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>GenericInterface Class Reference</h1>
+<code>from PyKDE5.solid import *</code>
+<p>
+Inherits: Solid.DeviceInterface &#x2192; QObject<br />
+
+Namespace: Solid<br />
+<h2>Detailed Description</h2>
+
+<p>Generic interface to deal with a device. It exposes a set of properties
+and is organized as a key/value set.
+</p>
+<p>
+Warning: Using this class could expose some backend specific details
+and lead to non portable code. Use it at your own risk, or during
+transitional phases when the provided device interfaces don't
+provide the necessary methods.
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#PropertyChange">PropertyChange</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;PropertyModified, PropertyAdded, PropertyRemoved&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Signals</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#conditionRaised">conditionRaised</a> (QString condition, QString reason)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#propertyChanged">propertyChanged</a> ({QString:int} changes)</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#GenericInterface">__init__</a> (self, QObject backendObject)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">{QString:QVariant}&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#allProperties">allProperties</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QVariant&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#property">property</a> (self, QString key)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#propertyExists">propertyExists</a> (self, QString key)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::DeviceInterface::Type&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#deviceInterfaceType">deviceInterfaceType</a> ()</td></tr>
+</table>
+<hr><h2>Signal Documentation</h2><a class="anchor" name="conditionRaised"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> conditionRaised</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>condition</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>reason</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when an event occurred in the device.
+For example when a button is pressed.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>condition</em>&nbsp;</td><td> the condition name
+
+<tr><td></td><td valign="top"><em>reason</em>&nbsp;</td><td> a message explaining why the condition has been raised
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("conditionRaised(const QString&, const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="propertyChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> propertyChanged</td>
+<td>(</td>
+<td class="paramtype">{QString:int}&nbsp;</td>
+<td class="paramname"><em>changes</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when a property is changed in the device.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>changes</em>&nbsp;</td><td> the map describing the property changes that
+occurred in the device, keys are property name and values
+describe the kind of change done on the device property
+(added/removed/modified), it's one of the type Solid.Device.PropertyChange
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("propertyChanged(const QMap<QString,int>&)"), target_slot)</code></dd></dl></div></div><hr><h2>Method Documentation</h2><a class="anchor" name="GenericInterface"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>backendObject</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Creates a new GenericInterface object.
+You generally won't need this. It's created when necessary using
+Device.as().
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>backendObject</em>&nbsp;</td><td> the device interface object provided by the backend
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> Solid.Device.as()
+</dd></dl>
+</p></div></div><a class="anchor" name="allProperties"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">{QString:QVariant} allProperties</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves a key/value map of all the known properties for the device.
+</p>
+<p>
+Warning: Using this method could expose some backend specific details
+and lead to non portable code. Use it at your own risk, or during
+transitional phases when the provided device interfaces don't
+provide the necessary methods.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> all the properties of the device
+</dd></dl>
+</p></div></div><a class="anchor" name="property"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QVariant property</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>key</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Retrieves a property of the device.
+</p>
+<p>
+Warning: Using this method could expose some backend specific details
+and lead to non portable code. Use it at your own risk, or during
+transitional phases when the provided device interfaces don't
+provide the necessary methods.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>key</em>&nbsp;</td><td> the property key
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the actual value of the property, or QVariant() if the
+property is unknown
+</dd></dl>
+</p></div></div><a class="anchor" name="propertyExists"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool propertyExists</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>key</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Tests if a property exist in the device.
+</p>
+<p>
+Warning: Using this method could expose some backend specific details
+and lead to non portable code. Use it at your own risk, or during
+transitional phases when the provided device interfaces don't
+provide the necessary methods.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>key</em>&nbsp;</td><td> the property key
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the property is available in the device, false
+otherwise
+</dd></dl>
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="deviceInterfaceType"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::DeviceInterface::Type deviceInterfaceType</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname">)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Get the Solid.DeviceInterface.Type of the GenericInterface device interface.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the Processor device interface type
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> Solid.Ifaces.Enums.DeviceInterface.Type
+</dd></dl>
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="PropertyChange"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">PropertyChange</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>This enum type defines the type of change that can occur to a GenericInterface
+property.
+</p>
+<p>
+- PropertyModified : A property value has changed in the device
+- PropertyAdded : A new property has been added to the device
+- PropertyRemoved : A property has been removed from the device
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>PropertyModified</em>&nbsp;</td><td><tr><td valign="top"><em>PropertyAdded</em>&nbsp;</td><td><tr><td valign="top"><em>PropertyRemoved</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

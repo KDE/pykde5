@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KUrlMimeData</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KUrlMimeData Namespace Reference</h1>
+<code>from PyKDE5.kcoreaddons.KUrlMimeData import *</code>
+<p>
+<h2>Detailed Description</h2>
+<p>Utility functions for using URLs in QMimeData.
+In addition to QMimeData.setUrls() and QMimeData.urls(), these functions allow to:
+</p>
+<p>
+- Store two sets of URLs, the KDE-specific URLs and the equivalent local-file URLs
+for compatibility with non-KDE applications
+- Store KIO metadata, such as the HTTP referrer for a given URL (some websites
+require it for downloading e.g. an image)
+</p>
+<p>
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#DecodeOptions">DecodeOptions</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;PreferLocalUrls, PreferKdeUrls&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QStringList&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mimeDataTypes">mimeDataTypes</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setMetaData">setMetaData</a> ({QString:QString} metaData, QMimeData mimeData)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setUrls">setUrls</a> ([QUrl] urls, [QUrl] mostLocalUrls, QMimeData mimeData)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[QUrl]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#urlsFromMimeData">urlsFromMimeData</a> (QMimeData mimeData, KUrlMimeData::DecodeOptions decodeOptions=KUrlMimeData.DecodeOptions.PreferKdeUrls, {QString:QString} metaData=0)</td></tr>
+</table>
+<hr><h2>Enumeration Documentation</h2><a class="anchor" name="DecodeOptions"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">DecodeOptions</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Flags to be used in urlsFromMimeData.
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>PreferLocalUrls</em>&nbsp;</td><td><tr><td valign="top"><em>PreferKdeUrls</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p><hr><h2>Function Documentation</h2><a class="anchor" name="mimeDataTypes"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QStringList mimeDataTypes</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname">)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the list of mimeTypes that can be decoded by urlsFromMimeData
+</p></div></div><a class="anchor" name="setMetaData"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setMetaData</td>
+<td>(</td>
+<td class="paramtype">{QString:QString}&nbsp;</td>
+<td class="paramname"><em>metaData</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QMimeData&nbsp;</td>
+<td class="paramname"><em>mimeData</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p></p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>metaData</em>&nbsp;</td><td> KIO metadata shipped in the mime data, which is used for instance to
+set a correct HTTP referrer (some websites require it for downloading e.g. an image)
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setUrls"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setUrls</td>
+<td>(</td>
+<td class="paramtype">[QUrl]&nbsp;</td>
+<td class="paramname"><em>urls</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">[QUrl]&nbsp;</td>
+<td class="paramname"><em>mostLocalUrls</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QMimeData&nbsp;</td>
+<td class="paramname"><em>mimeData</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Adds URLs and KIO metadata into the given QMimeData.
+</p>
+<p>
+WARNING: do not call this method multiple times on the same mimedata object,
+you can add urls only once. But you can add other things, e.g. images, XML...
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>mimeData</em>&nbsp;</td><td> the QMimeData instance used to drag or copy this URL
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="urlsFromMimeData"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[QUrl] urlsFromMimeData</td>
+<td>(</td>
+<td class="paramtype">QMimeData&nbsp;</td>
+<td class="paramname"><em>mimeData</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KUrlMimeData::DecodeOptions&nbsp;</td>
+<td class="paramname"><em>decodeOptions=KUrlMimeData.DecodeOptions.PreferKdeUrls</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">{QString:QString}&nbsp;</td>
+<td class="paramname"><em>metaData=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Extract a list of urls from the contents of <b>mimeData.</b>
+</p>
+<p>
+Compared to QMimeData.urls(), this method has support for retrieving KDE-specific URLs
+when urls() would retrieve "most local URLs" instead.
+</p>
+<p>
+Decoding will fail if <b>mimeData</b> does not contain any URLs, or if at
+least one extracted URL is not valid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>mimeData</em>&nbsp;</td><td> the mime data to extract from; cannot be 0
+
+<tr><td></td><td valign="top"><em>decodeOptions</em>&nbsp;</td><td> options for decoding
+
+<tr><td></td><td valign="top"><em>metaData</em>&nbsp;</td><td> optional pointer to a map which will hold the metadata after this call
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the list of urls
+</dd></dl>
+</p></div></div>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

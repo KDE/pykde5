@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KDateComboBox</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KDateComboBox Class Reference</h1>
+<code>from PyKDE5.kwidgetsaddons import *</code>
+<p>
+Inherits: QComboBox &#x2192; QWidget &#x2192; QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#Option">Option</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;EditDate, SelectDate, DatePicker, DateKeywords, WarnOnInvalid&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Signals</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateChanged">dateChanged</a> (QDate date)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateEdited">dateEdited</a> (QDate date)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateEntered">dateEntered</a> (QDate date)</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KDateComboBox">__init__</a> (self, QWidget parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#assignDate">assignDate</a> (self, QDate date)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QDate&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#date">date</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">{QDate:QString}&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateMap">dateMap</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QLocale::FormatType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#displayFormat">displayFormat</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#eventFilter">eventFilter</a> (self, QObject object, QEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#focusInEvent">focusInEvent</a> (self, QFocusEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#focusOutEvent">focusOutEvent</a> (self, QFocusEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#hidePopup">hidePopup</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isNull">isNull</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isValid">isValid</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#keyPressEvent">keyPressEvent</a> (self, QKeyEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QDate&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#maximumDate">maximumDate</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QDate&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#minimumDate">minimumDate</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mousePressEvent">mousePressEvent</a> (self, QMouseEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KDateComboBox::Options&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#options">options</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#resetDateRange">resetDateRange</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#resetMaximumDate">resetMaximumDate</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#resetMinimumDate">resetMinimumDate</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#resizeEvent">resizeEvent</a> (self, QResizeEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDate">setDate</a> (self, QDate date)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDateMap">setDateMap</a> (self, {QDate:QString} dateMap)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDateRange">setDateRange</a> (self, QDate minDate, QDate maxDate, QString minWarnMsg=QString(), QString maxWarnMsg=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDisplayFormat">setDisplayFormat</a> (self, QLocale::FormatType format)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setMaximumDate">setMaximumDate</a> (self, QDate maxDate, QString maxWarnMsg=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setMinimumDate">setMinimumDate</a> (self, QDate minTime, QString minWarnMsg=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setOptions">setOptions</a> (self, KDateComboBox::Options options)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#showPopup">showPopup</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#wheelEvent">wheelEvent</a> (self, QWheelEvent event)</td></tr>
+</table>
+<hr><h2>Signal Documentation</h2><a class="anchor" name="dateChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> dateChanged</td>
+<td>(</td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>date</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the date has been changed either manually by the user
+or programatically.
+</p>
+<p>
+The returned date may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>date</em>&nbsp;</td><td> the new date
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("dateChanged(const QDate&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="dateEdited"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> dateEdited</td>
+<td>(</td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>date</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the date is being manually edited by the user.
+</p>
+<p>
+The returned date may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>date</em>&nbsp;</td><td> the new date
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("dateEdited(const QDate&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="dateEntered"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> dateEntered</td>
+<td>(</td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>date</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the date has been manually entered or selected by the user.
+</p>
+<p>
+The returned date may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>date</em>&nbsp;</td><td> the new date
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("dateEntered(const QDate&)"), target_slot)</code></dd></dl></div></div><hr><h2>Method Documentation</h2><a class="anchor" name="KDateComboBox"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Create a new KDateComboBox widget
+</p>
+<p>
+By default the EditDate, SelectDate, DatePicker and DateKeywords options
+are enabled, the ShortDate format is used and the date is set to the
+current date.
+</p></div></div><a class="anchor" name="assignDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> assignDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>date</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Assign the date for the widget.
+</p>
+<p>
+Virtual to allow sub-classes to apply extra validation rules.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>date</em>&nbsp;</td><td> the new date
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="date"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QDate date</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently selected date
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently selected date
+</dd></dl>
+</p></div></div><a class="anchor" name="dateMap"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">{QDate:QString} dateMap</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the map of dates listed in the drop-down and their displayed
+string forms.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setDateMap()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the select date map
+</dd></dl>
+</p></div></div><a class="anchor" name="displayFormat"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QLocale::FormatType displayFormat</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently set date display format
+</p>
+<p>
+By default this is the Short Format
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently set date format
+</dd></dl>
+</p></div></div><a class="anchor" name="eventFilter"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool eventFilter</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>object</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="focusInEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> focusInEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QFocusEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="focusOutEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> focusOutEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QFocusEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="hidePopup"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> hidePopup</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="isNull"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isNull</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return if the current user input is null
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> isValid()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> if the current user input is null
+</dd></dl>
+</p></div></div><a class="anchor" name="isValid"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isValid</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return if the current user input is valid
+</p>
+<p>
+If the user input is null then it is not valid
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> isNull()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> if the current user input is valid
+</dd></dl>
+</p></div></div><a class="anchor" name="keyPressEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> keyPressEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QKeyEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="maximumDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QDate maximumDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the current maximum date
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the current maximum date
+</dd></dl>
+</p></div></div><a class="anchor" name="minimumDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QDate minimumDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the current minimum date
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the current minimum date
+</dd></dl>
+</p></div></div><a class="anchor" name="mousePressEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> mousePressEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QMouseEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="options"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KDateComboBox::Options options</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently set widget options
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently set widget options
+</dd></dl>
+</p></div></div><a class="anchor" name="resetDateRange"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> resetDateRange</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Reset the minimum and maximum date to the default values.
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setDateRange()
+</dd></dl>
+</p></div></div><a class="anchor" name="resetMaximumDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> resetMaximumDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Reset the maximum date to the default
+</p></div></div><a class="anchor" name="resetMinimumDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> resetMinimumDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Reset the minimum date to the default
+</p></div></div><a class="anchor" name="resizeEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> resizeEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QResizeEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="setDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>date</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the currently selected date
+</p>
+<p>
+You can set an invalid date or a date outside the valid range, validity
+checking is only done via isValid().
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>date</em>&nbsp;</td><td> the new date
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setDateMap"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDateMap</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">{QDate:QString}&nbsp;</td>
+<td class="paramname"><em>dateMap</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the list of dates able to be selected from the drop-down and the
+string form to display for those dates, e.g. "2010-01-01" and "Yesterday".
+</p>
+<p>
+Any invalid or duplicate dates will be used, the list will NOT be
+sorted, and the minimum and maximum date will not be affected.
+</p>
+<p>
+The <b>dateMap</b> is keyed by the date to be listed and the value is the
+string to be displayed. If you want the date to be displayed in the
+default date format then the string should be null. If you want a
+separator to be displayed then set the string to "separator".
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> dateMap()
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dateMap</em>&nbsp;</td><td> the map of dates able to be selected
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setDateRange"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDateRange</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>minDate</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>maxDate</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>minWarnMsg=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>maxWarnMsg=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the valid date range to be applied by isValid().
+</p>
+<p>
+Both dates must be valid and the minimum date must be less than or equal
+to the maximum date, otherwise the date range will not be set.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>minDate</em>&nbsp;</td><td> the minimum date
+
+<tr><td></td><td valign="top"><em>maxDate</em>&nbsp;</td><td> the maximum date
+
+<tr><td></td><td valign="top"><em>minWarnMsg</em>&nbsp;</td><td> the minimum warning message
+
+<tr><td></td><td valign="top"><em>maxWarnMsg</em>&nbsp;</td><td> the maximum warning message
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setDisplayFormat"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDisplayFormat</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QLocale::FormatType&nbsp;</td>
+<td class="paramname"><em>format</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the date format to display.
+</p>
+<p>
+By default is the Short Format.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>format</em>&nbsp;</td><td> the date format to use
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setMaximumDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setMaximumDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>maxDate</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>maxWarnMsg=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the maximum allowed date.
+</p>
+<p>
+If the date is invalid, or less than current minimum,
+then the maximum will not be set.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> minimumDate()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> maximumDate()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setMaximumDate()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setDateRange()
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>maxDate</em>&nbsp;</td><td> the maximum date
+
+<tr><td></td><td valign="top"><em>maxWarnMsg</em>&nbsp;</td><td> the maximum warning message
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setMinimumDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setMinimumDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>minTime</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>minWarnMsg=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the minimum allowed date.
+</p>
+<p>
+If the date is invalid, or greater than current maximum,
+then the minimum will not be set.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> minimumDate()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> maximumDate()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setMaximumDate()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setDateRange()
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>minDate</em>&nbsp;</td><td> the minimum date
+
+<tr><td></td><td valign="top"><em>minWarnMsg</em>&nbsp;</td><td> the minimum warning message
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setOptions"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setOptions</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KDateComboBox::Options&nbsp;</td>
+<td class="paramname"><em>options</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the new widget options
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> the new widget options
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="showPopup"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> showPopup</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="wheelEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> wheelEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWheelEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="Option"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">Option</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Options provided by the widget
+<dl class="see" compact><dt><b>See also:</b></dt><dd> options()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setOptions()
+</dd></dl>
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>EditTime</em>&nbsp;=&nbsp;0x0001</td><td><tr><td valign="top"><em>SelectTime</em>&nbsp;=&nbsp;0x0002</td><td><tr><td valign="top"><em>ForceTime</em>&nbsp;=&nbsp;0x0004</td><td><tr><td valign="top"><em>WarnOnInvalid</em>&nbsp;=&nbsp;0x0008</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

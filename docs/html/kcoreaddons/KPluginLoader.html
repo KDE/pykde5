@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KPluginLoader</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KPluginLoader Class Reference</h1>
+<code>from PyKDE5.kcoreaddons import *</code>
+<p>
+Inherits: QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+<p>\class KPluginLoader kpluginloader.h &lt;KPluginLoader&gt;
+</p>
+<p>
+This class behaves largely like QPluginLoader (and, indeed, uses it
+internally), but additionally reads the plugin version, as provided by the
+K_EXPORT_PLUGIN_VERSION macro (see pluginVersion()) and provides access to a
+KPluginFactory instance if the plugin provides one (see factory())
+</p>
+<p>
+Note that the factory() is a typesafe convenience method that just wraps a
+qobject_cast on the result of QPluginLoader.instance(). Therefore, if you do
+not need the plugin version feature, you can (and should) just use
+QPluginLoader instead.
+</p>
+<p>
+Unlike QPluginLoader, it is not possible to re-use KPluginLoader for more
+than one plugin (it provides no setFileName method).
+</p>
+<p>
+The same notes and caveats that apply to QPluginLoader also apply to
+KPluginLoader.
+</p>
+<p>
+Sample code:
+<pre class="fragment">
+  KPluginLoader loader( ...library or kservice... );
+  KPluginFactory* factory = loader.factory();
+  if (!factory) {
+      kWarning() &lt;&lt; "Error loading plugin:" &lt;&lt; loader.errorString();
+  } else {
+      MyInterface* obj = factory-&gt;create&lt;MyInterface&gt;();
+      if (!obj) {
+          kWarning() &lt;&lt; "Error creating object";
+      }
+  }
+</pre>
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> KPluginFactory
+</dd></dl> </p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Bernhard Loos &lt;nhuh.put@web.de&gt; </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KPluginLoader">__init__</a> (self, QString plugin, QObject parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KPluginLoader">__init__</a> (self, KPluginName name, QObject parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#errorString">errorString</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KPluginFactory&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#factory">factory</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#fileName">fileName</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QObject&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#instance">instance</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isLoaded">isLoaded</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#load">load</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QLibrary::LoadHints&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#loadHints">loadHints</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#pluginName">pluginName</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">long&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#pluginVersion">pluginVersion</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setLoadHints">setLoadHints</a> (self, QLibrary::LoadHints loadHints)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#unload">unload</a> (self)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#findPlugin">findPlugin</a> (QString name)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KPluginLoader"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>plugin</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Load a plugin by name.
+</p>
+<p>
+This should be the name of the plugin object file, without any suffix
+(like .so or .dll). Plugin object files should not have a 'lib' prefix.
+</p>
+<p>
+fileName() will be empty if the plugin could not be found.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>plugin</em>&nbsp;</td><td> The name of the plugin.
+</td></tr> </table></dl>
+<p> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> A parent object.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="KPluginLoader"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KPluginName&nbsp;</td>
+<td class="paramname"><em>name</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Load a plugin by name.
+</p>
+<p>
+This constructor behaves exactly the same as
+KPluginLoader(const QString&amp;,QObject*). It allows any class that can be
+cast to KPluginName (such as KService) to be passed to KPluginLoader.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>name</em>&nbsp;</td><td> The name of the plugin.
+</td></tr> </table></dl>
+<p> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> A parent object.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="errorString"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString errorString</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the last error.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> The description of the last error.
+</dd></dl> </p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> QPluginLoader.errorString()
+</dd></dl>
+</p></div></div><a class="anchor" name="factory"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KPluginFactory factory</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the factory object of the plugin.
+</p>
+<p>
+This is typically created by one of the KPluginFactory macros.
+Internally, this uses QPluginLoader.instance(), and the same
+behaviours apply.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> The factory of the plugin or 0 on error.
+</dd></dl>
+</p></div></div><a class="anchor" name="fileName"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString fileName</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the path of the plugin.
+</p>
+<p>
+This will be the full path of the plugin if it was found, and empty if
+it could not be found.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> The full path of the plugin, or the null string if it could
+not be found.
+</dd></dl> </p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> QPluginLoader.fileName(), pluginName()
+</dd></dl>
+</p></div></div><a class="anchor" name="instance"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QObject instance</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the root object of the plugin.
+</p>
+<p>
+The plugin will be loaded if necessary. If the plugin used one of the
+KPluginFactory macros, you should use factory() instead.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> The plugin's root object.
+</dd></dl> </p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> QPluginLoader.instance()
+</dd></dl>
+</p></div></div><a class="anchor" name="isLoaded"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isLoaded</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Determines whether the plugin is loaded.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> True if the plugin is loaded, false otherwise.
+</dd></dl> </p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> QPluginLoader.isLoaded()
+</dd></dl>
+</p></div></div><a class="anchor" name="load"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool load</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Loads the plugin.
+</p>
+<p>
+It is safe to call this multiple times; if the plugin was already loaded,
+it will just return true.
+</p>
+<p>
+Methods that require the plugin to be loaded will load it as necessary
+anyway, so you do not normally need to call this method.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> True if the plugin was loaded successfully, false
+otherwise.
+</dd></dl> </p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> QPluginLoader.load()
+</dd></dl>
+</p></div></div><a class="anchor" name="loadHints"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QLibrary::LoadHints loadHints</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the load hints for the plugin.
+</p>
+<p>
+Determines how load() should work. See QLibrary.loadHints for more
+information.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> The load hints for the plugin.
+</dd></dl> </p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> QPluginLoader.loadHints(), setLoadHints()
+</dd></dl>
+</p></div></div><a class="anchor" name="pluginName"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString pluginName</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the name of this plugin as given to the constructor.
+</p>
+<p>
+If the KService constructor was used, this is the name of the library
+provided by the service.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> The plugin name.
+</dd></dl> </p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> fileName()
+</dd></dl>
+</p></div></div><a class="anchor" name="pluginVersion"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">long pluginVersion</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the plugin version.
+</p>
+<p>
+This will load the plugin if it is not already loaded.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> The version given to K_EXPORT_PLUGIN_VERSION, or (quint32) -1 if
+the macro was not used or the plugin could not be loaded.
+</dd></dl>
+</p></div></div><a class="anchor" name="setLoadHints"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setLoadHints</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QLibrary::LoadHints&nbsp;</td>
+<td class="paramname"><em>loadHints</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the load hints for the plugin.
+</p>
+<p>
+Determines how load() should work. See QLibrary.loadHints for more
+information.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>loadHints</em>&nbsp;</td><td> The load hints for the plugin.
+</td></tr>
+</table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> QPluginLoader.setLoadHints(), loadHints()
+</dd></dl>
+</p></div></div><a class="anchor" name="unload"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool unload</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Attempts to unload the plugin.
+</p>
+<p>
+If other instances of KPluginLoader or QPluginLoader are using the same
+plugin, this will fail; unloading will only happen when every instance
+has called unload().
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> True if the plugin was unloaded, false otherwise.
+</dd></dl> </p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> QPluginLoader.unload(), load(), instance(), factory()
+</dd></dl>
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="findPlugin"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString findPlugin</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>name</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Locates a plugin.
+</p>
+<p>
+Searches for a dynamic object file in the locations KPluginLoader and
+QPluginLoader would search (ie: the current directory and
+QCoreApplication.libraryPaths()).
+</p>
+<p>
+This can be useful if you wish to use a plugin that does not conform to
+the Qt plugin scheme of providing a QObject that declares
+Q_PLUGIN_METADATA. In this case, you can find the plugin with this
+method, and load it with QLibrary.
+</p>
+<p>
+Note that the path is not necessarily absolute. In particular, if the
+plugin is found in the current directory, it will be a relative path.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>name</em>&nbsp;</td><td> The name of the plugin (can be a relative path; see above).
+This should not include a file extension (like .so or .dll).
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> The path to the plugin if it was found, or QString() if it
+could not be found.
+</dd></dl> </p>
+<p>
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p></div></div>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

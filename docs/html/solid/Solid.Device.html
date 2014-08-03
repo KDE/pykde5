@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Solid.Device</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>Device Class Reference</h1>
+<code>from PyKDE5.solid import *</code>
+<p>
+
+
+Namespace: Solid<br />
+<h2>Detailed Description</h2>
+
+<p>This class allows applications to deal with devices available in the
+underlying system.
+</p>
+<p>
+Device stores a reference to device data provided by the backend.
+Device objects are designed to be used by value. Copying these objects
+is quite cheap, so using pointers to the me is generally not needed.
+</p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Kevin Ottens &lt;ervin@kde.org&gt; </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#Device">__init__</a> (self, QString udi=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#Device">__init__</a> (self, Solid::Device device)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::DeviceInterface&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#asDeviceInterface">asDeviceInterface</a> (self, Solid::DeviceInterface::Type type)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#description">description</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QStringList&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#emblems">emblems</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#icon">icon</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isDeviceInterface">isDeviceInterface</a> (self, Solid::DeviceInterface::Type type)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isValid">isValid</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Device&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#parent">parent</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#parentUdi">parentUdi</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#product">product</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#udi">udi</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#vendor">vendor</a> (self)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[Solid::Device]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#allDevices">allDevices</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[Solid::Device]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#listFromQuery">listFromQuery</a> (Solid::Predicate predicate, QString parentUdi=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[Solid::Device]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#listFromQuery">listFromQuery</a> (QString predicate, QString parentUdi=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[Solid::Device]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#listFromType">listFromType</a> (Solid::DeviceInterface::Type type, QString parentUdi=QString())</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="Device"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructs a device for a given Universal Device Identifier (UDI).
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the udi of the device to create
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="Device"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::Device&nbsp;</td>
+<td class="paramname"><em>device</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructs a copy of a device.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>device</em>&nbsp;</td><td> the device to copy
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="asDeviceInterface"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::DeviceInterface asDeviceInterface</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::DeviceInterface::Type&nbsp;</td>
+<td class="paramname"><em>type</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Retrieves a specialized interface to interact with the device corresponding to
+a particular device interface.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>type</em>&nbsp;</td><td> the device interface type
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> a pointer to the device interface interface if it exists, 0 otherwise
+</dd></dl>
+</p></div></div><a class="anchor" name="description"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString description</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the description of device.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the description
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 4.4
+</dd></dl>
+</p></div></div><a class="anchor" name="emblems"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QStringList emblems</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the names of the emblems representing the state of this device.
+The naming follows the freedesktop.org specification.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the emblem names
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 4.4
+</dd></dl>
+</p></div></div><a class="anchor" name="icon"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString icon</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the name of the icon representing this device.
+The naming follows the freedesktop.org specification.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the icon name
+</dd></dl>
+</p></div></div><a class="anchor" name="isDeviceInterface"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isDeviceInterface</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::DeviceInterface::Type&nbsp;</td>
+<td class="paramname"><em>type</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Tests if a device interface is available from the device.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>type</em>&nbsp;</td><td> the device interface type to query
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the device interface is available, false otherwise
+</dd></dl>
+</p></div></div><a class="anchor" name="isValid"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isValid</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Indicates if this device is valid.
+A device is considered valid if it's available in the system.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> true if this device is available, false otherwise
+</dd></dl>
+</p></div></div><a class="anchor" name="parent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Device parent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the parent of the Device.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the device's parent
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> parentUdi()
+</dd></dl>
+</p></div></div><a class="anchor" name="parentUdi"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString parentUdi</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the Universal Device Identifier (UDI)
+of the Device's parent.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the udi of the device's parent
+</dd></dl>
+</p></div></div><a class="anchor" name="product"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString product</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the name of the product corresponding to this device.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the product name
+</dd></dl>
+</p></div></div><a class="anchor" name="udi"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString udi</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the Universal Device Identifier (UDI).
+</p>
+<p>
+<dl class="warning" compact><dt><b>Warning:</b></dt><dd> Don't use the UDI for anything except communication with Solid. Also don't store
+UDIs as there's no guarantee that the UDI stays the same when the hardware setup changed.
+The UDI is a unique identifier that is local to the computer in question and for the
+current boot session. The UDIs may change after a reboot.
+Similar hardware in other computers may have different values; different
+hardware could have the same UDI.
+</dd></dl> </p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the udi of the device
+</dd></dl>
+</p></div></div><a class="anchor" name="vendor"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString vendor</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the name of the device vendor.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the vendor name
+</dd></dl>
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="allDevices"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[Solid::Device] allDevices</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname">)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves all the devices available in the underlying system.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the list of the devices available
+</dd></dl>
+</p></div></div><a class="anchor" name="listFromQuery"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[Solid::Device] listFromQuery</td>
+<td>(</td>
+<td class="paramtype">Solid::Predicate&nbsp;</td>
+<td class="paramname"><em>predicate</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>parentUdi=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Convenience function see above.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>predicate</em>&nbsp;</td><td>
+
+<tr><td></td><td valign="top"><em>parentUdi</em>&nbsp;</td><td>
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the list of devices
+</dd></dl>
+</p></div></div><a class="anchor" name="listFromQuery"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[Solid::Device] listFromQuery</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>predicate</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>parentUdi=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Convenience function see above.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>predicate</em>&nbsp;</td><td>
+
+<tr><td></td><td valign="top"><em>parentUdi</em>&nbsp;</td><td>
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the list of devices
+</dd></dl>
+</p></div></div><a class="anchor" name="listFromType"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[Solid::Device] listFromType</td>
+<td>(</td>
+<td class="paramtype">Solid::DeviceInterface::Type&nbsp;</td>
+<td class="paramname"><em>type</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>parentUdi=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Retrieves a list of devices of the system given matching the given
+constraints (parent and device interface type)
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>type</em>&nbsp;</td><td> device interface type available on the devices we're looking for, or DeviceInterface.Unknown
+if there's no constraint on the device interfaces
+
+<tr><td></td><td valign="top"><em>parentUdi</em>&nbsp;</td><td> UDI of the parent of the devices we're searching for, or QString()
+if there's no constraint on the parent
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the list of devices corresponding to the given constraints
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> Solid.Predicate
+</dd></dl>
+</p></div></div>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KAboutLicense</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KAboutLicense Class Reference</h1>
+<code>from PyKDE5.kcoreaddons import *</code>
+<p>
+
+
+
+<h2>Detailed Description</h2>
+
+<p>This class is used to store information about a license.
+The license can be one of some predefined, one given as text or one
+that can be loaded from a file. This class is used in the KAboutData class.
+Explicitly creating a KAboutLicense object is not possible.
+If the license is wanted for a KDE component having KAboutData object,
+use KAboutData.licenses() to get the licenses for that component.
+If the license is for a non-code resource and given by a keyword
+(e.g. in .desktop files), try using KAboutLicense.byKeyword().
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#LicenseKey">LicenseKey</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;Custom, File, Unknown, GPL, GPL_V2, LGPL, LGPL_V2, BSDL, Artistic, QPL, QPL_V1_0, GPL_V3, LGPL_V3&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#NameFormat">NameFormat</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;ShortName, FullName&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KAboutLicense">__init__</a> (self, KAboutLicense other)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KAboutLicense">__init__</a> (self, KAboutData aboutData)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KAboutLicense">__init__</a> (self, KAboutLicense::LicenseKey licenseType, KAboutData aboutData)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutLicense::LicenseKey&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#key">key</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#name">name</a> (self, KAboutLicense::NameFormat formatName)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#text">text</a> (self)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutLicense&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#byKeyword">byKeyword</a> (QString keyword)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KAboutLicense"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KAboutLicense&nbsp;</td>
+<td class="paramname"><em>other</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Copy constructor. Performs a deep copy.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>other</em>&nbsp;</td><td> object to copy
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="KAboutLicense"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KAboutData&nbsp;</td>
+<td class="paramname"><em>aboutData</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p><dl class="internal" compact><dt><b>Internal:</b></dt><dd> Used by KAboutData to construct a KAboutLicense
+</dd></dl>
+</p></div></div><a class="anchor" name="KAboutLicense"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KAboutLicense::LicenseKey&nbsp;</td>
+<td class="paramname"><em>licenseType</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KAboutData&nbsp;</td>
+<td class="paramname"><em>aboutData</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p><dl class="internal" compact><dt><b>Internal:</b></dt><dd> Used by KAboutData to construct a predefined license.
+</dd></dl>
+</p></div></div><a class="anchor" name="key"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutLicense::LicenseKey key</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the license key.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> The license key as element of KAboutLicense.LicenseKey enum.
+</dd></dl>
+</p></div></div><a class="anchor" name="name"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString name</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KAboutLicense::NameFormat&nbsp;</td>
+<td class="paramname"><em>formatName</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Returns the license name.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> The license name as a string.
+</dd></dl>
+</p></div></div><a class="anchor" name="text"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString text</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the full license text. If the licenseType argument of the
+constructor has been used, any text defined by setLicenseText is ignored,
+and the standard text for the chosen license will be returned.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> The license text.
+</dd></dl>
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="byKeyword"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutLicense byKeyword</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>keyword</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Fetch a known license by a keyword.
+</p>
+<p>
+Frequently the license data is provided by a terse keyword-like string,
+e.g. by a field in a .desktop file. Using this method, an application
+can get hold of a proper KAboutLicense object, providing that the
+license is one of the several known to KDE, and use it to present
+more human-readable information to the user.
+</p>
+<p>
+Keywords are matched by stripping all whitespace and lowercasing.
+The known keywords correspond to the KAboutLicense.LicenseKey enumeration,
+e.g. any of "LGPLV3", "LGPLv3", "LGPL v3" would match KAboutLicense.LGPL_V3.
+If there is no match for the keyword, a valid license object is still
+returned, with its name and text informing about a custom license,
+and its key equal to KAboutLicense.Custom.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>keyword</em>&nbsp;</td><td> The license keyword.
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> The license object.
+</dd></dl> </p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> KAboutLicense.LicenseKey
+</dd></dl>
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="LicenseKey"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">LicenseKey</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Describes the license of the software.
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>Custom</em>&nbsp;=&nbsp;-2</td><td><tr><td valign="top"><em>File</em>&nbsp;=&nbsp;-1</td><td><tr><td valign="top"><em>Unknown</em>&nbsp;=&nbsp;0</td><td><tr><td valign="top"><em>GPL</em>&nbsp;=&nbsp;1</td><td><tr><td valign="top"><em>GPL_V2</em>&nbsp;=&nbsp;1</td><td><tr><td valign="top"><em>LGPL</em>&nbsp;=&nbsp;2</td><td><tr><td valign="top"><em>LGPL_V2</em>&nbsp;=&nbsp;2</td><td><tr><td valign="top"><em>BSDL</em>&nbsp;=&nbsp;3</td><td><tr><td valign="top"><em>Artistic</em>&nbsp;=&nbsp;4</td><td><tr><td valign="top"><em>QPL</em>&nbsp;=&nbsp;5</td><td><tr><td valign="top"><em>QPL_V1_0</em>&nbsp;=&nbsp;5</td><td><tr><td valign="top"><em>GPL_V3</em>&nbsp;=&nbsp;6</td><td><tr><td valign="top"><em>LGPL_V3</em>&nbsp;=&nbsp;7</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="NameFormat"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">NameFormat</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Format of the license name.
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>ShortName</em>&nbsp;</td><td><tr><td valign="top"><em>FullName</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

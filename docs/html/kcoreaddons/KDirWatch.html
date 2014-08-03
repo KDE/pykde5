@@ -1,0 +1,846 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KDirWatch</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KDirWatch Class Reference</h1>
+<code>from PyKDE5.kcoreaddons import *</code>
+<p>
+Inherits: QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+<p>Class for watching directory and file changes.
+</p>
+<p>
+Watch directories and files for changes.
+The watched directories or files don't have to exist yet.
+</p>
+<p>
+When a watched directory is changed, i.e. when files therein are
+created or deleted, KDirWatch will emit the signal dirty().
+</p>
+<p>
+When a watched, but previously not existing directory gets created,
+KDirWatch will emit the signal created().
+</p>
+<p>
+When a watched directory gets deleted, KDirWatch will emit the
+signal deleted(). The directory is still watched for new
+creation.
+</p>
+<p>
+When a watched file is changed, i.e. attributes changed or written
+to, KDirWatch will emit the signal dirty().
+</p>
+<p>
+Scanning of particular directories or files can be stopped temporarily
+and restarted. The whole class can be stopped and restarted.
+Directories and files can be added/removed from the list in any state.
+</p>
+<p>
+The implementation uses the INOTIFY functionality on LINUX.
+Otherwise the FAM service is used, when available.
+As a last resort, a regular polling for change of modification times
+is done; the polling interval is a global config option:
+DirWatch/PollInterval and DirWatch/NFSPollInterval for NFS mounted
+directories.
+The choice of implementation can be adjusted by the user, with the key
+[DirWatch] PreferredMethod={Fam|Stat|QFSWatch|inotify}
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> self()
+</dd></dl> 
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Sven Radej (in 1998) </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#Method">Method</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;FAM, INotify, Stat, QFSWatch&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#WatchMode">WatchMode</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;WatchDirOnly, WatchFiles, WatchSubDirs&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Signals</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#created">created</a> (QString path)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#deleted">deleted</a> (QString path)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dirty">dirty</a> (QString path)</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KDirWatch">__init__</a> (self, QObject parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addDir">addDir</a> (self, QString path, KDirWatch::WatchModes watchModes=KDirWatch.WatchMode.WatchDirOnly)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addFile">addFile</a> (self, QString file)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#contains">contains</a> (self, QString path)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QDateTime&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ctime">ctime</a> (self, QString path)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#deleteQFSWatcher">deleteQFSWatcher</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KDirWatch::Method&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#internalMethod">internalMethod</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isStopped">isStopped</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#removeDir">removeDir</a> (self, QString path)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#removeFile">removeFile</a> (self, QString file)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#restartDirScan">restartDirScan</a> (self, QString path)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setCreated">setCreated</a> (self, QString path)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDeleted">setDeleted</a> (self, QString path)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDirty">setDirty</a> (self, QString path)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#startScan">startScan</a> (self, bool notify=0, bool skippedToo=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#stopDirScan">stopDirScan</a> (self, QString path)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#stopScan">stopScan</a> (self)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#exists">exists</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KDirWatch&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#self">self</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#statistics">statistics</a> ()</td></tr>
+</table>
+<hr><h2>Signal Documentation</h2><a class="anchor" name="created"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> created</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Emitted when a file or directory is created.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the path of the file or directory
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("created(const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="deleted"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> deleted</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Emitted when a file or directory is deleted.
+</p>
+<p>
+The object is still watched for new creation.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the path of the file or directory
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("deleted(const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="dirty"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> dirty</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Emitted when a watched object is changed.
+For a directory this signal is emitted when files
+therein are created or deleted.
+For a file this signal is emitted when its size or attributes change.
+</p>
+<p>
+When you watch a directory, changes in the size or attributes of
+contained files may or may not trigger this signal to be emitted
+depending on which backend is used by KDirWatch.
+</p>
+<p>
+The new ctime is set before the signal is emitted.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the path of the file or directory
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("dirty(const QString&)"), target_slot)</code></dd></dl></div></div><hr><h2>Method Documentation</h2><a class="anchor" name="KDirWatch"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructor.
+</p>
+<p>
+Scanning begins immediately when a dir/file watch
+is added.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> the parent of the QObject (or 0 for parent-less KDataTools)
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="addDir"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> addDir</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KDirWatch::WatchModes&nbsp;</td>
+<td class="paramname"><em>watchModes=KDirWatch.WatchMode.WatchDirOnly</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Adds a directory to be watched.
+</p>
+<p>
+The directory does not have to exist. When <b>watchModes</b> is set to
+WatchDirOnly (the default), the signals dirty(), created(), deleted()
+can be emitted, all for the watched directory.
+When <b>watchModes</b> is set to WatchFiles, all files in the watched
+directory are watched for changes, too. Thus, the signals dirty(),
+created(), deleted() can be emitted.
+When <b>watchModes</b> is set to WatchSubDirs, all subdirs are watched using
+the same flags specified in <b>watchModes</b> (symlinks aren't followed).
+If the <b>path</b> points to a symlink to a directory, the target directory
+is watched instead. If you want to watch the link, use <b>addFile().</b>
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the path to watch
+
+<tr><td></td><td valign="top"><em>watchModes</em>&nbsp;</td><td> watch modes
+</td></tr>
+</table></dl>
+<p> @sa KDirWatch.WatchMode
+</p></div></div><a class="anchor" name="addFile"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> addFile</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>file</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Adds a file to be watched.
+If it's a symlink to a directory, it watches the symlink itself.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>file</em>&nbsp;</td><td> the file to watch
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="contains"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool contains</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Check if a directory is being watched by this KDirWatch instance
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the directory to check
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the directory is being watched
+</dd></dl>
+</p></div></div><a class="anchor" name="ctime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QDateTime ctime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Returns the time the directory/file was last changed.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the file to check
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the date of the last modification
+</dd></dl>
+</p></div></div><a class="anchor" name="deleteQFSWatcher"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> deleteQFSWatcher</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="internalMethod"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KDirWatch::Method internalMethod</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the preferred internal method to
+watch for changes.
+</p></div></div><a class="anchor" name="isStopped"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isStopped</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Is scanning stopped?
+After creation of a KDirWatch instance, this is false.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> true when scanning stopped
+</dd></dl>
+</p></div></div><a class="anchor" name="removeDir"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> removeDir</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Removes a directory from the list of scanned directories.
+</p>
+<p>
+If specified path is not in the list this does nothing.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the path of the dir to be removed from the list
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="removeFile"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> removeFile</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>file</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Removes a file from the list of watched files.
+</p>
+<p>
+If specified path is not in the list this does nothing.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>file</em>&nbsp;</td><td> the file to be removed from the list
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="restartDirScan"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool restartDirScan</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Restarts scanning for specified path.
+</p>
+<p>
+It doesn't notify about the changes (by emitting a signal).
+The ctime value is reset.
+</p>
+<p>
+Call it when you are finished with big operations on that path,
+<b>and</b> when <b>you</b> have refreshed that path.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the path to restart scanning
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the <b>path</b> is being watched, otherwise false
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> stopDirScanning()
+</dd></dl>
+</p></div></div><a class="anchor" name="setCreated"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setCreated</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Emits created().
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the path of the file or directory
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setDeleted"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDeleted</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Emits deleted().
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the path of the file or directory
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setDirty"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDirty</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Emits dirty().
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the path of the file or directory
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="startScan"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> startScan</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>notify=0</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>skippedToo=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Starts scanning of all dirs in list.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>notify</em>&nbsp;</td><td> If true, all changed directories (since
+stopScan() call) will be notified for refresh. If notify is
+false, all ctimes will be reset (except those who are stopped,
+but only if <b>skippedToo</b> is false) and changed dirs won't be
+notified. You can start scanning even if the list is
+empty. First call should be called with <b>false</b> or else all
+directories
+in list will be notified.
+
+<tr><td></td><td valign="top"><em>skippedToo</em>&nbsp;</td><td> if true, the skipped directoris (scanning of which was
+stopped with stopDirScan() ) will be reset and notified
+for change. Otherwise, stopped directories will continue to be
+unnotified.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="stopDirScan"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool stopDirScan</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Stops scanning the specified path.
+</p>
+<p>
+The <b>path</b> is not deleted from the internal list, it is just skipped.
+Call this function when you perform an huge operation
+on this directory (copy/move big files or many files). When finished,
+call restartDirScan(path).
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the path to skip
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the <b>path</b> is being watched, otherwise false
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> restartDirScanning()
+</dd></dl>
+</p></div></div><a class="anchor" name="stopScan"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> stopScan</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Stops scanning of all directories in internal list.
+</p>
+<p>
+The timer is stopped, but the list is not cleared.
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="exists"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool exists</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname">)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns true if there is an instance of KDirWatch.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> true if there is an instance of KDirWatch.
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> KDirWatch.self()
+</dd></dl>
+</p></div></div><a class="anchor" name="self"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KDirWatch self</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname">)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>The KDirWatch instance usually globally used in an application.
+It is automatically deleted when the application exits.
+</p>
+<p>
+However, you can create an arbitrary number of KDirWatch instances
+aside from this one - for those you have to take care of memory management.
+</p>
+<p>
+This function returns an instance of KDirWatch. If there is none, it
+will be created.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> a KDirWatch instance
+</dd></dl>
+</p></div></div><a class="anchor" name="statistics"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> statistics</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname">)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Dump statistic information about the KDirWatch.self() instance.
+This checks for consistency, too.
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="Method"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">Method</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>FAM</em>&nbsp;</td><td><tr><td valign="top"><em>INotify</em>&nbsp;</td><td><tr><td valign="top"><em>Stat</em>&nbsp;</td><td><tr><td valign="top"><em>QFSWatch</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="WatchMode"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">WatchMode</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Available watch modes for directory monitoring
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>WatchDirOnly</em>&nbsp;=&nbsp;0</td><td><tr><td valign="top"><em>WatchFiles</em>&nbsp;=&nbsp;0x01</td><td><tr><td valign="top"><em>WatchSubDirs</em>&nbsp;=&nbsp;0x02</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

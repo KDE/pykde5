@@ -1,0 +1,1054 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KTimeComboBox</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KTimeComboBox Class Reference</h1>
+<code>from PyKDE5.kwidgetsaddons import *</code>
+<p>
+Inherits: QComboBox &#x2192; QWidget &#x2192; QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#Option">Option</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;EditTime, SelectTime, ForceTime, WarnOnInvalid&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Signals</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeChanged">timeChanged</a> (QTime time)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeEdited">timeEdited</a> (QTime time)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeEntered">timeEntered</a> (QTime time)</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KTimeComboBox">__init__</a> (self, QWidget parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#assignTime">assignTime</a> (self, QTime time)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QLocale::FormatType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#displayFormat">displayFormat</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#eventFilter">eventFilter</a> (self, QObject object, QEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#focusInEvent">focusInEvent</a> (self, QFocusEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#focusOutEvent">focusOutEvent</a> (self, QFocusEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#hidePopup">hidePopup</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isNull">isNull</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isValid">isValid</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#keyPressEvent">keyPressEvent</a> (self, QKeyEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QTime&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#maximumTime">maximumTime</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QTime&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#minimumTime">minimumTime</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mousePressEvent">mousePressEvent</a> (self, QMouseEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KTimeComboBox::Options&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#options">options</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#resetMaximumTime">resetMaximumTime</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#resetMinimumTime">resetMinimumTime</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#resetTimeRange">resetTimeRange</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#resizeEvent">resizeEvent</a> (self, QResizeEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDisplayFormat">setDisplayFormat</a> (self, QLocale::FormatType formatOptions)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setMaximumTime">setMaximumTime</a> (self, QTime maxTime, QString maxWarnMsg=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setMinimumTime">setMinimumTime</a> (self, QTime minTime, QString minWarnMsg=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setOptions">setOptions</a> (self, KTimeComboBox::Options options)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTime">setTime</a> (self, QTime time)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTimeList">setTimeList</a> (self, [QTime] timeList, QString minWarnMsg=QString(), QString maxWarnMsg=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTimeListInterval">setTimeListInterval</a> (self, int minutes)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTimeRange">setTimeRange</a> (self, QTime minTime, QTime maxTime, QString minWarnMsg=QString(), QString maxWarnMsg=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#showPopup">showPopup</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QTime&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#time">time</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[QTime]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeList">timeList</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeListInterval">timeListInterval</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#wheelEvent">wheelEvent</a> (self, QWheelEvent event)</td></tr>
+</table>
+<hr><h2>Signal Documentation</h2><a class="anchor" name="timeChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> timeChanged</td>
+<td>(</td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>time</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the time has been changed either manually by the user
+or programatically.
+</p>
+<p>
+The returned time may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>time</em>&nbsp;</td><td> the new time
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("timeChanged(const QTime&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="timeEdited"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> timeEdited</td>
+<td>(</td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>time</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the time is being manually edited by the user.
+</p>
+<p>
+The returned time may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>time</em>&nbsp;</td><td> the new time
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("timeEdited(const QTime&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="timeEntered"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> timeEntered</td>
+<td>(</td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>time</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the time has been manually entered or selected by the user.
+</p>
+<p>
+The returned time may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>time</em>&nbsp;</td><td> the new time
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("timeEntered(const QTime&)"), target_slot)</code></dd></dl></div></div><hr><h2>Method Documentation</h2><a class="anchor" name="KTimeComboBox"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Create a new KTimeComboBox widget
+</p></div></div><a class="anchor" name="assignTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> assignTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>time</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Assign the time for the widget.
+</p>
+<p>
+Virtual to allow sub-classes to apply extra validation rules.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>time</em>&nbsp;</td><td> the new time
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="displayFormat"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QLocale::FormatType displayFormat</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently set time format
+</p>
+<p>
+By default this is the Short Format
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently set time format
+</dd></dl>
+</p></div></div><a class="anchor" name="eventFilter"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool eventFilter</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>object</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="focusInEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> focusInEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QFocusEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="focusOutEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> focusOutEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QFocusEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="hidePopup"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> hidePopup</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="isNull"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isNull</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return if the current user input is null
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> isValid()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> if the current user input is null
+</dd></dl>
+</p></div></div><a class="anchor" name="isValid"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isValid</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return if the current user input is valid
+</p>
+<p>
+If the user input is null then it is not valid
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> isNull()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> if the current user input is valid
+</dd></dl>
+</p></div></div><a class="anchor" name="keyPressEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> keyPressEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QKeyEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="maximumTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QTime maximumTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the current maximum time
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the current maximum time
+</dd></dl>
+</p></div></div><a class="anchor" name="minimumTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QTime minimumTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the current minimum time
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the current minimum time
+</dd></dl>
+</p></div></div><a class="anchor" name="mousePressEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> mousePressEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QMouseEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="options"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KTimeComboBox::Options options</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently set widget options
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently set widget options
+</dd></dl>
+</p></div></div><a class="anchor" name="resetMaximumTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> resetMaximumTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Reset the maximum time to the default of 23:59:59.999
+</p></div></div><a class="anchor" name="resetMinimumTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> resetMinimumTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Reset the minimum time to the default of 00:00:00.000
+</p></div></div><a class="anchor" name="resetTimeRange"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> resetTimeRange</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Reset the minimum and maximum time to the default values.
+</p></div></div><a class="anchor" name="resizeEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> resizeEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QResizeEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="setDisplayFormat"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDisplayFormat</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QLocale::FormatType&nbsp;</td>
+<td class="paramname"><em>formatOptions</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the time format to display.
+</p>
+<p>
+By default is the Short Format.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>format</em>&nbsp;</td><td> the time format to use
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setMaximumTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setMaximumTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>maxTime</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>maxWarnMsg=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the maximum allowed time.
+</p>
+<p>
+If the time is invalid, or less than current minimum,
+then the maximum will not be set.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> minimumTime()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> maximumTime()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setMaximumTime()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setTimeRange()
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>maxTime</em>&nbsp;</td><td> the maximum time
+
+<tr><td></td><td valign="top"><em>maxWarnMsg</em>&nbsp;</td><td> the maximum warning message
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setMinimumTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setMinimumTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>minTime</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>minWarnMsg=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the minimum allowed time.
+</p>
+<p>
+If the time is invalid, or greater than current maximum,
+then the minimum will not be set.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> minimumTime()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> maximumTime()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setMaximumTime()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setTimeRange()
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>minTime</em>&nbsp;</td><td> the minimum time
+
+<tr><td></td><td valign="top"><em>minWarnMsg</em>&nbsp;</td><td> the minimum warning message
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setOptions"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setOptions</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KTimeComboBox::Options&nbsp;</td>
+<td class="paramname"><em>options</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the new widget options
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> the new widget options
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>time</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the currently selected time
+</p>
+<p>
+You can set an invalid time or a time outside the valid range, validity
+checking is only done via isValid().
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>time</em>&nbsp;</td><td> the new time
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setTimeList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTimeList</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">[QTime]&nbsp;</td>
+<td class="paramname"><em>timeList</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>minWarnMsg=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>maxWarnMsg=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the list of times able to be selected from the drop-down.
+</p>
+<p>
+Setting the time list will override any time interval previously set via
+setTimeListInterval().
+</p>
+<p>
+Any invalid or duplicate times will be ignored, and the list will be
+sorted.
+</p>
+<p>
+The minimum and maximum time will automatically be set to the earliest
+and latest value in the list.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> timeList()
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>timeList</em>&nbsp;</td><td> the list of times able to be selected
+
+<tr><td></td><td valign="top"><em>minWarnMsg</em>&nbsp;</td><td> the minimum warning message
+
+<tr><td></td><td valign="top"><em>maxWarnMsg</em>&nbsp;</td><td> the maximum warning message
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setTimeListInterval"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTimeListInterval</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>minutes</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the interval between times able to be selected from the drop-down.
+</p>
+<p>
+The combo drop-down will be populated with times every </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>minutes</em>&nbsp;</td><td>
+apart, starting from the minimumTime() and ending at maximumTime().
+</td></tr>
+</table></dl>
+<p> If the ForceInterval option is set then any time manually typed into the
+combo line edit will be forced to the nearest interval.
+</p>
+<p>
+This interval must be an exact divisor of the valid time range hours.
+For example with the default 24 hour range <b>interval</b> must divide 1440
+minutes exactly, meaning 1, 6 and 90 are valid but 7, 31 and 91 are not.
+</p>
+<p>
+Setting the time list interval will override any time list previously set
+via setTimeList().
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> timeListInterval()
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>minutes</em>&nbsp;</td><td> the time list interval to display
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setTimeRange"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTimeRange</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>minTime</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>maxTime</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>minWarnMsg=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>maxWarnMsg=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the minimum and maximum time range.
+</p>
+<p>
+If either time is invalid, or min &gt; max then the range will not be set.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>minTime</em>&nbsp;</td><td> the minimum time
+
+<tr><td></td><td valign="top"><em>maxTime</em>&nbsp;</td><td> the maximum time
+
+<tr><td></td><td valign="top"><em>minWarnMsg</em>&nbsp;</td><td> the minimum warning message
+
+<tr><td></td><td valign="top"><em>maxWarnMsg</em>&nbsp;</td><td> the maximum warning message
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="showPopup"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> showPopup</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="time"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QTime time</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently selected time
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently selected time
+</dd></dl>
+</p></div></div><a class="anchor" name="timeList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[QTime] timeList</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the list of times able to be selected in the drop-down.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setTimeList()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> timeListInterval()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setTimeListInterval()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the select time list
+</dd></dl>
+</p></div></div><a class="anchor" name="timeListInterval"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int timeListInterval</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the interval between select time list entries if set by setTimeListInterval().
+</p>
+<p>
+Returns -1 if not set.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setTimeListInterval()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the select time list interval in minutes
+</dd></dl>
+</p></div></div><a class="anchor" name="wheelEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> wheelEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWheelEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="Option"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">Option</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Options provided by the widget
+<dl class="see" compact><dt><b>See also:</b></dt><dd> options
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setOptions
+</dd></dl>
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>EditTime</em>&nbsp;=&nbsp;0x0001</td><td><tr><td valign="top"><em>SelectTime</em>&nbsp;=&nbsp;0x0002</td><td><tr><td valign="top"><em>ForceTime</em>&nbsp;=&nbsp;0x0004</td><td><tr><td valign="top"><em>WarnOnInvalid</em>&nbsp;=&nbsp;0x0008</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

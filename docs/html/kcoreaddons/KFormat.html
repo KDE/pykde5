@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KFormat</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KFormat Class Reference</h1>
+<code>from PyKDE5.kcoreaddons import *</code>
+<p>
+
+
+
+<h2>Detailed Description</h2>
+<dl class="abstract" compact><dt><b>Abstract class:</b></dt>
+<dd>This class can be used as a base class for new classes, but can not be instantiated directly.</dd></dl>
+<p>KFormat provides support for formatting numbers and datetimes in
+formats that are not supported by QLocale.
+</p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> John Layt &lt;jlayt@kde.org&gt;, </dd></dl>
+Michael Pyne &lt;mpyne@kde.org&gt;,
+Albert Astals Cid &lt;aacid@kde.org&gt;,
+</p>
+<p>
+Class for formatting numbers and datetimes.
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#BinarySizeUnits">BinarySizeUnits</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;DefaultBinaryUnits, UnitByte, UnitKiloByte, UnitMegaByte, UnitGigaByte, UnitTeraByte, UnitPetaByte, UnitExaByte, UnitZettaByte, UnitYottaByte, UnitLastUnit&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#BinaryUnitDialect">BinaryUnitDialect</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;DefaultBinaryDialect, IECBinaryDialect, JEDECBinaryDialect, MetricBinaryDialect, LastBinaryDialect&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#DurationFormatOption">DurationFormatOption</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;DefaultDuration, InitialDuration, ShowMilliseconds, HideSeconds, FoldHours&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KFormat">__init__</a> (self, QLocale locale=QLocale())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KFormat">__init__</a> (self, KFormat other)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#formatByteSize">formatByteSize</a> (self, float size, int precision=1, KFormat::BinaryUnitDialect dialect=KFormat.DefaultBinaryDialect, KFormat::BinarySizeUnits units=KFormat.DefaultBinaryUnits)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#formatDecimalDuration">formatDecimalDuration</a> (self, long msecs, int decimalPlaces=2)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#formatDuration">formatDuration</a> (self, long msecs, KFormat::DurationFormatOptions options=KFormat.DefaultDuration)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#formatRelativeDate">formatRelativeDate</a> (self, QDate date, QLocale::FormatType format)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#formatRelativeDateTime">formatRelativeDateTime</a> (self, QDateTime dateTime, QLocale::FormatType format)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#formatSpelloutDuration">formatSpelloutDuration</a> (self, long msecs)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KFormat"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QLocale&nbsp;</td>
+<td class="paramname"><em>locale=QLocale()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructs a KFormat.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>locale</em>&nbsp;</td><td> the locale to use, defaults to the system locale
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="KFormat"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KFormat&nbsp;</td>
+<td class="paramname"><em>other</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Copy constructor
+</p></div></div><a class="anchor" name="formatByteSize"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString formatByteSize</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">float&nbsp;</td>
+<td class="paramname"><em>size</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>precision=1</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KFormat::BinaryUnitDialect&nbsp;</td>
+<td class="paramname"><em>dialect=KFormat.DefaultBinaryDialect</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KFormat::BinarySizeUnits&nbsp;</td>
+<td class="paramname"><em>units=KFormat.DefaultBinaryUnits</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Converts <b>size</b> from bytes to the appropriate string representation
+using the binary unit dialect <b>dialect</b> and the specific units <b>specificUnit.</b>
+</p>
+<p>
+Example:
+formatByteSize(1000, unit, KFormat.UnitKiloByte) returns:
+for KFormat.MetricBinaryDialect, "1.0 kB",
+for KFormat.IECBinaryDialect, "0.9 KiB",
+for KFormat.JEDECBinaryDialect, "0.9 KB".
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>size</em>&nbsp;</td><td> size in bytes
+
+<tr><td></td><td valign="top"><em>precision</em>&nbsp;</td><td> number of places after the decimal point to use. KDE uses
+1 by default so when in doubt use 1.
+
+<tr><td></td><td valign="top"><em>dialect</em>&nbsp;</td><td> binary unit standard to use. Use DefaultBinaryDialect to
+use the localized user selection unless you need to use a specific
+unit type (such as displaying a flash memory size in JEDEC).
+
+<tr><td></td><td valign="top"><em>specificUnit</em>&nbsp;</td><td> specific unit size to use in result. Use
+DefaultBinaryUnits to automatically select a unit that will return
+a sanely-sized number.
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> converted size as a translated string including the units.
+E.g. "1.23 KiB", "2 GB" (JEDEC), "4.2 kB" (Metric).
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> BinarySizeUnits
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> BinaryUnitDialect
+</dd></dl>
+</p></div></div><a class="anchor" name="formatDecimalDuration"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString formatDecimalDuration</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">long&nbsp;</td>
+<td class="paramname"><em>msecs</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>decimalPlaces=2</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Given a number of milliseconds, converts that to a string containing
+the localized equivalent to the requested decimal places.
+</p>
+<p>
+e.g. given formatDuration(60000), returns "1.0 minutes"
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>msecs</em>&nbsp;</td><td> Time duration in milliseconds
+
+<tr><td></td><td valign="top"><em>decimalPlaces</em>&nbsp;</td><td> Deciaml places to round off to, defaults to 2
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> converted duration as a string - e.g. "5.5 seconds" "23.0 minutes"
+</dd></dl>
+</p></div></div><a class="anchor" name="formatDuration"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString formatDuration</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">long&nbsp;</td>
+<td class="paramname"><em>msecs</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KFormat::DurationFormatOptions&nbsp;</td>
+<td class="paramname"><em>options=KFormat.DefaultDuration</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Given a number of milliseconds, converts that to a string containing
+the localized equivalent, e.g. 1:23:45
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>msecs</em>&nbsp;</td><td> Time duration in milliseconds
+
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> options to use in the duration format
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> converted duration as a string - e.g. "1:23:45" "1h23m"
+</dd></dl>
+</p></div></div><a class="anchor" name="formatRelativeDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString formatRelativeDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>date</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QLocale::FormatType&nbsp;</td>
+<td class="paramname"><em>format</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Returns a string formatted to a relative date style.
+</p>
+<p>
+If the <b>date</b> falls within one week before or after the current date
+then a relative date string will be returned, such as:
+* Yesterday
+* Today
+* Tomorrow
+* Last Tuesday
+* Next Wednesday
+</p>
+<p>
+If the <b>date</b> falls outside this period then the <b>format</b> is used.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>date</em>&nbsp;</td><td> the date to be formatted
+
+<tr><td></td><td valign="top"><em>format</em>&nbsp;</td><td> the date format to use
+</td></tr>
+</table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the date as a string
+</dd></dl>
+</p></div></div><a class="anchor" name="formatRelativeDateTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString formatRelativeDateTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDateTime&nbsp;</td>
+<td class="paramname"><em>dateTime</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QLocale::FormatType&nbsp;</td>
+<td class="paramname"><em>format</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Returns a string formatted to a relative datetime style.
+</p>
+<p>
+If the <b>dateTime</b> falls within one week before or after the current date
+then a relative date string will be returned, such as:
+* Yesterday, 3:00pm
+* Today, 3:00pm
+* Tomorrow, 3:00pm
+* Last Tuesday, 3:00pm
+* Next Wednesday, 3:00pm
+</p>
+<p>
+If the <b>dateTime</b> falls outside this period then the <b>format</b> is used.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dateTime</em>&nbsp;</td><td> the date to be formatted
+
+<tr><td></td><td valign="top"><em>format</em>&nbsp;</td><td> the date format to use
+</td></tr>
+</table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the date as a string
+</dd></dl>
+</p></div></div><a class="anchor" name="formatSpelloutDuration"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString formatSpelloutDuration</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">long&nbsp;</td>
+<td class="paramname"><em>msecs</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Given a number of milliseconds, converts that to a spell-out string containing
+the localized equivalent.
+</p>
+<p>
+e.g. given formatSpelloutDuration(60001) returns "1 minute"
+given formatSpelloutDuration(62005) returns "1 minute and 2 seconds"
+given formatSpelloutDuration(90060000) returns "1 day and 1 hour"
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>msecs</em>&nbsp;</td><td> Time duration in milliseconds
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> converted duration as a string.
+Units not interesting to the user, for example seconds or minutes when the first
+unit is day, are not returned because they are irrelevant. The same applies for
+seconds when the first unit is hour.
+</dd></dl>
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="BinarySizeUnits"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">BinarySizeUnits</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>These binary units are used in KDE by the formatByteSize()
+function.
+</p>
+<p>
+NOTE: There are several different units standards:
+1) SI (i.e. metric), powers-of-10.
+2) IEC, powers-of-2, with specific units KiB, MiB, etc.
+3) JEDEC, powers-of-2, used for solid state memory sizing which
+is why you see flash cards labels as e.g. 4GB. These (ab)use
+the metric units. Although JEDEC only defines KB, MB, GB, if
+JEDEC is selected all units will be powers-of-2 with metric
+prefixes for clarity in the event of sizes larger than 1024 GB.
+</p>
+<p>
+Although 3 different dialects are possible this enum only uses
+metric names since adding all 3 different names of essentially the same
+unit would be pointless. Use BinaryUnitDialect to control the exact
+units returned.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> BinaryUnitDialect
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> formatByteSize
+</dd></dl>
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>DefaultBinaryUnits</em>&nbsp;=&nbsp;-1</td><td><tr><td valign="top"><em>UnitByte</em>&nbsp;</td><td><tr><td valign="top"><em>UnitKiloByte</em>&nbsp;</td><td><tr><td valign="top"><em>UnitMegaByte</em>&nbsp;</td><td><tr><td valign="top"><em>UnitGigaByte</em>&nbsp;</td><td><tr><td valign="top"><em>UnitTeraByte</em>&nbsp;</td><td><tr><td valign="top"><em>UnitPetaByte</em>&nbsp;</td><td><tr><td valign="top"><em>UnitExaByte</em>&nbsp;</td><td><tr><td valign="top"><em>UnitZettaByte</em>&nbsp;</td><td><tr><td valign="top"><em>UnitYottaByte</em>&nbsp;</td><td><tr><td valign="top"><em>UnitLastUnit</em>&nbsp;=&nbsp;UnitYottaByte</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="BinaryUnitDialect"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">BinaryUnitDialect</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>This enum chooses what dialect is used for binary units.
+</p>
+<p>
+Note: Although JEDEC abuses the metric prefixes and can therefore be
+confusing, it has been used to describe *memory* sizes for quite some time
+and programs should therefore use either Default, JEDEC, or IEC 60027-2
+for memory sizes.
+</p>
+<p>
+On the other hand network transmission rates are typically in metric so
+Default, Metric, or IEC (which is unambiguous) should be chosen.
+</p>
+<p>
+Normally choosing DefaultBinaryDialect is the best option as that uses
+the user's selection for units. If the user has not selected a preference,
+IECBinaryDialect will typically be used.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> BinarySizeUnits
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> formatByteSize
+</dd></dl>
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>DefaultBinaryDialect</em>&nbsp;=&nbsp;-1</td><td><tr><td valign="top"><em>IECBinaryDialect</em>&nbsp;</td><td><tr><td valign="top"><em>JEDECBinaryDialect</em>&nbsp;</td><td><tr><td valign="top"><em>MetricBinaryDialect</em>&nbsp;</td><td><tr><td valign="top"><em>LastBinaryDialect</em>&nbsp;=&nbsp;MetricBinaryDialect</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="DurationFormatOption"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">DurationFormatOption</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Format flags for formatDuration()
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>DefaultDuration</em>&nbsp;=&nbsp;0x0</td><td><tr><td valign="top"><em>InitialDuration</em>&nbsp;=&nbsp;0x1</td><td><tr><td valign="top"><em>ShowMilliseconds</em>&nbsp;=&nbsp;0x2</td><td><tr><td valign="top"><em>HideSeconds</em>&nbsp;=&nbsp;0x4</td><td><tr><td valign="top"><em>FoldHours</em>&nbsp;=&nbsp;0x8</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

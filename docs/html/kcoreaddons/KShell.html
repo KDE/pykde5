@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KShell</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KShell Namespace Reference</h1>
+<code>from PyKDE5.kcoreaddons.KShell import *</code>
+<p>
+<h2>Detailed Description</h2>
+<p>Emulates some basic system shell functionality.
+<dl class="see" compact><dt><b>See also:</b></dt><dd> KStringHandler
+</dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#Errors">Errors</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;NoError, BadQuoting, FoundMeta&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#Option">Option</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;NoOptions, TildeExpand, AbortOnMeta&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#joinArgs">joinArgs</a> (QStringList args)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#quoteArg">quoteArg</a> (QString arg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QStringList&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#splitArgs">splitArgs</a> (QString cmd, KShell::Options flags=KShell.Option.NoOptions, KShell::Errors err=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#tildeExpand">tildeExpand</a> (QString path)</td></tr>
+</table>
+<hr><h2>Enumeration Documentation</h2><a class="anchor" name="Errors"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">Errors</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Status codes from splitArgs()
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>NoError</em>&nbsp;=&nbsp;0</td><td><tr><td valign="top"><em>BadQuoting</em>&nbsp;</td><td><tr><td valign="top"><em>FoundMeta</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="Option"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">Option</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Flags for splitArgs().
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>NoOptions</em>&nbsp;=&nbsp;0</td><td><tr><td valign="top"><em>TildeExpand</em>&nbsp;=&nbsp;1</td><td><tr><td valign="top"><em>AbortOnMeta</em>&nbsp;=&nbsp;2</td><td></table>
+</dl>
+</div></div><p><hr><h2>Function Documentation</h2><a class="anchor" name="joinArgs"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString joinArgs</td>
+<td>(</td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>args</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Quotes and joins <b>args</b> together according to system shell rules.
+</p>
+<p>
+If the output is fed back into splitArgs(), the AbortOnMeta flag
+needs to be used on Windows. On *NIX, no such requirement exists.
+</p>
+<p>
+See quoteArg() for more info.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>args</em>&nbsp;</td><td> a list of strings to quote and join
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> a command suitable for shell execution
+</dd></dl>
+</p></div></div><a class="anchor" name="quoteArg"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString quoteArg</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>arg</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Quotes <b>arg</b> according to system shell rules.
+</p>
+<p>
+This function can be used to quote an argument string such that
+the shell processes it properly. This is e.g. necessary for
+user-provided file names which may contain spaces or quotes.
+It also prevents expansion of wild cards and environment variables.
+</p>
+<p>
+On *NIX, the output is POSIX shell compliant.
+On Windows, it is compliant with the argument splitting code of the
+Microsoft C runtime and the cmd shell used together.
+Occurrences of the percent sign are replaced with
+\%PERCENT_SIGN% to prevent spurious variable expansion;
+related KDE functions are prepared for this.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>arg</em>&nbsp;</td><td> the argument to quote
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the quoted argument
+</dd></dl>
+</p></div></div><a class="anchor" name="splitArgs"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QStringList splitArgs</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>cmd</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KShell::Options&nbsp;</td>
+<td class="paramname"><em>flags=KShell.Option.NoOptions</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KShell::Errors&nbsp;</td>
+<td class="paramname"><em>err=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Splits <b>cmd</b> according to system shell word splitting and quoting rules.
+Can optionally perform tilde expansion and/or abort if it finds shell
+meta characters it cannot process.
+</p>
+<p>
+On *NIX the behavior is based on the POSIX shell and bash:
+- Whitespace splits tokens
+- The backslash quotes the following character
+- A string enclosed in single quotes is not split. No shell meta
+characters are interpreted.
+- A string enclosed in double quotes is not split. Within the string,
+the backslash quotes shell meta characters - if it is followed
+by a "meaningless" character, the backslash is output verbatim.
+- A string enclosed in $'' is not split. Within the string, the
+backslash has a similar meaning to the one in C strings. Consult
+the bash manual for more information.
+</p>
+<p>
+On Windows, the behavior is defined by the Microsoft C runtime. Qt and
+many other implementations comply with this standard, but many do not.
+- Whitespace splits tokens
+- A string enclosed in double quotes is not split
+- 2N double quotes within a quoted string yield N literal quotes.
+This is not documented on MSDN.
+- Backslashes have special semantics iff they are followed by a double
+quote:
+- 2N backslashes + double quote =&gt; N backslashes and begin/end quoting
+- 2N+1 backslashes + double quote =&gt; N backslashes + literal quote
+</p>
+<p>
+If AbortOnMeta is used on Windows, this function applies cmd shell
+semantics before proceeding with word splitting:
+- Cmd ignores <b>all</b> special chars between double quotes.
+Note that the quotes are <b>not</b> removed at this stage - the
+tokenization rules described above still apply.
+- The circumflex is the escape char for everything including
+itself.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>cmd</em>&nbsp;</td><td> the command to split
+
+<tr><td></td><td valign="top"><em>flags</em>&nbsp;</td><td> operation flags, see Option
+
+<tr><td></td><td valign="top"><em>err</em>&nbsp;</td><td> if not NULL, a status code will be stored at the pointer
+target, see Errors
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> a list of unquoted words or an empty list if an error occurred
+</dd></dl>
+</p></div></div><a class="anchor" name="tildeExpand"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString tildeExpand</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>path</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Performs tilde expansion on <b>path.</b> Interprets "~/path" and
+"~user/path". If the path starts with an escaped tilde ("\~" on UNIX,
+"^~" on Windows), the escape char is removed and the path is returned
+as is.
+</p>
+<p>
+Note that if <b>path</b> starts with a tilde but cannot be properly expanded,
+this function will return an empty string.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>path</em>&nbsp;</td><td> the path to tilde-expand
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the expanded path
+</dd></dl>
+</p></div></div>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

@@ -1,0 +1,1810 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KDateTimeEdit</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KDateTimeEdit Class Reference</h1>
+<code>from PyKDE5.kwidgetsaddons import *</code>
+<p>
+Inherits: QWidget &#x2192; QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#Option">Option</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;ShowCalendar, ShowDate, ShowTime, ShowTimeZone, EditDate, EditTime, SelectCalendar, SelectDate, SelectTime, SelectTimeZone, DatePicker, DateKeywords, ForceTime, WarnOnInvalid&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Signals</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#calendarChanged">calendarChanged</a> (QLocale calendarLocale)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#calendarEntered">calendarEntered</a> (QLocale calendarLocale)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateChanged">dateChanged</a> (QDate date)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateEdited">dateEdited</a> (QDate date)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateEntered">dateEntered</a> (QDate date)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateTimeChanged">dateTimeChanged</a> (QDateTime dateTime)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateTimeEdited">dateTimeEdited</a> (QDateTime dateTime)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateTimeEntered">dateTimeEntered</a> (QDateTime dateTime)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeChanged">timeChanged</a> (QTime time)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeEdited">timeEdited</a> (QTime time)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeEntered">timeEntered</a> (QTime time)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeZoneChanged">timeZoneChanged</a> (QTimeZone zone)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeZoneEntered">timeZoneEntered</a> (QTimeZone zone)</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KDateTimeEdit">__init__</a> (self, QWidget parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#assignDate">assignDate</a> (self, QDate date)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#assignDateTime">assignDateTime</a> (self, QDateTime dateTime)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#assignTime">assignTime</a> (self, QTime time)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#assignTimeZone">assignTimeZone</a> (self, QTimeZone zone)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[QLocale]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#calendarLocalesList">calendarLocalesList</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QDate&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#date">date</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QLocale::FormatType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateDisplayFormat">dateDisplayFormat</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">{QDate:QString}&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateMap">dateMap</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QDateTime&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dateTime">dateTime</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#eventFilter">eventFilter</a> (self, QObject object, QEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#focusInEvent">focusInEvent</a> (self, QFocusEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#focusOutEvent">focusOutEvent</a> (self, QFocusEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isNull">isNull</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isNullDate">isNullDate</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isNullTime">isNullTime</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isValid">isValid</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isValidDate">isValidDate</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isValidTime">isValidTime</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QDateTime&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#maximumDateTime">maximumDateTime</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QDateTime&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#minimumDateTime">minimumDateTime</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KDateTimeEdit::Options&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#options">options</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#resetDateTimeRange">resetDateTimeRange</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#resetMaximumDateTime">resetMaximumDateTime</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#resetMinimumDateTime">resetMinimumDateTime</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#resizeEvent">resizeEvent</a> (self, QResizeEvent event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setCalendarLocalesList">setCalendarLocalesList</a> (self, [QLocale] calendarLocales)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDate">setDate</a> (self, QDate date)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDateDisplayFormat">setDateDisplayFormat</a> (self, QLocale::FormatType format)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDateMap">setDateMap</a> (self, {QDate:QString} dateMap)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDateTime">setDateTime</a> (self, QDateTime dateTime)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDateTimeRange">setDateTimeRange</a> (self, QDateTime minDateTime, QDateTime maxDateTime, QString minWarnMsg=QString(), QString maxWarnMsg=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setMaximumDateTime">setMaximumDateTime</a> (self, QDateTime maxDateTime, QString maxWarnMsg=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setMinimumDateTime">setMinimumDateTime</a> (self, QDateTime minDateTime, QString minWarnMsg=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setOptions">setOptions</a> (self, KDateTimeEdit::Options options)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTime">setTime</a> (self, QTime time)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTimeDisplayFormat">setTimeDisplayFormat</a> (self, QLocale::FormatType formatOptions)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTimeList">setTimeList</a> (self, [QTime] timeList, QString minWarnMsg=QString(), QString maxWarnMsg=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTimeListInterval">setTimeListInterval</a> (self, int minutes)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTimeZone">setTimeZone</a> (self, QTimeZone zone)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTimeZones">setTimeZones</a> (self, [QTimeZone] zones)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QTime&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#time">time</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QLocale::FormatType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeDisplayFormat">timeDisplayFormat</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[QTime]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeList">timeList</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeListInterval">timeListInterval</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QTimeZone&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeZone">timeZone</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[QTimeZone]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeZones">timeZones</a> (self)</td></tr>
+</table>
+<hr><h2>Signal Documentation</h2><a class="anchor" name="calendarChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> calendarChanged</td>
+<td>(</td>
+<td class="paramtype">QLocale&nbsp;</td>
+<td class="paramname"><em>calendarLocale</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the Calendar Locale has been changed either manually by the user
+or programatically.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>calendarLocale</em>&nbsp;</td><td> the new calendar locale
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("calendarChanged(const QLocale&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="calendarEntered"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> calendarEntered</td>
+<td>(</td>
+<td class="paramtype">QLocale&nbsp;</td>
+<td class="paramname"><em>calendarLocale</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the Calendar Locale has been manually entered by the user.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>calendarLocale</em>&nbsp;</td><td> the new calendar locale
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("calendarEntered(const QLocale&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="dateChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> dateChanged</td>
+<td>(</td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>date</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the date has been changed either manually by the user
+or programatically.
+</p>
+<p>
+The returned date may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>date</em>&nbsp;</td><td> the new date
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("dateChanged(const QDate&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="dateEdited"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> dateEdited</td>
+<td>(</td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>date</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the date is being manually edited by the user.
+</p>
+<p>
+The returned date may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>date</em>&nbsp;</td><td> the new date
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("dateEdited(const QDate&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="dateEntered"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> dateEntered</td>
+<td>(</td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>date</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the date has been manually entered by the user.
+</p>
+<p>
+The returned date may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>date</em>&nbsp;</td><td> the new date
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("dateEntered(const QDate&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="dateTimeChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> dateTimeChanged</td>
+<td>(</td>
+<td class="paramtype">QDateTime&nbsp;</td>
+<td class="paramname"><em>dateTime</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the date or time has been changed either manually by the user
+or programatically.
+</p>
+<p>
+The returned date and time may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dateTime</em>&nbsp;</td><td> the new date, time and time zone
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("dateTimeChanged(const QDateTime&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="dateTimeEdited"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> dateTimeEdited</td>
+<td>(</td>
+<td class="paramtype">QDateTime&nbsp;</td>
+<td class="paramname"><em>dateTime</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the date or time is being manually edited by the user.
+</p>
+<p>
+The returned date and time may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dateTime</em>&nbsp;</td><td> the new date, time and time zone
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("dateTimeEdited(const QDateTime&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="dateTimeEntered"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> dateTimeEntered</td>
+<td>(</td>
+<td class="paramtype">QDateTime&nbsp;</td>
+<td class="paramname"><em>dateTime</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the date or time has been manually entered by the user.
+</p>
+<p>
+The returned date and time may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dateTime</em>&nbsp;</td><td> the new date, time and time zone
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("dateTimeEntered(const QDateTime&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="timeChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> timeChanged</td>
+<td>(</td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>time</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the time has been changed either manually by the user
+or programatically.
+</p>
+<p>
+The returned time may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>time</em>&nbsp;</td><td> the new time
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("timeChanged(const QTime&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="timeEdited"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> timeEdited</td>
+<td>(</td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>time</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the time is being manually edited by the user.
+</p>
+<p>
+The returned time may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>time</em>&nbsp;</td><td> the new time
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("timeEdited(const QTime&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="timeEntered"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> timeEntered</td>
+<td>(</td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>time</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the time has been manually entered by the user.
+</p>
+<p>
+The returned time may be invalid.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>time</em>&nbsp;</td><td> the new time
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("timeEntered(const QTime&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="timeZoneChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> timeZoneChanged</td>
+<td>(</td>
+<td class="paramtype">QTimeZone&nbsp;</td>
+<td class="paramname"><em>zone</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the time zone has been changed either manually by the user
+or programatically.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>timeZone</em>&nbsp;</td><td> the new time zone
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("timeZoneChanged(const QTimeZone&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="timeZoneEntered"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> timeZoneEntered</td>
+<td>(</td>
+<td class="paramtype">QTimeZone&nbsp;</td>
+<td class="paramname"><em>zone</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Signal if the time zone has been changed manually by the user.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>timeZone</em>&nbsp;</td><td> the new time zone
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("timeZoneEntered(const QTimeZone&)"), target_slot)</code></dd></dl></div></div><hr><h2>Method Documentation</h2><a class="anchor" name="KDateTimeEdit"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Create a new KDateTimeEdit widget
+</p></div></div><a class="anchor" name="assignDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> assignDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>date</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Assign the date for the widget.
+</p>
+<p>
+Virtual to allow sub-classes to apply extra validation rules,
+but reimplementations must call the parent method at the end.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>date</em>&nbsp;</td><td> the new date
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="assignDateTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> assignDateTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDateTime&nbsp;</td>
+<td class="paramname"><em>dateTime</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Assign the date, time and time zone for the widget.
+</p>
+<p>
+Virtual to allow sub-classes to apply extra validation rules,
+but reimplementations must call the parent method at the end.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>datetime</em>&nbsp;</td><td> the new date and time
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="assignTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> assignTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>time</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Assign the time for the widget.
+</p>
+<p>
+Virtual to allow sub-classes to apply extra validation rules,
+but reimplementations must call the parent method at the end.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>time</em>&nbsp;</td><td> the new time
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="assignTimeZone"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> assignTimeZone</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTimeZone&nbsp;</td>
+<td class="paramname"><em>zone</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Assign the time zone for the widget.
+</p>
+<p>
+Virtual to allow sub-classes to apply extra validation rules,
+but reimplementations must call the parent method at the end.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>zone</em>&nbsp;</td><td> the new time zone
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="calendarLocalesList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[QLocale] calendarLocalesList</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the list of Calendar Systems displayed.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>calendars</em>&nbsp;</td><td> the list of calendar systems to display
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="date"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QDate date</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently selected date
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently selected date
+</dd></dl>
+</p></div></div><a class="anchor" name="dateDisplayFormat"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QLocale::FormatType dateDisplayFormat</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently set date display format
+</p>
+<p>
+By default this is the Short Format
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently set date format
+</dd></dl>
+</p></div></div><a class="anchor" name="dateMap"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">{QDate:QString} dateMap</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the map of dates listed in the drop-down and their displayed
+string forms.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setDateMap()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the select date map
+</dd></dl>
+</p></div></div><a class="anchor" name="dateTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QDateTime dateTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently selected date, time and time zone
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently selected date, time and time zone
+</dd></dl>
+</p></div></div><a class="anchor" name="eventFilter"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool eventFilter</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>object</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="focusInEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> focusInEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QFocusEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="focusOutEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> focusOutEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QFocusEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="isNull"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isNull</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return if the current user input is null
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> isValid()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> if the current user input is null
+</dd></dl>
+</p></div></div><a class="anchor" name="isNullDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isNullDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return if the current user input date is null
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> isValidDate()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> if the current user input date is null
+</dd></dl>
+</p></div></div><a class="anchor" name="isNullTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isNullTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return if the current user input time is null
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> isValidTime()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> if the current user input time is null
+</dd></dl>
+</p></div></div><a class="anchor" name="isValid"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isValid</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return if the current user input is valid
+</p>
+<p>
+If the user input is null then it is not valid
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> isNull()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> if the current user input is valid
+</dd></dl>
+</p></div></div><a class="anchor" name="isValidDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isValidDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return if the current user input date is valid
+</p>
+<p>
+If the user input date is null then it is not valid
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> isNullDate()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> if the current user input date is valid
+</dd></dl>
+</p></div></div><a class="anchor" name="isValidTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isValidTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return if the current user input time is valid
+</p>
+<p>
+If the user input time is null then it is not valid
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> isNullTime()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> if the current user input time is valid
+</dd></dl>
+</p></div></div><a class="anchor" name="maximumDateTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QDateTime maximumDateTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the current maximum date and time
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the current maximum date and time
+</dd></dl>
+</p></div></div><a class="anchor" name="minimumDateTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QDateTime minimumDateTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the current minimum date and time
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the current minimum date and time
+</dd></dl>
+</p></div></div><a class="anchor" name="options"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KDateTimeEdit::Options options</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently set widget options
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently set widget options
+</dd></dl>
+</p></div></div><a class="anchor" name="resetDateTimeRange"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> resetDateTimeRange</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Reset the minimum and maximum date and time to the default
+</p></div></div><a class="anchor" name="resetMaximumDateTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> resetMaximumDateTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Reset the minimum date and time to the default
+</p></div></div><a class="anchor" name="resetMinimumDateTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> resetMinimumDateTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Reset the minimum date and time to the default
+</p></div></div><a class="anchor" name="resizeEvent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> resizeEvent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QResizeEvent&nbsp;</td>
+<td class="paramname"><em>event</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="setCalendarLocalesList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setCalendarLocalesList</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">[QLocale]&nbsp;</td>
+<td class="paramname"><em>calendarLocales</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the list of Calendar Locales to display.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>calendarLocales</em>&nbsp;</td><td> the list of calendar locales to display
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setDate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDate&nbsp;</td>
+<td class="paramname"><em>date</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the currently selected date
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>date</em>&nbsp;</td><td> the new date
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setDateDisplayFormat"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDateDisplayFormat</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QLocale::FormatType&nbsp;</td>
+<td class="paramname"><em>format</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the date format to display.
+</p>
+<p>
+By default is the Short Format.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>format</em>&nbsp;</td><td> the date format to use
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setDateMap"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDateMap</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">{QDate:QString}&nbsp;</td>
+<td class="paramname"><em>dateMap</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the list of dates able to be selected from the drop-down and the
+string form to display for those dates, e.g. "2010-01-01" and "Yesterday".
+</p>
+<p>
+Any invalid or duplicate dates will be used, the list will NOT be
+sorted, and the minimum and maximum date will not be affected.
+</p>
+<p>
+The <b>dateMap</b> is keyed by the date to be listed and the value is the
+string to be displayed. If you want the date to be displayed in the
+default date format then the string should be null. If you want a
+separator to be displayed then set the string to "separator".
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> dateMap()
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dateMap</em>&nbsp;</td><td> the map of dates able to be selected
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setDateTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDateTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDateTime&nbsp;</td>
+<td class="paramname"><em>dateTime</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the currently selected date, time and time zone
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>dateTime</em>&nbsp;</td><td> the new date, time and time zone
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setDateTimeRange"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setDateTimeRange</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDateTime&nbsp;</td>
+<td class="paramname"><em>minDateTime</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDateTime&nbsp;</td>
+<td class="paramname"><em>maxDateTime</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>minWarnMsg=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>maxWarnMsg=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the minimum and maximum date and time range
+</p>
+<p>
+To enable range checking provide two valid dates.
+To disable range checking provide two invalid dates, or call
+clearDateRange;
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>minDateTime</em>&nbsp;</td><td> the minimum date and time
+
+<tr><td></td><td valign="top"><em>maxDateTime</em>&nbsp;</td><td> the maximum date and time
+
+<tr><td></td><td valign="top"><em>minWarnMsg</em>&nbsp;</td><td> the minimum warning message
+
+<tr><td></td><td valign="top"><em>maxWarnMsg</em>&nbsp;</td><td> the maximum warning message
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setMaximumDateTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setMaximumDateTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDateTime&nbsp;</td>
+<td class="paramname"><em>maxDateTime</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>maxWarnMsg=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the maximum allowed date.
+</p>
+<p>
+If the date is invalid, or less than current minimum,
+then the maximum will not be set.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setMinimumDateTime()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setDateRange()
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>maxDate</em>&nbsp;</td><td> the maximum date
+
+<tr><td></td><td valign="top"><em>maxWarnMsg</em>&nbsp;</td><td> the maximum warning message
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setMinimumDateTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setMinimumDateTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QDateTime&nbsp;</td>
+<td class="paramname"><em>minDateTime</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>minWarnMsg=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the minimum allowed date.
+</p>
+<p>
+If the date is invalid, or more than current maximum,
+then the minimum will not be set.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setMaximumDateTime()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setDateRange()
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>maxDate</em>&nbsp;</td><td> the minimum date
+
+<tr><td></td><td valign="top"><em>maxWarnMsg</em>&nbsp;</td><td> the minimum warning message
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setOptions"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setOptions</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KDateTimeEdit::Options&nbsp;</td>
+<td class="paramname"><em>options</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the new widget options
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>options</em>&nbsp;</td><td> the new widget options
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setTime"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTime</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTime&nbsp;</td>
+<td class="paramname"><em>time</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the currently selected time
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>time</em>&nbsp;</td><td> the new time
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setTimeDisplayFormat"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTimeDisplayFormat</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QLocale::FormatType&nbsp;</td>
+<td class="paramname"><em>formatOptions</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the time format to display.
+</p>
+<p>
+By default is the Short Format.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>format</em>&nbsp;</td><td> the time format to use
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setTimeList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTimeList</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">[QTime]&nbsp;</td>
+<td class="paramname"><em>timeList</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>minWarnMsg=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>maxWarnMsg=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the list of times able to be selected from the drop-down.
+</p>
+<p>
+Setting the time list will override any time interval previously set via
+setTimeListInterval().
+</p>
+<p>
+Any invalid or duplicate times will be ignored, and the list will be
+sorted.
+</p>
+<p>
+The minimum and maximum time will automatically be set to the earliest
+and latest value in the list.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> timeList()
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>timeList</em>&nbsp;</td><td> the list of times able to be selected
+
+<tr><td></td><td valign="top"><em>minWarnMsg</em>&nbsp;</td><td> the minimum warning message
+
+<tr><td></td><td valign="top"><em>maxWarnMsg</em>&nbsp;</td><td> the maximum warning message
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setTimeListInterval"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTimeListInterval</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>minutes</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the interval between times able to be selected from the drop-down.
+</p>
+<p>
+The combo drop-down will be populated with times every </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>minutes</em>&nbsp;</td><td>
+apart, starting from the minimumTime() and ending at maximumTime().
+</td></tr>
+</table></dl>
+<p> If the ForceInterval option is set then any time manually typed into the
+combo line edit will be forced to the nearest interval.
+</p>
+<p>
+This interval must be an exact divisor of the valid time range hours.
+For example with the default 24 hour range <b>interval</b> must divide 1440
+minutes exactly, meaning 1, 6 and 90 are valid but 7, 31 and 91 are not.
+</p>
+<p>
+Setting the time list interval will override any time list previously set
+via setTimeList().
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> timeListInterval()
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>minutes</em>&nbsp;</td><td> the time list interval to display
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setTimeZone"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTimeZone</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QTimeZone&nbsp;</td>
+<td class="paramname"><em>zone</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the current time zone
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>zone</em>&nbsp;</td><td> the new zone
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setTimeZones"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setTimeZones</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">[QTimeZone]&nbsp;</td>
+<td class="paramname"><em>zones</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the time zones able to be selected
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>zones</em>&nbsp;</td><td> the time zones to display
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="time"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QTime time</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently selected time
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently selected time
+</dd></dl>
+</p></div></div><a class="anchor" name="timeDisplayFormat"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QLocale::FormatType timeDisplayFormat</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently set time format
+</p>
+<p>
+By default this is the Short Format
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently set time format
+</dd></dl>
+</p></div></div><a class="anchor" name="timeList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[QTime] timeList</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the list of times able to be selected in the drop-down.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> setTimeList()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> timeListInterval()
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setTimeListInterval()
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the select time list
+</dd></dl>
+</p></div></div><a class="anchor" name="timeListInterval"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int timeListInterval</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the time list interval able to be selected
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the select time intervals in minutes
+</dd></dl>
+</p></div></div><a class="anchor" name="timeZone"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QTimeZone timeZone</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the currently selected time zone
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the currently selected time zone
+</dd></dl>
+</p></div></div><a class="anchor" name="timeZones"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[QTimeZone] timeZones</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Return the list of time zones able to be selected
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>zones</em>&nbsp;</td><td> the time zones to display
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="Option"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">Option</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Options provided by the widget
+<dl class="see" compact><dt><b>See also:</b></dt><dd> options
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setOptions
+</dd></dl>
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>EditTime</em>&nbsp;=&nbsp;0x0001</td><td><tr><td valign="top"><em>SelectTime</em>&nbsp;=&nbsp;0x0002</td><td><tr><td valign="top"><em>ForceTime</em>&nbsp;=&nbsp;0x0004</td><td><tr><td valign="top"><em>WarnOnInvalid</em>&nbsp;=&nbsp;0x0008</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

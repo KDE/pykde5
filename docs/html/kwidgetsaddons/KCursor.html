@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KCursor</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KCursor Class Reference</h1>
+<code>from PyKDE5.kwidgetsaddons import *</code>
+<p>
+
+
+
+<h2>Detailed Description</h2>
+
+<p>The KCursor class provides a set of static
+convenience methods for auto-hiding cursors on widgets.
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KCursor">__init__</a> (self)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#autoHideEventFilter">autoHideEventFilter</a> (QObject a0, QEvent a1)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#hideCursorDelay">hideCursorDelay</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setAutoHideCursor">setAutoHideCursor</a> (QWidget w, bool enable, bool customEventFilter=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setHideCursorDelay">setHideCursorDelay</a> (int ms)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KCursor"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="autoHideEventFilter"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> autoHideEventFilter</td>
+<td>(</td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>a0</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QEvent&nbsp;</td>
+<td class="paramname"><em>a1</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>KCursor has to install an eventFilter over the widget you want to
+auto-hide. If you have an own eventFilter() on that widget and stop
+some events by returning true, you might break auto-hiding, because
+KCursor doesn't get those events.
+</p>
+<p>
+In this case, you need to call setAutoHideCursor( widget, true, true );
+to tell KCursor not to install an eventFilter. Then you call this method
+from the beginning of your eventFilter, for example:
+<pre class="fragment">
+ edit = new KEdit( this, "some edit widget" );
+ edit-&gt;installEventFilter( this );
+ KCursor.setAutoHideCursor( edit, true, true );
+
+ [...]
+
+ bool YourClass.eventFilter( QObject *o, QEvent *e )
+ {
+     if ( o == edit ) // only that widget where you enabled auto-hide!
+         KCursor.autoHideEventFilter( o, e );
+
+     // now you can do your own event-processing
+     [...]
+ }
+</pre>
+</p>
+<p>
+Note that you must not call KCursor.autoHideEventFilter() when you
+didn't enable or after disabling auto-hiding.
+</p></div></div><a class="anchor" name="hideCursorDelay"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int hideCursorDelay</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname">)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> the current auto-hide delay time.
+</dd></dl> </p>
+<p>
+Default is 5000, i.e. 5 seconds.
+</p></div></div><a class="anchor" name="setAutoHideCursor"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setAutoHideCursor</td>
+<td>(</td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>w</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>enable</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>customEventFilter=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets auto-hiding the cursor for widget <b>w.</b> Enabling it will result in
+the cursor being hidden when
+<li> a key-event happens </li>
+<li> there are no key-events for a configured time-frame (see </li>
+setHideCursorDelay())
+</p>
+<p>
+The cursor will be shown again when the focus is lost or a mouse-event
+happens.
+</p>
+<p>
+Side effect: when enabling auto-hide, mouseTracking is enabled for the
+specified widget, because it's needed to get mouse-move-events. So
+don't disable mouseTracking for a widget while using auto-hide for it.
+</p>
+<p>
+When disabling auto-hide, mouseTracking will be disabled, so if you need
+mouseTracking after disabling auto-hide, you have to reenable
+mouseTracking.
+</p>
+<p>
+If you want to use auto-hiding for widgets that don't take focus, e.g.
+a QCanvasView, then you have to pass all key-events that should trigger
+auto-hiding to autoHideEventFilter().
+</p></div></div><a class="anchor" name="setHideCursorDelay"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setHideCursorDelay</td>
+<td>(</td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>ms</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the delay time in milliseconds for auto-hiding. When no keyboard
+events arrive for that time-frame, the cursor will be hidden.
+</p>
+<p>
+Default is 5000, i.e. 5 seconds.
+</p></div></div>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

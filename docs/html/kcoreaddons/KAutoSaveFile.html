@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KAutoSaveFile</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KAutoSaveFile Class Reference</h1>
+<code>from PyKDE5.kcoreaddons import *</code>
+<p>
+Inherits: QFile &#x2192; QFileDevice &#x2192; QIODevice &#x2192; QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+<p>\class KAutoSaveFile kautosavefile.h &lt;KAutoSaveFile&gt;
+</p>
+<p>
+Creates and manages a temporary "auto-save" file.
+Autosave files are temporary files that applications use to store
+the unsaved data in a file they have open for
+editing. KAutoSaveFile allows you to easily create and manage such
+files, as well as to recover the unsaved data left over by a
+crashed or otherwise gone process.
+</p>
+<p>
+Each KAutoSaveFile object is associated with one specific file that
+the application holds open. KAutoSaveFile is also a QObject, so it
+can be reparented to the actual opened file object, so as to manage
+the lifetime of the temporary file.
+</p>
+<p>
+Typical use consists of:
+- verifying whether stale autosave files exist for the opened file
+- deciding whether to recover the old, autosaved data
+- if not recovering, creating a KAutoSaveFile object for the opened file
+- during normal execution of the program, periodically save unsaved
+data into the KAutoSaveFile file.
+</p>
+<p>
+KAutoSaveFile holds a lock on the autosave file, so it's safe to
+delete the file and recreate it later. Because of that, disposing
+of stale autosave files should be done with releaseLock(). No lock is
+held on the managed file.
+</p>
+<p>
+Examples:
+Opening a new file:
+<pre class="fragment">
+   void Document.open(const QUrl &amp;url)
+   {
+       // check whether autosave files exist:
+       QList&lt;KAutoSaveFile *&gt; staleFiles = KAutoSaveFile.staleFiles(url);
+       if (!staleFiles.isEmpty()) {
+           if (KMessageBox.questionYesNo(parent,
+                                          "Auto-saved files exist. Do you want to recover them now?",
+                                          "File Recovery",
+                                          "Recover", "Don't recover") == KMessage.Yes) {
+               recoverFiles(staleFiles);
+               return;
+           } else {
+               // remove the stale files
+               foreach (KAutoSaveFile *stale, staleFiles) {
+                   stale-&gt;open(QIODevice.ReadWrite);
+                   delete stale;
+               }
+           }
+       }
+
+       // create new autosave object
+       m_autosave = new KAutoSaveFile(url, this);
+
+       // continue the process of opening file 'url'
+       ...
+   }
+</pre>
+</p>
+<p>
+The function recoverFiles could loop over the list of files and do this:
+<pre class="fragment">
+   foreach (KAutoSaveFile *stale, staleFiles) {
+       if (!stale-&gt;open(QIODevice.ReadWrite)) {
+           // show an error message; we could not steal the lockfile
+           // maybe another application got to the file before us?
+           delete stale;
+           continue;
+       }
+       Document *doc = new Document;
+       doc-&gt;m_autosave = stale;
+       stale-&gt;setParent(doc); // reparent
+
+       doc-&gt;setUrl(stale-&gt;managedFile());
+       doc-&gt;setContents(stale-&gt;readAll());
+       doc-&gt;setState(Document.Modified); // mark it as modified and unsaved
+
+       documentManager-&gt;addDocument(doc);
+   }
+</pre>
+</p>
+<p>
+If the file is unsaved, periodically write the contents to the save file:
+<pre class="fragment">
+   if (!m_autosave-&gt;isOpen() &amp;&amp; !m_autosave-&gt;open(QIODevice.ReadWrite)) {
+       // show error: could not open the autosave file
+   }
+   m_autosave-&gt;write(contents());
+</pre>
+</p>
+<p>
+When the user saves the file, the autosaved file is no longer
+necessary and can be removed or emptied.
+<pre class="fragment">
+    m_autosave-&gt;resize(0);    // leaves the file open
+</pre>
+</p>
+<p>
+<pre class="fragment">
+    m_autosave-&gt;remove();     // closes the file
+</pre>
+</p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Jacob R Rideout &lt;kde@jacobrideout.net&gt; </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KAutoSaveFile">__init__</a> (self, QUrl filename, QObject parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KAutoSaveFile">__init__</a> (self, QObject parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QUrl&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#managedFile">managedFile</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#open">open</a> (self, QIODevice::OpenMode openmode)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#releaseLock">releaseLock</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setManagedFile">setManagedFile</a> (self, QUrl filename)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[KAutoSaveFile]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#allStaleFiles">allStaleFiles</a> (QString applicationName=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[KAutoSaveFile]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#staleFiles">staleFiles</a> (QUrl url, QString applicationName=QString())</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KAutoSaveFile"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QUrl&nbsp;</td>
+<td class="paramname"><em>filename</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructs a KAutoSaveFile for file <b>filename.</b> The temporary
+file is not opened or created until actually needed. The file
+<b>filename</b> does not have to exist for KAutoSaveFile to be
+constructed (if it exists, it will not be touched).
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>filename</em>&nbsp;</td><td> the filename that this KAutoSaveFile refers to
+
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> the parent object
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="KAutoSaveFile"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>
+Constructs a KAutoSaveFile object. Note that you need to call
+setManagedFile() before calling open().
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>parent</em>&nbsp;</td><td> the parent object
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="managedFile"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QUrl managedFile</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the URL of the file managed by KAutoSaveFile. This
+is the same URL that was given to setManagedFile() or the
+KAutoSaveFile constructor.
+</p>
+<p>
+This is the name of the real file being edited by the
+application. To get the name of the temporary file where data
+can be saved, use fileName() (after you have called open()).
+</p></div></div><a class="anchor" name="open"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool open</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QIODevice::OpenMode&nbsp;</td>
+<td class="paramname"><em>openmode</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Opens the autosave file and locks it if it wasn't already
+locked. The name of the temporary file where data can be saved
+to will be set by this function and can be retrieved with
+fileName(). It will not change unless releaseLock() is called. No
+other application will attempt to edit such a file either while
+the lock is held.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>openmode</em>&nbsp;</td><td> the mode that should be used to open the file,
+probably QIODevice.ReadWrite
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the file could be opened (= locked and
+created), false if the operation failed
+</dd></dl>
+</p></div></div><a class="anchor" name="releaseLock"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> releaseLock</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Closes the autosave file resource and removes the lock
+file. The file name returned by fileName() will no longer be
+protected and can be overwritten by another application at any
+time. To obtain a new lock, call open() again.
+</p>
+<p>
+This function calls remove(), so the autosave temporary file
+will be removed too.
+</p></div></div><a class="anchor" name="setManagedFile"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setManagedFile</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QUrl&nbsp;</td>
+<td class="paramname"><em>filename</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the URL of the file managed by KAutoSaveFile. This should
+be the name of the real file being edited by the application.
+If the file was previously set, this function calls releaseLock().
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>filename</em>&nbsp;</td><td> the filename that this KAutoSaveFile refers to
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="allStaleFiles"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[KAutoSaveFile] allStaleFiles</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>applicationName=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Returns all stale autosave files left behind by crashed or
+otherwise gone instances of this application.
+</p>
+<p>
+If not given, the application name is obtained from
+QCoreApplication, so be sure to have set it correctly before
+calling this function.
+</p>
+<p>
+See staleFiles() for information on the returned objects.
+</p></div></div><a class="anchor" name="staleFiles"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[KAutoSaveFile] staleFiles</td>
+<td>(</td>
+<td class="paramtype">QUrl&nbsp;</td>
+<td class="paramname"><em>url</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>applicationName=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Checks for stale autosave files for the file <b>url.</b> Returns a list
+of autosave files that contain autosaved data left behind by
+other instances of the application, due to crashing or
+otherwise uncleanly exiting.
+</p>
+<p>
+It is the application's job to determine what to do with such
+unsaved data. Generally, this is done by asking the user if he
+wants to see the recovered data, and then allowing the user to
+save if he wants to.
+</p>
+<p>
+If not given, the application name is obtained from
+QCoreApplication, so be sure to have set it correctly before
+calling this function.
+</p>
+<p>
+This function returns a list of unopened KAutoSaveFile
+objects. By calling open() on them, the application will steal
+the lock. Subsequent releaseLock() or deleting of the object will
+then erase the stale autosave file.
+</p></div></div>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

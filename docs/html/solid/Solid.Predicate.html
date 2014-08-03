@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Solid.Predicate</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>Predicate Class Reference</h1>
+<code>from PyKDE5.solid import *</code>
+<p>
+
+
+Namespace: Solid<br />
+<h2>Detailed Description</h2>
+
+<p>This class implements predicates for devices.
+</p>
+<p>
+A predicate is a logical condition that a given device can match or not.
+It's a constraint about the value a property must have in a given device
+interface, or any combination (conjunction, disjunction) of such
+constraints.
+</p>
+<p>
+FIXME: Add an example.
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#ComparisonOperator">ComparisonOperator</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;Equals, Mask&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#Type">Type</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;PropertyCheck, Conjunction, Disjunction, InterfaceCheck&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#Predicate">__init__</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#Predicate">__init__</a> (self, Solid::Predicate other)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#Predicate">__init__</a> (self, Solid::DeviceInterface::Type ifaceType, QString property, QVariant value, Solid::Predicate::ComparisonOperator compOperator=Solid.Predicate.ComparisonOperator.Equals)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#Predicate">__init__</a> (self, QString ifaceName, QString property, QVariant value, Solid::Predicate::ComparisonOperator compOperator=Solid.Predicate.ComparisonOperator.Equals)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#Predicate">__init__</a> (self, Solid::DeviceInterface::Type ifaceType)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#Predicate">__init__</a> (self, QString ifaceName)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Predicate::ComparisonOperator&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#comparisonOperator">comparisonOperator</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Predicate&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#firstOperand">firstOperand</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::DeviceInterface::Type&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#interfaceType">interfaceType</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isValid">isValid</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#matches">matches</a> (self, Solid::Device device)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QVariant&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#matchingValue">matchingValue</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Predicate&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#operator &">operator &</a> (self, Solid::Predicate other)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Predicate&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#operator &=">operator &=</a> (self, Solid::Predicate other)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Predicate&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#operator |">operator |</a> (self, Solid::Predicate other)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Predicate&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#operator |=">operator |=</a> (self, Solid::Predicate other)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#propertyName">propertyName</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Predicate&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#secondOperand">secondOperand</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#toString">toString</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Predicate::Type&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#type">type</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QSet<Solid::DeviceInterface::Type>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#usedTypes">usedTypes</a> (self)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Predicate&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#fromString">fromString</a> (QString predicate)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="Predicate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Constructs an invalid predicate.
+</p></div></div><a class="anchor" name="Predicate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::Predicate&nbsp;</td>
+<td class="paramname"><em>other</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Copy constructor.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>other</em>&nbsp;</td><td> the predicate to copy
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="Predicate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::DeviceInterface::Type&nbsp;</td>
+<td class="paramname"><em>ifaceType</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>property</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QVariant&nbsp;</td>
+<td class="paramname"><em>value</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::Predicate::ComparisonOperator&nbsp;</td>
+<td class="paramname"><em>compOperator=Solid.Predicate.ComparisonOperator.Equals</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructs a predicate matching the value of a property in
+a given device interface.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>ifaceType</em>&nbsp;</td><td> the device interface type the device must have
+
+<tr><td></td><td valign="top"><em>property</em>&nbsp;</td><td> the property name of the device interface
+
+<tr><td></td><td valign="top"><em>value</em>&nbsp;</td><td> the value the property must have to make the device match
+
+<tr><td></td><td valign="top"><em>compOperator</em>&nbsp;</td><td> the operator to apply between the property and the value when matching
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="Predicate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>ifaceName</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>property</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QVariant&nbsp;</td>
+<td class="paramname"><em>value</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::Predicate::ComparisonOperator&nbsp;</td>
+<td class="paramname"><em>compOperator=Solid.Predicate.ComparisonOperator.Equals</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructs a predicate matching the value of a property in
+a given device interface.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>ifaceName</em>&nbsp;</td><td> the name of the device interface the device must have
+
+<tr><td></td><td valign="top"><em>property</em>&nbsp;</td><td> the property name of the device interface
+
+<tr><td></td><td valign="top"><em>value</em>&nbsp;</td><td> the value the property must have to make the device match
+
+<tr><td></td><td valign="top"><em>compOperator</em>&nbsp;</td><td> the operator to apply between the property and the value when matching
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="Predicate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::DeviceInterface::Type&nbsp;</td>
+<td class="paramname"><em>ifaceType</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructs a predicate matching devices being of a particular device interface
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>ifaceType</em>&nbsp;</td><td> the device interface the device must have
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="Predicate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>ifaceName</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructs a predicate matching devices being of a particular device interface
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>ifaceName</em>&nbsp;</td><td> the name of the device interface the device must have
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="comparisonOperator"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Predicate::ComparisonOperator comparisonOperator</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the comparison operator used to compare a property's value
+</p>
+<p>
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 4.4
+</dd></dl> <dl class="note" compact><dt><b>Note:</b></dt><dd> This is only valid for Conjunction and Disjunction types
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the comparison operator used
+</dd></dl>
+</p></div></div><a class="anchor" name="firstOperand"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Predicate firstOperand</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>A smaller, inner predicate which is the first to appear and is compared with the second one
+</p>
+<p>
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 4.4
+</dd></dl> <dl class="note" compact><dt><b>Note:</b></dt><dd> This is only valid for Conjunction and Disjunction types
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> The predicate used for the first operand
+</dd></dl>
+</p></div></div><a class="anchor" name="interfaceType"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::DeviceInterface::Type interfaceType</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the interface type.
+</p>
+<p>
+<dl class="note" compact><dt><b>Note:</b></dt><dd> This is only valid for InterfaceCheck and PropertyCheck types
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 4.4
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> a device interface type used by the predicate
+</dd></dl>
+</p></div></div><a class="anchor" name="isValid"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isValid</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Indicates if the predicate is valid.
+</p>
+<p>
+Predicate() is the only invalid predicate.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the predicate is valid, false otherwise
+</dd></dl>
+</p></div></div><a class="anchor" name="matches"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool matches</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::Device&nbsp;</td>
+<td class="paramname"><em>device</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Checks if a device matches the predicate.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>device</em>&nbsp;</td><td> the device to match against the predicate
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the given device matches the predicate, false otherwise
+</dd></dl>
+</p></div></div><a class="anchor" name="matchingValue"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QVariant matchingValue</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the value used when comparing a devices property to see if it matches the predicate
+</p>
+<p>
+<dl class="note" compact><dt><b>Note:</b></dt><dd> This is only valid for the PropertyCheck type
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 4.4
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the value used
+</dd></dl>
+</p></div></div><a class="anchor" name="operator &"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Predicate operator &</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::Predicate&nbsp;</td>
+<td class="paramname"><em>other</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="operator &="></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Predicate operator &=</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::Predicate&nbsp;</td>
+<td class="paramname"><em>other</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="operator |"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Predicate operator |</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::Predicate&nbsp;</td>
+<td class="paramname"><em>other</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="operator |="></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Predicate operator |=</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">Solid::Predicate&nbsp;</td>
+<td class="paramname"><em>other</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="propertyName"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString propertyName</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the property name used when retrieving the value to compare against
+</p>
+<p>
+<dl class="note" compact><dt><b>Note:</b></dt><dd> This is only valid for the PropertyCheck type
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 4.4
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> a property name
+</dd></dl>
+</p></div></div><a class="anchor" name="secondOperand"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Predicate secondOperand</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>A smaller, inner predicate which is the second to appear and is compared with the first one
+</p>
+<p>
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 4.4
+</dd></dl> <dl class="note" compact><dt><b>Note:</b></dt><dd> This is only valid for Conjunction and Disjunction types
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> The predicate used for the second operand
+</dd></dl>
+</p></div></div><a class="anchor" name="toString"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString toString</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Converts the predicate to its string form.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> a string representation of the predicate
+</dd></dl>
+</p></div></div><a class="anchor" name="type"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Predicate::Type type</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the predicate type, used to determine how to handle the predicate
+</p>
+<p>
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 4.4
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the predicate type
+</dd></dl>
+</p></div></div><a class="anchor" name="usedTypes"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QSet<Solid::DeviceInterface::Type> usedTypes</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the device interface types used in this predicate.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> all the device interface types used in this predicate
+</dd></dl>
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="fromString"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Predicate fromString</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>predicate</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Converts a string to a predicate.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>predicate</em>&nbsp;</td><td> the string to convert
+</td></tr> </table></dl>
+<p> <dl class="return" compact><dt><b>Returns:</b></dt><dd> a new valid predicate if the given string is syntactically
+correct, Predicate() otherwise
+</dd></dl>
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="ComparisonOperator"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">ComparisonOperator</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>The comparison operator which can be used for matching within the predicate.
+</p>
+<p>
+- Equals, the property and the value will match for strict equality
+- Mask, the property and the value will match if the bitmasking is not null
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>Equals</em>&nbsp;</td><td><tr><td valign="top"><em>Mask</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="Type"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">Type</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>The predicate type which controls how the predicate is handled
+</p>
+<p>
+- PropertyCheck, the predicate contains a comparison that needs to be matched using a ComparisonOperator
+- Conjunction, the two contained predicates need to be true for this predicate to be true
+- Disjunction, either of the two contained predicates may be true for this predicate to be true
+- InterfaceCheck, the device type is compared
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>PropertyCheck</em>&nbsp;</td><td><tr><td valign="top"><em>Conjunction</em>&nbsp;</td><td><tr><td valign="top"><em>Disjunction</em>&nbsp;</td><td><tr><td valign="top"><em>InterfaceCheck</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

@@ -1,0 +1,1793 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KAboutData</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KAboutData Class Reference</h1>
+<code>from PyKDE5.kcoreaddons import *</code>
+<p>
+
+
+
+<h2>Detailed Description</h2>
+
+<p>This class is used to store information about a program or plugin.
+It can store such values as version number, program name, home page, email address
+for bug reporting, multiple authors and contributors
+(using KAboutPerson), license and copyright information.
+</p>
+<p>
+Currently, the values set here are shown by the "About" box
+(see KAboutDialog), used by the bug report dialog (see KBugReport),
+and by the help shown on command line (see KAboutData.setupCommandLine()).
+</p>
+<p>
+Porting Notes: Since KDE Frameworks 5.0, the translation catalog mechanism
+must provided by your translation framework to load the correct catalog
+instead (eg: KLocalizedString.setApplicationDomain() for KI18n, or
+QCoreApplication.installTranslator() for Qt's translation system). This
+applies to the old setCatalogName() and catalogName() members. But see also
+K4AboutData in kde4support as a compatibility class.
+</p>
+<p>
+Holds information needed by the "About" box and other
+classes.
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Espen Sand (espen@kde.org), David Faure (faure@kde.org) </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KAboutData">__init__</a> (self, KAboutData other)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KAboutData">__init__</a> (self, QString componentName, QString displayName, QString version, QString shortDescription, KAboutLicense::LicenseKey licenseType, QString copyrightStatement=QString(), QString otherText=QString(), QString homePageAddress=QString(), QString bugsEmailAddress=QLatin1String("submit@bugs.kde.org"))</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KAboutData">__init__</a> (self, QString componentName, QString displayName, QString version)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addAuthor">addAuthor</a> (self, QString name, QString task=QString(), QString emailAddress=QString(), QString webAddress=QString(), QString ocsUsername=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addCredit">addCredit</a> (self, QString name, QString task=QString(), QString emailAddress=QString(), QString webAddress=QString(), QString ocsUserName=QString())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addLicense">addLicense</a> (self, KAboutLicense::LicenseKey licenseKey)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addLicenseText">addLicenseText</a> (self, QString license)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#addLicenseTextFile">addLicenseTextFile</a> (self, QString file)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[KAboutPerson]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#authors">authors</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#bugAddress">bugAddress</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#componentName">componentName</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#copyrightStatement">copyrightStatement</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[KAboutPerson]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#credits">credits</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#customAuthorPlainText">customAuthorPlainText</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#customAuthorRichText">customAuthorRichText</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#customAuthorTextEnabled">customAuthorTextEnabled</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#displayName">displayName</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#homepage">homepage</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#internalBugAddress">internalBugAddress</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#internalProgramName">internalProgramName</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#internalVersion">internalVersion</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[KAboutLicense]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#licenses">licenses</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ocsProviderUrl">ocsProviderUrl</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#organizationDomain">organizationDomain</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#otherText">otherText</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#productName">productName</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#programIconName">programIconName</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QVariant&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#programLogo">programLogo</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setBugAddress">setBugAddress</a> (self, QByteArray bugAddress)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setComponentName">setComponentName</a> (self, QString componentName)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setCopyrightStatement">setCopyrightStatement</a> (self, QString copyrightStatement)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setCustomAuthorText">setCustomAuthorText</a> (self, QString plainText, QString richText)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setDisplayName">setDisplayName</a> (self, QString displayName)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setHomepage">setHomepage</a> (self, QString homepage)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setLicense">setLicense</a> (self, KAboutLicense::LicenseKey licenseKey)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setLicenseText">setLicenseText</a> (self, QString license)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setLicenseTextFile">setLicenseTextFile</a> (self, QString file)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setOcsProvider">setOcsProvider</a> (self, QString providerUrl)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setOrganizationDomain">setOrganizationDomain</a> (self, QByteArray domain)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setOtherText">setOtherText</a> (self, QString otherText)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setProductName">setProductName</a> (self, QByteArray name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setProgramIconName">setProgramIconName</a> (self, QString iconName)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setProgramLogo">setProgramLogo</a> (self, QVariant image)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setShortDescription">setShortDescription</a> (self, QString shortDescription)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setTranslator">setTranslator</a> (self, QString name, QString emailAddress)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setVersion">setVersion</a> (self, QByteArray version)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#shortDescription">shortDescription</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[KAboutPerson]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#translators">translators</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#unsetCustomAuthorText">unsetCustomAuthorText</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#version">version</a> (self)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aboutTranslationTeam">aboutTranslationTeam</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#applicationData">applicationData</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KAboutData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#pluginData">pluginData</a> (QString componentName)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#registerPluginData">registerPluginData</a> (KAboutData aboutData)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setApplicationData">setApplicationData</a> (KAboutData aboutData)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KAboutData"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KAboutData&nbsp;</td>
+<td class="paramname"><em>other</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Copy constructor. Performs a deep copy.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>other</em>&nbsp;</td><td> object to copy
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="KAboutData"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>componentName</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>displayName</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>version</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>shortDescription</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KAboutLicense::LicenseKey&nbsp;</td>
+<td class="paramname"><em>licenseType</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>copyrightStatement=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>otherText=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>homePageAddress=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>bugsEmailAddress=QLatin1String("submit@bugs.kde.org")</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructor.
+</p>
+<p>
+Porting Note: The <b>catalogName</b> parameter present in KDE4 was
+deprecated and removed. See also K4AboutData
+in kde4support if this feature is needed for compatibility purposes, or
+consider using componentName() instead.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>componentName</em>&nbsp;</td><td> The program name or plugin name used internally.
+Example: "kwrite".
+</td></tr>
+
+<tr><td></td><td valign="top"><em>displayName</em>&nbsp;</td><td> A displayable name for the program or plugin. This string
+should be translated. Example: i18n("KWrite")
+</td></tr>
+
+<tr><td></td><td valign="top"><em>version</em>&nbsp;</td><td> The component version string.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>shortDescription</em>&nbsp;</td><td> A short description of what the component does.
+This string should be translated.
+Example: i18n("A simple text editor.")
+</td></tr>
+
+<tr><td></td><td valign="top"><em>licenseType</em>&nbsp;</td><td> The license identifier. Use setLicenseText or
+setLicenseTextFile if you use a license not predefined here.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>copyrightStatement</em>&nbsp;</td><td> A copyright statement, that can look like this:
+i18n("Copyright (C) 1999-2000 Name"). The string specified here is
+taken verbatim; the author information from addAuthor is not used.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>otherText</em>&nbsp;</td><td> Some free form text, that can contain any kind of
+information. The text can contain newlines. This string
+should be translated.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>homePageAddress</em>&nbsp;</td><td> The component's homepage string.
+Start the address with "http://". "http://some.domain" is
+is correct, "some.domain" is not.
+IMPORTANT: if you set a home page address, this will change the "organization domain"
+of the application, which is used for automatic D-Bus registration.
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> setOrganizationDomain
+</dd></dl> </p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>bugsEmailAddress</em>&nbsp;</td><td> The bug report email address string.
+This defaults to the kde.org bug system.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="KAboutData"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>componentName</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>displayName</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>version</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Constructor.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>componentName</em>&nbsp;</td><td> The program name or plugin name used internally.
+Example: "kwrite".
+</td></tr>
+
+<tr><td></td><td valign="top"><em>displayName</em>&nbsp;</td><td> A displayable name for the program or plugin. This string
+should be translated. Example: i18n("KWrite")
+</td></tr>
+
+<tr><td></td><td valign="top"><em>version</em>&nbsp;</td><td> The component version string.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="addAuthor"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData addAuthor</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>name</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>task=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>emailAddress=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>webAddress=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>ocsUsername=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines an author.
+</p>
+<p>
+You can call this function as many times as you need. Each entry is
+appended to a list. The person in the first entry is assumed to be
+the leader of the project.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>name</em>&nbsp;</td><td> The developer's name. It should be translated.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>task</em>&nbsp;</td><td> What the person is responsible for. This text can contain
+newlines. It should be translated.
+Can be left empty.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>emailAddress</em>&nbsp;</td><td> An Email address where the person can be reached.
+Can be left empty.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>webAddress</em>&nbsp;</td><td> The person's homepage or a relevant link.
+Start the address with "http://". "http://some.domain" is
+correct, "some.domain" is not. Can be left empty.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>ocsUsername</em>&nbsp;</td><td> The person's Open Collaboration Services username.
+The provider can be optionally specified with <dl class="see" compact><dt><b>See also:</b></dt><dd> setOcsProvider.
+</dd></dl>
+</p></div></div><a class="anchor" name="addCredit"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData addCredit</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>name</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>task=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>emailAddress=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>webAddress=QString()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>ocsUserName=QString()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines a person that deserves credit.
+</p>
+<p>
+You can call this function as many times as you need. Each entry
+is appended to a list.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>name</em>&nbsp;</td><td> The person's name. It should be translated.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>task</em>&nbsp;</td><td> What the person has done to deserve the honor. The
+text can contain newlines. It should be translated.
+Can be left empty.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>emailAddress</em>&nbsp;</td><td> An email address when the person can be reached.
+Can be left empty.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>webAddress</em>&nbsp;</td><td> The person's homepage or a relevant link.
+Start the address with "http://". "http://some.domain" is
+is correct, "some.domain" is not. Can be left empty.
+</td></tr>
+
+<tr><td></td><td valign="top"><em>ocsUsername</em>&nbsp;</td><td> The person's Open Collaboration Services username.
+The provider can be optionally specified with <dl class="see" compact><dt><b>See also:</b></dt><dd> setOcsProvider.
+</dd></dl>
+</p></div></div><a class="anchor" name="addLicense"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData addLicense</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KAboutLicense::LicenseKey&nbsp;</td>
+<td class="paramname"><em>licenseKey</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Adds a license identifier.
+</p>
+<p>
+If there is only one unknown license set, e.g. by using the default
+parameter in the constructor, that one is replaced.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>licenseKey</em>&nbsp;</td><td> The license identifier.
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> setLicenseText, addLicenseText, addLicenseTextFile
+</dd></dl>
+</p></div></div><a class="anchor" name="addLicenseText"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData addLicenseText</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>license</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Adds a license text, which is translated.
+</p>
+<p>
+If there is only one unknown license set, e.g. by using the default
+parameter in the constructor, that one is replaced.
+</p>
+<p>
+Example:
+<pre class="fragment">
+ addLicenseText( i18n("This is my license") );
+</pre>
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>license</em>&nbsp;</td><td> The license text.
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> setLicenseText, addLicense, addLicenseTextFile
+</dd></dl>
+</p></div></div><a class="anchor" name="addLicenseTextFile"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData addLicenseTextFile</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>file</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Adds a license text by pointing to a file where it resides.
+The file format has to be plain text in an encoding compatible to the locale.
+</p>
+<p>
+If there is only one unknown license set, e.g. by using the default
+parameter in the constructor, that one is replaced.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>file</em>&nbsp;</td><td> Path to the file in the local filesystem containing the license text.
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> addLicenseText, addLicense, setLicenseTextFile
+</dd></dl>
+</p></div></div><a class="anchor" name="authors"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[KAboutPerson] authors</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns a list of authors.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> author information (list of persons).
+</dd></dl>
+</p></div></div><a class="anchor" name="bugAddress"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString bugAddress</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the email address for bugs.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the email address where to report bugs.
+</dd></dl>
+</p></div></div><a class="anchor" name="componentName"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString componentName</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the application's internal name.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the internal program name.
+</dd></dl>
+</p></div></div><a class="anchor" name="copyrightStatement"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString copyrightStatement</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the copyright statement.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the copyright statement. Can be QString() if not set.
+</dd></dl>
+</p></div></div><a class="anchor" name="credits"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[KAboutPerson] credits</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns a list of persons who contributed.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> credit information (list of persons).
+</dd></dl>
+</p></div></div><a class="anchor" name="customAuthorPlainText"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString customAuthorPlainText</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the plain text displayed around the list of authors instead
+of the default message telling users to send bug reports to bugAddress().
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the plain text displayed around the list of authors instead
+of the default message. Can be QString().
+</dd></dl>
+</p></div></div><a class="anchor" name="customAuthorRichText"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString customAuthorRichText</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the rich text displayed around the list of authors instead
+of the default message telling users to send bug reports to bugAddress().
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the rich text displayed around the list of authors instead
+of the default message. Can be QString().
+</dd></dl>
+</p></div></div><a class="anchor" name="customAuthorTextEnabled"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool customAuthorTextEnabled</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns whether custom text should be displayed around the list of
+authors.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> whether custom text should be displayed around the list of
+authors.
+</dd></dl>
+</p></div></div><a class="anchor" name="displayName"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString displayName</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the translated program name.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the program name (translated).
+</dd></dl>
+</p></div></div><a class="anchor" name="homepage"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString homepage</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the application homepage.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the application homepage URL. Can be QString() if
+not set.
+</dd></dl>
+</p></div></div><a class="anchor" name="internalBugAddress"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString internalBugAddress</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="internal" compact><dt><b>Internal:</b></dt><dd>
+Provided for use by KCrash
+</dd></dl>
+</p></div></div><a class="anchor" name="internalProgramName"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString internalProgramName</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="internal" compact><dt><b>Internal:</b></dt><dd>
+Provided for use by KCrash
+</dd></dl>
+</p></div></div><a class="anchor" name="internalVersion"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString internalVersion</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="internal" compact><dt><b>Internal:</b></dt><dd>
+Provided for use by KCrash
+</dd></dl>
+</p></div></div><a class="anchor" name="licenses"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[KAboutLicense] licenses</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns a list of licenses.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> licenses information (list of licenses)
+</dd></dl>
+</p></div></div><a class="anchor" name="ocsProviderUrl"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString ocsProviderUrl</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the chosen Open Collaboration Services provider URL.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the provider URL.
+</dd></dl>
+</p></div></div><a class="anchor" name="organizationDomain"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString organizationDomain</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the domain name of the organization that wrote this application.
+</p>
+<p>
+Used by the automatic registration to D-Bus done by KApplication and KUniqueApplication.
+</p></div></div><a class="anchor" name="otherText"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString otherText</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns a translated, free form text.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the free form text (translated). Can be QString() if not set.
+</dd></dl>
+</p></div></div><a class="anchor" name="productName"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString productName</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the application's product name, which will be used in KBugReport
+dialog. By default it returns componentName(), otherwise the one which is set
+with setProductName()
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the product name.
+</dd></dl>
+</p></div></div><a class="anchor" name="programIconName"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString programIconName</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the program's icon name.
+</p>
+<p>
+The default value is componentName().
+Use setProgramIconName() if you need to have an icon
+whose name is different from the internal application name.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the program's icon name.
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> setProgramIconName()
+</dd></dl>
+</p></div></div><a class="anchor" name="programLogo"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QVariant programLogo</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the program logo image.
+</p>
+<p>
+Because KAboutData is a core class it cannot use QImage directly,
+so this is a QVariant containing a QImage.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the program logo data, or a null image if there is
+no custom application logo defined.
+</dd></dl>
+</p></div></div><a class="anchor" name="setBugAddress"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setBugAddress</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QByteArray&nbsp;</td>
+<td class="paramname"><em>bugAddress</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines the address where bug reports should be sent.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>bugAddress</em>&nbsp;</td><td> The bug report email address string.
+This defaults to the kde.org bug system.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setComponentName"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setComponentName</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>componentName</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines the component name used internally.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>componentName</em>&nbsp;</td><td> The application or plugin name. Example: "kate".
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setCopyrightStatement"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setCopyrightStatement</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>copyrightStatement</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines the copyright statement to show when displaying the license.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>copyrightStatement</em>&nbsp;</td><td> A copyright statement, that can look like
+this: i18n("Copyright (C) 1999-2000 Name"). The string specified here is
+taken verbatim; the author information from addAuthor is not used.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setCustomAuthorText"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setCustomAuthorText</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>plainText</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>richText</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the custom text displayed around the list of authors instead
+of the default message telling users to send bug reports to bugAddress().
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>plainText</em>&nbsp;</td><td> The plain text.
+
+<tr><td></td><td valign="top"><em>richText</em>&nbsp;</td><td> The rich text.
+</td></tr>
+</table></dl>
+<p> Setting both to parameters to QString() will cause no message to be
+displayed at all. Call unsetCustomAuthorText() to revert to the default
+message.
+</p></div></div><a class="anchor" name="setDisplayName"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setDisplayName</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>displayName</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines the displayable component name string.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>displayName</em>&nbsp;</td><td> The display name. This string should be
+translated.
+Example: i18n("Advanced Text Editor").
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setHomepage"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setHomepage</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>homepage</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines the program homepage.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>homepage</em>&nbsp;</td><td> The program homepage string.
+Start the address with "http://". "http://kate.kde.org"
+is correct but "kate.kde.org" is not.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setLicense"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setLicense</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KAboutLicense::LicenseKey&nbsp;</td>
+<td class="paramname"><em>licenseKey</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines the license identifier.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>licenseKey</em>&nbsp;</td><td> The license identifier.
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> addLicenseText, setLicenseText, setLicenseTextFile
+</dd></dl>
+</p></div></div><a class="anchor" name="setLicenseText"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setLicenseText</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>license</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines a license text, which is translated.
+</p>
+<p>
+Example:
+<pre class="fragment">
+ setLicenseText( i18n("This is my license") );
+</pre>
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>license</em>&nbsp;</td><td> The license text.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setLicenseTextFile"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setLicenseTextFile</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>file</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines a license text by pointing to a file where it resides.
+The file format has to be plain text in an encoding compatible to the locale.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>file</em>&nbsp;</td><td> Path to the file in the local filesystem containing the license text.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setOcsProvider"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setOcsProvider</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>providerUrl</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Specifies an Open Collaboration Services provider by URL.
+A provider file must be available for the chosen provider.
+</p>
+<p>
+Use this if you need to override the default provider.
+</p>
+<p>
+If this method is not used, all the KAboutPerson OCS usernames
+will be used with the openDesktop.org entry from the default
+provider file.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>providerUrl</em>&nbsp;</td><td> The provider URL as defined in the provider file.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setOrganizationDomain"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setOrganizationDomain</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QByteArray&nbsp;</td>
+<td class="paramname"><em>domain</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines the Internet domain of the organization that wrote this application.
+The domain is set to kde.org by default, or the domain of the homePageAddress constructor argument,
+if set.
+</p>
+<p>
+Make sure to call setOrganizationDomain if your product is developed out of the
+kde.org version-control system.
+</p>
+<p>
+Used by the automatic registration to D-Bus done by KApplication and KUniqueApplication.
+</p>
+<p>
+IMPORTANT: if the organization domain is set, the .desktop file that describes your
+application should have an entry like X-DBUS-ServiceName=reversed_domain.kmyapp
+For instance kwrite passes "http://www.kate-editor.org" as the homePageAddress so it needs
+X-DBUS-ServiceName=org.kate-editor.kwrite in its kwrite.desktop file.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>domain</em>&nbsp;</td><td> the domain name, for instance kde.org, koffice.org, kdevelop.org, etc.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setOtherText"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setOtherText</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>otherText</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines the additional text to show in the about dialog.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>otherText</em>&nbsp;</td><td> Some free form text, that can contain any kind of
+information. The text can contain newlines. This string
+should be translated.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setProductName"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setProductName</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QByteArray&nbsp;</td>
+<td class="paramname"><em>name</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines the product name which will be used in the KBugReport dialog.
+By default it's the componentName, but you can overwrite it here to provide
+support for special components e.g. in the form 'product/component',
+such as 'kontact/summary'.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>name</em>&nbsp;</td><td> The name of product
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setProgramIconName"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setProgramIconName</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>iconName</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines the program icon.
+</p>
+<p>
+Use this if you need to have an application icon
+whose name is different than the application name.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>iconName</em>&nbsp;</td><td> name of the icon. Example: "accessories-text-editor"
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> programIconName()
+</dd></dl>
+</p></div></div><a class="anchor" name="setProgramLogo"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setProgramLogo</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QVariant&nbsp;</td>
+<td class="paramname"><em>image</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines the program logo.
+</p>
+<p>
+Use this if you need to have an application logo
+in AboutData other than the application icon.
+</p>
+<p>
+Because KAboutData is a core class it cannot use QImage directly,
+so this is a QVariant that should contain a QImage.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>image</em>&nbsp;</td><td> logo image.
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> programLogo()
+</dd></dl>
+</p></div></div><a class="anchor" name="setShortDescription"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setShortDescription</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>shortDescription</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines a short description of what the program does.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>shortDescription</em>&nbsp;</td><td> The program description. This string should
+be translated. Example: i18n("An advanced text
+editor with syntax highlighting support.").
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setTranslator"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setTranslator</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>name</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>emailAddress</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the name(s) of the translator(s) of the GUI.
+</p>
+<p>
+Since this depends on the language, just use a dummy text marked for
+translation.
+</p>
+<p>
+The canonical use is:
+</p>
+<p>
+<pre class="fragment">
+ setTranslator(ki18nc("NAME OF TRANSLATORS", "Your names"),
+               ki18nc("EMAIL OF TRANSLATORS", "Your emails"));
+</pre>
+</p>
+<p>
+The translator can then translate this dummy text with his name
+or with a list of names separated with ",".
+If there is no translation or the application is used with the
+default language, this function call is ignored.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>name</em>&nbsp;</td><td> the name(s) of the translator(s)
+
+<tr><td></td><td valign="top"><em>emailAddress</em>&nbsp;</td><td> the email address(es) of the translator(s)
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> KAboutTranslator
+</dd></dl>
+</p></div></div><a class="anchor" name="setVersion"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData setVersion</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QByteArray&nbsp;</td>
+<td class="paramname"><em>version</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Defines the program version string.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>version</em>&nbsp;</td><td> The program version.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="shortDescription"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString shortDescription</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns a short, translated description.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the short description (translated). Can be
+QString() if not set.
+</dd></dl>
+</p></div></div><a class="anchor" name="translators"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[KAboutPerson] translators</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns a list of translators.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> translators information (list of persons)
+</dd></dl>
+</p></div></div><a class="anchor" name="unsetCustomAuthorText"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData unsetCustomAuthorText</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Clears any custom text displayed around the list of authors and falls
+back to the default message telling users to send bug reports to
+bugAddress().
+</p></div></div><a class="anchor" name="version"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString version</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the program's version.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the version string.
+</dd></dl>
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="aboutTranslationTeam"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString aboutTranslationTeam</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname">)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns a message about the translation team.
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> a message about the translation team
+</dd></dl>
+</p></div></div><a class="anchor" name="applicationData"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData applicationData</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname">)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Returns the KAboutData for the application.
+This contains information such as authors, license, etc.
+provided that the main() called setApplicationData.
+</p></div></div><a class="anchor" name="pluginData"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KAboutData pluginData</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>componentName</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Return the KAboutData for the given plugin identified by <b>componentName.</b>
+</p></div></div><a class="anchor" name="registerPluginData"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> registerPluginData</td>
+<td>(</td>
+<td class="paramtype">KAboutData&nbsp;</td>
+<td class="paramname"><em>aboutData</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Register the KAboutData information for a plugin.
+Call this from the constructor of the plugin.
+This will register the plugin's <b>aboutData</b> under the component name
+that was set in <b>aboutData.</b>
+</p></div></div><a class="anchor" name="setApplicationData"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setApplicationData</td>
+<td>(</td>
+<td class="paramtype">KAboutData&nbsp;</td>
+<td class="paramname"><em>aboutData</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the application data for this application.
+</p>
+<p>
+In addition to changing the result of applicationData(), this initializes
+the relevant properties of QCoreApplication (and its subclasses) with
+information from <b>aboutData.</b>
+</p></div></div>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

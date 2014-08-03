@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KSelectionProxyModel</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KSelectionProxyModel Class Reference</h1>
+<code>from PyKDE5.kitemmodels import *</code>
+<p>
+Inherits: QAbstractProxyModel &#x2192; QAbstractItemModel &#x2192; QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+<p>A Proxy Model which presents a subset of its source model to observers.
+</p>
+<p>
+The KSelectionProxyModel is most useful as a convenience for displaying the selection in one view in
+another view. The selectionModel of the initial view is used to create a proxied model which is filtered
+based on the configuration of this class.
+</p>
+<p>
+For example, when a user clicks a mail folder in one view in an email application, the contained emails
+should be displayed in another view.
+</p>
+<p>
+This takes away the need for the developer to handle the selection between the views, including all the
+mapToSource, mapFromSource and setRootIndex calls.
+</p>
+<p>
+<pre class="fragment">
+MyModel *sourceModel = new MyModel(this);
+QTreeView *leftView = new QTreeView(this);
+leftView-&gt;setModel(sourceModel);
+
+KSelectionProxyModel *selectionProxy = new KSelectionProxyModel(leftView-&gt;selectionModel(), this);
+selectionProxy-&gt;setSourceModel(sourceModel);
+
+QTreeView *rightView = new QTreeView(this);
+rightView-&gt;setModel(selectionProxy);
+</pre>
+</p>
+<p>
+<div align="center"><img src="../images/selectionproxymodelsimpleselection.png" /><p><strong> "A Selection in one view creating a model for use with another view." </strong></p></div>
+</p>
+<p>
+The KSelectionProxyModel can handle complex selections.
+</p>
+<p>
+<div align="center"><img src="../images/selectionproxymodelmultipleselection.png" /><p><strong> "Non-contiguous selection creating a new simple model in a second view." </strong></p></div>
+</p>
+<p>
+The contents of the secondary view depends on the selection in the primary view, and the configuration of the proxy model.
+See KSelectionProxyModel.setFilterBehavior for the different possible configurations.
+</p>
+<p>
+For example, if the filterBehavior is SubTrees, selecting another item in an already selected subtree has no effect.
+</p>
+<p>
+<div align="center"><img src="../images/selectionproxymodelmultipleselection-withdescendant.png" /><p><strong> "Selecting an item and its descendant." </strong></p></div>
+</p>
+<p>
+See the test application in KDE/kdelibs/kdeui/tests/proxymodeltestapp to try out the valid configurations.
+</p>
+<p>
+<div align="center"><img src="../images/kselectionproxymodel-testapp.png" /><p><strong> "KSelectionProxyModel test application" </strong></p></div>
+</p>
+<p>
+Obviously, the KSelectionProxyModel may be used in a view, or further processed with other proxy models.
+See KAddressBook and AkonadiConsole in kdepim for examples which use a further KDescendantsProxyModel
+and QSortFilterProxyModel on top of a KSelectionProxyModel.
+</p>
+<p>
+Additionally, this class can be used to programmatically choose some items from the source model to display in the view. For example,
+this is how the Favourite Folder View in KMail works, and is also used in unit testing.
+</p>
+<p>
+See also: http://doc.trolltech.com/4.5/model-view-proxy-models.html
+</p>
+<p>
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 4.4
+</dd></dl> 
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Stephen Kelly &lt;steveire@gmail.com&gt; </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#FilterBehavior">FilterBehavior</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;SubTrees, SubTreeRoots, SubTreesWithoutRoots, ExactSelection, ChildrenOfExactSelection&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KSelectionProxyModel">__init__</a> (self, QItemSelectionModel selectionModel, QObject parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#columnCount">columnCount</a> (self, QModelIndex a0=QModelIndex())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QVariant&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#data">data</a> (self, QModelIndex index, int role=Qt.DisplayRole)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#dropMimeData">dropMimeData</a> (self, QMimeData data, <a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::DropAction</a> action, int row, int column, QModelIndex parent)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KSelectionProxyModel::FilterBehavior&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#filterBehavior">filterBehavior</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::ItemFlags</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#flags">flags</a> (self, QModelIndex index)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#hasChildren">hasChildren</a> (self, QModelIndex parent=QModelIndex())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QVariant&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#headerData">headerData</a> (self, int section, <a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::Orientation</a> orientation, int role=Qt.DisplayRole)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QModelIndex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#index">index</a> (self, int a0, int a1, QModelIndex a2=QModelIndex())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QModelIndex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mapFromSource">mapFromSource</a> (self, QModelIndex sourceIndex)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QItemSelection&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mapSelectionFromSource">mapSelectionFromSource</a> (self, QItemSelection selection)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QItemSelection&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mapSelectionToSource">mapSelectionToSource</a> (self, QItemSelection selection)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QModelIndex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mapToSource">mapToSource</a> (self, QModelIndex proxyIndex)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[QModelIndex]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#match">match</a> (self, QModelIndex start, int role, QVariant value, int hits=1, <a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::MatchFlags</a> flags=Qt.MatchFlags(Qt.MatchStartsWith|Qt.MatchWrap))</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QMimeData&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mimeData">mimeData</a> (self, [QModelIndex] indexes)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QStringList&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#mimeTypes">mimeTypes</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QModelIndex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#parent">parent</a> (self, QModelIndex a0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#rowCount">rowCount</a> (self, QModelIndex parent=QModelIndex())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QItemSelectionModel&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#selectionModel">selectionModel</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setFilterBehavior">setFilterBehavior</a> (self, KSelectionProxyModel::FilterBehavior behavior)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setSourceModel">setSourceModel</a> (self, QAbstractItemModel sourceModel)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[QPersistentModelIndex]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#sourceRootIndexes">sourceRootIndexes</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::DropActions</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#supportedDropActions">supportedDropActions</a> (self)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KSelectionProxyModel"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QItemSelectionModel&nbsp;</td>
+<td class="paramname"><em>selectionModel</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>ctor.
+</p>
+<p>
+<b>selectionModel</b> The selection model used to filter what is presented by the proxy.
+</p></div></div><a class="anchor" name="columnCount"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int columnCount</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>a0=QModelIndex()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="data"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QVariant data</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>index</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>role=Qt.DisplayRole</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="dropMimeData"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool dropMimeData</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QMimeData&nbsp;</td>
+<td class="paramname"><em>data</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::DropAction</a>&nbsp;</td>
+<td class="paramname"><em>action</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>row</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>column</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>parent</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="filterBehavior"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KSelectionProxyModel::FilterBehavior filterBehavior</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="flags"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::ItemFlags</a> flags</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>index</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="hasChildren"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool hasChildren</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>parent=QModelIndex()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="headerData"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QVariant headerData</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>section</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::Orientation</a>&nbsp;</td>
+<td class="paramname"><em>orientation</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>role=Qt.DisplayRole</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="index"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QModelIndex index</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>a0</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>a1</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>a2=QModelIndex()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="mapFromSource"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QModelIndex mapFromSource</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>sourceIndex</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="mapSelectionFromSource"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QItemSelection mapSelectionFromSource</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QItemSelection&nbsp;</td>
+<td class="paramname"><em>selection</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="mapSelectionToSource"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QItemSelection mapSelectionToSource</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QItemSelection&nbsp;</td>
+<td class="paramname"><em>selection</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="mapToSource"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QModelIndex mapToSource</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>proxyIndex</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="match"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[QModelIndex] match</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>start</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>role</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QVariant&nbsp;</td>
+<td class="paramname"><em>value</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>hits=1</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::MatchFlags</a>&nbsp;</td>
+<td class="paramname"><em>flags=Qt.MatchFlags(Qt.MatchStartsWith|Qt.MatchWrap)</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="mimeData"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QMimeData mimeData</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">[QModelIndex]&nbsp;</td>
+<td class="paramname"><em>indexes</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="mimeTypes"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QStringList mimeTypes</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="parent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QModelIndex parent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>a0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="rowCount"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int rowCount</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>parent=QModelIndex()</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="selectionModel"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QItemSelectionModel selectionModel</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="setFilterBehavior"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setFilterBehavior</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KSelectionProxyModel::FilterBehavior&nbsp;</td>
+<td class="paramname"><em>behavior</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set the filter behaviors of this model.
+The filter behaviors of the model govern the content of the model based on the selection of the contained QItemSelectionModel.
+</p>
+<p>
+See kdeui/proxymodeltestapp to try out the different proxy model behaviors.
+</p>
+<p>
+The most useful behaviors are SubTrees, ExactSelection and ChildrenOfExactSelection.
+</p>
+<p>
+The default behavior is SubTrees. This means that this proxy model will contain the roots of the items in the source model.
+Any descendants which are also selected have no additional effect.
+For example if the source model is like:
+</p>
+<p>
+@verbatim
+(root)
+- A
+- B
+- C
+- D
+- E
+- F
+- G
+- H
+- I
+- J
+- K
+- L
+@endverbatim
+</p>
+<p>
+And A, B, C and D are selected, the proxy will contain:
+</p>
+<p>
+@verbatim
+(root)
+- A
+- B
+- C
+- D
+- E
+- F
+- G
+@endverbatim
+</p>
+<p>
+That is, selecting 'D' or 'C' if 'B' is also selected has no effect. If 'B' is de-selected, then 'C' amd 'D' become top-level items:
+</p>
+<p>
+@verbatim
+(root)
+- A
+- C
+- D
+- E
+- F
+- G
+@endverbatim
+</p>
+<p>
+This is the behavior used by KJots when rendering books.
+</p>
+<p>
+If the behavior is set to SubTreeRoots, then the children of selected indexes are not part of the model. If 'A', 'B' and 'D' are selected,
+</p>
+<p>
+@verbatim
+(root)
+- A
+- B
+@endverbatim
+</p>
+<p>
+Note that although 'D' is selected, it is not part of the proxy model, because its parent 'B' is already selected.
+</p>
+<p>
+SubTreesWithoutRoots has the effect of not making the selected items part of the model, but making their children part of the model instead. If 'A', 'B' and 'I' are selected:
+</p>
+<p>
+@verbatim
+(root)
+- C
+- D
+- E
+- F
+- G
+- J
+- K
+- L
+@endverbatim
+</p>
+<p>
+Note that 'A' has no children, so selecting it has no outward effect on the model.
+</p>
+<p>
+ChildrenOfExactSelection causes the proxy model to contain the children of the selected indexes,but further descendants are omitted.
+Additionally, if descendants of an already selected index are selected, their children are part of the proxy model.
+For example, if 'A', 'B', 'D' and 'I' are selected:
+</p>
+<p>
+@verbatim
+(root)
+- C
+- D
+- E
+- G
+- J
+- K
+- L
+@endverbatim
+</p>
+<p>
+This would be useful for example if showing containers (for example maildirs) in one view and their items in another. Sub-maildirs would still appear in the proxy, but
+could be filtered out using a QSortfilterProxyModel.
+</p>
+<p>
+The ExactSelection behavior causes the selected items to be part of the proxy model, even if their ancestors are already selected, but children of selected items are not included.
+</p>
+<p>
+Again, if 'A', 'B', 'D' and 'I' are selected:
+</p>
+<p>
+@verbatim
+(root)
+- A
+- B
+- D
+- I
+@endverbatim
+</p>
+<p>
+This is the behavior used by the Favourite Folder View in KMail.
+</p></div></div><a class="anchor" name="setSourceModel"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setSourceModel</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QAbstractItemModel&nbsp;</td>
+<td class="paramname"><em>sourceModel</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>reimp.
+</p></div></div><a class="anchor" name="sourceRootIndexes"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[QPersistentModelIndex] sourceRootIndexes</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="supportedDropActions"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::DropActions</a> supportedDropActions</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="FilterBehavior"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">FilterBehavior</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>SubTrees</em>&nbsp;</td><td><tr><td valign="top"><em>SubTreeRoots</em>&nbsp;</td><td><tr><td valign="top"><em>SubTreesWithoutRoots</em>&nbsp;</td><td><tr><td valign="top"><em>ExactSelection</em>&nbsp;</td><td><tr><td valign="top"><em>ChildrenOfExactSelection</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

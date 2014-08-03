@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KCategorizedSortFilterProxyModel</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KCategorizedSortFilterProxyModel Class Reference</h1>
+<code>from PyKDE5.kitemviews import *</code>
+<p>
+Inherits: QSortFilterProxyModel &#x2192; QAbstractProxyModel &#x2192; QAbstractItemModel &#x2192; QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+<p>This class lets you categorize a view. It is meant to be used along with
+KCategorizedView class.
+</p>
+<p>
+In general terms all you need to do is to reimplement subSortLessThan() and
+compareCategories() methods. In order to make categorization work, you need
+to also call setCategorizedModel() class to enable it, since the categorization
+is disabled by default.
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> KCategorizedView
+</dd></dl> </p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Rafael Fernández López &lt;ereslibre@kde.org&gt; </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#AdditionalRoles">AdditionalRoles</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;CategoryDisplayRole, CategorySortRole&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KCategorizedSortFilterProxyModel">__init__</a> (self, QObject parent=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#compareCategories">compareCategories</a> (self, QModelIndex left, QModelIndex right)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isCategorizedModel">isCategorizedModel</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#lessThan">lessThan</a> (self, QModelIndex left, QModelIndex right)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setCategorizedModel">setCategorizedModel</a> (self, bool categorizedModel)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setSortCategoriesByNaturalComparison">setSortCategoriesByNaturalComparison</a> (self, bool sortCategoriesByNaturalComparison)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#sort">sort</a> (self, int column, <a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::SortOrder</a> order=Qt.AscendingOrder)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#sortCategoriesByNaturalComparison">sortCategoriesByNaturalComparison</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#sortColumn">sortColumn</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::SortOrder</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#sortOrder">sortOrder</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#subSortLessThan">subSortLessThan</a> (self, QModelIndex left, QModelIndex right)</td></tr>
+</table>
+<hr><h2>Method Documentation</h2><a class="anchor" name="KCategorizedSortFilterProxyModel"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>parent=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="compareCategories"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int compareCategories</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>left</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>right</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This method compares the category of the <b>left</b> index with the category
+of the <b>right</b> index.
+</p>
+<p>
+Internally and if not reimplemented, this method will ask for <b>left</b> and
+<b>right</b> models for role CategorySortRole. In order to correctly sort
+categories, the data() metod of the model should return a qlonglong (or numeric) value, or
+a QString object. QString objects will be sorted with QString.localeAwareCompare if
+sortCategoriesByNaturalComparison() is true.
+</p>
+<p>
+<dl class="note" compact><dt><b>Note:</b></dt><dd> Please have present that:
+QString(QChar(QChar.ObjectReplacementCharacter)) &gt;
+QString(QChar(QChar.ReplacementCharacter)) &gt;
+[ all possible strings ] &gt;
+QString();
+</dd></dl> </p>
+<p>
+This means that QString() will be sorted the first one, while
+QString(QChar(QChar.ObjectReplacementCharacter)) and
+QString(QChar(QChar.ReplacementCharacter)) will be sorted in last
+position.
+</p>
+<p>
+<dl class="warning" compact><dt><b>Warning:</b></dt><dd> Please note that data() method of the model should return always
+information of the same type. If you return a QString for an index,
+you should return always QStrings for all indexes for role CategorySortRole
+in order to correctly sort categories. You can't mix by returning
+a QString for one index, and a qlonglong for other.
+</dd></dl> </p>
+<p>
+<dl class="note" compact><dt><b>Note:</b></dt><dd> If you need a more complex layout, you will have to reimplement this
+method.
+</dd></dl> </p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> A negative value if the category of <b>left</b> should be placed before the
+category of <b>right.</b> 0 if <b>left</b> and <b>right</b> are on the same category, and
+a positive value if the category of <b>left</b> should be placed after the
+category of <b>right.</b>
+</dd></dl>
+</p></div></div><a class="anchor" name="isCategorizedModel"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isCategorizedModel</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> whether the model is categorized or not. Disabled by default.
+</dd></dl>
+</p></div></div><a class="anchor" name="lessThan"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool lessThan</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>left</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>right</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Overridden from QSortFilterProxyModel. If you are subclassing
+KCategorizedSortFilterProxyModel, you will probably not need to reimplement this
+method.
+</p>
+<p>
+It calls compareCategories() to sort by category. If the both items are in the
+same category (i.e. compareCategories returns 0), then subSortLessThan is called.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> Returns true if the item <b>left</b> is less than the item <b>right</b> when sorting.
+</dd></dl> </p>
+<p>
+<dl class="warning" compact><dt><b>Warning:</b></dt><dd> You usually won't need to reimplement this method when subclassing
+from KCategorizedSortFilterProxyModel.
+</dd></dl>
+</p></div></div><a class="anchor" name="setCategorizedModel"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setCategorizedModel</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>categorizedModel</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Enables or disables the categorization feature.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>categorizedModel</em>&nbsp;</td><td> whether to enable or disable the categorization feature.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setSortCategoriesByNaturalComparison"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setSortCategoriesByNaturalComparison</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>sortCategoriesByNaturalComparison</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Set if the sorting using CategorySortRole will use a natural comparison
+in the case that strings were returned. If enabled, QCollator
+will be used for sorting.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>sortCategoriesByNaturalComparison</em>&nbsp;</td><td> whether to sort using a natural comparison or not.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="sort"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> sort</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>column</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::SortOrder</a>&nbsp;</td>
+<td class="paramname"><em>order=Qt.AscendingOrder</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Overridden from QSortFilterProxyModel. Sorts the source model using
+<b>column</b> for the given <b>order.</b>
+</p></div></div><a class="anchor" name="sortCategoriesByNaturalComparison"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool sortCategoriesByNaturalComparison</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> whether it is being used a natural comparison for sorting. Enabled by default.
+</dd></dl>
+</p></div></div><a class="anchor" name="sortColumn"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int sortColumn</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> the column being used for sorting.
+</dd></dl>
+</p></div></div><a class="anchor" name="sortOrder"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::SortOrder</a> sortOrder</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> the sort order being used for sorting.
+</dd></dl>
+</p></div></div><a class="anchor" name="subSortLessThan"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool subSortLessThan</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>left</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QModelIndex&nbsp;</td>
+<td class="paramname"><em>right</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This method has a similar purpose as lessThan() has on QSortFilterProxyModel.
+It is used for sorting items that are in the same category.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> Returns true if the item <b>left</b> is less than the item <b>right</b> when sorting.
+</dd></dl>
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="AdditionalRoles"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">AdditionalRoles</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>CategoryDisplayRole</em>&nbsp;=&nbsp;0x17CE990A</td><td><tr><td valign="top"><em>CategorySortRole</em>&nbsp;=&nbsp;0x27857E60</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

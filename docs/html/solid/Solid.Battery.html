@@ -1,0 +1,987 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Solid.Battery</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>Battery Class Reference</h1>
+<code>from PyKDE5.solid import *</code>
+<p>
+Inherits: Solid.DeviceInterface &#x2192; QObject<br />
+
+Namespace: Solid<br />
+<h2>Detailed Description</h2>
+
+<p>This device interface is available on batteries.
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#BatteryType">BatteryType</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;UnknownBattery, PdaBattery, UpsBattery, PrimaryBattery, MouseBattery, KeyboardBattery, KeyboardMouseBattery, CameraBattery, PhoneBattery, MonitorBattery&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#ChargeState">ChargeState</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;NoCharge, Charging, Discharging, FullyCharged&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#Technology">Technology</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;UnknownTechnology, LithiumIon, LithiumPolymer, LithiumIronPhosphate, LeadAcid, NickelCadmium, NickelMetalHydride&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Signals</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#capacityChanged">capacityChanged</a> (int value, QString udi)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#chargePercentChanged">chargePercentChanged</a> (int value, QString udi)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#chargeStateChanged">chargeStateChanged</a> (int newState, QString udi)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#energyChanged">energyChanged</a> (float energy, QString udi)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#energyRateChanged">energyRateChanged</a> (float energyRate, QString udi)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#powerSupplyStateChanged">powerSupplyStateChanged</a> (bool newState, QString udi)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#presentStateChanged">presentStateChanged</a> (bool newState, QString udi)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#temperatureChanged">temperatureChanged</a> (float temperature, QString udi)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeToEmptyChanged">timeToEmptyChanged</a> (long time, QString udi)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeToFullChanged">timeToFullChanged</a> (long time, QString udi)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#voltageChanged">voltageChanged</a> (float voltage, QString udi)</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#Battery">__init__</a> (self, QObject backendObject)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#capacity">capacity</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#chargePercent">chargePercent</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Battery::ChargeState&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#chargeState">chargeState</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">float&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#energy">energy</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">float&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#energyRate">energyRate</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isPlugged">isPlugged</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isPowerSupply">isPowerSupply</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isPresent">isPresent</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isRecalled">isRecalled</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#isRechargeable">isRechargeable</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#recallUrl">recallUrl</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#recallVendor">recallVendor</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#serial">serial</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Battery::Technology&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#technology">technology</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">float&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#temperature">temperature</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">long&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeToEmpty">timeToEmpty</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">long&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#timeToFull">timeToFull</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::Battery::BatteryType&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#type">type</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">float&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#voltage">voltage</a> (self)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::DeviceInterface::Type&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#deviceInterfaceType">deviceInterfaceType</a> ()</td></tr>
+</table>
+<hr><h2>Signal Documentation</h2><a class="anchor" name="capacityChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> capacityChanged</td>
+<td>(</td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>value</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when the capacity of this battery has changed.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>value</em>&nbsp;</td><td> the new capacity of the battery
+
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the battery with the new capacity
+</td></tr> </table></dl>
+<p> <dl class="since" compact><dt><b>Since:</b></dt><dd> 4.11
+</dd></dl>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("capacityChanged(int, const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="chargePercentChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> chargePercentChanged</td>
+<td>(</td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>value</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when the charge percent value of this
+battery has changed.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>value</em>&nbsp;</td><td> the new charge percent value of the battery
+
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the battery with the new charge percent
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("chargePercentChanged(int, const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="chargeStateChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> chargeStateChanged</td>
+<td>(</td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>newState</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when the charge state of this battery
+has changed.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>newState</em>&nbsp;</td><td> the new charge state of the battery, it's one of
+the type Solid.Battery.ChargeState
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> Solid.Battery.ChargeState
+</dd></dl> </p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the battery with the new charge state
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("chargeStateChanged(int, const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="energyChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> energyChanged</td>
+<td>(</td>
+<td class="paramtype">float&nbsp;</td>
+<td class="paramname"><em>energy</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when the energy value of this
+battery has changed.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>energy</em>&nbsp;</td><td> the new energy value of the battery
+
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the battery with the new charge percent
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("energyChanged(double, const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="energyRateChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> energyRateChanged</td>
+<td>(</td>
+<td class="paramtype">float&nbsp;</td>
+<td class="paramname"><em>energyRate</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when the energy rate value of this
+battery has changed.
+</p>
+<p>
+If positive, the source is being discharged, if negative it's being charged.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>energyRate</em>&nbsp;</td><td> the new energy rate value of the battery
+
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the battery with the new charge percent
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("energyRateChanged(double, const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="powerSupplyStateChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> powerSupplyStateChanged</td>
+<td>(</td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>newState</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when the power supply state of the battery
+changes.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>newState</em>&nbsp;</td><td> the new power supply state, type is boolean
+
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the battery with the new power supply state
+</td></tr> </table></dl>
+<p> <dl class="since" compact><dt><b>Since:</b></dt><dd> 4.11
+</dd></dl>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("powerSupplyStateChanged(bool, const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="presentStateChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> presentStateChanged</td>
+<td>(</td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>newState</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted if the battery get plugged in/out of the
+battery bay.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>newState</em>&nbsp;</td><td> the new plugging state of the battery, type is boolean
+
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the battery with thew new plugging state
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("presentStateChanged(bool, const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="temperatureChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> temperatureChanged</td>
+<td>(</td>
+<td class="paramtype">float&nbsp;</td>
+<td class="paramname"><em>temperature</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when the battery temperature has changed.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>temperature</em>&nbsp;</td><td> the new temperature of the battery in degrees Celsius
+
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the battery with the new temperature
+</td></tr> </table></dl>
+<p> <dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("temperatureChanged(double, const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="timeToEmptyChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> timeToEmptyChanged</td>
+<td>(</td>
+<td class="paramtype">long&nbsp;</td>
+<td class="paramname"><em>time</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when the time until the battery is empty
+has changed.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>time</em>&nbsp;</td><td> the new remaining time
+
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the battery with the new remaining time
+</td></tr> </table></dl>
+<p> <dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("timeToEmptyChanged(qlonglong, const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="timeToFullChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> timeToFullChanged</td>
+<td>(</td>
+<td class="paramtype">long&nbsp;</td>
+<td class="paramname"><em>time</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when the time until the battery is full
+has changed.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>time</em>&nbsp;</td><td> the new remaining time
+
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the battery with the new remaining time
+</td></tr> </table></dl>
+<p> <dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("timeToFullChanged(qlonglong, const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="voltageChanged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> voltageChanged</td>
+<td>(</td>
+<td class="paramtype">float&nbsp;</td>
+<td class="paramname"><em>voltage</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when the voltage in the cell has changed.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>voltage</em>&nbsp;</td><td> the new voltage of the cell
+
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the battery with the new voltage
+</td></tr> </table></dl>
+<p> <dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("voltageChanged(double, const QString&)"), target_slot)</code></dd></dl></div></div><hr><h2>Method Documentation</h2><a class="anchor" name="Battery"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>backendObject</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Creates a new Battery object.
+You generally won't need this. It's created when necessary using
+Device.as().
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>backendObject</em>&nbsp;</td><td> the device interface object provided by the backend
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> Solid.Device.as()
+</dd></dl>
+</p></div></div><a class="anchor" name="capacity"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int capacity</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the battery capacity normalised to percent,
+meaning how much energy can it hold compared to what it is designed to.
+The capacity of the battery will reduce with age.
+A capacity value less than 75% is usually a sign that you should renew your battery.
+</p>
+<p>
+<dl class="since" compact><dt><b>Since:</b></dt><dd> 4.11
+</dd></dl> <dl class="return" compact><dt><b>Returns:</b></dt><dd> the battery capacity normalised to percent
+</dd></dl>
+</p></div></div><a class="anchor" name="chargePercent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int chargePercent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the current charge level of the battery normalised
+to percent.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the current charge level normalised to percent
+</dd></dl>
+</p></div></div><a class="anchor" name="chargeState"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Battery::ChargeState chargeState</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the current charge state of the battery. It can be in a stable
+state (no charge), charging or discharging.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the current battery charge state
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> Solid.Battery.ChargeState
+</dd></dl>
+</p></div></div><a class="anchor" name="energy"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">float energy</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Amount of energy (measured in Wh) currently available in the power source.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> amount of battery energy in Wh
+</dd></dl>
+</p></div></div><a class="anchor" name="energyRate"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">float energyRate</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Amount of energy being drained from the source, measured in W.
+If positive, the source is being discharged, if negative it's being charged.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> battery rate in Watts
+</dd></dl>
+</p></div></div><a class="anchor" name="isPlugged"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isPlugged</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Indicates if this battery is currently present in its bay.
+</p>
+<p>
+<dl class="deprecated" compact><dt><b>Deprecated:</b></dt><dd> since Solid 5.0. Use isPresent instead.
+</dd></dl>
+</p></div></div><a class="anchor" name="isPowerSupply"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isPowerSupply</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Indicates if the battery is powering the machine.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the battery is powersupply, false otherwise
+</dd></dl>
+</p></div></div><a class="anchor" name="isPresent"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isPresent</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Indicates if this battery is currently present in its bay.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the battery is present, false otherwise
+</dd></dl>
+</p></div></div><a class="anchor" name="isRecalled"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isRecalled</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>The battery may have been recalled by the vendor due to a suspected fault.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the battery has been recalled, false otherwise
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p></div></div><a class="anchor" name="isRechargeable"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool isRechargeable</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Indicates if the battery is rechargeable.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> true if the battery is rechargeable, false otherwise (one time usage)
+</dd></dl>
+</p></div></div><a class="anchor" name="recallUrl"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString recallUrl</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>The website URL of the vendor that has recalled the battery.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the website URL of the vendor that has recalled the battery
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p></div></div><a class="anchor" name="recallVendor"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString recallVendor</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>The vendor that has recalled the battery.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the vendor name that has recalled the battery
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p></div></div><a class="anchor" name="serial"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString serial</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>The serial number of the battery
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the serial number of the battery
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p></div></div><a class="anchor" name="technology"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Battery::Technology technology</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the technology used to manufacture the battery.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the battery technology
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> Solid.Battery.Technology
+</dd></dl>
+</p></div></div><a class="anchor" name="temperature"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">float temperature</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>The temperature of the battery in degrees Celsius.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the battery temperature in degrees Celsius
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p></div></div><a class="anchor" name="timeToEmpty"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">long timeToEmpty</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Time (in seconds) until the battery is empty.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> time until the battery is empty
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p></div></div><a class="anchor" name="timeToFull"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">long timeToFull</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Time (in seconds) until the battery is full.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> time until the battery is full
+</dd></dl> <dl class="since" compact><dt><b>Since:</b></dt><dd> 5.0
+</dd></dl>
+</p></div></div><a class="anchor" name="type"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::Battery::BatteryType type</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the type of device holding this battery.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the type of device holding this battery
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> Solid.Battery.BatteryType
+</dd></dl>
+</p></div></div><a class="anchor" name="voltage"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">float voltage</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Voltage in the Cell or being recorded by the meter.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> voltage in Volts
+</dd></dl>
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="deviceInterfaceType"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::DeviceInterface::Type deviceInterfaceType</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname">)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Get the Solid.DeviceInterface.Type of the Battery device interface.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the Battery device interface type
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> Solid.DeviceInterface.Type
+</dd></dl>
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="BatteryType"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">BatteryType</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>This enum type defines the type of the device holding the battery
+</p>
+<p>
+- PdaBattery : A battery in a Personal Digital Assistant
+- UpsBattery : A battery in an Uninterruptible Power Supply
+- PrimaryBattery : A primary battery for the system (for example laptop battery)
+- MouseBattery : A battery in a mouse
+- KeyboardBattery : A battery in a keyboard
+- KeyboardMouseBattery : A battery in a combined keyboard and mouse
+- CameraBattery : A battery in a camera
+- PhoneBattery : A battery in a phone
+- MonitorBattery : A battery in a monitor
+- UnknownBattery : A battery in an unknown device
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>UnknownBattery</em>&nbsp;</td><td><tr><td valign="top"><em>PdaBattery</em>&nbsp;</td><td><tr><td valign="top"><em>UpsBattery</em>&nbsp;</td><td><tr><td valign="top"><em>PrimaryBattery</em>&nbsp;</td><td><tr><td valign="top"><em>MouseBattery</em>&nbsp;</td><td><tr><td valign="top"><em>KeyboardBattery</em>&nbsp;</td><td><tr><td valign="top"><em>KeyboardMouseBattery</em>&nbsp;</td><td><tr><td valign="top"><em>CameraBattery</em>&nbsp;</td><td><tr><td valign="top"><em>PhoneBattery</em>&nbsp;</td><td><tr><td valign="top"><em>MonitorBattery</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="ChargeState"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">ChargeState</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>This enum type defines charge state of a battery
+</p>
+<p>
+- NoCharge : Battery charge is stable, not charging or discharging or
+the state is Unknown
+- Charging : Battery is charging
+- Discharging : Battery is discharging
+- FullyCharged: The battery is fully charged; a battery not neccessarily
+charges up to 100%
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>NoCharge</em>&nbsp;</td><td><tr><td valign="top"><em>Charging</em>&nbsp;</td><td><tr><td valign="top"><em>Discharging</em>&nbsp;</td><td><tr><td valign="top"><em>FullyCharged</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="Technology"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">Technology</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Technology used in the battery
+</p>
+<p>
+0: Unknown
+1: Lithium ion
+2: Lithium polymer
+3: Lithium iron phosphate
+4: Lead acid
+5: Nickel cadmium
+6: Nickel metal hydride
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>UnknownTechnology</em>&nbsp;=&nbsp;0</td><td><tr><td valign="top"><em>LithiumIon</em>&nbsp;</td><td><tr><td valign="top"><em>LithiumPolymer</em>&nbsp;</td><td><tr><td valign="top"><em>LithiumIronPhosphate</em>&nbsp;</td><td><tr><td valign="top"><em>LeadAcid</em>&nbsp;</td><td><tr><td valign="top"><em>NickelCadmium</em>&nbsp;</td><td><tr><td valign="top"><em>NickelMetalHydride</em>&nbsp;</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>KFontChooser</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>KFontChooser Class Reference</h1>
+<code>from PyKDE5.kwidgetsaddons import *</code>
+<p>
+Inherits: QWidget &#x2192; QObject<br />
+
+
+<h2>Detailed Description</h2>
+
+<p>A font selection widget.
+</p>
+<p>
+While KFontChooser as an ordinary widget can be embedded in
+custom dialogs and therefore is very flexible, in most cases
+it is preferable to use the convenience functions in
+QFontDialog.
+</p>
+<p>
+<div align="center"><img src="../images/kfontchooser.png" /><p><strong> "KDE Font Chooser Widget" </strong></p></div>
+</p>
+<p>
+<dl class="see" compact><dt><b>See also:</b></dt><dd> KFontRequester
+</dd></dl> </p>
+<p>
+
+<dl class="author" compact><dt><b>Author:</b></dt><dd> Preston Brown &lt;pbrown@kde.org&gt;, Bernd Wuebben &lt;wuebben@kde.org&gt; </dd></dl>
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#DisplayFlag">DisplayFlag</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;NoDisplayFlags, FixedFontsOnly, DisplayFrame, ShowDifferences&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#FontColumn">FontColumn</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;FamilyList, StyleList, SizeList&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#FontDiff">FontDiff</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;NoFontDiffFlags, FontDiffFamily, FontDiffStyle, FontDiffSize, AllFontDiffs&nbsp;}</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#FontListCriteria">FontListCriteria</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;FixedWidthFonts, ScalableFonts, SmoothScalableFonts&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Signals</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#fontSelected">fontSelected</a> (QFont font)</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#KFontChooser">__init__</a> (self, QWidget parent=0L, KFontChooser::DisplayFlags flags=KFontChooser.DisplayFlag.DisplayFrame, QStringList fontList=QStringList(), int visibleListSize=8)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QColor&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#backgroundColor">backgroundColor</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QColor&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#color">color</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#enableColumn">enableColumn</a> (self, int column, bool state)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QFont&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#font">font</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">KFontChooser::FontDiffFlags&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#fontDiffFlags">fontDiffFlags</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QString&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#sampleText">sampleText</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setBackgroundColor">setBackgroundColor</a> (self, QColor col)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setColor">setColor</a> (self, QColor col)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setFont">setFont</a> (self, QFont font, bool onlyFixed=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setSampleBoxVisible">setSampleBoxVisible</a> (self, bool visible)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setSampleText">setSampleText</a> (self, QString text)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#setSizeIsRelative">setSizeIsRelative</a> (self, <a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::CheckState</a> relative)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">QSize&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#sizeHint">sizeHint</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::CheckState</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#sizeIsRelative">sizeIsRelative</a> (self)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#getFontList">getFontList</a> (QStringList list, long fontListCriteria)</td></tr>
+</table>
+<hr><h2>Signal Documentation</h2><a class="anchor" name="fontSelected"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> fontSelected</td>
+<td>(</td>
+<td class="paramtype">QFont&nbsp;</td>
+<td class="paramname"><em>font</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Emitted whenever the selected font changes.
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("fontSelected(const QFont&)"), target_slot)</code></dd></dl></div></div><hr><h2>Method Documentation</h2><a class="anchor" name="KFontChooser"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QWidget&nbsp;</td>
+<td class="paramname"><em>parent=0L</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">KFontChooser::DisplayFlags&nbsp;</td>
+<td class="paramname"><em>flags=KFontChooser.DisplayFlag.DisplayFrame</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>fontList=QStringList()</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>visibleListSize=8</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"></div></div><a class="anchor" name="backgroundColor"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QColor backgroundColor</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> The background color currently used in the preview (default:
+the base color of the active colorgroup)
+</dd></dl>
+</p></div></div><a class="anchor" name="color"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QColor color</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> The color currently used in the preview (default: the text
+color of the active color group)
+</dd></dl>
+</p></div></div><a class="anchor" name="enableColumn"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> enableColumn</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">int&nbsp;</td>
+<td class="paramname"><em>column</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>state</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Enables or disable a font column in the chooser.
+</p>
+<p>
+Use this
+function if your application does not need or supports all font
+properties.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>column</em>&nbsp;</td><td> Specify the columns. An or'ed combination of
+<b>FamilyList,</b> <b>StyleList</b> and <b>SizeList</b> is possible.
+
+<tr><td></td><td valign="top"><em>state</em>&nbsp;</td><td> If <b>false</b> the columns are disabled.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="font"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QFont font</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> The currently selected font in the chooser.
+</dd></dl>
+</p></div></div><a class="anchor" name="fontDiffFlags"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">KFontChooser::FontDiffFlags fontDiffFlags</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> The bitmask corresponding to the attributes the user
+wishes to change.
+</dd></dl>
+</p></div></div><a class="anchor" name="sampleText"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QString sampleText</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> The current text in the sample text input area.
+</dd></dl>
+</p></div></div><a class="anchor" name="setBackgroundColor"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setBackgroundColor</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QColor&nbsp;</td>
+<td class="paramname"><em>col</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the background color to use in the preview.
+</p></div></div><a class="anchor" name="setColor"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setColor</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QColor&nbsp;</td>
+<td class="paramname"><em>col</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the color to use in the preview.
+</p></div></div><a class="anchor" name="setFont"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setFont</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QFont&nbsp;</td>
+<td class="paramname"><em>font</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>onlyFixed=0</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the currently selected font in the chooser.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>font</em>&nbsp;</td><td> The font to select.
+
+<tr><td></td><td valign="top"><em>onlyFixed</em>&nbsp;</td><td> Readjust the font list to display only fixed
+width fonts if <b>true,</b> or vice-versa.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setSampleBoxVisible"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setSampleBoxVisible</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">bool&nbsp;</td>
+<td class="paramname"><em>visible</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Shows or hides the sample text box.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>visible</em>&nbsp;</td><td> Set it to true to show the box, to false to hide it.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setSampleText"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setSampleText</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>text</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the sample text.
+</p>
+<p>
+Normally you should not change this
+text, but it can be better to do this if the default text is
+too large for the edit area when using the default font of your
+application.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>text</em>&nbsp;</td><td> The new sample text. The current will be removed.
+</td></tr>
+</table></dl>
+<p>
+</p></div></div><a class="anchor" name="setSizeIsRelative"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> setSizeIsRelative</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::CheckState</a>&nbsp;</td>
+<td class="paramname"><em>relative</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Sets the state of the checkbox indicating whether the font size
+is to be interpreted as relative size.
+NOTE: If parameter sizeIsRelative was not set in the constructor
+of the widget this setting will be ignored.
+</p></div></div><a class="anchor" name="sizeHint"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">QSize sizeHint</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Reimplemented for internal reasons.
+</p></div></div><a class="anchor" name="sizeIsRelative"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"><a href="http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">Qt::CheckState</a> sizeIsRelative</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><dl class="return" compact><dt><b>Returns:</b></dt><dd> Whether the font size is to be interpreted as relative size
+(default: QButton:Off)
+</dd></dl>
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="getFontList"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> getFontList</td>
+<td>(</td>
+<td class="paramtype">QStringList&nbsp;</td>
+<td class="paramname"><em>list</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">long&nbsp;</td>
+<td class="paramname"><em>fontListCriteria</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Creates a list of font strings.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>list</em>&nbsp;</td><td> The list is returned here.
+
+<tr><td></td><td valign="top"><em>fontListCriteria</em>&nbsp;</td><td> should contain all the restrictions for font selection as OR-ed values
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> KFontChooser.FontListCriteria for the individual values
+</dd></dl>
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="DisplayFlag"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">DisplayFlag</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><li> <b>FixedFontsOnly</b> only show fixed fonts, excluding proportional fonts </li>
+<li> <b>DisplayFrame</b> show a visual frame around the chooser </li>
+<li> <b>ShowDifferences</b> display the font differences interfaces </li>
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>NoDisplayFlags</em>&nbsp;=&nbsp;0</td><td><tr><td valign="top"><em>FixedFontsOnly</em>&nbsp;=&nbsp;1</td><td><tr><td valign="top"><em>DisplayFrame</em>&nbsp;=&nbsp;2</td><td><tr><td valign="top"><em>ShowDifferences</em>&nbsp;=&nbsp;4</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="FontColumn"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">FontColumn</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><li> <b>FamilyList</b> - Identifies the family (leftmost) list. </li>
+<li> <b>StyleList</b> - Identifies the style (center) list. </li>
+<li> <b>SizeList</b> - Identifies the size (rightmost) list. </li>
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>FamilyList</em>&nbsp;=&nbsp;0x01</td><td><tr><td valign="top"><em>StyleList</em>&nbsp;=&nbsp;0x02</td><td><tr><td valign="top"><em>SizeList</em>&nbsp;=&nbsp;0x04</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="FontDiff"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">FontDiff</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p><li> <b>FontDiffFamily</b> - Identifies a requested change in the font family. </li>
+<li> <b>FontDiffStyle</b> - Identifies a requested change in the font style. </li>
+<li> <b>FontDiffSize</b> - Identifies a requested change in the font size. </li>
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>NoFontDiffFlags</em>&nbsp;=&nbsp;0</td><td><tr><td valign="top"><em>FontDiffFamily</em>&nbsp;=&nbsp;1</td><td><tr><td valign="top"><em>FontDiffStyle</em>&nbsp;=&nbsp;2</td><td><tr><td valign="top"><em>FontDiffSize</em>&nbsp;=&nbsp;4</td><td><tr><td valign="top"><em>AllFontDiffs</em>&nbsp;=&nbsp;FontDiffFamily|FontDiffStyle|FontDiffSize</td><td></table>
+</dl>
+</div></div><p><a class="anchor" name="FontListCriteria"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">FontListCriteria</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>The selection criteria for the font families shown in the dialog.
+<li> <b>FixedWidthFont</b> when included only fixed-width fonts are returned. </li>
+The fonts where the width of every character is equal.
+<li> <b>ScalableFont</b> when included only scalable fonts are returned; </li>
+certain configurations allow bitmap fonts to remain unscaled and
+thus these fonts have limited number of sizes.
+<li> <b>SmoothScalableFont</b> when included only return smooth scalable fonts. </li>
+this will return only non-bitmap fonts which are scalable to any size requested.
+Setting this option to true will mean the "scalable" flag is irrelavant.
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>FixedWidthFonts</em>&nbsp;=&nbsp;0x01</td><td><tr><td valign="top"><em>ScalableFonts</em>&nbsp;=&nbsp;0x02</td><td><tr><td valign="top"><em>SmoothScalableFonts</em>&nbsp;=&nbsp;0x04</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

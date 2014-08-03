@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <title>Solid.OpticalDrive</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <link rel="stylesheet" type="text/css" href="../common/doxygen.css" />
+  <link rel="stylesheet" media="screen" type="text/css" title="KDE Colors" href="../common/kde.css" />
+</head>
+<body>
+<div id="container">
+<div id="header">
+  <div id="header_top">
+    <div>
+      <div>
+        <img alt ="" src="../common/top-kde.jpg"/>
+        KDE 5.0 PyKDE API Reference
+      </div>
+    </div>
+  </div>
+  <div id="header_bottom">
+    <div id="location">
+      <ul>
+        <li>KDE's Python API</li>
+      </ul>
+    </div>
+
+    <div id="menu">
+      <ul>
+        <li><a href="../modules.html">Overview</a></li>
+<li><a href="http://techbase.kde.org/Development/Languages/Python">PyKDE Home</a></li>
+<li><a href="http://kde.org/family/">Sitemap</a></li>
+<li><a href="http://kde.org/contact/">Contact Us</a></li>
+</ul>
+    </div>
+  </div>
+</div>
+
+<div id="body_wrapper">
+<div id="body">
+<div id="right">
+<div class="content">
+<div id="main">
+<div class="clearer">&nbsp;</div>
+
+<h1>OpticalDrive Class Reference</h1>
+<code>from PyKDE5.solid import *</code>
+<p>
+Inherits: Solid.StorageDrive &#x2192; Solid.DeviceInterface &#x2192; QObject<br />
+
+Namespace: Solid<br />
+<h2>Detailed Description</h2>
+
+<p>This device interface is available on CD-R*,DVD*,Blu-Ray,HD-DVD drives.
+</p>
+<p>
+An OpticalDrive is a storage that can handle optical discs.
+</p>
+<table border="0" cellpadding="0" cellspacing="0"><tr><td colspan="2"><br><h2>Enumerations</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="#MediumType">MediumType</a>&nbsp;</td><td class="memItemRight" valign="bottom">{&nbsp;Cdr, Cdrw, Dvd, Dvdr, Dvdrw, Dvdram, Dvdplusr, Dvdplusrw, Dvdplusdl, Dvdplusdlrw, Bd, Bdr, Bdre, HdDvd, HdDvdr, HdDvdrw&nbsp;}</td></tr>
+<tr><td colspan="2"><br><h2>Signals</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ejectDone">ejectDone</a> (Solid::ErrorType error, QVariant errorData, QString udi)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ejectPressed">ejectPressed</a> (QString udi)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ejectRequested">ejectRequested</a> (QString udi)</td></tr>
+<tr><td colspan="2"><br><h2>Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#OpticalDrive">__init__</a> (self, QObject backendObject)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#eject">eject</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#readSpeed">readSpeed</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::OpticalDrive::MediumTypes&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#supportedMedia">supportedMedia</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#writeSpeed">writeSpeed</a> (self)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">[int]&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#writeSpeeds">writeSpeeds</a> (self)</td></tr>
+<tr><td colspan="2"><br><h2>Static Methods</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Solid::DeviceInterface::Type&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="#deviceInterfaceType">deviceInterfaceType</a> ()</td></tr>
+</table>
+<hr><h2>Signal Documentation</h2><a class="anchor" name="ejectDone"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> ejectDone</td>
+<td>(</td>
+<td class="paramtype">Solid::ErrorType&nbsp;</td>
+<td class="paramname"><em>error</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QVariant&nbsp;</td>
+<td class="paramname"><em>errorData</em>, </td>
+</tr>
+<tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when the attempted eject process on this
+drive is completed. The signal might be spontaneous, i.e.
+it can be triggered by another process.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>error</em>&nbsp;</td><td> type of error that occurred, if any
+
+<tr><td></td><td valign="top"><em>errorData</em>&nbsp;</td><td> more information about the error, if any
+
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the volume
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("ejectDone(Solid::ErrorType, QVariant, const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="ejectPressed"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> ejectPressed</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when the eject button is pressed
+on the drive.
+</p>
+<p>
+Please note that some (broken) drives doesn't report this event.
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the drive
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("ejectPressed(const QString&)"), target_slot)</code></dd></dl></div></div><a class="anchor" name="ejectRequested"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname"> ejectRequested</td>
+<td>(</td>
+<td class="paramtype">QString&nbsp;</td>
+<td class="paramname"><em>udi</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>This signal is emitted when eject on this drive is
+requested. The signal might be spontaneous, i.e. it
+can be triggered by another process.
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>udi</em>&nbsp;</td><td> the UDI of the volume
+</td></tr>
+</table></dl>
+<p>
+</p><dl compact><dt><b>Signal syntax:</b></dt><dd><code>QObject.connect(source, SIGNAL("ejectRequested(const QString&)"), target_slot)</code></dd></dl></div></div><hr><h2>Method Documentation</h2><a class="anchor" name="OpticalDrive"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">__init__</td>
+<td>(</td>
+<td class="paramtype">&nbsp;<em>self</em>, </td>
+<td class="paramname"></td>
+</tr><tr>
+<td class="memname"></td>
+<td></td>
+<td class="paramtype">QObject&nbsp;</td>
+<td class="paramname"><em>backendObject</em></td>
+</tr>
+<tr>
+<td></td>
+<td>)</td>
+<td></td>
+<td></td>
+<td width="100%"> </td>
+</tr></table>
+</div>
+<div class="memdoc"><p>Creates a new OpticalDrive object.
+You generally won't need this. It's created when necessary using
+Device.as().
+</p>
+<p>
+</p><dl compact><dt><b>Parameters:</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td></td><td valign="top"><em>backendObject</em>&nbsp;</td><td> the device interface object provided by the backend
+</td></tr> </table></dl>
+<p> <dl class="see" compact><dt><b>See also:</b></dt><dd> Solid.Device.as()
+</dd></dl>
+</p></div></div><a class="anchor" name="eject"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">bool eject</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Ejects any disc that could be contained in this drive.
+If this drive is empty, but has a tray it'll be opened.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the status of the eject operation
+</dd></dl>
+</p></div></div><a class="anchor" name="readSpeed"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int readSpeed</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the maximum read speed of this drive in kilobytes per second.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the maximum read speed
+</dd></dl>
+</p></div></div><a class="anchor" name="supportedMedia"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::OpticalDrive::MediumTypes supportedMedia</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the medium types this drive supports.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the flag set indicating the supported medium types
+</dd></dl>
+</p></div></div><a class="anchor" name="writeSpeed"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">int writeSpeed</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the maximum write speed of this drive in kilobytes per second.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the maximum write speed
+</dd></dl>
+</p></div></div><a class="anchor" name="writeSpeeds"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">[int] writeSpeeds</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname"><em>self</em>&nbsp;)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Retrieves the list of supported write speeds of this drive in
+kilobytes per second.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the list of supported write speeds
+</dd></dl>
+</p></div></div><hr><h2>Static Method Documentation</h2><a class="anchor" name="deviceInterfaceType"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname"><tr>
+<td class="memname">Solid::DeviceInterface::Type deviceInterfaceType</td>
+<td>(</td>
+<td class="paramtype">&nbsp;</td>
+<td class="paramname">)</td>
+<td width="100%"> </td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>Get the Solid.DeviceInterface.Type of the OpticalDrive device interface.
+</p>
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd> the OpticalDrive device interface type
+</dd></dl> <dl class="see" compact><dt><b>See also:</b></dt><dd> Solid.Ifaces.Enums.DeviceInterface.Type
+</dd></dl>
+</p></div></div><hr><h2>Enumeration Documentation</h2><a class="anchor" name="MediumType"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="memname">
+<tr><td class="memname">MediumType</td>
+</tr>
+</table>
+</div>
+<div class="memdoc"><p>This enum type defines the type of medium an optical drive supports.
+</p>
+<p>
+- Cdr : A Recordable Compact Disc (CD-R)
+- Cdrw : A ReWritable Compact Disc (CD-RW)
+- Dvd : A Digital Versatile Disc (DVD)
+- Dvdr : A Recordable Digital Versatile Disc (DVD-R)
+- Dvdrw : A ReWritable Digital Versatile Disc (DVD-RW)
+- Dvdram : A Random Access Memory Digital Versatile Disc (DVD-RAM)
+- Dvdplusr : A Recordable Digital Versatile Disc (DVD+R)
+- Dvdplusrw : A ReWritable Digital Versatile Disc (DVD+RW)
+- Dvdplusdl : A Dual Layer Digital Versatile Disc (DVD+R DL)
+- Dvdplusdlrw : A Dual Layer Digital Versatile Disc (DVD+RW DL)
+- Bd : A Blu-ray Disc (BD)
+- Bdr : A Blu-ray Disc Recordable (BD-R)
+- Bdre : A Blu-ray Disc Recordable and Eraseable (BD-RE)
+- HdDvd : A High Density Digital Versatile Disc (HD DVD)
+- HdDvdr : A High Density Digital Versatile Disc Recordable (HD DVD-R)
+- HdDvdrw : A High Density Digital Versatile Disc ReWritable (HD DVD-RW)
+</p><dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0"><tr><td valign="top"><em>Cdr</em>&nbsp;=&nbsp;0x00001</td><td><tr><td valign="top"><em>Cdrw</em>&nbsp;=&nbsp;0x00002</td><td><tr><td valign="top"><em>Dvd</em>&nbsp;=&nbsp;0x00004</td><td><tr><td valign="top"><em>Dvdr</em>&nbsp;=&nbsp;0x00008</td><td><tr><td valign="top"><em>Dvdrw</em>&nbsp;=&nbsp;0x00010</td><td><tr><td valign="top"><em>Dvdram</em>&nbsp;=&nbsp;0x00020</td><td><tr><td valign="top"><em>Dvdplusr</em>&nbsp;=&nbsp;0x00040</td><td><tr><td valign="top"><em>Dvdplusrw</em>&nbsp;=&nbsp;0x00080</td><td><tr><td valign="top"><em>Dvdplusdl</em>&nbsp;=&nbsp;0x00100</td><td><tr><td valign="top"><em>Dvdplusdlrw</em>&nbsp;=&nbsp;0x00200</td><td><tr><td valign="top"><em>Bd</em>&nbsp;=&nbsp;0x00400</td><td><tr><td valign="top"><em>Bdr</em>&nbsp;=&nbsp;0x00800</td><td><tr><td valign="top"><em>Bdre</em>&nbsp;=&nbsp;0x01000</td><td><tr><td valign="top"><em>HdDvd</em>&nbsp;=&nbsp;0x02000</td><td><tr><td valign="top"><em>HdDvdr</em>&nbsp;=&nbsp;0x04000</td><td><tr><td valign="top"><em>HdDvdrw</em>&nbsp;=&nbsp;0x08000</td><td></table>
+</dl>
+</div></div><p>
+</div>
+</div>
+</div>
+
+<div id="left">
+
+<div class="menu_box">
+<div class="nav_list">
+<ul>
+<li><a href="../allclasses.html">Full Index</a></li>
+</ul>
+</div>
+
+<a name="cp-menu" /><div class="menutitle"><div>
+  <h2 id="cp-menu-project">Modules</h2>
+</div></div>
+<div class="nav_list">
+<ul><li><a href="../karchive/index.html">karchive</a></li>
+<li><a href="../kcoreaddons/index.html">kcoreaddons</a></li>
+<li><a href="../kguiaddons/index.html">kguiaddons</a></li>
+<li><a href="../kitemmodels/index.html">kitemmodels</a></li>
+<li><a href="../kitemviews/index.html">kitemviews</a></li>
+<li><a href="../kplotting/index.html">kplotting</a></li>
+<li><a href="../kwidgetsaddons/index.html">kwidgetsaddons</a></li>
+<li><a href="../solid/index.html">solid</a></li>
+<li><a href="../sonnet/index.html">sonnet</a></li>
+
+</ul></div></div>
+
+</div>
+
+</div>
+  <div class="clearer"/>
+</div>
+
+<div id="end_body"></div>
+</div>
+<div id="footer"><div id="footer_text">
+This documentation is maintained by <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;simon&#64;simonzone&#46;com">Simon Edwards</a>.<br />
+        KDE<sup>&#174;</sup> and <a href="../images/kde_gear_black.png">the K Desktop Environment<sup>&#174;</sup> logo</a> are registered trademarks of <a href="http://ev.kde.org/" title="Homepage of the KDE non-profit Organization">KDE e.V.</a> |
+        <a href="http://www.kde.org/contact/impressum.php">Legal</a>
+    </div></div>
+</body>
+</html>

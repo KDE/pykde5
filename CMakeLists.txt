@@ -20,7 +20,7 @@ include(PythonMacros)
 include(FeatureSummary)
 include(ECMSetupVersion)
 
-find_package(KF5 CONFIG REQUIRED Auth ItemModels ItemViews Archive Plotting Solid CoreAddons Sonnet GuiAddons WidgetsAddons)
+find_package(KF5 REQUIRED Auth ItemModels ItemViews Archive Plotting Solid CoreAddons Sonnet GuiAddons WidgetsAddons)
 
 #option(PYKDEUIC4_ALTINSTALL "Enable parallel-installation of the PyKDE4 tools" FALSE)
 

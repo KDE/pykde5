@@ -22,23 +22,23 @@ include(ECMSetupVersion)
 
 find_package(KF5 REQUIRED Auth ItemModels ItemViews Archive Plotting Solid CoreAddons Sonnet GuiAddons WidgetsAddons)
 
-#option(PYKDEUIC4_ALTINSTALL "Enable parallel-installation of the PyKDE4 tools" FALSE)
+#option(PYKDEUIC4_ALTINSTALL "Enable parallel-installation of the PyKDE5 tools" FALSE)
 
 #set_package_properties(KDE4 PROPERTIES DESCRIPTION "The KDE libraries"
 #                       URL "http://www.kde.org" TYPE REQUIRED
-#                       PURPOSE "Required to build PyKDE4")
+#                       PURPOSE "Required to build PyKDE5")
 set_package_properties(PythonLibrary PROPERTIES DESCRIPTION
                        "The Python Library" URL "http://www.python.org"
-                       TYPE REQUIRED PURPOSE "Required to build PyKDE4")
+                       TYPE REQUIRED PURPOSE "Required to build PyKDE5")
 set_package_properties(PythonInterp PROPERTIES
                        DESCRIPTION "The Python interpreter"
                        URL "http://www.python.org" TYPE REQUIRED
-                       PURPOSE "Required to build PyKDE4")
+                       PURPOSE "Required to build PyKDE5")
 
 find_package(SIP)
 set_package_properties(SIP PROPERTIES DESCRIPTION "The SIP binding generator"
                        URL "http://riverbankcomputing.com" TYPE REQUIRED
-                       PURPOSE "Required to build PyKDE4")
+                       PURPOSE "Required to build PyKDE5")
 
 include(SIPMacros)
 

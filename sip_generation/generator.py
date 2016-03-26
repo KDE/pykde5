@@ -32,7 +32,6 @@ from clang import cindex
 from clang.cindex import CursorKind, SourceRange, TokenKind, AccessSpecifier
 
 import rules
-from rules import apply_function_rules, apply_param_rules
 
 
 class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
@@ -263,8 +262,6 @@ class Generator(object):
         :return:
         """
         access_specifier = self._read_source(member.extent)
-        assert len(access_specifier) == 1
-        access_specifier = access_specifier[0]
         if access_specifier == "Q_OBJECT":
             access_specifier = "public:"
         elif access_specifier == "Q_SIGNALS:":
@@ -408,7 +405,10 @@ class Generator(object):
         else:
             extract[0] = extract[0][extent.start.column - 1:]
             extract[-1] = extract[-1][:extent.end.column - 1]
-        return extract
+        #
+        # Return a single line of text.
+        #
+        return "".join(extract).replace("\n", " ")
 
     @staticmethod
     def _find_libclang():

@@ -86,15 +86,25 @@ class Generator(object):
         self.dump_includes = dump_includes
         self.diagnostics = set()
         self.tu = None
+        self.unpreprocessed_source = None
 
     def create_sip(self, source):
         """
+        Actually convert the given source header file into its SIP equivalent.
+
         :param source:             The source (header) file of interest.
         """
-        includes = ["-I" + i for i in self.includes]
+        #
+        # Read in the original file.
+        #
+        self.unpreprocessed_source = []
+        with open(source, "rU") as f:
+            for line in f:
+                self.unpreprocessed_source.append(line)
         #
         # Create and populate the index.
         #
+        includes = ["-I" + i for i in self.includes]
         index = cindex.Index.create()
         self.tu = index.parse(source, includes + ["-x", "c++", "-std=c++11", "-ferror-limit=0", "-D__CODE_GENERATOR__"])
         for diag in self.tu.diagnostics:
@@ -204,7 +214,9 @@ class Generator(object):
                 body += ",\n".join(enumerations)
                 body += "\n    };\n"
             elif member.kind == CursorKind.CXX_ACCESS_SPEC_DECL:
-                body += "{}:\n".format(member.access_specifier.name.lower())
+                access_specifier = self._get_access_specifier(member)
+                if access_specifier:
+                    body += "{}\n".format(access_specifier)
             elif member.kind == CursorKind.TYPEDEF_DECL:
                 alias, definition = self._typedef_get(container, member)
                 body += "    typedef {} {}:\n".format(definition, alias)
@@ -236,6 +248,30 @@ class Generator(object):
                 lines = [pad + line for line in lines]
                 body = "\n".join(lines)
         return body
+
+    def _get_access_specifier(self, member):
+        """
+        In principle, we just want member.access_specifier.name.lower(), except that we need to handle:
+
+          Q_OBJECT
+          Q_SIGNALS:|signals:
+          public|private|protected Q_SLOTS:|slots:
+
+        which are converted by the preprocessor...so read the original text.
+
+        :param member:                  The access_specifier.
+        :return:
+        """
+        access_specifier = self._read_source(member.extent)
+        assert len(access_specifier) == 1
+        access_specifier = access_specifier[0]
+        if access_specifier == "Q_OBJECT":
+            access_specifier = "public:"
+        elif access_specifier == "Q_SIGNALS:":
+            access_specifier = "signals:"
+        elif access_specifier.endswith("slots:") or access_specifier.endswith("Q_SLOTS:"):
+            access_specifier = access_specifier.split()[0] + ":"
+        return access_specifier
 
     def _typedef_get(self, container, typedef):
         alias = typedef.displayname
@@ -359,6 +395,20 @@ class Generator(object):
             return text[default_value:]
         else:
             return ""
+
+    def _read_source(self, extent):
+        """
+        Read the given range from the unpre-processed source.
+
+        :param extent:              The range of text required.
+        """
+        extract = self.unpreprocessed_source[extent.start.line - 1:extent.end.line]
+        if extent.start.line == extent.end.line:
+            extract[0] = extract[0][extent.start.column - 1:extent.end.column - 1]
+        else:
+            extract[0] = extract[0][extent.start.column - 1:]
+            extract[-1] = extract[-1][:extent.end.column - 1]
+        return extract
 
     @staticmethod
     def _find_libclang():

@@ -192,15 +192,21 @@ class Generator(object):
                 logger.debug("Ignoring private {} {}::{}".format(member.kind, name, member.displayname))
                 continue
             if member.kind in [CursorKind.CXX_METHOD, CursorKind.FUNCTION_DECL]:
-                keywords = self._fn_get_keywords(member)
                 parameters = self._fn_get_parameters(container, member)
-                decl = "{} {}({}){}".format(member.result_type.spelling, member.spelling, parameters, keywords)
+                decl = "{} {}({})".format(member.result_type.spelling, member.spelling, parameters)
+                #
+                # Now the rules have run, add any prefix/suffix.
+                #
+                prefix, suffix = self._fn_get_keywords(member)
+                decl = prefix + decl + suffix
+                decl = decl.replace("* ", "*").replace("& ", "&")
                 decl = rules.apply_function_rules(container, member, decl)
                 if decl:
                     body += "    {};\n".format(decl)
             elif member.kind in [CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR]:
                 parameters = self._fn_get_parameters(container, member)
                 decl = "{}({})".format(member.spelling, parameters)
+                decl = decl.replace("* ", "*").replace("& ", "&")
                 decl = rules.apply_function_rules(container, member, decl)
                 if decl:
                     body += "    {};\n".format(decl)
@@ -286,40 +292,26 @@ class Generator(object):
 
     def _fn_get_keywords(self, function):
         """
-        The parser does not seem to provide access to the complete keywords (const, static, etc) of a function.
+        The parser does not provide direct access to the complete keywords (explicit, const, static, etc) of a function
+        in the displayname. It would be nice to get these from the AST, but I cannot find where they are hiding.
+
+        Now, we could resort to using the original source. That does not bode well if you have macros (QOBJECT,
+        xxxDEPRECATED?), inlined bodies and the like, using the rule engine could be used to patch corner cases...
+
+        ...or we can try to guess what SIP cares about, i.e static and maybe const. Luckily (?), we have those to hand!
+
+        :param function:                    The function object.
+        :return: prefix, suffix             String containing any prefix or suffix keywords.
         """
-        text = ""
-        bracket_level = 0
-        found_end = False
-        was_punctuated = True
-        for token in self.tu.get_tokens(extent=function.extent):
-            if bracket_level <= 0 and token.spelling == ";":
-                found_end = True
-                break
-            elif token.spelling == "(":
-                was_punctuated = True
-                bracket_level += 1
-                text += token.spelling
-            elif token.spelling == ")":
-                was_punctuated = True
-                bracket_level -= 1
-                text += token.spelling
-            elif token.kind == TokenKind.PUNCTUATION:
-                was_punctuated = True
-                text += token.spelling
-            else:
-                if not was_punctuated:
-                    text += " "
-                text += token.spelling
-                was_punctuated = False
-        if not found_end:
-            RuntimeError(_("No end found for {}, '{}'").format(function.spelling, text))
-        text = text.split(function.displayname)
-        if len(text) > 1:
-            text = " " + text[-1]
+        if function.is_const_method():
+            suffix = " const"
         else:
-            text = ""
-        return text
+            suffix = ""
+        if function.is_static_method():
+            prefix = "static "
+        else:
+            prefix = ""
+        return prefix, suffix
 
     def _fn_get_parameters(self, container, function):
         """

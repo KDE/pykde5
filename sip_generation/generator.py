@@ -243,7 +243,7 @@ class Generator(object):
             if text.endswith("}"):
                 body = "\n"
         if body:
-            if container.kind == CursorKind.CLASS_TEMPLATE:
+            if container.kind == CursorKind.CLASS_TEMPLATE or name.endswith(">"):
                 template_type_parameters = "template <" + (", ".join(template_type_parameters)) + ">\n"
             else:
                 template_type_parameters = ""

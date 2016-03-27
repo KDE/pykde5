@@ -148,6 +148,8 @@ class Generator(object):
                 decl = self._enum_get(self.tu.cursor, child)
             elif child.kind == CursorKind.TYPEDEF_DECL:
                 decl = self._typedef_get(self.tu.cursor, child)
+            elif child.kind in [CursorKind.FUNCTION_DECL, CursorKind.FUNCTION_TEMPLATE]:
+                decl = self._fn_get(self.tu.cursor, child)
             else:
                 logger.debug("Ignoring child {} {}".format(child.kind.name, child.displayname or child.spelling))
                 continue
@@ -200,18 +202,10 @@ class Generator(object):
             if member.access_specifier == AccessSpecifier.PRIVATE:
                 logger.debug("Ignoring private {} {}::{}".format(member.kind, name, member.displayname))
                 continue
-            if member.kind in [CursorKind.CXX_METHOD, CursorKind.FUNCTION_DECL]:
-                parameters = self._fn_get_parameters(container, member)
-                decl = "{} {}({})".format(member.result_type.spelling, member.spelling, parameters)
-                #
-                # Now the rules have run, add any prefix/suffix.
-                #
-                prefix, suffix = self._fn_get_keywords(member)
-                decl = prefix + decl + suffix
-                decl = decl.replace("* ", "*").replace("& ", "&")
-                decl = rules.apply_function_rules(container, member, decl)
+            if member.kind in [CursorKind.CXX_METHOD, CursorKind.FUNCTION_DECL, CursorKind.FUNCTION_TEMPLATE]:
+                decl = self._fn_get(container, member, 1)
                 if decl:
-                    body += "    {};\n".format(decl)
+                    body += decl
             elif member.kind in [CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR]:
                 parameters = self._fn_get_parameters(container, member)
                 decl = "{}({})".format(member.spelling, parameters)
@@ -315,6 +309,28 @@ class Generator(object):
             assert enum.kind == CursorKind.ENUM_CONSTANT_DECL
         decl += ",\n".join(enumerations) + "\n"
         decl += pad + "};\n"
+        return decl
+
+    def _fn_get(self, container, function, level=0):
+        pad = " " * (level * 4)
+        template_type_parameters = []
+        for child in function.get_children():
+            if child.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
+                template_type_parameters.append("typename " + child.displayname)
+        if function.kind == CursorKind.FUNCTION_TEMPLATE:
+            template_type_parameters = pad + "template <" + (", ".join(template_type_parameters)) + ">\n"
+        else:
+            template_type_parameters = ""
+        parameters = self._fn_get_parameters(container, function)
+        decl = "{} {}({})".format(function.result_type.spelling, function.spelling, parameters)
+        decl = decl.replace("* ", "*").replace("& ", "&")
+        decl = rules.apply_function_rules(container, function, decl)
+        #
+        # Now the rules have run, add any prefix/suffix.
+        #
+        prefix, suffix = self._fn_get_keywords(function)
+        decl = prefix + decl + suffix
+        decl = template_type_parameters + pad + decl + ";\n"
         return decl
 
     def _fn_get_keywords(self, function):

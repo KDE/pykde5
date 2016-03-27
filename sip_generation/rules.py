@@ -66,7 +66,7 @@ def function_discard(container, function, text, matcher):
 #       """
 #
 _FUNCTION_RULES = [
-        (".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall", ".*", function_discard),
+        (".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", function_discard),
     ]
 
 

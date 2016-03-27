@@ -402,8 +402,7 @@ class Generator(object):
         if template:
             decl = pad + "typedef {}<{}> {};\n".format(template, ", ".join(args), alias)
         else:
-            assert len(args) == 1
-            decl = pad + pad + "typedef {} {};\n".format(args[0], alias)
+            decl = pad + "typedef {} {};\n".format("::".join(args), alias)
         return decl
 
     def _read_source(self, extent):

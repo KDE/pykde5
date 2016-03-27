@@ -20,6 +20,7 @@
 """SIP file generator driver for PyKDE."""
 from __future__ import print_function
 import argparse
+import errno
 import gettext
 import os
 import inspect
@@ -27,8 +28,6 @@ import logging
 import re
 import sys
 import traceback
-
-import errno
 
 from generator import Generator
 

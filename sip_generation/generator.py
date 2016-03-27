@@ -143,6 +143,14 @@ class Generator(object):
             #
             if child.kind in [CursorKind.CLASS_DECL, CursorKind.NAMESPACE]:
                 body.append(self._process_container(child, h_file))
+            elif child.kind == CursorKind.ENUM_DECL:
+                decl = self._enum_get(self.tu.cursor, child)
+                if decl:
+                    body.append(decl)
+            elif child.kind == CursorKind.TYPEDEF_DECL:
+                decl = self._typedef_get(self.tu.cursor, child)
+                if decl:
+                    body.append(decl)
             else:
                 logger.debug("Ignoring child {} {}".format(child.kind.name, child.displayname or child.spelling))
                 continue
@@ -211,20 +219,17 @@ class Generator(object):
                 if decl:
                     body += "    {};\n".format(decl)
             elif member.kind == CursorKind.ENUM_DECL:
-                body += "    enum {}\n{{\n".format(member.displayname)
-                enumerations = []
-                for enum in member.get_children():
-                    enumerations.append("        {}".format(enum.displayname))
-                    assert enum.kind == CursorKind.ENUM_CONSTANT_DECL
-                body += ",\n".join(enumerations)
-                body += "\n    };\n"
+                decl = self._enum_get(container, member, level + 1)
+                if decl:
+                    body += decl
             elif member.kind == CursorKind.CXX_ACCESS_SPEC_DECL:
                 access_specifier = self._get_access_specifier(member)
                 if access_specifier:
                     body += "{}\n".format(access_specifier)
             elif member.kind == CursorKind.TYPEDEF_DECL:
-                alias, definition = self._typedef_get(container, member)
-                body += "    typedef {} {}:\n".format(definition, alias)
+                decl = self._typedef_get(container, member, level + 1)
+                if decl:
+                    body += decl
             elif member.kind == CursorKind.CLASS_DECL:
                 body += self._process_container(member, level=level + 1)
             else:
@@ -276,19 +281,16 @@ class Generator(object):
             access_specifier = access_specifier.split()[0] + ":"
         return access_specifier
 
-    def _typedef_get(self, container, typedef):
-        alias = typedef.displayname
-        template = ""
-        args = []
-        for child in typedef.get_children():
-            if child.kind == CursorKind.TEMPLATE_REF:
-                template = child.displayname
-            elif child.kind == CursorKind.TYPE_REF:
-                args.append(child.displayname)
-            else:
-                logger.debug("Ignorning unsupported {} {}".format(child.kind, child.spelling))
-        body = "{}<{}>".format(template, ", ".join(args))
-        return alias, body
+    def _enum_get(self, container, enum, level=0):
+        pad = " " * (level * 4)
+        decl = pad + "enum {} {{\n".format(enum.displayname)
+        enumerations = []
+        for enum in enum.get_children():
+            enumerations.append(pad + "    {}".format(enum.displayname))
+            assert enum.kind == CursorKind.ENUM_CONSTANT_DECL
+        decl += ",\n".join(enumerations) + "\n"
+        decl += pad + "};\n"
+        return decl
 
     def _fn_get_keywords(self, function):
         """
@@ -384,6 +386,25 @@ class Generator(object):
             return text[default_value:]
         else:
             return ""
+
+    def _typedef_get(self, container, typedef, level=0):
+        pad = " " * (level * 4)
+        alias = typedef.displayname
+        template = ""
+        args = []
+        for child in typedef.get_children():
+            if child.kind == CursorKind.TEMPLATE_REF:
+                template = child.displayname
+            elif child.kind == CursorKind.TYPE_REF:
+                args.append(child.displayname)
+            else:
+                logger.debug("Ignorning unsupported {}::{} {}".format(container.spelling, child.spelling, child.kind))
+        if template:
+            decl = pad + "typedef {}<{}> {};\n".format(template, ", ".join(args), alias)
+        else:
+            assert len(args) == 1
+            decl = pad + pad + "typedef {} {};\n".format(args[0], alias)
+        return decl
 
     def _read_source(self, extent):
         """

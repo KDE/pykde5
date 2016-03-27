@@ -141,19 +141,18 @@ class Generator(object):
             #
             # Add entries we know about.
             #
-            if child.kind in [CursorKind.CLASS_DECL, CursorKind.NAMESPACE]:
-                body.append(self._process_container(child, h_file))
+            decl = ""
+            if child.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL]:
+                decl = self._container_get(child, h_file)
             elif child.kind == CursorKind.ENUM_DECL:
                 decl = self._enum_get(self.tu.cursor, child)
-                if decl:
-                    body.append(decl)
             elif child.kind == CursorKind.TYPEDEF_DECL:
                 decl = self._typedef_get(self.tu.cursor, child)
-                if decl:
-                    body.append(decl)
             else:
                 logger.debug("Ignoring child {} {}".format(child.kind.name, child.displayname or child.spelling))
                 continue
+            if decl:
+                body.append(decl)
         #
         # Generate a file header.
         #
@@ -181,7 +180,7 @@ class Generator(object):
 """.format(now.year, sip_file, self.tu.spelling)
         return body, header, sip_file
 
-    def _process_container(self, container, h_file="", level=0):
+    def _container_get(self, container, h_file="", level=0):
         """
         Recursive walk of a class or namespace.
         
@@ -190,11 +189,13 @@ class Generator(object):
         :param level:               Recursion level controls indentation.
         :return:                    A string.
         """
-        name = container.spelling
+        name = container.displayname
         if container.access_specifier == AccessSpecifier.PRIVATE:
             logger.debug("Ignoring private {} {}".format(container.kind, name))
             return ""
         body = ""
+        base_specifiers = []
+        template_type_parameters = []
         for member in container.get_children():
             if member.access_specifier == AccessSpecifier.PRIVATE:
                 logger.debug("Ignoring private {} {}::{}".format(member.kind, name, member.displayname))
@@ -230,25 +231,48 @@ class Generator(object):
                 decl = self._typedef_get(container, member, level + 1)
                 if decl:
                     body += decl
-            elif member.kind == CursorKind.CLASS_DECL:
-                body += self._process_container(member, level=level + 1)
+            elif member.kind == CursorKind.CXX_BASE_SPECIFIER:
+                base_specifiers.append(member.displayname)
+            elif member.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
+                template_type_parameters.append("typename " + member.displayname)
+            elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL]:
+                decl = self._container_get(member, level=level + 1)
+                if decl:
+                    body += decl
             else:
                 logger.debug("Ignorning unsupported {} {}::{}".format(member.kind, name, member.displayname))
+        #
+        # Empty containers are still useful if they provide namespaces.
+        #
+        if not body:
+            text = self._read_source(container.extent)
+            if text.endswith("}"):
+                body = "\n"
         if body:
-            bases = [m.type.spelling for m in container.get_children() if m.kind == CursorKind.CXX_BASE_SPECIFIER]
-            if bases:
-                bases = ": " + (", ".join(bases))
+            if container.kind == CursorKind.CLASS_TEMPLATE:
+                template_type_parameters = "template <" + (", ".join(template_type_parameters)) + ">\n"
             else:
-                bases = ""
+                template_type_parameters = ""
+            if base_specifiers:
+                base_specifiers = ": " + (", ".join(base_specifiers))
+            else:
+                base_specifiers = ""
             if h_file:
                 h_file = """%TypeHeaderCode
 #include <{}>
 %End
 """.format(h_file)
-            body = """class {}{}
-{{
-{}{}}};
-""".format(name, bases, h_file, body)
+            else:
+                h_file = ""
+            #
+            # There does not seem to be an obvious way to tell a class from a struct. That should matter...
+            #
+            if container.kind == CursorKind.NAMESPACE:
+                container_type = "namespace"
+            else:
+                container_type = "class"
+            body = "{}{} {}{}\n{{\n{}{}}};".format(
+                template_type_parameters, container_type, name, base_specifiers, h_file, body)
             #
             # Apply indentation.
             #
@@ -257,6 +281,7 @@ class Generator(object):
                 lines = body.split("\n")
                 lines = [pad + line for line in lines]
                 body = "\n".join(lines)
+            body += "\n"
         return body
 
     def _get_access_specifier(self, member):
@@ -337,7 +362,7 @@ class Generator(object):
                     decl += " = " + init
                 parameters.append(decl)
             else:
-                logger.debug("Ignoring non-param {} {}".format(mc.kind, mc.displayname))
+                logger.debug("Ignoring non-param {}::{} {}".format(function.spelling, mc.kind, mc.displayname))
                 continue
 
         parameters = ", ".join(parameters)
@@ -468,9 +493,10 @@ def main(argv=None):
         #
         g = Generator(args.qt_includes, args.kde_includes)
         body, header, sip_file = g.create_sip(args.source)
-        print(header)
-        for r in body:
-            print(r)
+        if body:
+            print(header)
+            for r in body:
+                print(r)
     except Exception as e:
         tbk = traceback.format_exc()
         print(tbk)

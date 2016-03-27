@@ -107,7 +107,7 @@ def main(argv = None):
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
     parser.add_argument("--kde-includes", default="/usr/include/KF5", help=_("Root of KDE header paths"))
     parser.add_argument("--qt-includes", default="/usr/include/x86_64-linux-gnu/qt5", help=_("Root of Qt header paths"))
-    parser.add_argument("--sources", default="KMessageBox", type=re.compile, help=_("Regular expression of files under --kde-includes to process"))
+    parser.add_argument("--sources", default=".*", type=re.compile, help=_("Regular expression of files under --kde-includes to process"))
     parser.add_argument("output", help=_("Output directory"))
     try:
         args = parser.parse_args(argv[1:])

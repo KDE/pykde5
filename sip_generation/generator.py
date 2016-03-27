@@ -313,24 +313,42 @@ class Generator(object):
 
     def _fn_get(self, container, function, level=0):
         pad = " " * (level * 4)
+        parameters = []
         template_type_parameters = []
         for child in function.get_children():
-            if child.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
+            if child.kind == CursorKind.PARM_DECL:
+                parameter = child.displayname or "__{}".format(len(parameters))
+                #
+                # So far so good, but we need any default value.
+                #
+                decl = "{} {}".format(child.type.spelling, parameter)
+                init = self._fn_get_parameter_default(function, child)
+                decl, init = rules.apply_param_rules(container, function, parameter, decl, init)
+                if init:
+                    decl += " = " + init
+                parameters.append(decl)
+            elif child.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
                 template_type_parameters.append("typename " + child.displayname)
-        if function.kind == CursorKind.FUNCTION_TEMPLATE:
-            template_type_parameters = pad + "template <" + (", ".join(template_type_parameters)) + ">\n"
+            else:
+                logger.debug("Ignoring non-param {}::{} {}".format(function.spelling, child.kind, child.displayname))
+        parameters = ", ".join(parameters)
+        if function.kind in [CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR]:
+            decl = "{}({})".format(function.spelling, parameters)
         else:
-            template_type_parameters = ""
-        parameters = self._fn_get_parameters(container, function)
-        decl = "{} {}({})".format(function.result_type.spelling, function.spelling, parameters)
+            decl = "{} {}({})".format(function.result_type.spelling, function.spelling, parameters)
         decl = decl.replace("* ", "*").replace("& ", "&")
         decl = rules.apply_function_rules(container, function, decl)
         #
         # Now the rules have run, add any prefix/suffix.
         #
-        prefix, suffix = self._fn_get_keywords(function)
-        decl = prefix + decl + suffix
-        decl = template_type_parameters + pad + decl + ";\n"
+        if decl:
+            if function.kind == CursorKind.FUNCTION_TEMPLATE:
+                template_type_parameters = pad + "template <" + (", ".join(template_type_parameters)) + ">\n"
+            else:
+                template_type_parameters = ""
+            prefix, suffix = self._fn_get_keywords(function)
+            decl = prefix + decl + suffix
+            decl = template_type_parameters + pad + decl + ";\n"
         return decl
 
     def _fn_get_keywords(self, function):
@@ -355,34 +373,6 @@ class Generator(object):
         else:
             prefix = ""
         return prefix, suffix
-
-    def _fn_get_parameters(self, container, function):
-        """
-        Find the parameters for a function.
-
-        :param container:
-        :param function:
-        :return:
-        """
-        parameters = []
-        for mc in function.get_children():
-            if mc.kind == CursorKind.PARM_DECL:
-                parameter = mc.displayname or "__{}".format(len(parameters))
-                #
-                # So far so good, but we need any default value.
-                #
-                decl = "{} {}".format(mc.type.spelling, parameter)
-                init = self._fn_get_parameter_default(function, mc)
-                decl, init = rules.apply_param_rules(container, function, parameter, decl, init)
-                if init:
-                    decl += " = " + init
-                parameters.append(decl)
-            else:
-                logger.debug("Ignoring non-param {}::{} {}".format(function.spelling, mc.kind, mc.displayname))
-                continue
-
-        parameters = ", ".join(parameters)
-        return parameters
 
     def _fn_get_parameter_default(self, function, parameter):
         """

@@ -185,7 +185,7 @@ class Generator(object):
             if member.location.file.name != self.tu.spelling:
                 continue
             if member.access_specifier == AccessSpecifier.PRIVATE:
-                logger.debug("Ignoring private {} {}::{}".format(member.kind, name, member.displayname))
+                logger.debug("Ignoring private {}::{} {}".format(name, member.displayname, member.kind))
                 continue
             decl = ""
             if member.kind in [CursorKind.CXX_METHOD, CursorKind.FUNCTION_DECL, CursorKind.FUNCTION_TEMPLATE,
@@ -204,7 +204,7 @@ class Generator(object):
             elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL]:
                 decl = self._container_get(member, level + 1, h_file)
             else:
-                logger.debug("Ignorning unsupported {} {}::{}".format(member.kind, name, member.displayname))
+                logger.debug("Ignoring container child {}::{} {}".format(name, member.displayname, member.kind))
             if decl:
                 body += decl
         #
@@ -292,10 +292,15 @@ class Generator(object):
                 if init:
                     decl += " = " + init
                 parameters.append(decl)
+            elif child.kind in [CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF]:
+                #
+                # Ignore the result type.
+                #
+                pass
             elif child.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
                 template_type_parameters.append("typename " + child.displayname)
             else:
-                logger.debug("Ignoring non-param {}::{} {}".format(function.spelling, child.kind, child.displayname))
+                logger.debug("Ignoring function child {}::{} {}".format(function.spelling, child.displayname, child.kind))
         parameters = ", ".join(parameters)
         if function.kind in [CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR]:
             decl = "{}({})".format(function.spelling, parameters)

@@ -208,7 +208,8 @@ class Generator(object):
             elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL]:
                 decl = self._container_get(member, level + 1, h_file)
             else:
-                logger.debug("Ignoring container child {}::{} {}".format(name, member.displayname, member.kind))
+                id = member.displayname or member.spelling or member.extent.start.line
+                logger.debug("Ignoring container child {}::{} {}".format(name, id, member.kind))
             if decl:
                 body += decl
         #
@@ -304,7 +305,8 @@ class Generator(object):
             elif child.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
                 template_type_parameters.append("typename " + child.displayname)
             else:
-                logger.debug("Ignoring function child {}::{} {}".format(function.spelling, child.displayname, child.kind))
+                id = child.displayname or child.spelling or child.extent.start.line
+                logger.debug("Ignoring function child {}::{} {}".format(function.spelling, id, child.kind))
         parameters = ", ".join(parameters)
         if function.kind in [CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR]:
             decl = "{}({})".format(function.spelling, parameters)

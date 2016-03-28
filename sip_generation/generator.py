@@ -283,6 +283,7 @@ class Generator(object):
 
     def _fn_get(self, container, function, level):
         pad = " " * (level * 4)
+        setattr(function, "sip_annotations", [])
         parameters = []
         template_type_parameters = []
         for child in function.get_children():
@@ -293,7 +294,10 @@ class Generator(object):
                 #
                 decl = "{} {}".format(child.type.spelling, parameter)
                 init = self._fn_get_parameter_default(function, child)
-                decl, init = rules.apply_param_rules(container, function, parameter, decl, init)
+                setattr(child, "sip_annotations", [])
+                decl, init = rules.apply_param_rules(container, function, child, decl, init)
+                if child.sip_annotations:
+                    decl += " /" + ",".join(child.sip_annotations) + "/"
                 if init:
                     decl += " = " + init
                 parameters.append(decl)
@@ -308,6 +312,11 @@ class Generator(object):
                 #   CursorKind.CXX_OVERRIDE_ATTR: The "override" keyword.
                 #
                 pass
+            elif child.kind == CursorKind.UNEXPOSED_ATTR and self._read_source(child.extent).endswith("DEPRECATED"):
+                #
+                # We don't seem to have access to the __attribute__(())s, but at least we can look for stuff we care about.
+                #
+                function.sip_annotations.append("Deprecated")
             elif child.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
                 template_type_parameters.append("typename " + child.displayname)
             else:
@@ -330,6 +339,8 @@ class Generator(object):
                 template_type_parameters = ""
             prefix, suffix = self._fn_get_keywords(function)
             decl = prefix + decl + suffix
+            if function.sip_annotations:
+                decl += " /" + ",".join(function.sip_annotations) + "/"
             decl = template_type_parameters + pad + decl + ";\n"
         return decl
 

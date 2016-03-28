@@ -20,6 +20,7 @@
 """SIP file generator overrides for PyKDE."""
 from __future__ import print_function
 import argparse
+from copy import copy
 import gettext
 import inspect
 import logging
@@ -77,7 +78,7 @@ def _FUNCTION_RULES():
             :param matcher:                 The re.Match object. This contains named
                                             groups corresponding to the parameter
                                             names above.
-            :return: An updated decl, init pair.
+            :return: An updated decl, or function.sip_annotations.
             '''
     """
     return [
@@ -86,11 +87,13 @@ def _FUNCTION_RULES():
 
 
 def parameter_out(container, function, parameter, decl, init, matcher):
-    return decl + " /Out/", init
+    parameter.sip_annotations.append("Out")
+    return decl, init
 
 
 def parameter_transfer_this(container, function, parameter, decl, init, matcher):
-    return decl + " /TransferThis/", init
+    parameter.sip_annotations.append("TransferThis")
+    return decl, init
 
 
 def _PARAMETER_RULES():
@@ -135,7 +138,7 @@ def _PARAMETER_RULES():
             :param matcher:                 The re.Match object. This contains named
                                             groups corresponding to the parameter
                                             names above.
-            :return: An updated decl, init pair.
+            :return: An updated (decl, init) pair, or function.sip_annotations.
           '''
     """
     return [
@@ -162,12 +165,12 @@ class Rule(object):
         return self.matcher.match(candidate)
 
     def trace_result(self, original, modified):
-        if not modified:
-            logger.debug(_("Rule {} suppressed '{}'").format(self, original))
-        elif original != modified:
-            logger.debug(_("Rule {} modified '{}'->'{}'").format(self, original, modified))
+        if not modified[:-2]:
+            logger.debug(_("Rule {} suppressed {}").format(self, original))
+        elif original[:-2] != modified[:-2] or original[-1] != modified[-1]:
+            logger.debug(_("Rule {} modified {}->{}").format(self, original, modified))
         else:
-            logger.warn(_("Rule {} did not modify '{}'").format(self, original))
+            logger.warn(_("Rule {} did not modify {}").format(self, original))
 
     def __str__(self):
         return "{}[{}],{}".format(self.db.__name__, self.rule_number, self.fn.__name__)
@@ -186,9 +189,10 @@ def apply_function_rules(container, function, decl):
     for rule in _compiled_fn_rules:
         matcher = rule.match(candidate)
         if matcher:
-            modified = rule.fn(container.spelling, function.spelling, decl, matcher)
-            rule.trace_result(decl, modified)
-            decl = modified
+            annotations = copy(function.sip_annotations)
+            decl2 = rule.fn(container.spelling, function.spelling, decl, matcher)
+            rule.trace_result((decl, annotations), (decl2, function.sip_annotations))
+            decl = decl2
             #
             # Only use the first matching rule.
             #
@@ -211,10 +215,10 @@ def apply_param_rules(container, function, parameter, decl, init):
     for rule in _compiled_param_rules:
         matcher = rule.match(candidate)
         if matcher:
-            original = (decl, init)
-            modified = rule.fn(container.spelling, function.spelling, parameter, decl, init, matcher)
-            rule.trace_result(original, modified)
-            decl, init = modified
+            annotations = copy(parameter.sip_annotations)
+            decl2, init2 = rule.fn(container.spelling, function.spelling, parameter, decl, init, matcher)
+            rule.trace_result((decl, init, annotations), (decl2, init2, parameter.sip_annotations))
+            decl, init = decl2, init2
             #
             # Only use the first matching rule.
             #

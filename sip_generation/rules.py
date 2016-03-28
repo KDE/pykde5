@@ -144,6 +144,35 @@ def _PARAMETER_RULES():
     ]
 
 
+class Rule(object):
+    def __init__(self, db, rule_number, fn, pattern_zip):
+        self.db = db
+        self.rule_number = rule_number
+        self.fn = fn
+        try:
+            groups = ["(?P<{}>{})".format(name, pattern) for pattern, name in pattern_zip]
+            groups = "-".join(groups)
+            self.matcher = re.compile(groups)
+        except Exception as e:
+            groups = ["{} '{}'".format(name, pattern) for pattern, name in pattern_zip]
+            groups = ", ".join(groups)
+            raise RuntimeError(_("Bad {}: {}: {}").format(self, groups, e))
+
+    def match(self, candidate):
+        return self.matcher.match(candidate)
+
+    def trace_result(self, original, modified):
+        if not modified:
+            logger.debug(_("Rule {} suppressed '{}'").format(self, original))
+        elif original != modified:
+            logger.debug(_("Rule {} modified '{}'->'{}'").format(self, original, modified))
+        else:
+            logger.warn(_("Rule {} did not modify '{}'").format(self, original))
+
+    def __str__(self):
+        return "{}[{}],{}".format(self.db.__name__, self.rule_number, self.fn.__name__)
+
+
 def apply_function_rules(container, function, decl):
     """
     Walk over the rules database for functions, applying the first matching transformation.
@@ -154,16 +183,12 @@ def apply_function_rules(container, function, decl):
     :return:
     """
     candidate = "{}-{}-{}".format(container.spelling, function.spelling, decl)
-    for i, o in enumerate(_compiled_fn_rules):
-        m, x = o
-        if m.match(candidate):
-            modified_decl = x(container.spelling, function.spelling, decl, m)
-            if not modified_decl:
-                logger.debug(_("Rule {} suppressed {}").format(i, decl))
-            else:
-                if decl != modified_decl:
-                    logger.info(_("Rule {} modified {}").format(i, decl))
-            decl = modified_decl
+    for rule in _compiled_fn_rules:
+        matcher = rule.match(candidate)
+        if matcher:
+            modified = rule.fn(container.spelling, function.spelling, decl, matcher)
+            rule.trace_result(decl, modified)
+            decl = modified
             #
             # Only use the first matching rule.
             #
@@ -183,19 +208,13 @@ def apply_param_rules(container, function, parameter, decl, init):
     :return:
     """
     candidate = "{}-{}-{}-{}-{}".format(container.spelling, function.spelling, parameter, decl, init)
-    for i, o in enumerate(_compiled_param_rules):
-        m, x = o
-        matcher = m.match(candidate)
+    for rule in _compiled_param_rules:
+        matcher = rule.match(candidate)
         if matcher:
-            decl2, init2 = x(container.spelling, function.spelling, parameter, decl, init, matcher)
-            if decl != decl2 or init != init2:
-                logger.debug(
-                    _("Rule {}[{}] modified '{}'->'{}', '{}'->'{}'").format(
-                        i, x.__name__, decl, decl2, init, init2))
-                decl = decl2
-                init = init2
-            else:
-                logger.warn(_("Rule {}[{}] did not modify '{}' '{}'").format(i, x.__name__, decl, init))
+            original = (decl, init)
+            modified = rule.fn(container.spelling, function.spelling, parameter, decl, init, matcher)
+            rule.trace_result(original, modified)
+            decl, init = modified
             #
             # Only use the first matching rule.
             #
@@ -209,17 +228,10 @@ def _compile_parameter_rules():
     """
     results = []
     for i, o in enumerate(_PARAMETER_RULES()):
-        c, f, p, d, init, handler = o
+        c, f, p, d, init, fn = o
         z = zip([c, f, p, d, init],
                 ["container", "function", "parameter", "decl", "init"])
-        try:
-            groups = ["(?P<{}>{})".format(name, pattern) for pattern, name in z]
-            groups = "-".join(groups)
-            results.append((re.compile(groups), handler))
-        except Exception as e:
-            groups = ["{} '{}'".format(name, pattern) for pattern, name in z]
-            groups = ", ".join(groups)
-            raise RuntimeError(_("Bad parameter_rules[{}]: {}: {}").format(i, groups, e))
+        results.append(Rule(_PARAMETER_RULES, i, fn, z))
     return results
 
 
@@ -229,17 +241,10 @@ def _compile_function_rules():
     """
     results = []
     for i, o in enumerate(_FUNCTION_RULES()):
-        c, f, d, handler = o
+        c, f, d, fn = o
         z = zip([c, f, d],
                 ["container", "function", "decl"])
-        try:
-            groups = ["(?P<{}>{})".format(name, pattern) for pattern, name in z]
-            groups = "-".join(groups)
-            results.append((re.compile(groups), handler))
-        except Exception as e:
-            groups = ["{} '{}'".format(name, pattern) for pattern, name in z]
-            groups = ", ".join(groups)
-            raise RuntimeError(_("Bad function_rule[{}]: {}: {}").format(i, groups, e))
+        results.append(Rule(_FUNCTION_RULES, i, fn, z))
     return results
 
 

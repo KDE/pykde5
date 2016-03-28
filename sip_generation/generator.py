@@ -193,7 +193,7 @@ class Generator(object):
                 continue
             decl = ""
             if member.kind in [CursorKind.CXX_METHOD, CursorKind.FUNCTION_DECL, CursorKind.FUNCTION_TEMPLATE,
-                               CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR]:
+                               CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR, CursorKind.CONVERSION_FUNCTION]:
                 decl = self._fn_get(container, member, level + 1)
             elif member.kind == CursorKind.ENUM_DECL:
                 decl = self._enum_get(container, member, level + 1)

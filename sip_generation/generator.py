@@ -297,9 +297,15 @@ class Generator(object):
                 if init:
                     decl += " = " + init
                 parameters.append(decl)
-            elif child.kind in [CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF]:
+            elif child.kind in [CursorKind.COMPOUND_STMT,
+                                CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF,
+                                CursorKind.CXX_OVERRIDE_ATTR]:
                 #
-                # Ignore the result type.
+                # Ignore:
+                #
+                #   CursorKind.COMPOUND_STMT: Function body.
+                #   CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF: The result type.
+                #   CursorKind.CXX_OVERRIDE_ATTR: The "override" keyword.
                 #
                 pass
             elif child.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:

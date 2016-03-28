@@ -25,6 +25,7 @@ import gettext
 import inspect
 import logging
 import os
+import re
 import subprocess
 import sys
 import traceback
@@ -164,6 +165,8 @@ class Generator(object):
 """.format(now.year, sip_file, self.tu.spelling)
         return body, header, sip_file
 
+    CONTAINER_SKIPPABLE_UNEXPOSED_DECL = re.compile("(_DECLARE_PRIVATE|friend)\W")
+
     def _container_get(self, container, level, h_file):
         """
         Recursive walk of a class or namespace.
@@ -173,6 +176,18 @@ class Generator(object):
         :param level:               Recursion level controls indentation.
         :return:                    A string.
         """
+        def skippable_unexposed_decl(member):
+            text = self._read_source(member.extent)
+            if Generator.CONTAINER_SKIPPABLE_UNEXPOSED_DECL.search(text):
+                return True
+            logger.debug(_("Ignoring container UNEXPOSED_DECL: {}").format(text))
+
+        def skippable_visibility_attr(member):
+            text = self._read_source(member.extent)
+            if text.endswith("_EXPORT"):
+                return True
+            logger.debug(_("Ignoring container VISIBILITY_ATTR: {}").format(text))
+
         name = container.displayname
         if container.access_specifier == AccessSpecifier.PRIVATE:
             if self.dump_privates:
@@ -207,6 +222,10 @@ class Generator(object):
                 template_type_parameters.append("typename " + member.displayname)
             elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL]:
                 decl = self._container_get(member, level + 1, h_file)
+            elif member.kind == CursorKind.VISIBILITY_ATTR and skippable_visibility_attr(member):
+                pass
+            elif member.kind == CursorKind.UNEXPOSED_DECL and skippable_unexposed_decl(member):
+                pass
             else:
                 id = member.displayname or member.spelling or member.extent.start.line
                 logger.debug("Ignoring container child {}::{} {}".format(name, id, member.kind))
@@ -282,6 +301,12 @@ class Generator(object):
         return decl
 
     def _fn_get(self, container, function, level):
+        def skippable_visibility_attr(member):
+            text = self._read_source(member.extent)
+            if text.endswith("_EXPORT"):
+                return True
+            logger.debug(_("Ignoring fn VISIBILITY_ATTR: {}").format(text))
+
         pad = " " * (level * 4)
         setattr(function, "sip_annotations", [])
         parameters = []
@@ -319,6 +344,8 @@ class Generator(object):
                 function.sip_annotations.append("Deprecated")
             elif child.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
                 template_type_parameters.append("typename " + child.displayname)
+            elif child.kind == CursorKind.VISIBILITY_ATTR and skippable_visibility_attr(child):
+                pass
             else:
                 id = child.displayname or child.spelling or child.extent.start.line
                 logger.debug("Ignoring function child {}::{} {}".format(function.spelling, id, child.kind))

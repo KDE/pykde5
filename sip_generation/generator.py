@@ -65,13 +65,14 @@ def walk_directories(root, fn):
 class Generator(object):
     _libclang = None
 
-    def __init__(self, qt_includes, kde_includes, dump_includes=False):
+    def __init__(self, qt_includes, kde_includes, dump_includes=False, dump_privates=False):
         """
         Constructor.
 
         :param qt_includes:         The root for all Qt include files.
         :param kde_includes:        The root for all KDE include files.
         :param dump_includes:       Turn on diagnostics for include files.
+        :param dump_privates:       Turn on diagnostics for omitted private items.
         """
         Generator._find_libclang()
         self.includes = set()
@@ -83,6 +84,7 @@ class Generator(object):
             for include in sorted(self.includes):
                 logger.debug(_("Using includes from {}").format(include))
         self.dump_includes = dump_includes
+        self.dump_privates = dump_privates
         self.diagnostics = set()
         self.tu = None
         self.unpreprocessed_source = None
@@ -173,7 +175,8 @@ class Generator(object):
         """
         name = container.displayname
         if container.access_specifier == AccessSpecifier.PRIVATE:
-            logger.debug("Ignoring private {} {}".format(container.kind, name))
+            if self.dump_privates:
+                logger.debug("Ignoring private {} {}".format(container.kind, name))
             return ""
         body = ""
         base_specifiers = []
@@ -185,7 +188,8 @@ class Generator(object):
             if member.location.file.name != self.tu.spelling:
                 continue
             if member.access_specifier == AccessSpecifier.PRIVATE:
-                logger.debug("Ignoring private {}::{} {}".format(name, member.displayname, member.kind))
+                if self.dump_privates:
+                    logger.debug("Ignoring private {}::{} {}".format(name, member.displayname, member.kind))
                 continue
             decl = ""
             if member.kind in [CursorKind.CXX_METHOD, CursorKind.FUNCTION_DECL, CursorKind.FUNCTION_TEMPLATE,

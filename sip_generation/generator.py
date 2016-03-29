@@ -203,6 +203,7 @@ class Generator(object):
             if self.dump_privates:
                 logger.debug("Ignoring private {} {}".format(container.kind, name))
             return ""
+        setattr(container, "sip_annotations", [])
         body = ""
         base_specifiers = []
         template_type_parameters = []
@@ -234,6 +235,11 @@ class Generator(object):
                 decl = self._var_get(container, member, level + 1)
             elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL]:
                 decl = self._container_get(member, level + 1, h_file)
+            elif member.kind == CursorKind.UNEXPOSED_ATTR and self._read_source(member.extent).endswith("_DEPRECATED_EXPORT"):
+                #
+                # We don't seem to have access to the __attribute__(())s, but at least we can look for stuff we care about.
+                #
+                container.sip_annotations.append("Deprecated")
             elif member.kind in TEMPLATE_KINDS:
                 #
                 # Ignore:
@@ -280,8 +286,11 @@ class Generator(object):
                 else:
                     h_file = ""
                 prefix = "{}{} {}{}\n{}{{\n{}".format(template_type_parameters, container_type, name, base_specifiers, pad, h_file)
-                suffix = pad + "};\n"
-                body = prefix + body + suffix
+                if container.sip_annotations:
+                    suffix = "} /" + ",".join(container.sip_annotations) + "/;\n"
+                else:
+                    suffix = "};\n"
+                body = prefix + body + pad + suffix
         return body
 
     def _get_access_specifier(self, member, level):
@@ -362,7 +371,7 @@ class Generator(object):
                 #   TEMPLATE_KINDS: The result type.
                 #
                 pass
-            elif child.kind == CursorKind.UNEXPOSED_ATTR and self._read_source(child.extent).endswith("DEPRECATED"):
+            elif child.kind == CursorKind.UNEXPOSED_ATTR and self._read_source(child.extent).endswith("_DEPRECATED"):
                 #
                 # We don't seem to have access to the __attribute__(())s, but at least we can look for stuff we care about.
                 #

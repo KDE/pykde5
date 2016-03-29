@@ -190,13 +190,15 @@ class Generator(object):
             text = self._read_source(member.extent)
             if Generator.CONTAINER_SKIPPABLE_UNEXPOSED_DECL.search(text):
                 return True
-            logger.debug(_("Ignoring container UNEXPOSED_DECL: {}").format(text))
+            logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(container.kind, container.spelling,
+                                                                     member.extent.start.line, text, member.kind))
 
         def skippable_visibility_attr(member):
             text = self._read_source(member.extent)
             if text.endswith("_EXPORT"):
                 return True
-            logger.debug(_("Ignoring container VISIBILITY_ATTR: {}").format(text))
+            logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(container.kind, container.spelling,
+                                                                     member.extent.start.line, text, member.kind))
 
         name = container.displayname
         if container.access_specifier == AccessSpecifier.PRIVATE:
@@ -252,8 +254,7 @@ class Generator(object):
             elif member.kind == CursorKind.UNEXPOSED_DECL and skippable_unexposed_decl(member):
                 pass
             else:
-                id = member.displayname or member.spelling or member.extent.start.line
-                logger.debug("Ignoring container child {}::{} {}".format(name, id, member.kind))
+                Generator._report_ignoring(container, member)
             if decl:
                 body += decl
         #
@@ -341,7 +342,8 @@ class Generator(object):
             text = self._read_source(member.extent)
             if text.endswith("_EXPORT"):
                 return True
-            logger.debug(_("Ignoring fn VISIBILITY_ATTR: {}").format(text))
+            logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(function.kind, function.spelling,
+                                                                     member.extent.start.line, text, member.kind))
 
         pad = " " * (level * 4)
         setattr(function, "sip_annotations", [])
@@ -384,8 +386,7 @@ class Generator(object):
             elif child.kind == CursorKind.VISIBILITY_ATTR and skippable_visibility_attr(child):
                 pass
             else:
-                id = child.displayname or child.spelling or child.extent.start.line
-                logger.debug("Ignoring function child {}::{} {}".format(function.spelling, id, child.kind))
+                Generator._report_ignoring(function, child)
         parameters = ", ".join(parameters)
         if function.kind in [CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR]:
             decl = "{}({})".format(function.spelling, parameters)
@@ -422,8 +423,7 @@ class Generator(object):
             elif child.kind == CursorKind.TEMPLATE_TEMPLATE_PARAMETER:
                 template_type_parameters.append(self._template_template_param_get(member))
             else:
-                id = member.displayname or member.spelling or member.extent.start.line
-                logger.debug("Ignoring template parameter child {}::{} {}".format(container.name, id, member.kind))
+                Generator._report_ignoring(container, child)
         template_type_parameters = "template <" + (", ".join(template_type_parameters)) + "> class " + container.displayname
         return template_type_parameters
 
@@ -505,7 +505,7 @@ class Generator(object):
             elif child.kind == CursorKind.TYPE_REF:
                 args.append(child.displayname)
             else:
-                logger.debug("Ignorning unsupported {}::{} {}".format(container.spelling, child.spelling, child.kind))
+                Generator._report_ignoring(typedef, child)
         if template:
             decl = pad + "typedef {}<{}> {};\n".format(template, ", ".join(args), alias)
         else:
@@ -533,8 +533,7 @@ class Generator(object):
                 #
                 pass
             else:
-                id = child.displayname or child.spelling or child.extent.start.line
-                logger.debug("Ignoring variable child {}::{} {}".format(variable.spelling, id, child.kind))
+                Generator._report_ignoring(variable, child)
         decl = "{} {}".format(variable.type.spelling, variable.spelling)
         decl = decl.replace("* ", "*").replace("& ", "&")
         decl = rule_set.var_rules().apply(container, variable, decl)
@@ -597,6 +596,12 @@ class Generator(object):
                 cindex.Config.set_library_file(Generator._libclang)
         else:
             raise RuntimeError(_("Cannot find libclang"))
+
+    @staticmethod
+    def _report_ignoring(parent, child):
+        child_id = child.displayname or child.spelling
+        logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(parent.kind, parent.spelling, child.extent.start.line,
+                                                                 child_id, child.kind))
 
 
 def main(argv=None):

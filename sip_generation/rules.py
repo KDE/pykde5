@@ -44,43 +44,7 @@ def function_discard(container, function, text, matcher):
     return ""
 
 
-def _FUNCTION_RULES():
-    """
-    THE RULE DATABASE FOR FUNCTIONS.
-
-    This is used to customise the behaviour of the SIP generator by allowing
-    the declaration for any function to be customised, for example to add SIP
-    compiler annotations.
-
-    Each entry must be a list with members as follows:
-
-        0. A regular expression which matches the class or namespace "container"
-        name enclosing the function.
-
-        1. A regular expression which matches the function name.
-
-        2. A regular expression which matches the parameter declaration (e.g.
-        "int foo()").
-
-        3. A function.
-
-    In use, the database is walked in order from the first entry. If the regular
-    expressions are matched, the function is called, and no further entries are
-    walked. The function is called with the following contract:
-
-        def function_xxx(container, function, decl, matcher):
-            '''
-            Return a modified declaration for the given function.
-
-            :param container:               The clang.cindex.Cursor for the container.
-            :param function:                The clang.cindex.Cursor for the function.
-            :param decl:                    The text of the declaration.
-            :param matcher:                 The re.Match object. This contains named
-                                            groups corresponding to the parameter
-                                            names above.
-            :return: An updated decl, or function.sip_annotations.
-            '''
-    """
+def KF5_FUNCTION_RULES():
     return [
         [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", function_discard],
     ]
@@ -96,51 +60,7 @@ def parameter_transfer_this(container, function, parameter, decl, init, matcher)
     return decl, init
 
 
-def _PARAMETER_RULES():
-    """
-    THE RULE DATABASE FOR FUNCTIONS PARAMETERS.
-
-    This is used to customise the behaviour of the SIP generator by allowing
-    the declaration for any parameter in any function to be customised, for
-    example to add SIP compiler annotations.
-
-    Each entry must be a list with members as follows:
-
-        0. A regular expression which matches the class or namespace "container"
-        name enclosing the function.
-
-        1. A regular expression which matches the function name enclosing the
-        parameter.
-
-        2. A regular expression which matches the parameter name.
-
-        3. A regular expression which matches the parameter declaration (e.g.
-        "int foo").
-
-        4. A regular expression which matches the parameter initialiser (e.g.
-        "Xyz:MYCONST + 42").
-
-        5. A function.
-
-    In use, the database is walked in order from the first entry. If the regular
-    expressions are matched, the function is called, and no further entries are
-    walked. The function is called with the following contract:
-
-        def parameter_xxx(container, function, parameter, decl, init, matcher):
-            '''
-            Return a modified declaration and initialiser for the given parameter.
-
-            :param container:               The clang.cindex.Cursor for the container.
-            :param function:                The clang.cindex.Cursor for the function.
-            :param parameter:               The clang.cindex.Cursor for the parameter.
-            :param decl:                    The text of the declaration.
-            :param init:                    The text of any initialiser.
-            :param matcher:                 The re.Match object. This contains named
-                                            groups corresponding to the parameter
-                                            names above.
-            :return: An updated (decl, init) pair, or function.sip_annotations.
-          '''
-    """
+def KF5_PARAMETER_RULES():
     return [
         [".*", ".*", ".*", r"[KQ][A-Za-z_0-9]+\W*\*\W*parent", ".*", parameter_transfer_this],
         ["KDateTime", "fromString", "negZero", ".*", ".*", parameter_out],
@@ -202,10 +122,6 @@ class AbstractCompiledRuleDb(object):
     def apply(self, *args):
         raise NotImplemented(_("Missing subclass"))
 
-    def __str__(self):
-        help = inspect.getdoc(self.db)
-        return self.db.__name__ + ": " + help
-
 
 class FunctionRuleDb(AbstractCompiledRuleDb):
     def __init__(self, db):
@@ -230,8 +146,8 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
 
 
 class ParameterRuleDb(AbstractCompiledRuleDb):
-    def __init__(self, raw_rules):
-        super(ParameterRuleDb, self).__init__(raw_rules, ["container", "function", "parameter", "decl", "init"])
+    def __init__(self, db):
+        super(ParameterRuleDb, self).__init__(db, ["container", "function", "parameter", "decl", "init"])
 
     def apply(self, container, function, parameter, decl, init):
         """
@@ -253,11 +169,105 @@ class ParameterRuleDb(AbstractCompiledRuleDb):
         return decl, init
 
 
+class RuleSet(object):
+    def __init__(self, fn_db, param_db):
+        self._fn_rules = FunctionRuleDb(fn_db)
+        self._param_rules = ParameterRuleDb(param_db)
+
+    def fn_rules(self):
+        """
+        THE RULES FOR FUNCTIONS.
+
+        These are used to customise the behaviour of the SIP generator by allowing
+        the declaration for any function to be customised, for example to add SIP
+        compiler annotations.
+
+        Each entry in the raw rule database must be a list with members as follows:
+
+            0. A regular expression which matches the class or namespace "container"
+            name enclosing the function.
+
+            1. A regular expression which matches the function name.
+
+            2. A regular expression which matches the parameter declaration (e.g.
+            "int foo()").
+
+            3. A function.
+
+        In use, the database is walked in order from the first entry. If the regular
+        expressions are matched, the function is called, and no further entries are
+        walked. The function is called with the following contract:
+
+            def function_xxx(container, function, decl, matcher):
+                '''
+                Return a modified declaration for the given function.
+
+                :param container:               The clang.cindex.Cursor for the container.
+                :param function:                The clang.cindex.Cursor for the function.
+                :param decl:                    The text of the declaration.
+                :param matcher:                 The re.Match object. This contains named
+                                                groups corresponding to the parameter
+                                                names above.
+                :return: An updated decl, or function.sip_annotations.
+                '''
+
+        :return: The compiled form of the rules.
+        """
+        return self._fn_rules
+
+    def param_rules(self):
+        """
+        THE RULES FOR FUNCTION PARAMETERS.
+
+        These are used to customise the behaviour of the SIP generator by allowing
+        the declaration for any parameter in any function to be customised, for
+        example to add SIP compiler annotations.
+
+        Each entry in the raw rule database must be a list with members as follows:
+
+            0. A regular expression which matches the class or namespace "container"
+            name enclosing the function.
+
+            1. A regular expression which matches the function name enclosing the
+            parameter.
+
+            2. A regular expression which matches the parameter name.
+
+            3. A regular expression which matches the parameter declaration (e.g.
+            "int foo").
+
+            4. A regular expression which matches the parameter initialiser (e.g.
+            "Xyz:MYCONST + 42").
+
+            5. A function.
+
+        In use, the database is walked in order from the first entry. If the regular
+        expressions are matched, the function is called, and no further entries are
+        walked. The function is called with the following contract:
+
+            def parameter_xxx(container, function, parameter, decl, init, matcher):
+                '''
+                Return a modified declaration and initialiser for the given parameter.
+
+                :param container:               The clang.cindex.Cursor for the container.
+                :param function:                The clang.cindex.Cursor for the function.
+                :param parameter:               The clang.cindex.Cursor for the parameter.
+                :param decl:                    The text of the declaration.
+                :param init:                    The text of any initialiser.
+                :param matcher:                 The re.Match object. This contains named
+                                                groups corresponding to the parameter
+                                                names above.
+                :return: An updated (decl, init) pair, or function.sip_annotations.
+            '''
+
+        :return: The compiled form of the rules.
+        """
+        return self._param_rules
+
 #
 # Statically prepare the rule logic. This takes the rules provided by the user and turns them into code.
 #
-fn_rules = FunctionRuleDb(_FUNCTION_RULES)
-param_rules = ParameterRuleDb(_PARAMETER_RULES)
+rule_set = RuleSet(KF5_FUNCTION_RULES, KF5_PARAMETER_RULES)
 
 
 def main(argv = None):
@@ -282,9 +292,9 @@ def main(argv = None):
         #
         # Generate help!
         #
-        for db in [fn_rules, param_rules]:
-            print(_(""))
-            print(db)
+        for db in [rule_set.fn_rules, rule_set.param_rules]:
+            print(inspect.getdoc(db))
+            print()
     except Exception as e:
         tbk = traceback.format_exc()
         print(tbk)

@@ -67,6 +67,16 @@ def KF5_PARAMETER_RULES():
     ]
 
 
+def variable_discard(container, variable, text, matcher):
+    return ""
+
+
+def KF5_VARIABLE_RULES():
+    return [
+        [".*", "staticMetaObject", ".*", variable_discard],
+    ]
+
+
 class Rule(object):
     def __init__(self, db, rule_number, fn, pattern_zip):
         self.db = db
@@ -169,10 +179,33 @@ class ParameterRuleDb(AbstractCompiledRuleDb):
         return decl, init
 
 
+class VariableRuleDb(AbstractCompiledRuleDb):
+    def __init__(self, db):
+        super(VariableRuleDb, self).__init__(db, ["container", "variable", "decl"])
+
+    def apply(self, container, variable, decl):
+        """
+        Walk over the rules database for variables, applying the first matching transformation.
+
+        :param container:
+        :param variable:
+        :param decl:
+        :return:
+        """
+        matcher, rule = self._match(container.spelling, variable.spelling, decl)
+        if matcher:
+            annotations = copy(variable.sip_annotations)
+            decl2 = rule.fn(container.spelling, variable.spelling, decl, matcher)
+            rule.trace_result((decl, annotations), (decl2, variable.sip_annotations))
+            decl = decl2
+        return decl
+
+
 class RuleSet(object):
-    def __init__(self, fn_db, param_db):
+    def __init__(self, fn_db, param_db, var_db):
         self._fn_rules = FunctionRuleDb(fn_db)
         self._param_rules = ParameterRuleDb(param_db)
+        self._var_rules = VariableRuleDb(var_db)
 
     def fn_rules(self):
         """
@@ -264,10 +297,52 @@ class RuleSet(object):
         """
         return self._param_rules
 
+    def var_rules(self):
+        """
+        THE RULES FOR VARIABLES.
+
+        These are used to customise the behaviour of the SIP generator by allowing
+        the declaration for any variable to be customised, for example to add SIP
+        compiler annotations.
+
+        Each entry in the raw rule database must be a list with members as follows:
+
+            0. A regular expression which matches the class or namespace "container"
+            name enclosing the variable.
+
+            1. A regular expression which matches the variable name.
+
+            2. A regular expression which matches the variable declaration (e.g.
+            "int foo").
+
+            3. A function.
+
+        In use, the database is walked in order from the first entry. If the regular
+        expressions are matched, the function is called, and no further entries are
+        walked. The function is called with the following contract:
+
+            def function_xxx(container, variable, decl, matcher):
+                '''
+                Return a modified declaration for the given function.
+
+                :param container:               The clang.cindex.Cursor for the container.
+                :param variable:                The clang.cindex.Cursor for the variable.
+                :param decl:                    The text of the declaration.
+                :param matcher:                 The re.Match object. This contains named
+                                                groups corresponding to the parameter
+                                                names above.
+                :return: An updated decl, or variable.sip_annotations.
+                '''
+
+        :return: The compiled form of the rules.
+        """
+        return self._var_rules
+
+
 #
 # Statically prepare the rule logic. This takes the rules provided by the user and turns them into code.
 #
-rule_set = RuleSet(KF5_FUNCTION_RULES, KF5_PARAMETER_RULES)
+rule_set = RuleSet(KF5_FUNCTION_RULES, KF5_PARAMETER_RULES, KF5_VARIABLE_RULES)
 
 
 def main(argv = None):
@@ -292,7 +367,7 @@ def main(argv = None):
         #
         # Generate help!
         #
-        for db in [rule_set.fn_rules, rule_set.param_rules]:
+        for db in [rule_set.fn_rules, rule_set.param_rules, rule_set.varm_rules]:
             print(inspect.getdoc(db))
             print()
     except Exception as e:

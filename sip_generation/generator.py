@@ -30,7 +30,7 @@ import subprocess
 import sys
 import traceback
 from clang import cindex
-from clang.cindex import CursorKind, SourceRange, TokenKind, AccessSpecifier
+from clang.cindex import AccessSpecifier, CursorKind, SourceRange, StorageClass, TokenKind
 
 from rules import rule_set
 
@@ -220,6 +220,8 @@ class Generator(object):
                 base_specifiers.append(member.displayname)
             elif member.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
                 template_type_parameters.append("typename " + member.displayname)
+            elif member.kind in [CursorKind.VAR_DECL, CursorKind.FIELD_DECL]:
+                decl = self._var_get(container, member, level + 1)
             elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL]:
                 decl = self._container_get(member, level + 1, h_file)
             elif member.kind == CursorKind.VISIBILITY_ATTR and skippable_visibility_attr(member):
@@ -301,6 +303,14 @@ class Generator(object):
         return decl
 
     def _fn_get(self, container, function, level):
+        """
+        Walk of a function.
+
+        :param container:           A class or namespace.
+        :param function:            The function object.
+        :param level:               Recursion level controls indentation.
+        :return:                    A string.
+        """
         def skippable_visibility_attr(member):
             text = self._read_source(member.extent)
             if text.endswith("_EXPORT"):
@@ -455,6 +465,62 @@ class Generator(object):
         else:
             decl = pad + "typedef {} {};\n".format("::".join(args), alias)
         return decl
+
+    def _var_get(self, container, variable, level):
+        """
+        Walk of a variable.
+
+        :param container:           A class or namespace.
+        :param variable:            The variable object.
+        :param level:               Recursion level controls indentation.
+        :return:                    A string.
+        """
+        pad = " " * (level * 4)
+        setattr(variable, "sip_annotations", [])
+        template_type_parameters = []
+        for child in variable.get_children():
+            if child.kind in [CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF, CursorKind.BINARY_OPERATOR,
+                              CursorKind.INTEGER_LITERAL, CursorKind.FLOATING_LITERAL, CursorKind.STRING_LITERAL,
+                              CursorKind.CXX_BOOL_LITERAL_EXPR]:
+                #
+                # Ignore:
+                #
+                #   CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF: The variable type.
+                #   CursorKind.BINARY_OPERATOR, CursorKind.INTEGER_LITERAL, CursorKind.FLOATING_LITERAL,
+                #       CursorKind.STRING_LITERAL, CursorKind.CXX_BOOL_LITERAL_EXPR: Computation.
+                #
+                #logger.error("Ignoring {}, sp='{}', displ='{}'".format(child.kind, child.spelling, child.displayname))
+                pass
+            else:
+                id = child.displayname or child.spelling or child.extent.start.line
+                logger.debug("Ignoring variable child {}::{} {}".format(variable.spelling, id, child.kind))
+        decl = "{} {}".format(variable.type.spelling, variable.spelling)
+        decl = decl.replace("* ", "*").replace("& ", "&")
+        decl = rule_set.var_rules().apply(container, variable, decl)
+        #
+        # Now the rules have run, add any prefix/suffix.
+        #
+        if decl:
+            prefix = self._var_get_keywords(variable)
+            decl = prefix + decl
+            if variable.sip_annotations:
+                decl += " /" + ",".join(variable.sip_annotations) + "/"
+            decl = pad + decl + ";\n"
+        return decl
+
+    def _var_get_keywords(self, variable):
+        """
+        The parser does not provide direct access to the complete keywords (static, etc) of a variable
+        in the displayname. It would be nice to get these from the AST, but I cannot find where they are hiding.
+
+        :param variable:                    The variable object.
+        :return: prefix                     String containing any prefix keywords.
+        """
+        if variable.storage_class == StorageClass.STATIC:
+            prefix = "static "
+        else:
+            prefix = ""
+        return prefix
 
     def _read_source(self, extent):
         """

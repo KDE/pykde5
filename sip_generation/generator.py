@@ -63,6 +63,12 @@ def walk_directories(root, fn):
             walk_directories(srcname, fn)
 
 
+EXPR_KINDS = [
+    CursorKind.UNEXPOSED_EXPR, CursorKind.UNARY_OPERATOR, CursorKind.BINARY_OPERATOR,
+    CursorKind.INTEGER_LITERAL, CursorKind.FLOATING_LITERAL, CursorKind.STRING_LITERAL,
+    CursorKind.CXX_BOOL_LITERAL_EXPR]
+
+
 class Generator(object):
     _libclang = None
 
@@ -224,6 +230,13 @@ class Generator(object):
                 decl = self._var_get(container, member, level + 1)
             elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL]:
                 decl = self._container_get(member, level + 1, h_file)
+            elif member.kind in [CursorKind.NAMESPACE_REF]:
+                #
+                # Ignore:
+                #
+                #   CursorKind.NAMESPACE_REF: Template type parameter.
+                #
+                pass
             elif member.kind == CursorKind.VISIBILITY_ATTR and skippable_visibility_attr(member):
                 pass
             elif member.kind == CursorKind.UNEXPOSED_DECL and skippable_unexposed_decl(member):
@@ -337,13 +350,13 @@ class Generator(object):
                     decl += " = " + init
                 parameters.append(decl)
             elif child.kind in [CursorKind.COMPOUND_STMT,
-                                CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF,
-                                CursorKind.CXX_OVERRIDE_ATTR]:
+                                CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF, CursorKind.NAMESPACE_REF,
+                                CursorKind.CXX_OVERRIDE_ATTR] + EXPR_KINDS:
                 #
                 # Ignore:
                 #
                 #   CursorKind.COMPOUND_STMT: Function body.
-                #   CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF: The result type.
+                #   CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF, CursorKind.NAMESPACE_REF: The result type.
                 #   CursorKind.CXX_OVERRIDE_ATTR: The "override" keyword.
                 #
                 pass
@@ -479,15 +492,11 @@ class Generator(object):
         setattr(variable, "sip_annotations", [])
         template_type_parameters = []
         for child in variable.get_children():
-            if child.kind in [CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF, CursorKind.BINARY_OPERATOR,
-                              CursorKind.INTEGER_LITERAL, CursorKind.FLOATING_LITERAL, CursorKind.STRING_LITERAL,
-                              CursorKind.CXX_BOOL_LITERAL_EXPR]:
+            if child.kind in [CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF, CursorKind.NAMESPACE_REF] + EXPR_KINDS:
                 #
                 # Ignore:
                 #
-                #   CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF: The variable type.
-                #   CursorKind.BINARY_OPERATOR, CursorKind.INTEGER_LITERAL, CursorKind.FLOATING_LITERAL,
-                #       CursorKind.STRING_LITERAL, CursorKind.CXX_BOOL_LITERAL_EXPR: Computation.
+                #   CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF, CursorKind.NAMESPACE_REF: The variable type.
                 #
                 #logger.error("Ignoring {}, sp='{}', displ='{}'".format(child.kind, child.spelling, child.displayname))
                 pass

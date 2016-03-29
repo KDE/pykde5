@@ -369,6 +369,8 @@ class Generator(object):
                 function.sip_annotations.append("Deprecated")
             elif child.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
                 template_type_parameters.append("typename " + child.displayname)
+            elif child.kind == CursorKind.TEMPLATE_TEMPLATE_PARAMETER:
+                template_type_parameters.append(self._template_template_param_get(child))
             elif child.kind == CursorKind.VISIBILITY_ATTR and skippable_visibility_attr(child):
                 pass
             else:
@@ -395,6 +397,25 @@ class Generator(object):
                 decl += " /" + ",".join(function.sip_annotations) + "/"
             decl = template_type_parameters + pad + decl + ";\n"
         return decl
+
+    def _template_template_param_get(self, container):
+        """
+        Recursive template template parameter walk.
+
+        :param container:                   The template template object.
+        :return:                            String containing the template template parameter.
+        """
+        template_type_parameters = []
+        for member in container.get_children():
+            if member.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
+                template_type_parameters.append("typename")
+            elif child.kind == CursorKind.TEMPLATE_TEMPLATE_PARAMETER:
+                template_type_parameters.append(self._template_template_param_get(member))
+            else:
+                id = member.displayname or member.spelling or member.extent.start.line
+                logger.debug("Ignoring template parameter child {}::{} {}".format(container.name, id, member.kind))
+        template_type_parameters = "template <" + (", ".join(template_type_parameters)) + "> class " + container.displayname
+        return template_type_parameters
 
     def _fn_get_keywords(self, function):
         """

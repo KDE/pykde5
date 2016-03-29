@@ -52,7 +52,7 @@ def _FUNCTION_RULES():
     the declaration for any function to be customised, for example to add SIP
     compiler annotations.
 
-    Each entry must be a tuple with members as follows:
+    Each entry must be a list with members as follows:
 
         0. A regular expression which matches the class or namespace "container"
         name enclosing the function.
@@ -82,7 +82,7 @@ def _FUNCTION_RULES():
             '''
     """
     return [
-        (".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", function_discard),
+        [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", function_discard],
     ]
 
 
@@ -104,7 +104,7 @@ def _PARAMETER_RULES():
     the declaration for any parameter in any function to be customised, for
     example to add SIP compiler annotations.
 
-    Each entry must be a tuple with members as follows:
+    Each entry must be a list with members as follows:
 
         0. A regular expression which matches the class or namespace "container"
         name enclosing the function.
@@ -142,8 +142,8 @@ def _PARAMETER_RULES():
           '''
     """
     return [
-        (".*", ".*", ".*", r"[KQ][A-Za-z_0-9]+\W*\*\W*parent", ".*", parameter_transfer_this),
-        ("KDateTime", "fromString", "negZero", ".*", ".*", parameter_out),
+        [".*", ".*", ".*", r"[KQ][A-Za-z_0-9]+\W*\*\W*parent", ".*", parameter_transfer_this],
+        ["KDateTime", "fromString", "negZero", ".*", ".*", parameter_out],
     ]
 
 
@@ -176,87 +176,88 @@ class Rule(object):
         return "{}[{}],{}".format(self.db.__name__, self.rule_number, self.fn.__name__)
 
 
-def apply_function_rules(container, function, decl):
-    """
-    Walk over the rules database for functions, applying the first matching transformation.
+class AbstractCompiledRuleDb(object):
+    def __init__(self, db, parameter_names):
+        self.db = db
+        self.compiled_rules = []
+        for i, raw_rule in enumerate(db()):
+            if len(raw_rule) != len(parameter_names) + 1:
+                raise RuntimeError(_("Bad raw rule {}: {}: {}").format(db.__name__, raw_rule, parameter_names))
+            z = zip(raw_rule[:-1], parameter_names)
+            self.compiled_rules.append(Rule(db, i, raw_rule[-1], z))
+        self.parameter_names = parameter_names
+        self.candidate_formatter = "-".join(["{}"] * len(parameter_names))
 
-    :param container:
-    :param function:
-    :param decl:
-    :return:
-    """
-    candidate = "{}-{}-{}".format(container.spelling, function.spelling, decl)
-    for rule in _compiled_fn_rules:
-        matcher = rule.match(candidate)
+    def _match(self, *args):
+        candidate = self.candidate_formatter.format(*args)
+        for rule in self.compiled_rules:
+            matcher = rule.match(candidate)
+            if matcher:
+                #
+                # Only use the first matching rule.
+                #
+                return matcher, rule
+        return None, None
+
+    def apply(self, *args):
+        raise NotImplemented(_("Missing subclass"))
+
+    def __str__(self):
+        help = inspect.getdoc(self.db)
+        return self.db.__name__ + ": " + help
+
+
+class FunctionRuleDb(AbstractCompiledRuleDb):
+    def __init__(self, db):
+        super(FunctionRuleDb, self).__init__(db, ["container", "function", "decl"])
+
+    def apply(self, container, function, decl):
+        """
+        Walk over the rules database for functions, applying the first matching transformation.
+
+        :param container:
+        :param function:
+        :param decl:
+        :return:
+        """
+        matcher, rule = self._match(container.spelling, function.spelling, decl)
         if matcher:
             annotations = copy(function.sip_annotations)
             decl2 = rule.fn(container.spelling, function.spelling, decl, matcher)
             rule.trace_result((decl, annotations), (decl2, function.sip_annotations))
             decl = decl2
-            #
-            # Only use the first matching rule.
-            #
-            break
-    return decl
+        return decl
 
 
-def apply_param_rules(container, function, parameter, decl, init):
-    """
-    Walk over the rules database for parameters, applying the first matching transformation.
+class ParameterRuleDb(AbstractCompiledRuleDb):
+    def __init__(self, raw_rules):
+        super(ParameterRuleDb, self).__init__(raw_rules, ["container", "function", "parameter", "decl", "init"])
 
-    :param parameter:
-    :param container:
-    :param function:
-    :param decl:
-    :param init:
-    :return:
-    """
-    candidate = "{}-{}-{}-{}-{}".format(container.spelling, function.spelling, parameter, decl, init)
-    for rule in _compiled_param_rules:
-        matcher = rule.match(candidate)
+    def apply(self, container, function, parameter, decl, init):
+        """
+        Walk over the rules database for parameters, applying the first matching transformation.
+
+        :param parameter:
+        :param container:
+        :param function:
+        :param decl:
+        :param init:
+        :return:
+        """
+        matcher, rule = self._match(container.spelling, function.spelling, parameter, decl, init)
         if matcher:
             annotations = copy(parameter.sip_annotations)
             decl2, init2 = rule.fn(container.spelling, function.spelling, parameter, decl, init, matcher)
             rule.trace_result((decl, init, annotations), (decl2, init2, parameter.sip_annotations))
             decl, init = decl2, init2
-            #
-            # Only use the first matching rule.
-            #
-            break
-    return decl, init
-
-
-def _compile_parameter_rules():
-    """
-    Take the rules provided by the user and turns them into code.
-    """
-    results = []
-    for i, o in enumerate(_PARAMETER_RULES()):
-        c, f, p, d, init, fn = o
-        z = zip([c, f, p, d, init],
-                ["container", "function", "parameter", "decl", "init"])
-        results.append(Rule(_PARAMETER_RULES, i, fn, z))
-    return results
-
-
-def _compile_function_rules():
-    """
-    Take the rules provided by the user and turns them into code.
-    """
-    results = []
-    for i, o in enumerate(_FUNCTION_RULES()):
-        c, f, d, fn = o
-        z = zip([c, f, d],
-                ["container", "function", "decl"])
-        results.append(Rule(_FUNCTION_RULES, i, fn, z))
-    return results
+        return decl, init
 
 
 #
-# Staticallly prepare the rule logic. This takes the rules provided by the user and turns them into
+# Statically prepare the rule logic. This takes the rules provided by the user and turns them into code.
 #
-_compiled_fn_rules = _compile_function_rules()
-_compiled_param_rules = _compile_parameter_rules()
+fn_rules = FunctionRuleDb(_FUNCTION_RULES)
+param_rules = ParameterRuleDb(_PARAMETER_RULES)
 
 
 def main(argv = None):
@@ -281,11 +282,9 @@ def main(argv = None):
         #
         # Generate help!
         #
-        for db in [_FUNCTION_RULES, _PARAMETER_RULES]:
+        for db in [fn_rules, param_rules]:
             print(_(""))
-            help = inspect.getdoc(db)
-            print(db.__name__ + ": " + help)
-            print()
+            print(db)
     except Exception as e:
         tbk = traceback.format_exc()
         print(tbk)

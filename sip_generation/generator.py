@@ -320,7 +320,7 @@ class Generator(object):
                 decl = "{} {}".format(child.type.spelling, parameter)
                 init = self._fn_get_parameter_default(function, child)
                 setattr(child, "sip_annotations", [])
-                decl, init = rules.apply_param_rules(container, function, child, decl, init)
+                decl, init = rules.param_rules.apply(container, function, child, decl, init)
                 if child.sip_annotations:
                     decl += " /" + ",".join(child.sip_annotations) + "/"
                 if init:
@@ -355,7 +355,7 @@ class Generator(object):
         else:
             decl = "{} {}({})".format(function.result_type.spelling, function.spelling, parameters)
         decl = decl.replace("* ", "*").replace("& ", "&")
-        decl = rules.apply_function_rules(container, function, decl)
+        decl = rules.fn_rules.apply(container, function, decl)
         #
         # Now the rules have run, add any prefix/suffix.
         #

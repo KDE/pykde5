@@ -237,7 +237,7 @@ class Generator(object):
                 decl = self._var_get(container, member, level + 1)
             elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL]:
                 decl = self._container_get(member, level + 1, h_file)
-            elif member.kind == CursorKind.UNEXPOSED_ATTR and self._read_source(member.extent).endswith("_DEPRECATED_EXPORT"):
+            elif member.kind == CursorKind.UNEXPOSED_ATTR and self._read_source(member.extent).find("_DEPRECATED") != -1:
                 #
                 # We don't seem to have access to the __attribute__(())s, but at least we can look for stuff we care about.
                 #
@@ -374,7 +374,7 @@ class Generator(object):
                 #   TEMPLATE_KINDS: The result type.
                 #
                 pass
-            elif child.kind == CursorKind.UNEXPOSED_ATTR and self._read_source(child.extent).endswith("_DEPRECATED"):
+            elif child.kind == CursorKind.UNEXPOSED_ATTR and self._read_source(child.extent).find("_DEPRECATED") != -1:
                 #
                 # We don't seem to have access to the __attribute__(())s, but at least we can look for stuff we care about.
                 #

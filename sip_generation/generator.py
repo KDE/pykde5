@@ -224,7 +224,7 @@ class Generator(object):
                                CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR, CursorKind.CONVERSION_FUNCTION]:
                 decl = self._fn_get(container, member, level + 1)
             elif member.kind == CursorKind.ENUM_DECL:
-                decl = self._enum_get(container, member, level + 1)
+                decl = self._enum_get(container, member, level + 1) + ";\n"
             elif member.kind == CursorKind.CXX_ACCESS_SPEC_DECL:
                 decl = self._get_access_specifier(member, level + 1)
             elif member.kind == CursorKind.TYPEDEF_DECL:
@@ -326,7 +326,7 @@ class Generator(object):
             enumerations.append(pad + "    {}".format(enum.displayname))
             assert enum.kind == CursorKind.ENUM_CONSTANT_DECL
         decl += ",\n".join(enumerations) + "\n"
-        decl += pad + "};\n"
+        decl += pad + "}"
         return decl
 
     def _fn_get(self, container, function, level):
@@ -504,6 +504,8 @@ class Generator(object):
                 template = child.displayname
             elif child.kind == CursorKind.TYPE_REF:
                 args.append(child.displayname)
+            elif child.kind == CursorKind.ENUM_DECL:
+                args.append(self._enum_get(container, child, level))
             else:
                 Generator._report_ignoring(typedef, child)
         if template:

@@ -51,12 +51,12 @@ def KF5_FUNCTION_RULES():
 
 
 def parameter_out(container, function, parameter, decl, init, matcher):
-    parameter.sip_annotations.append("Out")
+    parameter.sip_annotations.add("Out")
     return decl, init
 
 
 def parameter_transfer_this(container, function, parameter, decl, init, matcher):
-    parameter.sip_annotations.append("TransferThis")
+    parameter.sip_annotations.add("TransferThis")
     return decl, init
 
 

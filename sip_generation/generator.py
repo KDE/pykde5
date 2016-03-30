@@ -233,6 +233,8 @@ class Generator(object):
                 base_specifiers.append(member.displayname)
             elif member.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
                 template_type_parameters.append("typename " + member.displayname)
+            elif member.kind == CursorKind.TEMPLATE_NON_TYPE_PARAMETER:
+                template_type_parameters.append(member.type.spelling + " " + member.displayname)
             elif member.kind in [CursorKind.VAR_DECL, CursorKind.FIELD_DECL]:
                 decl = self._var_get(container, member, level + 1)
             elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL,
@@ -383,6 +385,8 @@ class Generator(object):
                 function.sip_annotations.append("Deprecated")
             elif child.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
                 template_type_parameters.append("typename " + child.displayname)
+            elif child.kind == CursorKind.TEMPLATE_NON_TYPE_PARAMETER:
+                template_type_parameters.append(child.type.spelling + " " + child.displayname)
             elif child.kind == CursorKind.TEMPLATE_TEMPLATE_PARAMETER:
                 template_type_parameters.append(self._template_template_param_get(child))
             elif child.kind == CursorKind.VISIBILITY_ATTR and skippable_visibility_attr(child):

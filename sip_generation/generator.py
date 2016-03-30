@@ -506,6 +506,7 @@ class Generator(object):
         alias = typedef.displayname
         template = ""
         args = []
+        parameters = []
         for child in typedef.get_children():
             if child.kind == CursorKind.TEMPLATE_REF:
                 template = child.displayname
@@ -513,9 +514,19 @@ class Generator(object):
                 args.append(child.displayname)
             elif child.kind == CursorKind.ENUM_DECL:
                 args.append(self._enum_get(container, child, level))
+            elif child.kind == CursorKind.PARM_DECL:
+                parameter = child.displayname or "__{}".format(len(parameters))
+                #
+                # So far so good, but we need any default value.
+                #
+                decl = "{} {}".format(child.type.spelling, parameter)
+                parameters.append(decl)
             else:
                 Generator._report_ignoring(typedef, child)
-        if template:
+        if parameters:
+            decl = pad + "typedef {}(*{})({});\n".format(typedef.result_type.spelling, alias, ", ".join(parameters), alias)
+            decl = decl.replace("* ", "*").replace("& ", "&")
+        elif template:
             decl = pad + "typedef {}<{}> {};\n".format(template, ", ".join(args), alias)
         else:
             decl = pad + "typedef {} {};\n".format("::".join(args), alias)

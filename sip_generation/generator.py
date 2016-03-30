@@ -179,7 +179,7 @@ class Generator(object):
     CONTAINER_SKIPPABLE_UNEXPOSED_DECL = re.compile("(_DECLARE_PRIVATE|friend)\W")
     CONTAINER_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|default")
     FN_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|default")
-    VAR_IS_VISIBLE_BY_ATTR = re.compile("default")
+    VAR_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|default")
 
     def _container_get(self, container, level, h_file):
         """

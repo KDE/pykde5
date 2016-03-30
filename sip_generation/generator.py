@@ -523,6 +523,13 @@ class Generator(object):
                 #
                 decl = "{} {}".format(child.type.spelling, parameter)
                 parameters.append(decl)
+            elif child.kind in EXPR_KINDS:
+                #
+                # Ignore:
+                #
+                #   EXPR_KINDS: Array size etc.
+                #
+                pass
             else:
                 Generator._report_ignoring(typedef, child)
         if parameters:

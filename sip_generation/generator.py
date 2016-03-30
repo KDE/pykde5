@@ -526,7 +526,7 @@ class Generator(object):
             else:
                 Generator._report_ignoring(typedef, child)
         if parameters:
-            decl = pad + "typedef {}(*{})({});\n".format(typedef.result_type.spelling, alias, ", ".join(parameters), alias)
+            decl = pad + self._read_source(typedef.extent) + ";\n"
             decl = decl.replace("* ", "*").replace("& ", "&")
         elif template:
             decl = pad + "typedef {}<{}> {};\n".format(template, ", ".join(args), alias)

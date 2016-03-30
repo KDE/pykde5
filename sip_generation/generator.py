@@ -64,7 +64,8 @@ def walk_directories(root, fn):
 
 
 EXPR_KINDS = [
-        CursorKind.UNEXPOSED_EXPR, CursorKind.UNARY_OPERATOR, CursorKind.BINARY_OPERATOR,
+        CursorKind.UNEXPOSED_EXPR,
+        CursorKind.CONDITIONAL_OPERATOR, CursorKind.UNARY_OPERATOR, CursorKind.BINARY_OPERATOR,
         CursorKind.INTEGER_LITERAL, CursorKind.FLOATING_LITERAL, CursorKind.STRING_LITERAL,
         CursorKind.CXX_BOOL_LITERAL_EXPR
     ]

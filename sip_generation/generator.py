@@ -235,7 +235,8 @@ class Generator(object):
                 template_type_parameters.append("typename " + member.displayname)
             elif member.kind in [CursorKind.VAR_DECL, CursorKind.FIELD_DECL]:
                 decl = self._var_get(container, member, level + 1)
-            elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL]:
+            elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL,
+                                 CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION]:
                 decl = self._container_get(member, level + 1, h_file)
             elif member.kind == CursorKind.UNEXPOSED_ATTR and self._read_source(member.extent).find("_DEPRECATED") != -1:
                 #

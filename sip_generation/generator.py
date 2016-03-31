@@ -261,8 +261,11 @@ class Generator(object):
                 text = self._read_source(member.extent)
                 if member.kind in [CursorKind.UNEXPOSED_ATTR, CursorKind.VISIBILITY_ATTR] and skippable_visibility_attr(member, text):
                     pass
-                elif member.kind == CursorKind.UNEXPOSED_DECL and skippable_unexposed_decl(member, text):
-                    pass
+                elif member.kind == CursorKind.UNEXPOSED_DECL:
+                    if skippable_unexposed_decl(member, text):
+                        pass
+                    else:
+                        decl = self._unexposed_decl_get(container, member)
                 else:
                     Generator._report_ignoring(container, member)
             if decl:
@@ -584,6 +587,33 @@ class Generator(object):
         if typedef.sip_annotations:
             decl += " /" + ",".join(typedef.sip_annotations) + "/"
         return decl + ";\n"
+
+    def _unexposed_decl_get(self, parent, decl):
+        """
+        The parser does not seem to provide access to the complete text of an unexposed decl.
+
+            1. Run the lexer from "here" to the end of the outer scope, bailing out when we see the ";"
+            or a "{" marking the end.
+        """
+        possible_extent = SourceRange.from_locations(decl.extent.start, parent.extent.end)
+        text = ""
+        found_end = False
+        was_punctuated = True
+        for token in self.tu.get_tokens(extent=possible_extent):
+            if token.spelling in [";", "{"]:
+                found_end = True
+                break
+            elif token.kind == TokenKind.PUNCTUATION:
+                was_punctuated = True
+                text += token.spelling
+            else:
+                if not was_punctuated:
+                    text += " "
+                text += token.spelling
+                was_punctuated = False
+        if not found_end and text:
+            RuntimeError(_("No end found for {}::{}, '{}'").format(parent.spelling, decl.spelling, text))
+        return text
 
     def _var_get(self, container, variable, level):
         """

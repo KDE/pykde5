@@ -30,7 +30,7 @@ import subprocess
 import sys
 import traceback
 from clang import cindex
-from clang.cindex import AccessSpecifier, CursorKind, SourceRange, StorageClass, TokenKind
+from clang.cindex import AccessSpecifier, CursorKind, SourceRange, StorageClass, TokenKind, TypeKind
 
 from rules import rule_set
 
@@ -115,7 +115,9 @@ class Generator(object):
             for line in f:
                 self.unpreprocessed_source.append(line)
         #
-        # Create and populate the index.
+        # Create and populate the index. To run the actual compiler in proprocess-only mode:
+        #
+        # ["clang-3.9"] + includes + ["-x", "c++", "-std=c++11", "-ferror-limit=0", "-D__CODE_GENERATOR__", "-E"] + [source]
         #
         includes = ["-I" + i for i in self.includes]
         index = cindex.Index.create()
@@ -180,6 +182,7 @@ class Generator(object):
     CONTAINER_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|default")
     FN_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|default")
     VAR_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|default")
+    TYPEDEF_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT")
 
     def _container_get(self, container, level, h_file):
         """
@@ -286,14 +289,14 @@ class Generator(object):
                 # There does not seem to be an obvious way to tell a class from a struct. That should matter...
                 #
                 if container.kind == CursorKind.NAMESPACE:
-                    container_type = pad + "namespace"
+                    container_type = pad + "namespace " + name
                 else:
-                    container_type = pad + "class"
+                    container_type = pad + "struct {}".format(name or "__struct{}".format(container.extent.start.line))
                 if level == 0:
                     h_file = "%TypeHeaderCode\n#include <{}>\n%End\n".format(h_file)
                 else:
                     h_file = ""
-                prefix = "{}{} {}{}\n{}{{\n{}".format(template_type_parameters, container_type, name, base_specifiers, pad, h_file)
+                prefix = "{}{}{}\n{}{{\n{}".format(template_type_parameters, container_type, base_specifiers, pad, h_file)
                 if container.sip_annotations:
                     suffix = "} /" + ",".join(container.sip_annotations) + "/;\n"
                 else:
@@ -327,7 +330,7 @@ class Generator(object):
 
     def _enum_get(self, container, enum, level):
         pad = " " * (level * 4)
-        decl = pad + "enum {} {{\n".format(enum.displayname)
+        decl = pad + "enum {} {{\n".format(enum.displayname or "__enum{}".format(enum.extent.start.line))
         enumerations = []
         for enum in enum.get_children():
             enumerations.append(pad + "    {}".format(enum.displayname))
@@ -505,25 +508,56 @@ class Generator(object):
             return ""
 
     def _typedef_get(self, container, typedef, level):
+        def skippable_visibility_attr(member, text):
+            """We don't seem to have access to the __attribute__(())s, but at least we can look for stuff we care about."""
+            if text.find("_DEPRECATED") != -1:
+                typedef.sip_annotations.add("Deprecated")
+                return True
+            if Generator.TYPEDEF_IS_VISIBLE_BY_ATTR.search(text):
+                return True
+            logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(typedef.kind, typedef.spelling,
+                                                                     member.extent.start.line, text, member.kind))
+
+
         pad = " " * (level * 4)
-        alias = typedef.displayname
-        template = ""
+        setattr(typedef, "sip_annotations", set())
         args = []
-        parameters = []
+        result_type = ""
         for child in typedef.get_children():
             if child.kind == CursorKind.TEMPLATE_REF:
-                template = child.displayname
+                result_type = child.displayname
             elif child.kind == CursorKind.TYPE_REF:
-                args.append(child.displayname)
+                #
+                # Sigh. For results which are pointers, we dont have a way of detecting the need for the "*".
+                #
+                result_type = child.type.spelling
             elif child.kind == CursorKind.ENUM_DECL:
-                args.append(self._enum_get(container, child, level))
+                if child.underlying_typedef_type:
+                    #
+                    # Typedefs for inlined enums seem to be emitted twice. Refer back to original.
+                    #
+                    enum = child.type.get_declaration()
+                    decl = "enum {}".format("__enum{}".format(enum.extent.start.line))
+                else:
+                    decl = self._enum_get(container, child, level)
+                args.append(decl)
+            elif child.kind == CursorKind.STRUCT_DECL:
+                if child.underlying_typedef_type:
+                    #
+                    # Typedefs for inlined structs seem to be emitted twice. Refer back to original.
+                    #
+                    struct = child.type.get_declaration()
+                    decl = "struct {}".format("__struct{}".format(struct.extent.start.line))
+                else:
+                    decl = self._container_get(child, level, None)
+                args.append(decl)
             elif child.kind == CursorKind.PARM_DECL:
-                parameter = child.displayname or "__{}".format(len(parameters))
+                decl = child.displayname or "__{}".format(len(args))
                 #
                 # So far so good, but we need any default value.
                 #
-                decl = "{} {}".format(child.type.spelling, parameter)
-                parameters.append(decl)
+                decl = "{} {}".format(child.type.spelling, decl)
+                args.append(decl)
             elif child.kind in EXPR_KINDS:
                 #
                 # Ignore:
@@ -532,15 +566,24 @@ class Generator(object):
                 #
                 pass
             else:
-                Generator._report_ignoring(typedef, child)
-        if parameters:
-            decl = pad + self._read_source(typedef.extent) + ";\n"
+                text = self._read_source(child.extent)
+                if child.kind in [CursorKind.UNEXPOSED_ATTR, CursorKind.VISIBILITY_ATTR] and skippable_visibility_attr(child, text):
+                    pass
+                elif child.kind == CursorKind.UNEXPOSED_DECL and skippable_unexposed_decl(child, text):
+                    pass
+                else:
+                    Generator._report_ignoring(typedef, child)
+        alias = typedef.displayname
+        if typedef.underlying_typedef_type.kind == TypeKind.MEMBERPOINTER:
+            decl = pad + "typedef {}(*{})({})".format(result_type, alias, ", ".join(args), alias)
             decl = decl.replace("* ", "*").replace("& ", "&")
-        elif template:
-            decl = pad + "typedef {}<{}> {};\n".format(template, ", ".join(args), alias)
+        elif typedef.underlying_typedef_type.kind == TypeKind.RECORD:
+            decl = pad + "typedef {} {}".format(result_type, alias)
         else:
-            decl = pad + "typedef {} {};\n".format("::".join(args), alias)
-        return decl
+            decl = pad + "typedef {} {}".format(typedef.underlying_typedef_type.spelling, alias)
+        if typedef.sip_annotations:
+            decl += " /" + ",".join(typedef.sip_annotations) + "/"
+        return decl + ";\n"
 
     def _var_get(self, container, variable, level):
         """

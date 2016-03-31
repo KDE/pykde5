@@ -179,9 +179,9 @@ class Generator(object):
         return body, header, sip_file
 
     CONTAINER_SKIPPABLE_UNEXPOSED_DECL = re.compile("(_DECLARE_PRIVATE|friend)\W")
-    CONTAINER_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|default")
-    FN_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|default")
-    VAR_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|default")
+    CONTAINER_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT")
+    FN_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|Q_REQUIRED_RESULT")
+    VAR_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT")
     TYPEDEF_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT")
 
     def _container_get(self, container, level, h_file):

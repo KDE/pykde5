@@ -61,17 +61,27 @@ def walk_tree(root, fn, filter):
 
 
 class Driver(Generator):
-    def __init__(self, qt_includes, kde_includes, sources, output_dir):
-        super(Driver, self).__init__(qt_includes, kde_includes)
-        self.root = kde_includes
-        self.sources = sources
+    def __init__(self, include_roots, project_name, project_root, selector, output_dir):
+        """
+        Constructor.
+
+        :param include_roots:       A list of roots of includes file, typically including the root for all Qt and
+                                    the root for all KDE include files as well as any project-specific include files.
+        :param project_name:        The name of the project.
+        :param project_root:        The root of files for which to generate SIP.
+        :param selector:            A regular expression which limits the files from project_root to be processed.
+        :param output_dir:          The destination directory.
+        """
+        super(Driver, self).__init__(include_roots, project_name)
+        self.root = project_root
+        self.selector = selector
         self.output_dir = output_dir
 
     def process_tree(self):
         walk_tree(self.root, self._process_one, os.path.isfile)
 
     def _process_one(self, file):
-        if self.sources.search(os.path.basename(file)):
+        if self.selector.search(os.path.basename(file)):
             result, copyright, sip_file = self.create_sip(file)
             if result:
                 output_file = os.path.join(os.path.dirname(file), sip_file)
@@ -104,9 +114,11 @@ def main(argv=None):
     parser = argparse.ArgumentParser(epilog=inspect.getdoc(main),
                                      formatter_class=HelpFormatter)
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
-    parser.add_argument("--kde-includes", default="/usr/include/KF5", help=_("Root of KDE header paths"))
-    parser.add_argument("--qt-includes", default="/usr/include/x86_64-linux-gnu/qt5", help=_("Root of Qt header paths"))
-    parser.add_argument("--sources", default=".*", type=re.compile, help=_("Regular expression of files under --kde-includes to process"))
+    parser.add_argument("--reference-includes", default=["/usr/include/x86_64-linux-gnu/qt5", "/usr/include/KF5"],
+                        action="append", help=_("Roots of header paths"))
+    parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
+    parser.add_argument("--project-includes", default="/usr/include/KF5", help=_("Root of header paths to process"))
+    parser.add_argument("--selector", default=".*", type=re.compile, help=_("Regular expression of files under --project-includes to process"))
     parser.add_argument("output", help=_("Output directory"))
     try:
         args = parser.parse_args(argv[1:])
@@ -117,7 +129,7 @@ def main(argv=None):
         #
         # Generate!
         #
-        d = Driver(args.qt_includes, args.kde_includes, args.sources, args.output)
+        d = Driver(args.reference_includes, args.project_name, args.project_includes, args.selector, args.output)
         d.process_tree()
     except Exception as e:
         tbk = traceback.format_exc()

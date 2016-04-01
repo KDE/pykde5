@@ -77,24 +77,24 @@ TEMPLATE_KINDS = [
 class Generator(object):
     _libclang = None
 
-    def __init__(self, qt_includes, kde_includes, dump_includes=False, dump_privates=False):
+    def __init__(self, include_roots, project_name, dump_includes=False, dump_privates=False):
         """
         Constructor.
 
-        :param qt_includes:         The root for all Qt include files.
-        :param kde_includes:        The root for all KDE include files.
+        :param include_roots:       A list of roots of includes file, typically including the root for all Qt and
+                                    the root for all KDE include files as well as any project-specific include files.
+        :param project_name:        The name of the project.
         :param dump_includes:       Turn on diagnostics for include files.
         :param dump_privates:       Turn on diagnostics for omitted private items.
         """
         Generator._find_libclang()
-        self.includes = set()
-        self.includes.add(qt_includes)
-        self.includes.add(kde_includes)
-        walk_directories(qt_includes, lambda d: self.includes.add(d))
-        walk_directories(kde_includes, lambda d: self.includes.add(d))
+        self.includes = set(include_roots)
+        for include_root in include_roots:
+            walk_directories(include_root, lambda d: self.includes.add(d))
         if dump_includes:
             for include in sorted(self.includes):
                 logger.debug(_("Using includes from {}").format(include))
+        self.project_name = project_name
         self.dump_includes = dump_includes
         self.dump_privates = dump_privates
         self.diagnostics = set()
@@ -158,7 +158,8 @@ class Generator(object):
         header = """//
 // Copyright (c) {} by Shaheed Haque (srhaque@theiet.org)
 //
-// This file, {}, derived from {}, is part of PyKDE5.
+// This file, {}, is part of {}. It was derived from
+// {}.
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU Library General Public License as
@@ -175,7 +176,7 @@ class Generator(object):
 // Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //
-""".format(now.year, sip_file, self.tu.spelling)
+""".format(now.year, sip_file, self.project_name, self.tu.spelling)
         return body, header, sip_file
 
     CONTAINER_SKIPPABLE_UNEXPOSED_DECL = re.compile("_DECLARE_PRIVATE|friend|;")
@@ -761,8 +762,9 @@ def main(argv=None):
     parser = argparse.ArgumentParser(epilog=inspect.getdoc(main),
                                      formatter_class=HelpFormatter)
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
-    parser.add_argument("--kde-includes", default="/usr/include/KF5", help=_("Root of KDE header paths"))
-    parser.add_argument("--qt-includes", default="/usr/include/x86_64-linux-gnu/qt5", help=_("Root of Qt header paths"))
+    parser.add_argument("--reference-includes", default=["/usr/include/x86_64-linux-gnu/qt5", "/usr/include/KF5"],
+                        action="append", help=_("Roots of header paths"))
+    parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
     parser.add_argument("source", help=_("File to process"))
     try:
         args = parser.parse_args(argv[1:])
@@ -773,7 +775,7 @@ def main(argv=None):
         #
         # Generate!
         #
-        g = Generator(args.qt_includes, args.kde_includes)
+        g = Generator(args.reference_includes, args.project_name)
         body, header, sip_file = g.create_sip(args.source)
         if body:
             print(header)

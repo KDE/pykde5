@@ -67,7 +67,7 @@ EXPR_KINDS = [
         CursorKind.UNEXPOSED_EXPR,
         CursorKind.CONDITIONAL_OPERATOR, CursorKind.UNARY_OPERATOR, CursorKind.BINARY_OPERATOR,
         CursorKind.INTEGER_LITERAL, CursorKind.FLOATING_LITERAL, CursorKind.STRING_LITERAL,
-        CursorKind.CXX_BOOL_LITERAL_EXPR
+        CursorKind.CXX_BOOL_LITERAL_EXPR, CursorKind.CXX_STATIC_CAST_EXPR, CursorKind.DECL_REF_EXPR
     ]
 TEMPLATE_KINDS = [
         CursorKind.TYPE_REF, CursorKind.TEMPLATE_REF, CursorKind.NAMESPACE_REF
@@ -249,12 +249,12 @@ class Generator(object):
             elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL,
                                  CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION]:
                 decl = self._container_get(member, level + 1, h_file)
-            elif member.kind in TEMPLATE_KINDS + [CursorKind.USING_DECLARATION]:
+            elif member.kind in TEMPLATE_KINDS + [CursorKind.USING_DECLARATION, CursorKind.USING_DIRECTIVE]:
                 #
                 # Ignore:
                 #
                 #   TEMPLATE_KINDS: Template type parameter.
-                #   CursorKind.USING_DECLARATION: Using? Pah!
+                #   CursorKind.USING_DECLARATION, CursorKind.USING_DIRECTIVE: Using? Pah!
                 #
                 pass
             else:

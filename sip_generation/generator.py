@@ -178,7 +178,7 @@ class Generator(object):
 """.format(now.year, sip_file, self.tu.spelling)
         return body, header, sip_file
 
-    CONTAINER_SKIPPABLE_UNEXPOSED_DECL = re.compile("(_DECLARE_PRIVATE|friend)\W")
+    CONTAINER_SKIPPABLE_UNEXPOSED_DECL = re.compile("_DECLARE_PRIVATE|friend|;")
     CONTAINER_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT")
     FN_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|Q_REQUIRED_RESULT")
     VAR_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT")
@@ -193,12 +193,6 @@ class Generator(object):
         :param level:               Recursion level controls indentation.
         :return:                    A string.
         """
-        def skippable_unexposed_decl(member, text):
-            if Generator.CONTAINER_SKIPPABLE_UNEXPOSED_DECL.search(text):
-                return True
-            logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(container.kind, container.spelling,
-                                                                     member.extent.start.line, text, member.kind))
-
         def skippable_visibility_attr(member, text):
             """We don't seem to have access to the __attribute__(())s, but at least we can look for stuff we care about."""
             if text.find("_DEPRECATED") != -1:
@@ -262,7 +256,7 @@ class Generator(object):
                 if member.kind in [CursorKind.UNEXPOSED_ATTR, CursorKind.VISIBILITY_ATTR] and skippable_visibility_attr(member, text):
                     pass
                 elif member.kind == CursorKind.UNEXPOSED_DECL:
-                    if skippable_unexposed_decl(member, text):
+                    if Generator.CONTAINER_SKIPPABLE_UNEXPOSED_DECL.search(text):
                         pass
                     else:
                         decl = self._unexposed_decl_get(container, member)

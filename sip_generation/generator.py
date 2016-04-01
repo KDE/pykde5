@@ -179,10 +179,10 @@ class Generator(object):
         return body, header, sip_file
 
     CONTAINER_SKIPPABLE_UNEXPOSED_DECL = re.compile("_DECLARE_PRIVATE|friend|;")
-    CONTAINER_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT")
-    FN_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|Q_REQUIRED_RESULT|format\(printf")
-    VAR_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT")
-    TYPEDEF_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT")
+    CONTAINER_SKIPPABLE_ATTR = re.compile("_EXPORT")
+    FN_SKIPPABLE_ATTR = re.compile("_EXPORT|Q_REQUIRED_RESULT|format\(printf")
+    VAR_SKIPPABLE_ATTR = re.compile("_EXPORT")
+    TYPEDEF_SKIPPABLE_ATTR = re.compile("_EXPORT")
 
     def _container_get(self, container, level, h_file):
         """
@@ -193,12 +193,12 @@ class Generator(object):
         :param level:               Recursion level controls indentation.
         :return:                    A string.
         """
-        def skippable_visibility_attr(member, text):
+        def skippable_attribute(member, text):
             """We don't seem to have access to the __attribute__(())s, but at least we can look for stuff we care about."""
             if text.find("_DEPRECATED") != -1:
                 container.sip_annotations.add("Deprecated")
                 return True
-            if Generator.CONTAINER_IS_VISIBLE_BY_ATTR.search(text):
+            if Generator.CONTAINER_SKIPPABLE_ATTR.search(text):
                 return True
             logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(container.kind, container.spelling,
                                                                      member.extent.start.line, text, member.kind))
@@ -253,7 +253,7 @@ class Generator(object):
                 pass
             else:
                 text = self._read_source(member.extent)
-                if member.kind in [CursorKind.UNEXPOSED_ATTR, CursorKind.VISIBILITY_ATTR] and skippable_visibility_attr(member, text):
+                if member.kind in [CursorKind.UNEXPOSED_ATTR, CursorKind.VISIBILITY_ATTR] and skippable_attribute(member, text):
                     pass
                 elif member.kind == CursorKind.UNEXPOSED_DECL:
                     if Generator.CONTAINER_SKIPPABLE_UNEXPOSED_DECL.search(text):
@@ -345,12 +345,12 @@ class Generator(object):
         :param level:               Recursion level controls indentation.
         :return:                    A string.
         """
-        def skippable_visibility_attr(member, text):
+        def skippable_attribute(member, text):
             """We don't seem to have access to the __attribute__(())s, but at least we can look for stuff we care about."""
             if text.find("_DEPRECATED") != -1:
                 function.sip_annotations.add("Deprecated")
                 return True
-            if Generator.FN_IS_VISIBLE_BY_ATTR.search(text):
+            if Generator.FN_SKIPPABLE_ATTR.search(text):
                 return True
             logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(function.kind, function.spelling,
                                                                      member.extent.start.line, text, member.kind))
@@ -393,7 +393,7 @@ class Generator(object):
                 template_type_parameters.append(self._template_template_param_get(child))
             else:
                 text = self._read_source(child.extent)
-                if child.kind in [CursorKind.UNEXPOSED_ATTR, CursorKind.VISIBILITY_ATTR] and skippable_visibility_attr(child, text):
+                if child.kind in [CursorKind.UNEXPOSED_ATTR, CursorKind.VISIBILITY_ATTR] and skippable_attribute(child, text):
                     pass
                 else:
                     Generator._report_ignoring(function, child)
@@ -505,12 +505,12 @@ class Generator(object):
             return ""
 
     def _typedef_get(self, container, typedef, level):
-        def skippable_visibility_attr(member, text):
+        def skippable_attribute(member, text):
             """We don't seem to have access to the __attribute__(())s, but at least we can look for stuff we care about."""
             if text.find("_DEPRECATED") != -1:
                 typedef.sip_annotations.add("Deprecated")
                 return True
-            if Generator.TYPEDEF_IS_VISIBLE_BY_ATTR.search(text):
+            if Generator.TYPEDEF_SKIPPABLE_ATTR.search(text):
                 return True
             logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(typedef.kind, typedef.spelling,
                                                                      member.extent.start.line, text, member.kind))
@@ -564,7 +564,7 @@ class Generator(object):
                 pass
             else:
                 text = self._read_source(child.extent)
-                if child.kind in [CursorKind.UNEXPOSED_ATTR, CursorKind.VISIBILITY_ATTR] and skippable_visibility_attr(child, text):
+                if child.kind in [CursorKind.UNEXPOSED_ATTR, CursorKind.VISIBILITY_ATTR] and skippable_attribute(child, text):
                     pass
                 else:
                     Generator._report_ignoring(typedef, child)
@@ -616,9 +616,9 @@ class Generator(object):
         :param level:               Recursion level controls indentation.
         :return:                    A string.
         """
-        def skippable_visibility_attr(member, text):
+        def skippable_attribute(member, text):
             """We don't seem to have access to the __attribute__(())s, but at least we can look for stuff we care about."""
-            if Generator.VAR_IS_VISIBLE_BY_ATTR.search(text):
+            if Generator.VAR_SKIPPABLE_ATTR.search(text):
                 return True
             logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(container.kind, container.spelling,
                                                                      member.extent.start.line, text, member.kind))
@@ -636,7 +636,7 @@ class Generator(object):
                 pass
             else:
                 text = self._read_source(child.extent)
-                if child.kind == CursorKind.VISIBILITY_ATTR and skippable_visibility_attr(child, text):
+                if child.kind == CursorKind.VISIBILITY_ATTR and skippable_attribute(child, text):
                     pass
                 else:
                     Generator._report_ignoring(variable, child)

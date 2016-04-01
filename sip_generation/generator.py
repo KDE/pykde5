@@ -243,12 +243,14 @@ class Generator(object):
             elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL,
                                  CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION]:
                 decl = self._container_get(member, level + 1, h_file)
-            elif member.kind in TEMPLATE_KINDS + [CursorKind.USING_DECLARATION, CursorKind.USING_DIRECTIVE]:
+            elif member.kind in TEMPLATE_KINDS + [CursorKind.USING_DECLARATION, CursorKind.USING_DIRECTIVE,
+                                                  CursorKind.CXX_FINAL_ATTR]:
                 #
                 # Ignore:
                 #
                 #   TEMPLATE_KINDS: Template type parameter.
                 #   CursorKind.USING_DECLARATION, CursorKind.USING_DIRECTIVE: Using? Pah!
+                #   CursorKind.CXX_FINAL_ATTR: Again, not much to be done with this.
                 #
                 pass
             else:

@@ -240,8 +240,9 @@ class Generator(object):
                 template_type_parameters.append(member.type.spelling + " " + member.displayname)
             elif member.kind in [CursorKind.VAR_DECL, CursorKind.FIELD_DECL]:
                 decl = self._var_get(container, member, level + 1)
-            elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.STRUCT_DECL,
-                                 CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION]:
+            elif member.kind in [CursorKind.NAMESPACE, CursorKind.CLASS_DECL,
+                                 CursorKind.CLASS_TEMPLATE, CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION,
+                                 CursorKind.STRUCT_DECL, CursorKind.UNION_DECL]:
                 decl = self._container_get(member, level + 1, h_file)
             elif member.kind in TEMPLATE_KINDS + [CursorKind.USING_DECLARATION, CursorKind.USING_DIRECTIVE,
                                                   CursorKind.CXX_FINAL_ATTR]:
@@ -289,8 +290,14 @@ class Generator(object):
                 #
                 if container.kind == CursorKind.NAMESPACE:
                     container_type = pad + "namespace " + name
-                else:
+                elif container.kind in [CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE, CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION]:
+                    container_type = pad + "class " + name
+                elif container.kind == CursorKind.STRUCT_DECL:
                     container_type = pad + "struct {}".format(name or "__struct{}".format(container.extent.start.line))
+                elif container.kind == CursorKind.UNION_DECL:
+                    container_type = pad + "union {}".format(name or "__union{}".format(container.extent.start.line))
+                else:
+                    assert False, AssertionError(_("Unexpected container {}: {}[{}]").format(container.kind, name, container.extent.start.line))
                 if level == 0:
                     h_file = "%TypeHeaderCode\n#include <{}>\n%End\n".format(h_file)
                 else:
@@ -629,11 +636,11 @@ class Generator(object):
         setattr(variable, "sip_annotations", set())
         template_type_parameters = []
         for child in variable.get_children():
-            if child.kind in TEMPLATE_KINDS:
+            if child.kind in TEMPLATE_KINDS + [CursorKind.STRUCT_DECL, CursorKind.UNION_DECL]:
                 #
                 # Ignore:
                 #
-                #   TEMPLATE_KINDS: The variable type.
+                #   TEMPLATE_KINDS, CursorKind.STRUCT_DECL, CursorKind.UNION_DECL: : The variable type.
                 #
                 pass
             else:

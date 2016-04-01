@@ -276,7 +276,7 @@ class Generator(object):
                 body = "\n"
         if body:
             pad = " " * (level * 4)
-            if container.kind == CursorKind.CLASS_TEMPLATE or name.endswith(">"):
+            if container.kind in [CursorKind.CLASS_TEMPLATE, CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION]:
                 template_type_parameters = pad + "template <" + (", ".join(template_type_parameters)) + ">\n"
             else:
                 template_type_parameters = ""
@@ -564,11 +564,12 @@ class Generator(object):
                 #
                 decl = "{} {}".format(child.type.spelling, decl)
                 args.append(decl)
-            elif child.kind in EXPR_KINDS:
+            elif child.kind in EXPR_KINDS + [CursorKind.NAMESPACE_REF]:
                 #
                 # Ignore:
                 #
                 #   EXPR_KINDS: Array size etc.
+                #   CursorKind.NAMESPACE_REF: Type stuff.
                 #
                 pass
             else:

@@ -572,8 +572,6 @@ class Generator(object):
                 text = self._read_source(child.extent)
                 if child.kind in [CursorKind.UNEXPOSED_ATTR, CursorKind.VISIBILITY_ATTR] and skippable_visibility_attr(child, text):
                     pass
-                elif child.kind == CursorKind.UNEXPOSED_DECL and skippable_unexposed_decl(child, text):
-                    pass
                 else:
                     Generator._report_ignoring(typedef, child)
         alias = typedef.displayname

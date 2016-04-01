@@ -61,18 +61,19 @@ def walk_tree(root, fn, filter):
 
 
 class Driver(Generator):
-    def __init__(self, include_roots, project_name, project_root, selector, output_dir):
+    def __init__(self, include_roots, project_name, project_rules, project_root, selector, output_dir):
         """
         Constructor.
 
         :param include_roots:       A list of roots of includes file, typically including the root for all Qt and
                                     the root for all KDE include files as well as any project-specific include files.
         :param project_name:        The name of the project.
+        :param project_rules:       The rules file for the project.
         :param project_root:        The root of files for which to generate SIP.
         :param selector:            A regular expression which limits the files from project_root to be processed.
         :param output_dir:          The destination directory.
         """
-        super(Driver, self).__init__(include_roots, project_name)
+        super(Driver, self).__init__(include_roots, project_name, project_rules)
         self.root = project_root
         self.selector = selector
         self.output_dir = output_dir
@@ -117,6 +118,8 @@ def main(argv=None):
     parser.add_argument("--reference-includes", default=["/usr/include/x86_64-linux-gnu/qt5", "/usr/include/KF5"],
                         action="append", help=_("Roots of header paths"))
     parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
+    parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
+                        help=_("Project rules"))
     parser.add_argument("--project-includes", default="/usr/include/KF5", help=_("Root of header paths to process"))
     parser.add_argument("--selector", default=".*", type=re.compile, help=_("Regular expression of files under --project-includes to process"))
     parser.add_argument("output", help=_("Output directory"))
@@ -129,7 +132,8 @@ def main(argv=None):
         #
         # Generate!
         #
-        d = Driver(args.reference_includes, args.project_name, args.project_includes, args.selector, args.output)
+        d = Driver(args.reference_includes, args.project_name, args.project_rules, args.project_includes,
+                   args.selector, args.output)
         d.process_tree()
     except Exception as e:
         tbk = traceback.format_exc()

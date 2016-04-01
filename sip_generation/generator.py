@@ -32,7 +32,7 @@ import traceback
 from clang import cindex
 from clang.cindex import AccessSpecifier, CursorKind, SourceRange, StorageClass, TokenKind, TypeKind
 
-from rules import rule_set
+from rules import RuleSet
 
 
 class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
@@ -77,13 +77,14 @@ TEMPLATE_KINDS = [
 class Generator(object):
     _libclang = None
 
-    def __init__(self, include_roots, project_name, dump_includes=False, dump_privates=False):
+    def __init__(self, include_roots, project_name, project_rules, dump_includes=False, dump_privates=False):
         """
         Constructor.
 
         :param include_roots:       A list of roots of includes file, typically including the root for all Qt and
                                     the root for all KDE include files as well as any project-specific include files.
         :param project_name:        The name of the project.
+        :param project_rules:       The rules file for the project.
         :param dump_includes:       Turn on diagnostics for include files.
         :param dump_privates:       Turn on diagnostics for omitted private items.
         """
@@ -95,6 +96,19 @@ class Generator(object):
             for include in sorted(self.includes):
                 logger.debug(_("Using includes from {}").format(include))
         self.project_name = project_name
+        try:
+            import imp
+            imp.load_source("project_rules", project_rules)
+        except ImportError:
+            import importlib
+            spec = importlib.util.spec_from_file_location("project_rules", project_rules)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+        #
+        # Statically prepare the rule logic. This takes the rules provided by the user and turns them into code.
+        #
+        project_rules = sys.modules["project_rules"]
+        self.rule_set = RuleSet(project_rules.function_rules, project_rules.parameter_rules, project_rules.variable_rules)
         self.dump_includes = dump_includes
         self.dump_privates = dump_privates
         self.diagnostics = set()
@@ -394,7 +408,7 @@ class Generator(object):
                 decl = "{} {}".format(child.type.spelling, parameter)
                 init = self._fn_get_parameter_default(function, child)
                 setattr(child, "sip_annotations", set())
-                decl, init = rule_set.param_rules().apply(container, function, child, decl, init)
+                decl, init = self.rule_set.param_rules().apply(container, function, child, decl, init)
                 if child.sip_annotations:
                     decl += " /" + ",".join(child.sip_annotations) + "/"
                 if init:
@@ -430,7 +444,7 @@ class Generator(object):
         else:
             decl = "{} {}({})".format(function.result_type.spelling, function.spelling, parameters)
         decl = decl.replace("* ", "*").replace("& ", "&")
-        decl = rule_set.fn_rules().apply(container, function, decl)
+        decl = self.rule_set.fn_rules().apply(container, function, decl)
         #
         # Now the rules have run, add any prefix/suffix.
         #
@@ -681,7 +695,7 @@ class Generator(object):
                     Generator._report_ignoring(variable, child)
         decl = "{} {}".format(variable.type.spelling, variable.spelling)
         decl = decl.replace("* ", "*").replace("& ", "&")
-        decl = rule_set.var_rules().apply(container, variable, decl)
+        decl = self.rule_set.var_rules().apply(container, variable, decl)
         #
         # Now the rules have run, add any prefix/suffix.
         #
@@ -765,6 +779,8 @@ def main(argv=None):
     parser.add_argument("--reference-includes", default=["/usr/include/x86_64-linux-gnu/qt5", "/usr/include/KF5"],
                         action="append", help=_("Roots of header paths"))
     parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
+    parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
+                        help=_("Project rules"))
     parser.add_argument("source", help=_("File to process"))
     try:
         args = parser.parse_args(argv[1:])
@@ -775,7 +791,7 @@ def main(argv=None):
         #
         # Generate!
         #
-        g = Generator(args.reference_includes, args.project_name)
+        g = Generator(args.reference_includes, args.project_name, args.project_rules)
         body, header, sip_file = g.create_sip(args.source)
         if body:
             print(header)

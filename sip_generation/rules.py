@@ -17,16 +17,17 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301  USA.
 #
-"""SIP file generator overrides for PyKDE."""
+"""SIP file generator rules engine for PyKDE."""
 from __future__ import print_function
+
 import argparse
-from copy import copy
 import gettext
 import inspect
 import logging
 import re
 import sys
 import traceback
+from copy import copy
 
 
 class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
@@ -38,43 +39,6 @@ gettext.install(__name__)
 
 # Keep PyCharm happy.
 _ = _
-
-
-def function_discard(container, function, text, matcher):
-    return ""
-
-
-def KF5_FUNCTION_RULES():
-    return [
-        [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", function_discard],
-    ]
-
-
-def parameter_out(container, function, parameter, decl, init, matcher):
-    parameter.sip_annotations.add("Out")
-    return decl, init
-
-
-def parameter_transfer_this(container, function, parameter, decl, init, matcher):
-    parameter.sip_annotations.add("TransferThis")
-    return decl, init
-
-
-def KF5_PARAMETER_RULES():
-    return [
-        [".*", ".*", ".*", r"[KQ][A-Za-z_0-9]+\W*\*\W*parent", ".*", parameter_transfer_this],
-        ["KDateTime", "fromString", "negZero", ".*", ".*", parameter_out],
-    ]
-
-
-def variable_discard(container, variable, text, matcher):
-    return ""
-
-
-def KF5_VARIABLE_RULES():
-    return [
-        [".*", "staticMetaObject", ".*", variable_discard],
-    ]
 
 
 class Rule(object):
@@ -337,12 +301,6 @@ class RuleSet(object):
         :return: The compiled form of the rules.
         """
         return self._var_rules
-
-
-#
-# Statically prepare the rule logic. This takes the rules provided by the user and turns them into code.
-#
-rule_set = RuleSet(KF5_FUNCTION_RULES, KF5_PARAMETER_RULES, KF5_VARIABLE_RULES)
 
 
 def main(argv=None):

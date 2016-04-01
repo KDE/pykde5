@@ -180,7 +180,7 @@ class Generator(object):
 
     CONTAINER_SKIPPABLE_UNEXPOSED_DECL = re.compile("_DECLARE_PRIVATE|friend|;")
     CONTAINER_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT")
-    FN_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|Q_REQUIRED_RESULT")
+    FN_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT|Q_REQUIRED_RESULT|format\(printf")
     VAR_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT")
     TYPEDEF_IS_VISIBLE_BY_ATTR = re.compile("_EXPORT")
 

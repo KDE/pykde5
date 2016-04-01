@@ -91,7 +91,7 @@ class Driver(Generator):
                 logger.info(_("Not creating empty SIP for {}").format(file))
 
 
-def main(argv = None):
+def main(argv=None):
     """
     Convert a whole set of KDE header files and generate the corresponding SIP files.
 

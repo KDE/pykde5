@@ -345,7 +345,7 @@ class RuleSet(object):
 rule_set = RuleSet(KF5_FUNCTION_RULES, KF5_PARAMETER_RULES, KF5_VARIABLE_RULES)
 
 
-def main(argv = None):
+def main(argv=None):
     """
     Rules engine for SIP file generation.
 
@@ -367,7 +367,7 @@ def main(argv = None):
         #
         # Generate help!
         #
-        for db in [rule_set.fn_rules, rule_set.param_rules, rule_set.varm_rules]:
+        for db in [rule_set.fn_rules, rule_set.param_rules, rule_set.var_rules]:
             print(inspect.getdoc(db))
             print()
     except Exception as e:

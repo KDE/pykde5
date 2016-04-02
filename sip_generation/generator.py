@@ -472,10 +472,13 @@ class Generator(object):
             suffix = " const"
         else:
             suffix = ""
+        prefix = ""
+        logger.error("function="+function.displayname)
         if function.is_static_method():
-            prefix = "static "
-        else:
-            prefix = ""
+            import pdb; pdb.set_trace()
+            prefix += "static "
+        if function.is_virtual_method():
+            prefix += "virtual "
         return prefix, suffix
 
     def _fn_get_parameter_default(self, function, parameter):

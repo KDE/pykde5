@@ -20,6 +20,7 @@
 """SIP file generator driver for PyKDE."""
 from __future__ import print_function
 import argparse
+import datetime
 import errno
 import gettext
 import os
@@ -81,12 +82,64 @@ class Driver(Generator):
     def process_tree(self):
         walk_tree(self.root, self._process_one, os.path.isfile)
 
-    def _process_one(self, file):
-        if self.selector.search(os.path.basename(file)):
-            result, copyright, sip_file = self.create_sip(file)
+    def _process_one(self, source):
+        h_file = source[len(self.root) + len(os.path.sep):]
+        if self.selector.search(os.path.basename(h_file)):
+            #
+            # Make sure any errors mention the file that was being processed.
+            #
+            try:
+                result, includes = self.create_sip(self.root, h_file)
+                if not result:
+                    #
+                    # Attempt to create a renaming header.
+                    #
+                    direct_includes = [i for i in includes if i.depth == 1]
+                    if len(direct_includes) == 1:
+                        included_h_file = direct_includes[0].include.name[len(self.root) + len(os.path.sep):]
+                        sip_basename = os.path.splitext(os.path.basename(included_h_file))[0] + ".sip"
+                        module_path = os.path.dirname(h_file)
+                        output_file = os.path.join(module_path, sip_basename)
+                        result = """
+%Include {}
+""".format(output_file)
+            except Exception as e:
+                logger.error("{} while processing {}".format(e.message, source))
+                raise
             if result:
-                output_file = os.path.join(os.path.dirname(file), sip_file)
-                output_file = output_file[len(self.root) + len(os.path.sep):]
+                #
+                # Generate a file header.
+                #
+                sip_basename = os.path.splitext(os.path.basename(h_file))[0] + ".sip"
+                module_path = os.path.dirname(h_file)
+                output_file = os.path.join(module_path, sip_basename)
+                now = datetime.datetime.utcnow()
+                header = """//
+// This file, {}, is part of {}.
+// It was derived from {}.
+//
+%Copying
+// Copyright (c) {} by Shaheed Haque (srhaque@theiet.org)
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU Library General Public License as
+// published by the Free Software Foundation; either version 2, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details
+//
+// You should have received a copy of the GNU Library General Public
+// License along with this program; if not, write to the
+// Free Software Foundation, Inc.,
+// 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+%End
+//
+%Module(name={})
+%Include qt.sip
+""".format(output_file, self.project_name, h_file, now.year, module_path.replace(os.path.sep, "."))
                 output_file = os.path.join(self.output_dir, output_file)
                 try:
                     os.makedirs(os.path.dirname(output_file))
@@ -95,7 +148,7 @@ class Driver(Generator):
                         raise
                 logger.info(_("Creating {}").format(output_file))
                 with open(output_file, "w") as f:
-                    f.write(copyright)
+                    f.write(header)
                     for r in result:
                         f.write(r)
             else:

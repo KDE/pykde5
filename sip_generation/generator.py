@@ -20,7 +20,6 @@
 """SIP file generator for PyKDE."""
 from __future__ import print_function
 import argparse
-import datetime
 import gettext
 import inspect
 import logging
@@ -115,15 +114,17 @@ class Generator(object):
         self.tu = None
         self.unpreprocessed_source = None
 
-    def create_sip(self, source):
+    def create_sip(self, root, h_file):
         """
         Actually convert the given source header file into its SIP equivalent.
 
-        :param source:             The source (header) file of interest.
+        :param root:                The root of the source tree.
+        :param h_file:              Add this suffix to the root to find the source (header) file of interest.
         """
         #
         # Read in the original file.
         #
+        source = os.path.join(root, h_file)
         self.unpreprocessed_source = []
         with open(source, "rU") as f:
             for line in f:
@@ -162,36 +163,8 @@ class Generator(object):
         #
         # Run through the top level children in the translation unit.
         #
-        h_file = os.path.basename(self.tu.spelling)
-        sip_file = os.path.splitext(h_file)[0] + ".sip"
         body = self._container_get(self.tu.cursor, -1, h_file)
-        #
-        # Generate a file header.
-        #
-        now = datetime.datetime.utcnow()
-        header = """//
-// Copyright (c) {} by Shaheed Haque (srhaque@theiet.org)
-//
-// This file, {}, is part of {}. It was derived from
-// {}.
-//
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU Library General Public License as
-// published by the Free Software Foundation; either version 2, or
-// (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details
-//
-// You should have received a copy of the GNU Library General Public
-// License along with this program; if not, write to the
-// Free Software Foundation, Inc.,
-// 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-//
-""".format(now.year, sip_file, self.project_name, self.tu.spelling)
-        return body, header, sip_file
+        return body, self.tu.get_includes()
 
     CONTAINER_SKIPPABLE_UNEXPOSED_DECL = re.compile("_DECLARE_PRIVATE|friend|;")
     CONTAINER_SKIPPABLE_ATTR = re.compile("_EXPORT")
@@ -795,9 +768,8 @@ def main(argv=None):
         # Generate!
         #
         g = Generator(args.reference_includes, args.project_name, args.project_rules)
-        body, header, sip_file = g.create_sip(args.source)
+        body, includes = g.create_sip(args.source)
         if body:
-            print(header)
             print(body)
     except Exception as e:
         tbk = traceback.format_exc()

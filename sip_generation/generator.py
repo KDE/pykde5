@@ -473,7 +473,6 @@ class Generator(object):
         else:
             suffix = ""
         prefix = ""
-        logger.error("function="+function.displayname)
         if function.is_static_method():
             import pdb; pdb.set_trace()
             prefix += "static "

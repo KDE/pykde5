@@ -474,7 +474,6 @@ class Generator(object):
             suffix = ""
         prefix = ""
         if function.is_static_method():
-            import pdb; pdb.set_trace()
             prefix += "static "
         if function.is_virtual_method():
             prefix += "virtual "

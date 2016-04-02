@@ -254,7 +254,10 @@ class Generator(object):
             elif member.kind == CursorKind.TYPEDEF_DECL:
                 decl = self._typedef_get(container, member, level + 1)
             elif member.kind == CursorKind.CXX_BASE_SPECIFIER:
-                base_specifiers.append(member.displayname)
+                #
+                # Strip off the leading "class". Except for TypeKind.UNEXPOSED...
+                #
+                base_specifiers.append(member.displayname.split(None, 2)[-1])
             elif member.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
                 template_type_parameters.append("typename " + member.displayname)
             elif member.kind == CursorKind.TEMPLATE_NON_TYPE_PARAMETER:

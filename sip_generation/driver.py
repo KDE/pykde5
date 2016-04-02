@@ -174,7 +174,8 @@ def main(argv=None):
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
     parser.add_argument("--project-includes", default="/usr/include/KF5", help=_("Root of header paths to process"))
-    parser.add_argument("--selector", default=".*", type=re.compile, help=_("Regular expression of files under --project-includes to process"))
+    parser.add_argument("--selector", default=".*", type=lambda s: re.compile(s, re.I),
+                        help=_("Regular expression of files under --project-includes to process"))
     parser.add_argument("output", help=_("Output directory"))
     try:
         args = parser.parse_args(argv[1:])

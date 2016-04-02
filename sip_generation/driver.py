@@ -152,7 +152,7 @@ class Driver(Generator):
                     for r in result:
                         f.write(r)
             else:
-                logger.info(_("Not creating empty SIP for {}").format(file))
+                logger.info(_("Not creating empty SIP for {}").format(source))
 
 
 def main(argv=None):

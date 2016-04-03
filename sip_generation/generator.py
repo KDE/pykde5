@@ -468,15 +468,16 @@ class Generator(object):
         :param function:                    The function object.
         :return: prefix, suffix             String containing any prefix or suffix keywords.
         """
+        suffix = ""
         if function.is_const_method():
-            suffix = " const"
-        else:
-            suffix = ""
+            suffix += " const"
         prefix = ""
         if function.is_static_method():
             prefix += "static "
         if function.is_virtual_method():
             prefix += "virtual "
+            if function.is_pure_virtual_method():
+                suffix += " = 0"
         return prefix, suffix
 
     def _fn_get_parameter_default(self, function, parameter):

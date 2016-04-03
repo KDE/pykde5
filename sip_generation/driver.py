@@ -212,9 +212,9 @@ def main(argv=None):
     parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
-    parser.add_argument("--project-includes", default="/usr/include/KF5", help=_("Root of header paths to process"))
+    parser.add_argument("--project-root", default="/usr/include/KF5", help=_("Root of header paths to process"))
     parser.add_argument("--selector", default=".*", type=lambda s: re.compile(s, re.I),
-                        help=_("Regular expression of files under --project-includes to process"))
+                        help=_("Regular expression of files under --project-root to process"))
     parser.add_argument("output", help=_("Output directory"))
     try:
         args = parser.parse_args(argv[1:])
@@ -225,7 +225,7 @@ def main(argv=None):
         #
         # Generate!
         #
-        d = Driver(args.reference_includes, args.project_name, args.project_rules, args.project_includes,
+        d = Driver(args.reference_includes, args.project_name, args.project_rules, args.project_root,
                    args.selector, args.output)
         d.process_tree()
     except Exception as e:

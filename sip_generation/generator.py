@@ -758,6 +758,7 @@ def main(argv=None):
     parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
+    parser.add_argument("--project-root", default="/usr/include/KF5", help=_("Root of header paths to process"))
     parser.add_argument("source", help=_("File to process"))
     try:
         args = parser.parse_args(argv[1:])
@@ -769,7 +770,7 @@ def main(argv=None):
         # Generate!
         #
         g = Generator(args.reference_includes, args.project_name, args.project_rules)
-        body, includes = g.create_sip(args.source)
+        body, includes = g.create_sip(args.project_root, args.source)
         if body:
             print(body)
     except Exception as e:

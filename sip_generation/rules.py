@@ -98,6 +98,44 @@ class AbstractCompiledRuleDb(object):
 
 
 class FunctionRuleDb(AbstractCompiledRuleDb):
+    """
+    THE RULES FOR FUNCTIONS.
+
+    These are used to customise the behaviour of the SIP generator by allowing
+    the declaration for any function to be customised, for example to add SIP
+    compiler annotations.
+
+    Each entry in the raw rule database must be a list with members as follows:
+
+        0. A regular expression which matches the class or namespace "container"
+        name enclosing the function.
+
+        1. A regular expression which matches the function name.
+
+        2. A regular expression which matches the parameter declaration (e.g.
+        "int foo()").
+
+        3. A function.
+
+    In use, the database is walked in order from the first entry. If the regular
+    expressions are matched, the function is called, and no further entries are
+    walked. The function is called with the following contract:
+
+        def function_xxx(container, function, decl, matcher):
+            '''
+            Return a modified declaration for the given function.
+
+            :param container:               The clang.cindex.Cursor for the container.
+            :param function:                The clang.cindex.Cursor for the function.
+            :param decl:                    The text of the declaration.
+            :param matcher:                 The re.Match object. This contains named
+                                            groups corresponding to the parameter
+                                            names above.
+            :return: An updated decl, or function.sip_annotations.
+            '''
+
+    :return: The compiled form of the rules.
+    """
     def __init__(self, db):
         super(FunctionRuleDb, self).__init__(db, ["container", "function", "decl"])
 
@@ -120,6 +158,52 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
 
 
 class ParameterRuleDb(AbstractCompiledRuleDb):
+    """
+    THE RULES FOR FUNCTION PARAMETERS.
+
+    These are used to customise the behaviour of the SIP generator by allowing
+    the declaration for any parameter in any function to be customised, for
+    example to add SIP compiler annotations.
+
+    Each entry in the raw rule database must be a list with members as follows:
+
+        0. A regular expression which matches the class or namespace "container"
+        name enclosing the function.
+
+        1. A regular expression which matches the function name enclosing the
+        parameter.
+
+        2. A regular expression which matches the parameter name.
+
+        3. A regular expression which matches the parameter declaration (e.g.
+        "int foo").
+
+        4. A regular expression which matches the parameter initialiser (e.g.
+        "Xyz:MYCONST + 42").
+
+        5. A function.
+
+    In use, the database is walked in order from the first entry. If the regular
+    expressions are matched, the function is called, and no further entries are
+    walked. The function is called with the following contract:
+
+        def parameter_xxx(container, function, parameter, decl, init, matcher):
+            '''
+            Return a modified declaration and initialiser for the given parameter.
+
+            :param container:               The clang.cindex.Cursor for the container.
+            :param function:                The clang.cindex.Cursor for the function.
+            :param parameter:               The clang.cindex.Cursor for the parameter.
+            :param decl:                    The text of the declaration.
+            :param init:                    The text of any initialiser.
+            :param matcher:                 The re.Match object. This contains named
+                                            groups corresponding to the parameter
+                                            names above.
+            :return: An updated (decl, init) pair, or function.sip_annotations.
+        '''
+
+    :return: The compiled form of the rules.
+    """
     def __init__(self, db):
         super(ParameterRuleDb, self).__init__(db, ["container", "function", "parameter", "decl", "init"])
 
@@ -144,6 +228,44 @@ class ParameterRuleDb(AbstractCompiledRuleDb):
 
 
 class VariableRuleDb(AbstractCompiledRuleDb):
+    """
+    THE RULES FOR VARIABLES.
+
+    These are used to customise the behaviour of the SIP generator by allowing
+    the declaration for any variable to be customised, for example to add SIP
+    compiler annotations.
+
+    Each entry in the raw rule database must be a list with members as follows:
+
+        0. A regular expression which matches the class or namespace "container"
+        name enclosing the variable.
+
+        1. A regular expression which matches the variable name.
+
+        2. A regular expression which matches the variable declaration (e.g.
+        "int foo").
+
+        3. A function.
+
+    In use, the database is walked in order from the first entry. If the regular
+    expressions are matched, the function is called, and no further entries are
+    walked. The function is called with the following contract:
+
+        def function_xxx(container, variable, decl, matcher):
+            '''
+            Return a modified declaration for the given function.
+
+            :param container:               The clang.cindex.Cursor for the container.
+            :param variable:                The clang.cindex.Cursor for the variable.
+            :param decl:                    The text of the declaration.
+            :param matcher:                 The re.Match object. This contains named
+                                            groups corresponding to the parameter
+                                            names above.
+            :return: An updated decl, or variable.sip_annotations.
+            '''
+
+    :return: The compiled form of the rules.
+    """
     def __init__(self, db):
         super(VariableRuleDb, self).__init__(db, ["container", "variable", "decl"])
 
@@ -171,135 +293,16 @@ class RuleSet(object):
         self._param_rules = ParameterRuleDb(param_db)
         self._var_rules = VariableRuleDb(var_db)
 
+    def container_rules(self):
+        return self._container_rules
+
     def fn_rules(self):
-        """
-        THE RULES FOR FUNCTIONS.
-
-        These are used to customise the behaviour of the SIP generator by allowing
-        the declaration for any function to be customised, for example to add SIP
-        compiler annotations.
-
-        Each entry in the raw rule database must be a list with members as follows:
-
-            0. A regular expression which matches the class or namespace "container"
-            name enclosing the function.
-
-            1. A regular expression which matches the function name.
-
-            2. A regular expression which matches the parameter declaration (e.g.
-            "int foo()").
-
-            3. A function.
-
-        In use, the database is walked in order from the first entry. If the regular
-        expressions are matched, the function is called, and no further entries are
-        walked. The function is called with the following contract:
-
-            def function_xxx(container, function, decl, matcher):
-                '''
-                Return a modified declaration for the given function.
-
-                :param container:               The clang.cindex.Cursor for the container.
-                :param function:                The clang.cindex.Cursor for the function.
-                :param decl:                    The text of the declaration.
-                :param matcher:                 The re.Match object. This contains named
-                                                groups corresponding to the parameter
-                                                names above.
-                :return: An updated decl, or function.sip_annotations.
-                '''
-
-        :return: The compiled form of the rules.
-        """
         return self._fn_rules
 
     def param_rules(self):
-        """
-        THE RULES FOR FUNCTION PARAMETERS.
-
-        These are used to customise the behaviour of the SIP generator by allowing
-        the declaration for any parameter in any function to be customised, for
-        example to add SIP compiler annotations.
-
-        Each entry in the raw rule database must be a list with members as follows:
-
-            0. A regular expression which matches the class or namespace "container"
-            name enclosing the function.
-
-            1. A regular expression which matches the function name enclosing the
-            parameter.
-
-            2. A regular expression which matches the parameter name.
-
-            3. A regular expression which matches the parameter declaration (e.g.
-            "int foo").
-
-            4. A regular expression which matches the parameter initialiser (e.g.
-            "Xyz:MYCONST + 42").
-
-            5. A function.
-
-        In use, the database is walked in order from the first entry. If the regular
-        expressions are matched, the function is called, and no further entries are
-        walked. The function is called with the following contract:
-
-            def parameter_xxx(container, function, parameter, decl, init, matcher):
-                '''
-                Return a modified declaration and initialiser for the given parameter.
-
-                :param container:               The clang.cindex.Cursor for the container.
-                :param function:                The clang.cindex.Cursor for the function.
-                :param parameter:               The clang.cindex.Cursor for the parameter.
-                :param decl:                    The text of the declaration.
-                :param init:                    The text of any initialiser.
-                :param matcher:                 The re.Match object. This contains named
-                                                groups corresponding to the parameter
-                                                names above.
-                :return: An updated (decl, init) pair, or function.sip_annotations.
-            '''
-
-        :return: The compiled form of the rules.
-        """
         return self._param_rules
 
     def var_rules(self):
-        """
-        THE RULES FOR VARIABLES.
-
-        These are used to customise the behaviour of the SIP generator by allowing
-        the declaration for any variable to be customised, for example to add SIP
-        compiler annotations.
-
-        Each entry in the raw rule database must be a list with members as follows:
-
-            0. A regular expression which matches the class or namespace "container"
-            name enclosing the variable.
-
-            1. A regular expression which matches the variable name.
-
-            2. A regular expression which matches the variable declaration (e.g.
-            "int foo").
-
-            3. A function.
-
-        In use, the database is walked in order from the first entry. If the regular
-        expressions are matched, the function is called, and no further entries are
-        walked. The function is called with the following contract:
-
-            def function_xxx(container, variable, decl, matcher):
-                '''
-                Return a modified declaration for the given function.
-
-                :param container:               The clang.cindex.Cursor for the container.
-                :param variable:                The clang.cindex.Cursor for the variable.
-                :param decl:                    The text of the declaration.
-                :param matcher:                 The re.Match object. This contains named
-                                                groups corresponding to the parameter
-                                                names above.
-                :return: An updated decl, or variable.sip_annotations.
-                '''
-
-        :return: The compiled form of the rules.
-        """
         return self._var_rules
 
 
@@ -325,7 +328,7 @@ def main(argv=None):
         #
         # Generate help!
         #
-        for db in [rule_set.fn_rules, rule_set.param_rules, rule_set.var_rules]:
+        for db in [FunctionRuleDb, ParameterRuleDb, VariableRuleDb]:
             print(inspect.getdoc(db))
             print()
     except Exception as e:

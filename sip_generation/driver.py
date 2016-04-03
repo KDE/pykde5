@@ -44,23 +44,6 @@ gettext.install(__name__)
 _ = _
 
 
-def walk_tree(root, fn, filter):
-    """
-    Walk over a directory tree and for each file passed by a filter, apply a function.
-
-    :param root:                Tree to be walked.
-    :param fn:                  Function to apply.
-    :param filter:              Filter to use.
-    """
-    names = os.listdir(root)
-    for name in names:
-        srcname = os.path.join(root, name)
-        if filter(srcname):
-            fn(srcname)
-        if os.path.isdir(srcname):
-            walk_tree(srcname, fn, filter)
-
-
 class Driver(Generator):
     def __init__(self, include_roots, project_name, project_rules, project_root, selector, output_dir):
         """
@@ -80,7 +63,51 @@ class Driver(Generator):
         self.output_dir = output_dir
 
     def process_tree(self):
-        walk_tree(self.root, self._process_one, os.path.isfile)
+        self._walk_tree(self.root)
+
+    def _walk_tree(self, root):
+        """
+        Walk over a directory tree and for each file or directory, apply a function.
+
+        :param root:                Tree to be walked.
+        """
+        names = os.listdir(root)
+        sip_files = []
+        for name in names:
+            srcname = os.path.join(root, name)
+            if os.path.isfile(srcname):
+                sip_file = self._process_one(srcname)
+                if sip_file:
+                    sip_files.append(sip_file)
+            elif os.path.isdir(srcname):
+                self._walk_tree(srcname)
+        #
+        # Create a SIP module including all the SIP files in this directory. We only want SIP files
+        # generated from new-style header files.
+        #
+        sip_files = [s for s in sip_files if not s.endswith(".sip")]
+        if sip_files:
+            h_dir = root[len(self.root) + len(os.path.sep):]
+            output_file = os.path.join(h_dir, "module.sip")
+            header = self.header(output_file, h_dir, h_dir)
+            #
+            # Write the header and the body.
+            #
+            full_output = os.path.join(self.output_dir, output_file)
+            try:
+                os.makedirs(os.path.dirname(full_output))
+            except OSError as e:
+                if e.errno != errno.EEXIST:
+                    raise
+            logger.info(_("Creating {}").format(full_output))
+            with open(full_output, "w") as f:
+                f.write(header)
+                f.write("""
+%Module(name={})
+%Include imports.sip
+""".format(h_dir.replace(os.path.sep, ".")))
+                for sip_file in sip_files:
+                    f.write("%Include {}\n".format(sip_file))
 
     def _process_one(self, source):
         h_file = source[len(self.root) + len(os.path.sep):]

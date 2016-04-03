@@ -27,6 +27,7 @@ import os
 import inspect
 import logging
 import re
+import string
 import sys
 import traceback
 
@@ -85,7 +86,7 @@ class Driver(Generator):
         # Create a SIP module including all the SIP files in this directory. We only want SIP files
         # generated from new-style header files.
         #
-        sip_files = [s for s in sip_files if not s.endswith(".sip")]
+        sip_files = [s for s in sip_files if s[0] in string.ascii_uppercase or not s.endswith(".sip")]
         if sip_files:
             h_dir = root[len(self.root) + len(os.path.sep):]
             output_file = os.path.join(h_dir, "module.sip")

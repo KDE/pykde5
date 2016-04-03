@@ -106,8 +106,7 @@ class Generator(object):
         #
         # Statically prepare the rule logic. This takes the rules provided by the user and turns them into code.
         #
-        project_rules = sys.modules["project_rules"]
-        self.rule_set = RuleSet(project_rules.function_rules, project_rules.parameter_rules, project_rules.variable_rules)
+        self.rule_set = RuleSet(sys.modules["project_rules"])
         self.dump_includes = dump_includes
         self.dump_privates = dump_privates
         self.diagnostics = set()
@@ -190,13 +189,17 @@ class Generator(object):
             :param text:            The raw source corresponding to the region of member.
             """
             if text.find("_DEPRECATED") != -1:
-                container.sip_annotations.add("Deprecated")
+                sip["annotations"].add("Deprecated")
                 return True
             if Generator.CONTAINER_SKIPPABLE_ATTR.search(text):
                 return True
             logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(container.kind, container.spelling,
                                                                      member.extent.start.line, text, member.kind))
 
+        sip = {
+            "name": container.displayname,
+            "annotations": set()
+        }
         name = container.displayname
         if container.access_specifier == AccessSpecifier.PRIVATE:
             if self.dump_privates:
@@ -272,43 +275,55 @@ class Generator(object):
             text = self._read_source(container.extent)
             if text.endswith("}"):
                 body = "\n"
-        if body:
-            pad = " " * (level * 4)
+        if body and level >= 0:
             if container.kind in [CursorKind.CLASS_TEMPLATE, CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION]:
-                template_type_parameters = pad + "template <" + (", ".join(template_type_parameters)) + ">\n"
+                template_type_parameters = "template <" + (", ".join(template_type_parameters)) + ">"
             else:
                 template_type_parameters = ""
             if base_specifiers:
-                base_specifiers = ": " + (", ".join(base_specifiers))
+                base_specifiers = ", ".join(base_specifiers)
             else:
                 base_specifiers = ""
-            if level >= 0:
-                #
-                # There does not seem to be an obvious way to tell a class from a struct. That should matter...
-                #
-                if container.kind == CursorKind.NAMESPACE:
-                    container_type = pad + "namespace " + name
-                elif container.kind in [CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE,
-                                        CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION]:
-                    container_type = pad + "class " + name
-                elif container.kind == CursorKind.STRUCT_DECL:
-                    container_type = pad + "struct {}".format(name or "__struct{}".format(container.extent.start.line))
-                elif container.kind == CursorKind.UNION_DECL:
-                    container_type = pad + "union {}".format(name or "__union{}".format(container.extent.start.line))
-                else:
-                    assert False, AssertionError(
-                        _("Unexpected container {}: {}[{}]").format(container.kind, name, container.extent.start.line))
+            #
+            # There does not seem to be an obvious way to tell a class from a struct. That should matter...
+            #
+            if container.kind == CursorKind.NAMESPACE:
+                container_type = "namespace " + name
+            elif container.kind in [CursorKind.CLASS_DECL, CursorKind.CLASS_TEMPLATE,
+                                    CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION]:
+                container_type = "class " + name
+            elif container.kind == CursorKind.STRUCT_DECL:
+                container_type = "struct {}".format(name or "__struct{}".format(container.extent.start.line))
+            elif container.kind == CursorKind.UNION_DECL:
+                container_type = "union {}".format(name or "__union{}".format(container.extent.start.line))
+            else:
+                raise AssertionError(
+                    _("Unexpected container {}: {}[{}]").format(container.kind, name, container.extent.start.line))
+            #
+            # Flesh out the SIP context for the rules engine.
+            #
+            sip["template_parameters"] = template_type_parameters
+            sip["decl"] = container_type
+            sip["base_specifiers"] = base_specifiers
+            sip["body"] = body
+            self.rule_set.container_rules().apply(container, sip)
+            if sip["decl"]:
+                pad = " " * (level * 4)
+                decl = pad + sip["decl"]
+                if sip["base_specifiers"]:
+                    decl += ": " + sip["base_specifiers"]
+                if sip["template_parameters"]:
+                    decl = pad + sip["template_parameters"] + "\n" + decl
+                decl += "\n" + pad + "{\n"
                 if level == 0:
-                    h_file = "%TypeHeaderCode\n#include <{}>\n%End\n".format(h_file)
-                else:
-                    h_file = ""
-                prefix = "{}{}{}\n{}{{\n{}".format(template_type_parameters, container_type, base_specifiers, pad,
-                                                   h_file)
-                if container.sip_annotations:
-                    suffix = "} /" + ",".join(container.sip_annotations) + "/;\n"
+                    decl += "%TypeHeaderCode\n#include <{}>\n%End\n".format(h_file)
+                if sip["annotations"]:
+                    suffix = "} /" + ",".join(sip["annotations"]) + "/;\n"
                 else:
                     suffix = "};\n"
-                body = prefix + body + pad + suffix
+                body = decl + sip["body"] + pad + suffix
+            else:
+                body = ""
         return body
 
     def _get_access_specifier(self, member, level):

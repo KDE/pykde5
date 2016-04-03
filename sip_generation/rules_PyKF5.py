@@ -18,6 +18,11 @@
 #
 """SIP file generator rules for PyKF5."""
 
+
+def container_discard_qmetatypeid(container, sip, matcher):
+    sip["decl"] = ""
+
+
 def function_discard_qobject(container, function, text, matcher):
     return ""
 
@@ -34,6 +39,13 @@ def parameter_out_kdatetime_negzero(container, function, parameter, decl, init, 
 def parameter_transfer_this_qobject_parents(container, function, parameter, decl, init, matcher):
     parameter.sip_annotations.add("TransferThis")
     return decl, init
+
+
+def container_rules():
+
+    return [
+        ["QMetaTypeId<.*>", ".*", ".*", ".*", container_discard_qmetatypeid],
+    ]
 
 
 def function_rules():

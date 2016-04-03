@@ -97,6 +97,72 @@ class AbstractCompiledRuleDb(object):
         raise NotImplemented(_("Missing subclass"))
 
 
+class ContainerRuleDb(AbstractCompiledRuleDb):
+    """
+    THE RULES FOR CONTAINERS.
+
+    These are used to customise the behaviour of the SIP generator by allowing
+    the declaration for any container (class, namespace, struct, union) to be
+    customised, for example to add SIP compiler annotations.
+
+    Each entry in the raw rule database must be a list with members as follows:
+
+        0. A regular expression which matches the container name.
+
+        1. A regular expression which matches any template parameters.
+
+        2. A regular expression which matches the container declaration.
+
+        3. A regular expression which matches any base specifiers.
+
+        4. A function.
+
+    In use, the database is walked in order from the first entry. If the regular
+    expressions are matched, the function is called, and no further entries are
+    walked. The function is called with the following contract:
+
+        def container_xxx(container, sip, matcher):
+            '''
+            Return a modified declaration for the given container.
+
+            :param container:   The clang.cindex.Cursor for the container.
+            :param sip:         A dict with the following keys:
+
+                                    name                The name of the container.
+                                    template_parameters Any template parameters.
+                                    decl                The declaration.
+                                    base_specifiers     Any base specifiers.
+                                    body                The body, less the outer
+                                                        pair of braces.
+                                    annotations         Any SIP annotations.
+
+            :param matcher:         The re.Match object. This contains named
+                                    groups corresponding to the key names above
+                                    EXCEPT body and annotations.
+
+            :return: An updated set of sip.xxx values. Setting sip.decl to the
+                     empty string will cause the container to be suppressed.
+            '''
+
+    :return: The compiled form of the rules.
+    """
+    def __init__(self, db):
+        super(ContainerRuleDb, self).__init__(db, ["container", "template_parameters", "decl", "base_specifiers"])
+
+    def apply(self, container, sip):
+        """
+        Walk over the rules database for functions, applying the first matching transformation.
+
+        :param container:
+        """
+        matcher, rule = self._match(sip["name"], sip["template_parameters"], sip["decl"], sip["base_specifiers"])
+        if matcher:
+            before = (sip["name"], sip["template_parameters"], sip["decl"], sip["base_specifiers"], sip["body"], copy(sip["annotations"]))
+            rule.fn(container, sip, matcher)
+            after = (sip["name"], sip["template_parameters"], sip["decl"], sip["base_specifiers"], sip["body"], sip["annotations"])
+            rule.trace_result(before, after)
+
+
 class FunctionRuleDb(AbstractCompiledRuleDb):
     """
     THE RULES FOR FUNCTIONS.
@@ -288,10 +354,11 @@ class VariableRuleDb(AbstractCompiledRuleDb):
 
 
 class RuleSet(object):
-    def __init__(self, fn_db, param_db, var_db):
-        self._fn_rules = FunctionRuleDb(fn_db)
-        self._param_rules = ParameterRuleDb(param_db)
-        self._var_rules = VariableRuleDb(var_db)
+    def __init__(self, rules_module):
+        self._container_rules = ContainerRuleDb(rules_module.container_rules)
+        self._fn_rules = FunctionRuleDb(rules_module.function_rules)
+        self._param_rules = ParameterRuleDb(rules_module.parameter_rules)
+        self._var_rules = VariableRuleDb(rules_module.variable_rules)
 
     def container_rules(self):
         return self._container_rules
@@ -328,7 +395,7 @@ def main(argv=None):
         #
         # Generate help!
         #
-        for db in [FunctionRuleDb, ParameterRuleDb, VariableRuleDb]:
+        for db in [ContainerRuleDb, FunctionRuleDb, ParameterRuleDb, VariableRuleDb]:
             print(inspect.getdoc(db))
             print()
     except Exception as e:

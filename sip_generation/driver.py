@@ -117,8 +117,30 @@ class Driver(Generator):
                     sip_basename = os.path.splitext(sip_basename)[0] + ".sip"
                 module_path = os.path.dirname(h_file)
                 output_file = os.path.join(module_path, sip_basename)
-                now = datetime.datetime.utcnow()
-                header = """//
+                header = self.header(output_file, h_file, module_path)
+                #
+                # Write the header and the body.
+                #
+                full_output = os.path.join(self.output_dir, output_file)
+                try:
+                    os.makedirs(os.path.dirname(full_output))
+                except OSError as e:
+                    if e.errno != errno.EEXIST:
+                        raise
+                logger.info(_("Creating {}").format(full_output))
+                with open(full_output, "w") as f:
+                    f.write(header)
+                    f.write(result)
+                return output_file
+            else:
+                logger.info(_("Not creating empty SIP for {}").format(source))
+                return None
+
+    def header(self, output_file, h_file, module_path):
+        """
+        Override this to get your own preferred file header.
+        """
+        header = """//
 // This file, {}, is part of {}.
 // It was derived from {}.
 //
@@ -141,22 +163,8 @@ class Driver(Generator):
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 %End
 //
-%Module(name={})
-%Include qt.sip
-""".format(output_file, self.project_name, h_file, now.year, module_path.replace(os.path.sep, "."))
-                output_file = os.path.join(self.output_dir, output_file)
-                try:
-                    os.makedirs(os.path.dirname(output_file))
-                except OSError as e:
-                    if e.errno != errno.EEXIST:
-                        raise
-                logger.info(_("Creating {}").format(output_file))
-                with open(output_file, "w") as f:
-                    f.write(header)
-                    for r in result:
-                        f.write(r)
-            else:
-                logger.info(_("Not creating empty SIP for {}").format(source))
+""".format(output_file, self.project_name, h_file, datetime.datetime.utcnow().year)
+        return header
 
 
 def main(argv=None):

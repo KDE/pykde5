@@ -111,7 +111,7 @@ class Driver(Generator):
 
     def _process_one(self, source):
         h_file = source[len(self.root) + len(os.path.sep):]
-        if self.selector.search(os.path.basename(h_file)):
+        if self.selector.search(h_file):
             #
             # Make sure any errors mention the file that was being processed.
             #

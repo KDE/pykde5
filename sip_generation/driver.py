@@ -97,7 +97,8 @@ class Driver(Generator):
                     direct_includes = [i for i in includes if i.depth == 1]
                     if len(direct_includes) == 1:
                         included_h_file = direct_includes[0].include.name[len(self.root) + len(os.path.sep):]
-                        sip_basename = os.path.splitext(os.path.basename(included_h_file))[0] + ".sip"
+                        sip_basename = os.path.basename(included_h_file)
+                        sip_basename = os.path.splitext(sip_basename)[0] + ".sip"
                         module_path = os.path.dirname(h_file)
                         output_file = os.path.join(module_path, sip_basename)
                         result = """
@@ -108,9 +109,12 @@ class Driver(Generator):
                 raise
             if result:
                 #
-                # Generate a file header.
+                # Generate a file header. We don't automatically use a .sip suffix because that could cause a clash with the
+                # legacy header on filesystems with case-insensitive lookups (NTFS).
                 #
-                sip_basename = os.path.splitext(os.path.basename(h_file))[0] + ".sip"
+                sip_basename = os.path.basename(h_file)
+                if sip_basename.endswith(".h"):
+                    sip_basename = os.path.splitext(sip_basename)[0] + ".sip"
                 module_path = os.path.dirname(h_file)
                 output_file = os.path.join(module_path, sip_basename)
                 now = datetime.datetime.utcnow()

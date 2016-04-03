@@ -72,7 +72,7 @@ class Driver(Generator):
 
         :param root:                Tree to be walked.
         """
-        names = os.listdir(root)
+        names = sorted(os.listdir(root))
         sip_files = []
         for name in names:
             srcname = os.path.join(root, name)

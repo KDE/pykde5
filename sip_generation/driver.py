@@ -86,6 +86,9 @@ class Driver(Generator):
         # Create a SIP module including all the SIP files in this directory. We only want SIP files
         # generated from new-style header files.
         #
+        # NOTE: this is really only best-effort; the output here might have to be edited, or indeed
+        # module files may need to be created from scratch if the logic here is not good enough.
+        #
         sip_files = [s for s in sip_files if s[0] in string.ascii_uppercase or not s.endswith(".sip")]
         if sip_files:
             h_dir = root[len(self.root) + len(os.path.sep):]

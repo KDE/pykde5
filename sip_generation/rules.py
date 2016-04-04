@@ -27,7 +27,7 @@ import logging
 import re
 import sys
 import traceback
-from copy import copy
+from copy import deepcopy
 
 
 class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
@@ -59,12 +59,18 @@ class Rule(object):
         return self.matcher.match(candidate)
 
     def trace_result(self, original, modified):
-        if not modified[:-2]:
+        if not modified["decl"]:
             logger.debug(_("Rule {} suppressed {}").format(self, original))
-        elif original[:-2] != modified[:-2] or original[-1] != modified[-1]:
-            logger.debug(_("Rule {} modified {}->{}").format(self, original, modified))
         else:
-            logger.warn(_("Rule {} did not modify {}").format(self, original))
+            delta = False
+            for k, v in original.iteritems():
+                if v != modified[k]:
+                    delta = True
+                    break
+            if delta:
+                logger.debug(_("Rule {} modified {}->{}").format(self, original, modified))
+            else:
+                logger.warn(_("Rule {} did not modify {}").format(self, original))
 
     def __str__(self):
         return "{}[{}],{}".format(self.db.__name__, self.rule_number, self.fn.__name__)
@@ -153,14 +159,14 @@ class ContainerRuleDb(AbstractCompiledRuleDb):
         """
         Walk over the rules database for functions, applying the first matching transformation.
 
-        :param container:
+        :param container:           The clang.cindex.Cursor for the container.
+        :param sip:                 The SIP dict.
         """
         matcher, rule = self._match(sip["name"], sip["template_parameters"], sip["decl"], sip["base_specifiers"])
         if matcher:
-            before = (sip["name"], sip["template_parameters"], sip["decl"], sip["base_specifiers"], sip["body"], copy(sip["annotations"]))
+            before = deepcopy(sip)
             rule.fn(container, sip, matcher)
-            after = (sip["name"], sip["template_parameters"], sip["decl"], sip["base_specifiers"], sip["body"], sip["annotations"])
-            rule.trace_result(before, after)
+            rule.trace_result(before, sip)
 
 
 class FunctionRuleDb(AbstractCompiledRuleDb):
@@ -178,10 +184,12 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
 
         1. A regular expression which matches the function name.
 
-        2. A regular expression which matches the parameter declaration (e.g.
+        2. A regular expression which matches any template parameters.
+
+        3. A regular expression which matches the function declaration (e.g.
         "int foo()").
 
-        3. A function.
+        4. A function.
 
     In use, the database is walked in order from the first entry. If the regular
     expressions are matched, the function is called, and no further entries are
@@ -191,36 +199,41 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
             '''
             Return a modified declaration for the given function.
 
-            :param container:               The clang.cindex.Cursor for the container.
-            :param function:                The clang.cindex.Cursor for the function.
-            :param decl:                    The text of the declaration.
-            :param matcher:                 The re.Match object. This contains named
-                                            groups corresponding to the parameter
-                                            names above.
-            :return: An updated decl, or function.sip_annotations.
+            :param container:   The clang.cindex.Cursor for the container.
+            :param function:    The clang.cindex.Cursor for the function.
+            :param sip:         A dict with the following keys:
+
+                                    name                The name of the function.
+                                    template_parameters Any template parameters.
+                                    decl                The declaration.
+                                    annotations         Any SIP annotations.
+
+            :param matcher:         The re.Match object. This contains named
+                                    groups corresponding to the key names above
+                                    EXCEPT annotations.
+
+            :return: An updated set of sip.xxx values. Setting sip.decl to the
+                     empty string will cause the container to be suppressed.
             '''
 
     :return: The compiled form of the rules.
     """
     def __init__(self, db):
-        super(FunctionRuleDb, self).__init__(db, ["container", "function", "decl"])
+        super(FunctionRuleDb, self).__init__(db, ["container", "function", "template_parameters", "decl"])
 
-    def apply(self, container, function, decl):
+    def apply(self, container, function, sip):
         """
         Walk over the rules database for functions, applying the first matching transformation.
 
-        :param container:
-        :param function:
-        :param decl:
-        :return:
+        :param container:           The clang.cindex.Cursor for the container.
+        :param function:            The clang.cindex.Cursor for the function.
+        :param sip:                 The SIP dict.
         """
-        matcher, rule = self._match(container.spelling, function.spelling, decl)
+        matcher, rule = self._match(container.spelling, sip["name"], sip["template_parameters"], sip["decl"])
         if matcher:
-            annotations = copy(function.sip_annotations)
-            decl2 = rule.fn(container.spelling, function.spelling, decl, matcher)
-            rule.trace_result((decl, annotations), (decl2, function.sip_annotations))
-            decl = decl2
-        return decl
+            before = deepcopy(sip)
+            rule.fn(container, function, sip, matcher)
+            rule.trace_result(before, sip)
 
 
 class ParameterRuleDb(AbstractCompiledRuleDb):
@@ -257,15 +270,21 @@ class ParameterRuleDb(AbstractCompiledRuleDb):
             '''
             Return a modified declaration and initialiser for the given parameter.
 
-            :param container:               The clang.cindex.Cursor for the container.
-            :param function:                The clang.cindex.Cursor for the function.
-            :param parameter:               The clang.cindex.Cursor for the parameter.
-            :param decl:                    The text of the declaration.
-            :param init:                    The text of any initialiser.
-            :param matcher:                 The re.Match object. This contains named
-                                            groups corresponding to the parameter
-                                            names above.
-            :return: An updated (decl, init) pair, or function.sip_annotations.
+            :param container:   The clang.cindex.Cursor for the container.
+            :param function:    The clang.cindex.Cursor for the function.
+            :param parameter:   The clang.cindex.Cursor for the parameter.
+            :param sip:         A dict with the following keys:
+
+                                    name                The name of the function.
+                                    decl                The declaration.
+                                    init                Any initialiser.
+                                    annotations         Any SIP annotations.
+
+            :param matcher:         The re.Match object. This contains named
+                                    groups corresponding to the key names above
+                                    EXCEPT annotations.
+
+            :return: An updated set of sip.xxx values.
         '''
 
     :return: The compiled form of the rules.
@@ -273,24 +292,20 @@ class ParameterRuleDb(AbstractCompiledRuleDb):
     def __init__(self, db):
         super(ParameterRuleDb, self).__init__(db, ["container", "function", "parameter", "decl", "init"])
 
-    def apply(self, container, function, parameter, decl, init):
+    def apply(self, container, function, parameter, sip):
         """
         Walk over the rules database for parameters, applying the first matching transformation.
 
-        :param parameter:
-        :param container:
-        :param function:
-        :param decl:
-        :param init:
-        :return:
+        :param container:           The clang.cindex.Cursor for the container.
+        :param function:            The clang.cindex.Cursor for the function.
+        :param parameter:           The clang.cindex.Cursor for the parameter.
+        :param sip:                 The SIP dict.
         """
-        matcher, rule = self._match(container.spelling, function.spelling, parameter, decl, init)
+        matcher, rule = self._match(container.spelling, function.spelling, sip["name"], sip["decl"], sip["init"])
         if matcher:
-            annotations = copy(parameter.sip_annotations)
-            decl2, init2 = rule.fn(container.spelling, function.spelling, parameter, decl, init, matcher)
-            rule.trace_result((decl, init, annotations), (decl2, init2, parameter.sip_annotations))
-            decl, init = decl2, init2
-        return decl, init
+            before = deepcopy(sip)
+            rule.fn(container, function, parameter, sip, matcher)
+            rule.trace_result(before, sip)
 
 
 class VariableRuleDb(AbstractCompiledRuleDb):
@@ -317,17 +332,24 @@ class VariableRuleDb(AbstractCompiledRuleDb):
     expressions are matched, the function is called, and no further entries are
     walked. The function is called with the following contract:
 
-        def function_xxx(container, variable, decl, matcher):
+        def variable_xxx(container, variable, decl, matcher):
             '''
             Return a modified declaration for the given function.
 
-            :param container:               The clang.cindex.Cursor for the container.
-            :param variable:                The clang.cindex.Cursor for the variable.
-            :param decl:                    The text of the declaration.
-            :param matcher:                 The re.Match object. This contains named
-                                            groups corresponding to the parameter
-                                            names above.
-            :return: An updated decl, or variable.sip_annotations.
+            :param container:   The clang.cindex.Cursor for the container.
+            :param variable:    The clang.cindex.Cursor for the variable.
+            :param sip:         A dict with the following keys:
+
+                                    name                The name of the variable.
+                                    decl                The declaration.
+                                    annotations         Any SIP annotations.
+
+            :param matcher:         The re.Match object. This contains named
+                                    groups corresponding to the key names above
+                                    EXCEPT annotations.
+
+            :return: An updated set of sip.xxx values. Setting sip.decl to the
+                     empty string will cause the container to be suppressed.
             '''
 
     :return: The compiled form of the rules.
@@ -335,22 +357,19 @@ class VariableRuleDb(AbstractCompiledRuleDb):
     def __init__(self, db):
         super(VariableRuleDb, self).__init__(db, ["container", "variable", "decl"])
 
-    def apply(self, container, variable, decl):
+    def apply(self, container, variable, sip):
         """
         Walk over the rules database for variables, applying the first matching transformation.
 
-        :param container:
-        :param variable:
-        :param decl:
-        :return:
+        :param container:           The clang.cindex.Cursor for the container.
+        :param variable:            The clang.cindex.Cursor for the variable.
+        :param sip:                 The SIP dict.
         """
-        matcher, rule = self._match(container.spelling, variable.spelling, decl)
+        matcher, rule = self._match(container.spelling, sip["name"], sip["decl"])
         if matcher:
-            annotations = copy(variable.sip_annotations)
-            decl2 = rule.fn(container.spelling, variable.spelling, decl, matcher)
-            rule.trace_result((decl, annotations), (decl2, variable.sip_annotations))
-            decl = decl2
-        return decl
+            before = deepcopy(sip)
+            rule.fn(container, variable, sip, matcher)
+            rule.trace_result(before, sip)
 
 
 class RuleSet(object):

@@ -23,22 +23,20 @@ def container_discard_qmetatypeid(container, sip, matcher):
     sip["decl"] = ""
 
 
-def function_discard_qobject(container, function, text, matcher):
-    return ""
+def function_discard_qobject(container, function, sip, matcher):
+    sip["decl"] = ""
 
 
-def variable_discard_qobject(container, variable, text, matcher):
-    return ""
+def parameter_out_kdatetime_negzero(container, function, parameter, sip, matcher):
+    sip["annotations"].add("Out")
 
 
-def parameter_out_kdatetime_negzero(container, function, parameter, decl, init, matcher):
-    parameter.sip_annotations.add("Out")
-    return decl, init
+def parameter_transfer_this_qobject_parents(container, function, parameter, sip, matcher):
+    sip["annotations"].add("TransferThis")
 
 
-def parameter_transfer_this_qobject_parents(container, function, parameter, decl, init, matcher):
-    parameter.sip_annotations.add("TransferThis")
-    return decl, init
+def variable_discard_qobject(container, variable, sip, matcher):
+    sip["decl"] = ""
 
 
 def container_rules():
@@ -51,7 +49,7 @@ def container_rules():
 def function_rules():
 
     return [
-        [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", function_discard_qobject],
+        [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", ".*", function_discard_qobject],
     ]
 
 

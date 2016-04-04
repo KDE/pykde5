@@ -205,7 +205,6 @@ class Generator(object):
             if self.dump_privates:
                 logger.debug("Ignoring private {} {}".format(container.kind, name))
             return ""
-        setattr(container, "sip_annotations", set())
         body = ""
         base_specifiers = []
         template_type_parameters = []
@@ -379,15 +378,17 @@ class Generator(object):
             :param text:            The raw source corresponding to the region of member.
             """
             if text.find("_DEPRECATED") != -1:
-                function.sip_annotations.add("Deprecated")
+                sip["annotations"].add("Deprecated")
                 return True
             if Generator.FN_SKIPPABLE_ATTR.search(text):
                 return True
             logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(function.kind, function.spelling,
                                                                      member.extent.start.line, text, member.kind))
 
-        pad = " " * (level * 4)
-        setattr(function, "sip_annotations", set())
+        sip = {
+            "name": function.spelling,
+            "annotations": set()
+        }
         parameters = []
         template_type_parameters = []
         for child in function.get_children():
@@ -396,14 +397,18 @@ class Generator(object):
                 #
                 # So far so good, but we need any default value.
                 #
-                decl = "{} {}".format(child.type.spelling, parameter)
-                init = self._fn_get_parameter_default(function, child)
-                setattr(child, "sip_annotations", set())
-                decl, init = self.rule_set.param_rules().apply(container, function, child, decl, init)
-                if child.sip_annotations:
-                    decl += " /" + ",".join(child.sip_annotations) + "/"
-                if init:
-                    decl += " = " + init
+                child_sip = {
+                    "name": parameter,
+                    "decl": "{} {}".format(child.type.spelling, parameter),
+                    "init": self._fn_get_parameter_default(function, child),
+                    "annotations": set()
+                }
+                self.rule_set.param_rules().apply(container, function, child, child_sip)
+                decl = child_sip["decl"]
+                if child_sip["annotations"]:
+                    decl += " /" + ",".join(child_sip["annotations"]) + "/"
+                if child_sip["init"]:
+                    decl += " = " + child_sip["init"]
                 parameters.append(decl)
             elif child.kind in [CursorKind.COMPOUND_STMT, CursorKind.CXX_OVERRIDE_ATTR,
                                 CursorKind.MEMBER_REF, CursorKind.DECL_REF_EXPR, CursorKind.CALL_EXPR] + TEMPLATE_KINDS:
@@ -429,26 +434,36 @@ class Generator(object):
                     pass
                 else:
                     Generator._report_ignoring(function, child)
+        if function.kind == CursorKind.FUNCTION_TEMPLATE:
+            template_type_parameters = "template <" + (", ".join(template_type_parameters)) + ">"
+        else:
+            template_type_parameters = ""
         parameters = ", ".join(parameters)
         if function.kind in [CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR]:
             decl = "{}({})".format(function.spelling, parameters)
         else:
             decl = "{} {}({})".format(function.result_type.spelling, function.spelling, parameters)
         decl = decl.replace("* ", "*").replace("& ", "&")
-        decl = self.rule_set.fn_rules().apply(container, function, decl)
+        #
+        # Flesh out the SIP context for the rules engine.
+        #
+        sip["template_parameters"] = template_type_parameters
+        sip["decl"] = decl
+        self.rule_set.fn_rules().apply(container, function, sip)
         #
         # Now the rules have run, add any prefix/suffix.
         #
-        if decl:
-            if function.kind == CursorKind.FUNCTION_TEMPLATE:
-                template_type_parameters = pad + "template <" + (", ".join(template_type_parameters)) + ">\n"
-            else:
-                template_type_parameters = ""
+        if sip["decl"]:
+            pad = " " * (level * 4)
             prefix, suffix = self._fn_get_keywords(function)
-            decl = prefix + decl + suffix
-            if function.sip_annotations:
-                decl += " /" + ",".join(function.sip_annotations) + "/"
-            decl = template_type_parameters + pad + decl + ";\n"
+            decl = pad + prefix + sip["decl"] + suffix
+            if sip["annotations"]:
+                decl += " /" + ",".join(sip["annotations"]) + "/"
+            if sip["template_parameters"]:
+                decl = pad + sip["template_parameters"] + "\n" + decl
+            decl += ";\n"
+        else:
+            decl = ""
         return decl
 
     def _template_template_param_get(self, container):
@@ -670,8 +685,11 @@ class Generator(object):
             logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(container.kind, container.spelling,
                                                                      member.extent.start.line, text, member.kind))
 
+        sip = {
+            "name": variable.spelling,
+            "annotations": set()
+        }
         pad = " " * (level * 4)
-        setattr(variable, "sip_annotations", set())
         for child in variable.get_children():
             if child.kind in TEMPLATE_KINDS + [CursorKind.STRUCT_DECL, CursorKind.UNION_DECL]:
                 #
@@ -688,16 +706,22 @@ class Generator(object):
                     Generator._report_ignoring(variable, child)
         decl = "{} {}".format(variable.type.spelling, variable.spelling)
         decl = decl.replace("* ", "*").replace("& ", "&")
-        decl = self.rule_set.var_rules().apply(container, variable, decl)
+        #
+        # Flesh out the SIP context for the rules engine.
+        #
+        sip["decl"] = decl
+        self.rule_set.var_rules().apply(container, variable, sip)
         #
         # Now the rules have run, add any prefix/suffix.
         #
-        if decl:
+        if sip["decl"]:
             prefix = self._var_get_keywords(variable)
-            decl = prefix + decl
-            if variable.sip_annotations:
-                decl += " /" + ",".join(variable.sip_annotations) + "/"
+            decl = prefix + sip["decl"]
+            if sip["annotations"]:
+                decl += " /" + ",".join(sip["annotations"]) + "/"
             decl = pad + decl + ";\n"
+        else:
+            decl = ""
         return decl
 
     def _var_get_keywords(self, variable):

@@ -73,7 +73,7 @@ TEMPLATE_KINDS = [
                  ] + EXPR_KINDS
 
 
-class Generator(object):
+class SipGenerator(object):
     _libclang = None
 
     def __init__(self, include_roots, project_name, project_rules, dump_includes=False, dump_privates=False):
@@ -87,7 +87,7 @@ class Generator(object):
         :param dump_includes:       Turn on diagnostics for include files.
         :param dump_privates:       Turn on diagnostics for omitted private items.
         """
-        Generator._find_libclang()
+        SipGenerator._find_libclang()
         self.includes = set(include_roots)
         for include_root in include_roots:
             walk_directories(include_root, lambda d: self.includes.add(d))
@@ -191,7 +191,7 @@ class Generator(object):
             if text.find("_DEPRECATED") != -1:
                 sip["annotations"].add("Deprecated")
                 return True
-            if Generator.CONTAINER_SKIPPABLE_ATTR.search(text):
+            if SipGenerator.CONTAINER_SKIPPABLE_ATTR.search(text):
                 return True
             logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(container.kind, container.spelling,
                                                                      member.extent.start.line, text, member.kind))
@@ -259,12 +259,12 @@ class Generator(object):
                         member, text):
                     pass
                 elif member.kind == CursorKind.UNEXPOSED_DECL:
-                    if Generator.CONTAINER_SKIPPABLE_UNEXPOSED_DECL.search(text):
+                    if SipGenerator.CONTAINER_SKIPPABLE_UNEXPOSED_DECL.search(text):
                         pass
                     else:
                         decl = self._unexposed_decl_get(container, member)
                 else:
-                    Generator._report_ignoring(container, member)
+                    SipGenerator._report_ignoring(container, member)
             if decl:
                 body += decl
         #
@@ -380,7 +380,7 @@ class Generator(object):
             if text.find("_DEPRECATED") != -1:
                 sip["annotations"].add("Deprecated")
                 return True
-            if Generator.FN_SKIPPABLE_ATTR.search(text):
+            if SipGenerator.FN_SKIPPABLE_ATTR.search(text):
                 return True
             logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(function.kind, function.spelling,
                                                                      member.extent.start.line, text, member.kind))
@@ -433,7 +433,7 @@ class Generator(object):
                                                                                                                  text):
                     pass
                 else:
-                    Generator._report_ignoring(function, child)
+                    SipGenerator._report_ignoring(function, child)
         if function.kind == CursorKind.FUNCTION_TEMPLATE:
             template_type_parameters = "template <" + (", ".join(template_type_parameters)) + ">"
         else:
@@ -480,7 +480,7 @@ class Generator(object):
             elif member.kind == CursorKind.TEMPLATE_TEMPLATE_PARAMETER:
                 template_type_parameters.append(self._template_template_param_get(member))
             else:
-                Generator._report_ignoring(container, member)
+                SipGenerator._report_ignoring(container, member)
         template_type_parameters = "template <" + (", ".join(template_type_parameters)) + "> class " + \
                                    container.displayname
         return template_type_parameters
@@ -565,7 +565,7 @@ class Generator(object):
             if text.find("_DEPRECATED") != -1:
                 typedef.sip_annotations.add("Deprecated")
                 return True
-            if Generator.TYPEDEF_SKIPPABLE_ATTR.search(text):
+            if SipGenerator.TYPEDEF_SKIPPABLE_ATTR.search(text):
                 return True
             logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(typedef.kind, typedef.spelling,
                                                                      member.extent.start.line, text, member.kind))
@@ -623,7 +623,7 @@ class Generator(object):
                                                                                                                  text):
                     pass
                 else:
-                    Generator._report_ignoring(typedef, child)
+                    SipGenerator._report_ignoring(typedef, child)
         alias = typedef.displayname
         if typedef.underlying_typedef_type.kind == TypeKind.MEMBERPOINTER:
             decl = pad + "typedef {}(*{})({})".format(result_type, alias, ", ".join(args), alias)
@@ -680,7 +680,7 @@ class Generator(object):
             :param member:          The attribute.
             :param text:            The raw source corresponding to the region of member.
             """
-            if Generator.VAR_SKIPPABLE_ATTR.search(text):
+            if SipGenerator.VAR_SKIPPABLE_ATTR.search(text):
                 return True
             logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(container.kind, container.spelling,
                                                                      member.extent.start.line, text, member.kind))
@@ -703,7 +703,7 @@ class Generator(object):
                 if child.kind == CursorKind.VISIBILITY_ATTR and skippable_attribute(child, text):
                     pass
                 else:
-                    Generator._report_ignoring(variable, child)
+                    SipGenerator._report_ignoring(variable, child)
         decl = "{} {}".format(variable.type.spelling, variable.spelling)
         decl = decl.replace("* ", "*").replace("& ", "&")
         #
@@ -760,16 +760,16 @@ class Generator(object):
         """"
         Find the libclang.so to alow us to initialise the system.
         """
-        if not Generator._libclang:
+        if not SipGenerator._libclang:
             lines = subprocess.check_output(["/sbin/ldconfig", "-p"])
             for line in lines.split("\n"):
                 fields = line.split()
                 if fields and fields[0].startswith("libclang.so"):
-                    Generator._libclang = fields[-1]
-                    logger.debug(_("Found libclang at {}").format(Generator._libclang))
-        if Generator._libclang:
+                    SipGenerator._libclang = fields[-1]
+                    logger.debug(_("Found libclang at {}").format(SipGenerator._libclang))
+        if SipGenerator._libclang:
             if not cindex.Config.loaded:
-                cindex.Config.set_library_file(Generator._libclang)
+                cindex.Config.set_library_file(SipGenerator._libclang)
         else:
             raise RuntimeError(_("Cannot find libclang"))
 
@@ -782,24 +782,27 @@ class Generator(object):
 
 def main(argv=None):
     """
-    Take a single KDE header file and generate the corresponding SIP file.
+    Take a single C++ header file and generate the corresponding SIP file.
+    Beyond simple generation of the SIP file from the corresponding C++
+    header file, a set of rules can be used to customise the generated
+    SIP file.
 
     Examples:
 
-        generator.py /usr/include/KF5/KItemModels/kselectionproxymodel.h
+        sip_generator.py /usr/include/KF5/KItemModels/kselectionproxymodel.h
     """
     if argv is None:
         argv = sys.argv
     parser = argparse.ArgumentParser(epilog=inspect.getdoc(main),
                                      formatter_class=HelpFormatter)
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
-    parser.add_argument("--reference-includes", default=["/usr/include/x86_64-linux-gnu/qt5", "/usr/include/KF5"],
-                        action="append", help=_("Roots of header paths"))
+    parser.add_argument("--includes", default=["/usr/include/x86_64-linux-gnu/qt5", "/usr/include/KF5"],
+                        action="append", help=_("Roots of C++ header paths to include"))
     parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
-    parser.add_argument("--project-root", default="/usr/include/KF5", help=_("Root of header paths to process"))
-    parser.add_argument("source", help=_("File to process"))
+    parser.add_argument("--project-root", default="/usr/include/KF5", help=_("Root of C++ header paths to process"))
+    parser.add_argument("source", help=_("C++ header path to process, relative to --project-root"))
     try:
         args = parser.parse_args(argv[1:])
         if args.verbose:
@@ -809,7 +812,7 @@ def main(argv=None):
         #
         # Generate!
         #
-        g = Generator(args.reference_includes, args.project_name, args.project_rules)
+        g = SipGenerator(args.includes, args.project_name, args.project_rules)
         body, includes = g.create_sip(args.project_root, args.source)
         if body:
             print(body)

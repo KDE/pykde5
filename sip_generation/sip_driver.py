@@ -31,7 +31,7 @@ import string
 import sys
 import traceback
 
-from generator import Generator
+from sip_generator import SipGenerator
 
 
 class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
@@ -45,7 +45,7 @@ gettext.install(__name__)
 _ = _
 
 
-class Driver(Generator):
+class SipDriver(SipGenerator):
     def __init__(self, include_roots, project_name, project_rules, project_root, selector, output_dir):
         """
         Constructor.
@@ -58,7 +58,7 @@ class Driver(Generator):
         :param selector:            A regular expression which limits the files from project_root to be processed.
         :param output_dir:          The destination directory.
         """
-        super(Driver, self).__init__(include_roots, project_name, project_rules)
+        super(SipDriver, self).__init__(include_roots, project_name, project_rules)
         self.root = project_root
         self.selector = selector
         self.output_dir = output_dir
@@ -200,26 +200,35 @@ class Driver(Generator):
 
 def main(argv=None):
     """
-    Convert a whole set of KDE header files and generate the corresponding SIP files.
+    Convert a whole set of KDE header files and generate the corresponding SIP
+    files. Beyond simple generation of the SIP files from the corresponding C++
+    header files:
+
+        - A set of rules can be used to customise the generated SIP files.
+
+        - For each set of SIP files in a directory, if at least one SIP file
+          is named like a new-style header (i.e. starts with an upper case
+          letter, or has no .h suffix), the a "module.sip" is created which
+          facilitates running the SIP compiler on a set of related files.
 
     Examples:
 
-        driver.py /tmp
+        driver.py /tmp /usr/include/KF5
     """
     if argv is None:
         argv = sys.argv
     parser = argparse.ArgumentParser(epilog=inspect.getdoc(main),
                                      formatter_class=HelpFormatter)
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
-    parser.add_argument("--reference-includes", default=["/usr/include/x86_64-linux-gnu/qt5", "/usr/include/KF5"],
-                        action="append", help=_("Roots of header paths"))
+    parser.add_argument("--includes", default=["/usr/include/x86_64-linux-gnu/qt5", "/usr/include/KF5"],
+                        action="append", help=_("Roots of C++ header paths to include"))
     parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
-    parser.add_argument("--project-root", default="/usr/include/KF5", help=_("Root of header paths to process"))
     parser.add_argument("--selector", default=".*", type=lambda s: re.compile(s, re.I),
-                        help=_("Regular expression of files under --project-root to process"))
-    parser.add_argument("output", help=_("Output directory"))
+                        help=_("Regular expression of C++ files under sources to process"))
+    parser.add_argument("sip", help=_("SIP output directory"))
+    parser.add_argument("sources", help=_("Root of C++ header paths to process"))
     try:
         args = parser.parse_args(argv[1:])
         if args.verbose:
@@ -229,8 +238,8 @@ def main(argv=None):
         #
         # Generate!
         #
-        d = Driver(args.reference_includes, args.project_name, args.project_rules, args.project_root,
-                   args.selector, args.output)
+        d = SipDriver(args.includes, args.project_name, args.project_rules, args.sources,
+                      args.selector, args.sip)
         d.process_tree()
     except Exception as e:
         tbk = traceback.format_exc()

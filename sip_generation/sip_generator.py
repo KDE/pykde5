@@ -797,12 +797,12 @@ def main(argv=None):
                                      formatter_class=HelpFormatter)
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
     parser.add_argument("--includes", default=["/usr/include/x86_64-linux-gnu/qt5", "/usr/include/KF5"],
-                        action="append", help=_("Roots of C++ header paths to include"))
+                        action="append", help=_("Roots of C++ headers to include"))
     parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
-    parser.add_argument("--project-root", default="/usr/include/KF5", help=_("Root of C++ header paths to process"))
-    parser.add_argument("source", help=_("C++ header path to process, relative to --project-root"))
+    parser.add_argument("--project-root", default="/usr/include/KF5", help=_("Root of C++ headers to process"))
+    parser.add_argument("source", help=_("C++ header to process, relative to --project-root"))
     try:
         args = parser.parse_args(argv[1:])
         if args.verbose:

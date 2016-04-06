@@ -31,8 +31,11 @@ def parameter_out_kdatetime_negzero(container, function, parameter, sip, matcher
     sip["annotations"].add("Out")
 
 
-def parameter_transfer_this_qobject_parents(container, function, parameter, sip, matcher):
-    sip["annotations"].add("TransferThis")
+def parameter_transfer_to_parent(container, function, parameter, sip, matcher):
+    if function.is_static_method():
+        sip["annotations"].add("Transfer")
+    else:
+        sip["annotations"].add("TransferThis")
 
 
 def variable_discard_qobject(container, variable, sip, matcher):
@@ -63,7 +66,10 @@ def function_rules():
 def parameter_rules():
 
     return [
-        [".*", ".*", ".*", r"[KQ][A-Za-z_0-9]+\W*\*\W*parent", ".*", parameter_transfer_this_qobject_parents],
+        #
+        # Annotate with Transfer or TransferThis when we see a parent object.
+        #
+        [".*", ".*", ".*", r"[KQ][A-Za-z_0-9]+\W*\*\W*parent", ".*", parameter_transfer_to_parent],
         ["KDateTime", "fromString", "negZero", ".*", ".*", parameter_out_kdatetime_negzero],
     ]
 

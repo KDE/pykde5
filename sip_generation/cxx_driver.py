@@ -112,14 +112,8 @@ class CxxDriver(object):
         # Make sure any errors mention the file that was being processed.
         #
         try:
-            sub = subprocess.Popen([self.sipconfig.sip_bin, "-c", full_output, "-b", build_file] + self.pyqt_sip_flags +
-                                   includes + [source], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            stdout, stderr = sub.communicate()
-            stdout = stdout.strip()
-            if sub.returncode:
-                raise RuntimeError(stdout)
-            if self.verbose and stdout:
-                print(stdout)
+            self._run_command([self.sipconfig.sip_bin, "-c", full_output, "-b", build_file] + self.pyqt_sip_flags +
+                                   includes + [source])
             #
             # Create the Makefile.
             #
@@ -131,17 +125,22 @@ class CxxDriver(object):
             #makefile.extra_libs = ["KParts"]
             #
             makefile.generate()
-            sub = subprocess.Popen(["make", "-f", os.path.basename(make_file)], cwd=full_output, stdout=subprocess.PIPE,
-                                   stderr=subprocess.STDOUT)
-            stdout, stderr = sub.communicate()
-            stdout = stdout.strip()
-            if sub.returncode:
-                raise RuntimeError(stdout)
-            if self.verbose and stdout:
-                print(stdout)
+            self._run_command(["make", "-f", os.path.basename(make_file)], cwd=full_output)
         except Exception as e:
             logger.error("{} while processing {}".format(e, source))
             raise
+
+    def _run_command(self, cmd, *args, **kwds):
+        if self.verbose:
+            logger.info(" ".join(cmd))
+        sub = subprocess.Popen(cmd, *args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, **kwds)
+        stdout, stderr = sub.communicate()
+        stdout = stdout.strip()
+        if sub.returncode:
+            raise RuntimeError(stdout)
+        if self.verbose and stdout:
+            print(stdout)
+
 
 def main(argv=None):
     """

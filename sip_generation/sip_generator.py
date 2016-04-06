@@ -113,6 +113,12 @@ class SipGenerator(object):
         self.tu = None
         self.unpreprocessed_source = None
 
+    @staticmethod
+    def describe(cursor, text=None):
+        if not text:
+            text = cursor.spelling
+        return "{} on line {} '{}'".format(cursor.kind.name, cursor.extent.start.line, text)
+
     def create_sip(self, root, h_file):
         """
         Actually convert the given source header file into its SIP equivalent.
@@ -193,8 +199,7 @@ class SipGenerator(object):
                 return True
             if SipGenerator.CONTAINER_SKIPPABLE_ATTR.search(text):
                 return True
-            logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(container.kind, container.spelling,
-                                                                     member.extent.start.line, text, member.kind))
+            SipGenerator._report_ignoring(container, member, text)
 
         sip = {
             "name": container.displayname,
@@ -203,7 +208,7 @@ class SipGenerator(object):
         name = container.displayname
         if container.access_specifier == AccessSpecifier.PRIVATE:
             if self.dump_privates:
-                logger.debug("Ignoring private {} {}".format(container.kind, name))
+                logger.debug("Ignoring private {}".format(SipGenerator.describe(container)))
             return ""
         body = ""
         base_specifiers = []
@@ -216,7 +221,7 @@ class SipGenerator(object):
                 continue
             if member.access_specifier == AccessSpecifier.PRIVATE:
                 if self.dump_privates:
-                    logger.debug("Ignoring private {}::{} {}".format(name, member.displayname, member.kind))
+                    logger.debug("Ignoring private {}".format(SipGenerator.describe(member)))
                 continue
             decl = ""
             if member.kind in [CursorKind.CXX_METHOD, CursorKind.FUNCTION_DECL, CursorKind.FUNCTION_TEMPLATE,
@@ -306,8 +311,8 @@ class SipGenerator(object):
             sip["base_specifiers"] = base_specifiers
             sip["body"] = body
             self.rule_set.container_rules().apply(container, sip)
+            pad = " " * (level * 4)
             if sip["decl"]:
-                pad = " " * (level * 4)
                 decl = pad + sip["decl"]
                 if sip["base_specifiers"]:
                     decl += ": " + sip["base_specifiers"]
@@ -322,7 +327,7 @@ class SipGenerator(object):
                     suffix = "};\n"
                 body = decl + sip["body"] + pad + suffix
             else:
-                body = ""
+                body = pad + "// Discarded {}\n".format(SipGenerator.describe(container))
         return body
 
     def _get_access_specifier(self, member, level):
@@ -382,8 +387,7 @@ class SipGenerator(object):
                 return True
             if SipGenerator.FN_SKIPPABLE_ATTR.search(text):
                 return True
-            logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(function.kind, function.spelling,
-                                                                     member.extent.start.line, text, member.kind))
+            SipGenerator._report_ignoring(function, member, text)
 
         sip = {
             "name": function.spelling,
@@ -453,8 +457,8 @@ class SipGenerator(object):
         #
         # Now the rules have run, add any prefix/suffix.
         #
+        pad = " " * (level * 4)
         if sip["decl"]:
-            pad = " " * (level * 4)
             prefix, suffix = self._fn_get_keywords(function)
             decl = pad + prefix + sip["decl"] + suffix
             if sip["annotations"]:
@@ -463,7 +467,7 @@ class SipGenerator(object):
                 decl = pad + sip["template_parameters"] + "\n" + decl
             decl += ";\n"
         else:
-            decl = ""
+            decl = pad + "// Discarded {}\n".format(SipGenerator.describe(function))
         return decl
 
     def _template_template_param_get(self, container):
@@ -567,8 +571,7 @@ class SipGenerator(object):
                 return True
             if SipGenerator.TYPEDEF_SKIPPABLE_ATTR.search(text):
                 return True
-            logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(typedef.kind, typedef.spelling,
-                                                                     member.extent.start.line, text, member.kind))
+            SipGenerator._report_ignoring(typedef, member, text)
 
         pad = " " * (level * 4)
         setattr(typedef, "sip_annotations", set())
@@ -682,14 +685,12 @@ class SipGenerator(object):
             """
             if SipGenerator.VAR_SKIPPABLE_ATTR.search(text):
                 return True
-            logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(container.kind, container.spelling,
-                                                                     member.extent.start.line, text, member.kind))
+            SipGenerator._report_ignoring(container, member, text)
 
         sip = {
             "name": variable.spelling,
             "annotations": set()
         }
-        pad = " " * (level * 4)
         for child in variable.get_children():
             if child.kind in TEMPLATE_KINDS + [CursorKind.STRUCT_DECL, CursorKind.UNION_DECL]:
                 #
@@ -714,6 +715,7 @@ class SipGenerator(object):
         #
         # Now the rules have run, add any prefix/suffix.
         #
+        pad = " " * (level * 4)
         if sip["decl"]:
             prefix = self._var_get_keywords(variable)
             decl = prefix + sip["decl"]
@@ -721,7 +723,7 @@ class SipGenerator(object):
                 decl += " /" + ",".join(sip["annotations"]) + "/"
             decl = pad + decl + ";\n"
         else:
-            decl = ""
+            decl = pad + "// Discarded {}\n".format(SipGenerator.describe(variable))
         return decl
 
     def _var_get_keywords(self, variable):
@@ -774,10 +776,10 @@ class SipGenerator(object):
             raise RuntimeError(_("Cannot find libclang"))
 
     @staticmethod
-    def _report_ignoring(parent, child):
-        child_id = child.displayname or child.spelling
-        logger.debug(_("Ignoring {} child {}[{}]::{} {}").format(parent.kind, parent.spelling, child.extent.start.line,
-                                                                 child_id, child.kind))
+    def _report_ignoring(parent, child, text=None):
+        if not text:
+            text = child.displayname or child.spelling
+        logger.debug(_("Ignoring {} {} child {}").format(parent.kind.name, parent.spelling, SipGenerator.describe(child, text)))
 
 
 def main(argv=None):

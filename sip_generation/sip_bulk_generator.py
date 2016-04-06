@@ -211,7 +211,7 @@ def main(argv=None):
 
     Examples:
 
-        driver.py /tmp /usr/include/KF5
+        sip_bulk_generator.py /tmp /usr/include/KF5
     """
     if argv is None:
         argv = sys.argv

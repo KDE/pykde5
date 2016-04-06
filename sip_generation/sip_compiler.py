@@ -144,20 +144,11 @@ class CxxDriver(object):
 
 def main(argv=None):
     """
-    Convert a whole set of KDE header files and generate the corresponding SIP
-    files. Beyond simple generation of the SIP files from the corresponding C++
-    header files:
-
-        - A set of rules can be used to customise the generated SIP files.
-
-        - For each set of SIP files in a directory, if at least one SIP file
-          is named like a new-style header (i.e. starts with an upper case
-          letter, or has no .h suffix), the a "module.sip" is created which
-          facilitates running the SIP compiler on a set of related files.
+    Run the SIP compiler, and the "make" the generated code.
 
     Examples:
 
-        driver.py /tmp /usr/include/KF5
+        sip_compiler.py cxx sip KParts/kparts/module.sip
     """
     if argv is None:
         argv = sys.argv

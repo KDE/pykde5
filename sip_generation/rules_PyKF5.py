@@ -22,7 +22,7 @@
 from clang.cindex import AccessSpecifier
 
 
-def container_discard_qmetatypeid(container, sip, matcher):
+def container_discard(container, sip, matcher):
     sip["decl"] = ""
 
 
@@ -53,7 +53,14 @@ def variable_discard_protected(container, variable, sip, matcher):
 def container_rules():
 
     return [
-        ["QMetaTypeId<.*>", ".*", ".*", ".*", container_discard_qmetatypeid],
+        #
+        # SIP does not seem to be able to handle these.
+        #
+        [".*", "(QMetaTypeId|QTypeInfo)<.*>", ".*", ".*", ".*", container_discard],
+        #
+        # SIP does not seem to be able to handle empty containers.
+        #
+        ["ScriptableExtension::KParts", "Null|Undefined", ".*", ".*", ".*", container_discard],
     ]
 
 
@@ -61,13 +68,13 @@ def function_rules():
 
     return [
         #
-        # SIP does not support operator=.
-        #
-        [".*", "operator=", ".*", ".*", function_discard],
-        #
         # Discard functions emitted by QOBJECT.
         #
         [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", ".*", function_discard],
+        #
+        # SIP does not support operator=.
+        #
+        [".*", "operator=", ".*", ".*", function_discard],
     ]
 
 
@@ -86,11 +93,11 @@ def variable_rules():
 
     return [
         #
-        # SIP does not support protected variables.
-        #
-        [".*", "d_ptr", ".*", variable_discard_protected],
-        #
         # Discard variable emitted by QOBJECT.
         #
         [".*", "staticMetaObject", ".*", variable_discard],
+        #
+        # SIP does not support protected variables.
+        #
+        [".*", "d_ptr", ".*", variable_discard_protected],
     ]

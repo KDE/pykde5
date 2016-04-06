@@ -28,7 +28,7 @@ import re
 import sys
 import traceback
 from copy import deepcopy
-
+from clang.cindex import CursorKind
 
 class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
     pass
@@ -113,15 +113,17 @@ class ContainerRuleDb(AbstractCompiledRuleDb):
 
     Each entry in the raw rule database must be a list with members as follows:
 
-        0. A regular expression which matches the container name.
+        0. A regular expression which matches the container's parent names.
 
-        1. A regular expression which matches any template parameters.
+        1. A regular expression which matches the container name.
 
-        2. A regular expression which matches the container declaration.
+        2. A regular expression which matches any template parameters.
 
-        3. A regular expression which matches any base specifiers.
+        3. A regular expression which matches the container declaration.
 
-        4. A function.
+        4. A regular expression which matches any base specifiers.
+
+        5. A function.
 
     In use, the database is walked in order from the first entry. If the regular
     expressions are matched, the function is called, and no further entries are
@@ -153,7 +155,7 @@ class ContainerRuleDb(AbstractCompiledRuleDb):
     :return: The compiled form of the rules.
     """
     def __init__(self, db):
-        super(ContainerRuleDb, self).__init__(db, ["container", "template_parameters", "decl", "base_specifiers"])
+        super(ContainerRuleDb, self).__init__(db, ["parents", "container", "template_parameters", "decl", "base_specifiers"])
 
     def apply(self, container, sip):
         """
@@ -162,7 +164,13 @@ class ContainerRuleDb(AbstractCompiledRuleDb):
         :param container:           The clang.cindex.Cursor for the container.
         :param sip:                 The SIP dict.
         """
-        matcher, rule = self._match(sip["name"], sip["template_parameters"], sip["decl"], sip["base_specifiers"])
+        parents = []
+        parent = container.semantic_parent
+        while parent.kind != CursorKind.TRANSLATION_UNIT:
+            parents.append(parent.spelling)
+            parent = parent.semantic_parent
+        parents = "::".join(parents)
+        matcher, rule = self._match(parents, sip["name"], sip["template_parameters"], sip["decl"], sip["base_specifiers"])
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, sip, matcher)

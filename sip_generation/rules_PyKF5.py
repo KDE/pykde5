@@ -50,6 +50,10 @@ def function_rules():
 
     return [
         #
+        # SIP does not support operator=.
+        #
+        [".*", "operator=", ".*", ".*", function_discard],
+        #
         # Discard functions emitted by QOBJECT.
         #
         [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", ".*", function_discard],

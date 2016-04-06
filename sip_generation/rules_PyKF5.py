@@ -19,6 +19,9 @@
 """SIP file generator rules for PyKF5."""
 
 
+from clang.cindex import AccessSpecifier
+
+
 def container_discard_qmetatypeid(container, sip, matcher):
     sip["decl"] = ""
 
@@ -40,6 +43,11 @@ def parameter_transfer_to_parent(container, function, parameter, sip, matcher):
 
 def variable_discard(container, variable, sip, matcher):
     sip["decl"] = ""
+
+
+def variable_discard_protected(container, variable, sip, matcher):
+    if variable.access_specifier == AccessSpecifier.PROTECTED:
+        sip["decl"] = ""
 
 
 def container_rules():
@@ -77,6 +85,10 @@ def parameter_rules():
 def variable_rules():
 
     return [
+        #
+        # SIP does not support protected variables.
+        #
+        [".*", "d_ptr", ".*", variable_discard_protected],
         #
         # Discard variable emitted by QOBJECT.
         #

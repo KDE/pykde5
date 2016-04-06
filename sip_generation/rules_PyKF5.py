@@ -38,7 +38,7 @@ def parameter_transfer_to_parent(container, function, parameter, sip, matcher):
         sip["annotations"].add("TransferThis")
 
 
-def variable_discard_qobject(container, variable, sip, matcher):
+def variable_discard(container, variable, sip, matcher):
     sip["decl"] = ""
 
 
@@ -77,5 +77,8 @@ def parameter_rules():
 def variable_rules():
 
     return [
-        [".*", "staticMetaObject", ".*", variable_discard_qobject],
+        #
+        # Discard variable emitted by QOBJECT.
+        #
+        [".*", "staticMetaObject", ".*", variable_discard],
     ]

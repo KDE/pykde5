@@ -23,7 +23,7 @@ def container_discard_qmetatypeid(container, sip, matcher):
     sip["decl"] = ""
 
 
-def function_discard_qobject(container, function, sip, matcher):
+def function_discard(container, function, sip, matcher):
     sip["decl"] = ""
 
 
@@ -49,7 +49,10 @@ def container_rules():
 def function_rules():
 
     return [
-        [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", ".*", function_discard_qobject],
+        #
+        # Discard functions emitted by QOBJECT.
+        #
+        [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", ".*", function_discard],
     ]
 
 

@@ -97,7 +97,7 @@ def variable_rules():
         #
         [".*", "staticMetaObject", ".*", variable_discard],
         #
-        # SIP does not support protected variables.
+        # Discard "private" variables (check they are protected!).
         #
         [".*", "d_ptr", ".*", variable_discard_protected],
     ]

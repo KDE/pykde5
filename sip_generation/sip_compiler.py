@@ -32,6 +32,8 @@ import traceback
 
 from PyQt5.QtCore import PYQT_CONFIGURATION
 
+from sip_bulk_generator import INCLUDES_EXTRACT
+
 
 class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
     pass
@@ -67,7 +69,6 @@ class CxxDriver(object):
         # g++ -I/usr/include/python2.7 -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5 -fPIC -shared -o t.so cxx/KParts/sipKPartscmodule.cpp /usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0
         #
         self.sipconfig = sipconfig.Configuration()
-        self.sipconfig._macros["INCDIR"]="/usr/include/x86_64-linux-gnu/qt5/QtCore /usr/include/x86_64-linux-gnu/qt5"
         self.pyqt_sip_flags = PYQT_CONFIGURATION["sip_flags"].split()
 
     def process_modules(self, root, sip_file):
@@ -78,7 +79,7 @@ class CxxDriver(object):
             sources = [sip_file]
         for source in sources:
             try:
-                self._process_one_module(root, source)
+                self._process_one_module(root, source.strip())
             except Exception as e:
                 if not error:
                     error = e
@@ -89,8 +90,8 @@ class CxxDriver(object):
 
     def _process_one_module(self, root, sip_file):
         source = os.path.join(root, sip_file)
-        includes = self.sips + [root]
-        includes = ["-I" + i for i in includes]
+        sip_roots = self.sips + [root]
+        sip_roots = ["-I" + i for i in sip_roots]
         #
         # Generate a file header. We don't automatically use a .sip suffix because that could cause a clash with the
         # legacy header on filesystems with case-insensitive lookups (NTFS).
@@ -102,21 +103,24 @@ class CxxDriver(object):
         full_output = os.path.join(self.output_dir, module_path)
         build_file = os.path.join(full_output, "module.sbf")
         make_file = os.path.join(full_output, "module.Makefile")
+        module_includes = os.path.join(full_output, "module.includes")
         try:
             os.makedirs(full_output)
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
-        logger.info(_("Creating {}").format(full_output))
         #
         # Make sure any errors mention the file that was being processed.
         #
         try:
-            self._run_command([self.sipconfig.sip_bin, "-c", full_output, "-b", build_file] + self.pyqt_sip_flags +
-                                   includes + [source])
+            logger.info(_("Creating {}").format(full_output))
+            self._run_command([self.sipconfig.sip_bin, "-c", full_output, "-b", build_file, "-X", INCLUDES_EXTRACT + ":" + module_includes] +
+                              self.pyqt_sip_flags + sip_roots + [source])
             #
             # Create the Makefile.
             #
+            module_includes = self.includes + open(module_includes, "rU").read().split("\n")
+            self.sipconfig._macros["INCDIR"] = " ".join(module_includes)
             makefile = sipconfig.SIPModuleMakefile(self.sipconfig, build_file, makefile=make_file)
             #
             # Add the library we are wrapping.  The name doesn't include any platform
@@ -125,6 +129,7 @@ class CxxDriver(object):
             #makefile.extra_libs = ["KParts"]
             #
             makefile.generate()
+            logger.info(_("Compiling {}").format(full_output))
             self._run_command(["make", "-f", os.path.basename(make_file)], cwd=full_output)
         except Exception as e:
             logger.error("{} while processing {}".format(e, source))

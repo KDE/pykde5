@@ -155,10 +155,10 @@ def main(argv=None):
     parser = argparse.ArgumentParser(epilog=inspect.getdoc(main),
                                      formatter_class=HelpFormatter)
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
-    parser.add_argument("--includes", default=["/usr/include/x86_64-linux-gnu/qt5", "/usr/include/KF5"],
-                        action="append", help=_("Roots of C++ headers to include"))
-    parser.add_argument("--sips", default=["/usr/share/sip/PyQt5"],
-                        action="append", help=_("Roots of SIP modules to include"))
+    parser.add_argument("--includes", default="/usr/include/x86_64-linux-gnu/qt5,/usr/include/KF5",
+                        help=_("Roots of C++ headers to include"))
+    parser.add_argument("--sips", default="/usr/share/sip/PyQt5",
+                        help=_("Roots of SIP modules to include"))
     parser.add_argument("cxx", help=_("C++ output directory"))
     parser.add_argument("sip", default="sip", help=_("Root of SIP modules to process"))
     parser.add_argument("source", help=_("SIP module to process, relative to project-root; a leading '@' signifies a file listing SIP modules"))
@@ -168,10 +168,18 @@ def main(argv=None):
             logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(levelname)s: %(message)s')
         else:
             logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+        includes = args.includes.split(",")
+        for path in includes:
+            if not os.path.isdir(path):
+                raise RuntimeError(_("--includes path '{}' is not a directory").format(path))
+        sips = args.sips.split(",")
+        for path in sips:
+            if not os.path.isdir(path):
+                raise RuntimeError(_("--sips path '{}' is not a directory").format(path))
         #
         # Generate!
         #
-        d = CxxDriver(args.includes, args.sips, args.cxx, args.verbose)
+        d = CxxDriver(includes, sips, args.cxx, args.verbose)
         d.process_modules(args.sip, args.source)
     except Exception as e:
         tbk = traceback.format_exc()

@@ -76,11 +76,11 @@ TEMPLATE_KINDS = [
 class SipGenerator(object):
     _libclang = None
 
-    def __init__(self, include_roots, project_name, project_rules, dump_includes=False, dump_privates=False):
+    def __init__(self, includes, project_name, project_rules, dump_includes=False, dump_privates=False):
         """
         Constructor.
 
-        :param include_roots:       A list of roots of includes file, typically including the root for all Qt and
+        :param includes:            A list of roots of includes file, typically including the root for all Qt and
                                     the root for all KDE include files as well as any project-specific include files.
         :param project_name:        The name of the project.
         :param project_rules:       The rules file for the project.
@@ -88,8 +88,8 @@ class SipGenerator(object):
         :param dump_privates:       Turn on diagnostics for omitted private items.
         """
         SipGenerator._find_libclang()
-        self.includes = set(include_roots)
-        for include_root in include_roots:
+        self.includes = set(includes)
+        for include_root in includes:
             walk_directories(include_root, lambda d: self.includes.add(d))
         if dump_includes:
             for include in sorted(self.includes):
@@ -808,8 +808,8 @@ def main(argv=None):
     parser = argparse.ArgumentParser(epilog=inspect.getdoc(main),
                                      formatter_class=HelpFormatter)
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
-    parser.add_argument("--includes", default=["/usr/include/x86_64-linux-gnu/qt5", "/usr/include/KF5"],
-                        action="append", help=_("Roots of C++ headers to include"))
+    parser.add_argument("--includes", default="/usr/include/x86_64-linux-gnu/qt5,/usr/include/KF5",
+                        help=_("Roots of C++ headers to include"))
     parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
@@ -821,10 +821,14 @@ def main(argv=None):
             logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(levelname)s: %(message)s')
         else:
             logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+        includes = args.includes.split(",")
+        for path in includes:
+            if not os.path.isdir(path):
+                raise RuntimeError(_("--includes path '{}' is not a directory").format(path))
         #
         # Generate!
         #
-        g = SipGenerator(args.includes, args.project_name, args.project_rules)
+        g = SipGenerator(includes, args.project_name, args.project_rules)
         body, includes = g.create_sip(args.project_root, args.source)
         if body:
             print(body)

@@ -45,12 +45,15 @@ gettext.install(__name__)
 _ = _
 
 
+MODULE_SIP = "mod.sip"
+
+
 class SipDriver(SipGenerator):
-    def __init__(self, include_roots, project_name, project_rules, project_root, selector, output_dir):
+    def __init__(self, includes, sips, project_name, project_rules, project_root, selector, output_dir):
         """
         Constructor.
 
-        :param include_roots:       A list of roots of includes file, typically including the root for all Qt and
+        :param includes:            A list of roots of includes file, typically including the root for all Qt and
                                     the root for all KDE include files as well as any project-specific include files.
         :param project_name:        The name of the project.
         :param project_rules:       The rules file for the project.
@@ -58,7 +61,9 @@ class SipDriver(SipGenerator):
         :param selector:            A regular expression which limits the files from project_root to be processed.
         :param output_dir:          The destination directory.
         """
-        super(SipDriver, self).__init__(include_roots, project_name, project_rules)
+        super(SipDriver, self).__init__(includes, project_name, project_rules)
+        self.includes = includes
+        self.sips = sips
         self.root = project_root
         self.selector = selector
         self.output_dir = output_dir
@@ -90,7 +95,7 @@ class SipDriver(SipGenerator):
         #
         if sip_files:
             h_dir = root[len(self.root) + len(os.path.sep):]
-            output_file = os.path.join(h_dir, "module.sip")
+            output_file = os.path.join(h_dir, os.path.basename(h_dir) + MODULE_SIP)
             header = self.header(output_file, h_dir, h_dir)
             #
             # Write the header and the body.
@@ -112,6 +117,12 @@ class SipDriver(SipGenerator):
                     f.write("%Include {}\n".format(sip_file))
 
     def _process_one(self, source):
+        """
+        Walk over a directory tree and for each file or directory, apply a function.
+
+        :param source:              Source to be processed.
+        :return:                    (output_file, set(direct includes from this file))
+        """
         h_file = source[len(self.root) + len(os.path.sep):]
         if self.selector.search(h_file):
             #
@@ -218,8 +229,10 @@ def main(argv=None):
     parser = argparse.ArgumentParser(epilog=inspect.getdoc(main),
                                      formatter_class=HelpFormatter)
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
-    parser.add_argument("--includes", default=["/usr/include/x86_64-linux-gnu/qt5", "/usr/include/KF5"],
-                        action="append", help=_("Roots of C++ headers to include"))
+    parser.add_argument("--includes", default="/usr/include/x86_64-linux-gnu/qt5,/usr/include/KF5",
+                        help=_("Roots of C++ headers to include"))
+    parser.add_argument("--sips", default="/usr/share/sip/PyQt5",
+                        help=_("Roots of SIP modules to include"))
     parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
@@ -233,10 +246,18 @@ def main(argv=None):
             logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(levelname)s: %(message)s')
         else:
             logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+        includes = args.includes.split(",")
+        for path in includes:
+            if not os.path.isdir(path):
+                raise RuntimeError(_("--includes path '{}' is not a directory").format(path))
+        sips = args.sips.split(",")
+        for path in sips:
+            if not os.path.isdir(path):
+                raise RuntimeError(_("--sips path '{}' is not a directory").format(path))
         #
         # Generate!
         #
-        d = SipDriver(args.includes, args.project_name, args.project_rules, args.sources,
+        d = SipDriver(includes, sips, args.project_name, args.project_rules, args.sources,
                       args.selector, args.sip)
         d.process_tree()
     except Exception as e:

@@ -46,9 +46,9 @@ _ = _
 
 
 MODULE_SIP = "mod.sip"
+INCLUDES_EXTRACT = "includes"
 
-
-class SipDriver(SipGenerator):
+class SipBulkGenerator(SipGenerator):
     def __init__(self, includes, sips, project_name, project_rules, project_root, selector, output_dir):
         """
         Constructor.
@@ -61,12 +61,13 @@ class SipDriver(SipGenerator):
         :param selector:            A regular expression which limits the files from project_root to be processed.
         :param output_dir:          The destination directory.
         """
-        super(SipDriver, self).__init__(includes, project_name, project_rules)
+        super(SipBulkGenerator, self).__init__(includes, project_name, project_rules)
         self.includes = includes
         self.sips = sips
         self.root = project_root
         self.selector = selector
         self.output_dir = output_dir
+        self.include_to_sip_cache = {}
 
     def process_tree(self):
         self._walk_tree(self.root)
@@ -77,14 +78,28 @@ class SipDriver(SipGenerator):
 
         :param root:                Tree to be walked.
         """
+        all_sip_imports = set()
+        all_include_roots = set()
         names = sorted(os.listdir(root))
         sip_files = []
         for name in names:
             srcname = os.path.join(root, name)
             if os.path.isfile(srcname):
-                sip_file = self._process_one(srcname)
+                sip_file, lower_direct_includes = self._process_one(srcname)
                 if sip_file:
                     sip_files.append(sip_file)
+                    #
+                    # Create something which the SIP compiler can process that includes what appears to be the
+                    # immediate fanout from this module.
+                    #
+                    for include in lower_direct_includes:
+                        all_include_roots.add(os.path.dirname(include))
+                        if not include.startswith(self.root):
+                            sip = self._map_include_to_sip(include)
+                            if sip:
+                                all_sip_imports.add(sip)
+                            else:
+                                logger.warn(_("Cannot find SIP for {}").format(include))
             elif os.path.isdir(srcname):
                 self._walk_tree(srcname)
         #
@@ -109,12 +124,44 @@ class SipDriver(SipGenerator):
             logger.info(_("Creating {}").format(full_output))
             with open(full_output, "w") as f:
                 f.write(header)
-                f.write("""
-%Module(name={})
-%Include imports.sip
-""".format(h_dir.replace(os.path.sep, ".")))
+                f.write("%Module(name={})\n".format(h_dir.replace(os.path.sep, ".")))
+                #
+                # Create something which the SIP compiler can process that includes what appears to be the
+                # immediate fanout from this module.
+                #
+                for sip_import in sorted(all_sip_imports):
+                    f.write("%Import {}\n".format(sip_import))
+                f.write("%Extract(id={})\n".format(INCLUDES_EXTRACT))
+                for include in sorted(all_include_roots):
+                    f.write("{}\n".format(include))
+                f.write("%End\n")
+                #
+                # Add all peer .sip files.
+                #
                 for sip_file in sip_files:
                     f.write("%Include {}\n".format(sip_file))
+
+    def _map_include_to_sip(self, include):
+        sip = self.include_to_sip_cache.get(include, None)
+        if sip:
+            return sip
+        for include_root in self.includes:
+            #
+            # Assume only EXACTLY one root matches.
+            #
+            if include.startswith(include_root):
+                i = include[len(include_root) + len(os.path.sep):]
+                parent = os.path.dirname(i)
+                parent_sip = os.path.join(parent, os.path.basename(parent) + MODULE_SIP)
+                vanilla_sip = os.path.splitext(i)[0] + ".sip"
+                lower_sip = os.path.join(os.path.dirname(vanilla_sip), os.path.basename(vanilla_sip).lower())
+                for sip in [parent_sip, vanilla_sip, lower_sip]:
+                    for sip_root in self.sips:
+                        p = os.path.join(sip_root, sip)
+                        if os.path.exists(p):
+                            self.include_to_sip_cache[include] = sip
+                            return sip
+        return None
 
     def _process_one(self, source):
         """
@@ -130,20 +177,18 @@ class SipDriver(SipGenerator):
             #
             try:
                 result, includes = self.create_sip(self.root, h_file)
+                direct_includes = [i for i in includes if i.depth == 1]
                 if not result:
                     #
                     # Attempt to create a renaming header.
                     #
-                    direct_includes = [i for i in includes if i.depth == 1]
                     if len(direct_includes) == 1:
                         included_h_file = direct_includes[0].include.name[len(self.root) + len(os.path.sep):]
                         sip_basename = os.path.basename(included_h_file)
                         sip_basename = os.path.splitext(sip_basename)[0] + ".sip"
                         module_path = os.path.dirname(h_file)
                         output_file = os.path.join(module_path, sip_basename)
-                        result = """
-%Include {}
-""".format(output_file)
+                        result = "\n%Include {}\n".format(output_file)
             except Exception as e:
                 logger.error("{} while processing {}".format(e, source))
                 raise
@@ -171,10 +216,13 @@ class SipDriver(SipGenerator):
                 with open(full_output, "w") as f:
                     f.write(header)
                     f.write(result)
-                return output_file
+                return output_file, set([i.include.name for i in direct_includes])
             else:
                 logger.info(_("Not creating empty SIP for {}").format(source))
-                return None
+                return None, set()
+        else:
+            logger.debug(_("Selector discarded {}").format(source))
+            return None, set()
 
     def header(self, output_file, h_file, module_path):
         """
@@ -257,8 +305,8 @@ def main(argv=None):
         #
         # Generate!
         #
-        d = SipDriver(includes, sips, args.project_name, args.project_rules, args.sources,
-                      args.selector, args.sip)
+        d = SipBulkGenerator(includes, sips, args.project_name, args.project_rules, args.sources,
+                             args.selector, args.sip)
         d.process_tree()
     except Exception as e:
         tbk = traceback.format_exc()

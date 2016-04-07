@@ -88,11 +88,11 @@ class SipGenerator(object):
         :param dump_privates:       Turn on diagnostics for omitted private items.
         """
         SipGenerator._find_libclang()
-        self.includes = set(includes)
+        self.exploded_includes = set(includes)
         for include_root in includes:
-            walk_directories(include_root, lambda d: self.includes.add(d))
+            walk_directories(include_root, lambda d: self.exploded_includes.add(d))
         if dump_includes:
-            for include in sorted(self.includes):
+            for include in sorted(self.exploded_includes):
                 logger.debug(_("Using includes from {}").format(include))
         self.project_name = project_name
         try:
@@ -139,7 +139,7 @@ class SipGenerator(object):
         #
         # ["clang-3.9"] + includes + ["-x", "c++", "-std=c++11", "-ferror-limit=0", "-D__CODE_GENERATOR__", "-E"] + [source]
         #
-        includes = ["-I" + i for i in self.includes]
+        includes = ["-I" + i for i in self.exploded_includes]
         index = cindex.Index.create()
         self.tu = index.parse(source, includes + ["-x", "c++", "-std=c++11", "-ferror-limit=0", "-D__CODE_GENERATOR__"])
         for diag in self.tu.diagnostics:

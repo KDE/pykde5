@@ -227,6 +227,11 @@ class SipBulkGenerator(SipGenerator):
     def header(self, output_file, h_file, module_path):
         """
         Override this to get your own preferred file header.
+
+        :param output_file:                 The name of the output file.
+        :param h_file:                      The name of the input file.
+        :param module_path:                 The delta from the root.
+        :return:
         """
         header = """//
 // This file, {}, is part of {}.

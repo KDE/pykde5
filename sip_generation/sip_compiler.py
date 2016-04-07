@@ -53,11 +53,10 @@ class CxxDriver(object):
 
         :param includes:            A list of roots of includes file, typically including the root for all Qt and
                                     the root for all KDE include files as well as any project-specific include files.
-        :param project_name:        The name of the project.
-        :param project_rules:       The rules file for the project.
-        :param project_root:        The root of files for which to generate SIP.
-        :param selector:            A regular expression which limits the files from project_root to be processed.
+        :param sips:                A list of roots of SIP file, typically including the root for all Qt and
+                                    the root for all KDE SIP files as well as any project-specific SIP files.
         :param output_dir:          The destination directory.
+        :param verbose:             Debug info.
         """
         self.includes = includes
         self.sips = sips
@@ -66,12 +65,16 @@ class CxxDriver(object):
         #
         # Get the SIP configuration information.
         #
-        # g++ -I/usr/include/python2.7 -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/x86_64-linux-gnu/qt5 -fPIC -shared -o t.so cxx/KParts/sipKPartscmodule.cpp /usr/lib/x86_64-linux-gnu/libpython2.7.so.1.0
-        #
         self.sipconfig = sipconfig.Configuration()
         self.pyqt_sip_flags = PYQT_CONFIGURATION["sip_flags"].split()
 
     def process_modules(self, root, sip_file):
+        """
+        Run a set of SIP files, but don't throw any errors. At the end, throw the first error.
+
+        :param root:                        The prefix for all SIP files.
+        :param sip_file:                    A SIP file name, or the name of a list of SIP files.
+        """
         error = None
         if sip_file.startswith("@"):
             sources = open(sip_file[1:], "rU")
@@ -86,9 +89,15 @@ class CxxDriver(object):
         if isinstance(sources, file):
             sources.close()
         if error:
-            raise e
+            raise error
 
     def _process_one_module(self, root, sip_file):
+        """
+        Run a SIP file.
+
+        :param root:                        The prefix for the SIP files.
+        :param sip_file:                    A SIP file name.
+        """
         source = os.path.join(root, sip_file)
         sip_roots = self.sips + [root]
         sip_roots = ["-I" + i for i in sip_roots]
@@ -114,8 +123,8 @@ class CxxDriver(object):
         #
         try:
             logger.info(_("Creating {}").format(full_output))
-            self._run_command([self.sipconfig.sip_bin, "-c", full_output, "-b", build_file, "-X", INCLUDES_EXTRACT + ":" + module_includes] +
-                              self.pyqt_sip_flags + sip_roots + [source])
+            self._run_command([self.sipconfig.sip_bin, "-c", full_output, "-b", build_file, "-X",
+                               INCLUDES_EXTRACT + ":" + module_includes] + self.pyqt_sip_flags + sip_roots + [source])
             #
             # Create the Makefile.
             #

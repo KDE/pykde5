@@ -316,16 +316,14 @@ class SipGenerator(object):
                 decl = pad + sip["decl"]
                 if sip["base_specifiers"]:
                     decl += ": " + sip["base_specifiers"]
+                if sip["annotations"]:
+                    decl += " /" + ",".join(sip["annotations"]) + "/"
                 if sip["template_parameters"]:
                     decl = pad + sip["template_parameters"] + "\n" + decl
                 decl += "\n" + pad + "{\n"
                 if level == 0:
                     decl += "%TypeHeaderCode\n#include <{}>\n%End\n".format(h_file)
-                if sip["annotations"]:
-                    suffix = "} /" + ",".join(sip["annotations"]) + "/;\n"
-                else:
-                    suffix = "};\n"
-                body = decl + sip["body"] + pad + suffix
+                body = decl + sip["body"] + pad + "};\n"
             else:
                 body = pad + "// Discarded {}\n".format(SipGenerator.describe(container))
         return body

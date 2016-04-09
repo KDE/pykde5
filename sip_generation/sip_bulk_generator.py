@@ -186,7 +186,7 @@ class SipBulkGenerator(SipGenerator):
                         included_h_file = direct_includes[0].include.name[len(self.root) + len(os.path.sep):]
                         sip_basename = os.path.basename(included_h_file)
                         sip_basename = os.path.splitext(sip_basename)[0] + ".sip"
-                        module_path = os.path.dirname(h_file)
+                        module_path = os.path.dirname(included_h_file)
                         output_file = os.path.join(module_path, sip_basename)
                         result = "\n%Include {}\n".format(output_file)
             except Exception as e:

@@ -63,7 +63,7 @@ class SipBulkGenerator(SipGenerator):
         """
         super(SipBulkGenerator, self).__init__(includes, project_name, project_rules)
         self.includes = includes
-        self.sips = sips
+        self.sips = sips + [output_dir]
         self.root = project_root
         self.selector = selector
         self.output_dir = output_dir
@@ -85,21 +85,16 @@ class SipBulkGenerator(SipGenerator):
         for name in names:
             srcname = os.path.join(root, name)
             if os.path.isfile(srcname):
-                sip_file, lower_direct_includes = self._process_one(srcname)
+                sip_file, direct_includes, direct_sips = self._process_one(srcname)
                 if sip_file:
                     sip_files.append(sip_file)
                     #
                     # Create something which the SIP compiler can process that includes what appears to be the
                     # immediate fanout from this module.
                     #
-                    for include in lower_direct_includes:
+                    for include in direct_includes:
                         all_include_roots.add(os.path.dirname(include))
-                        if not include.startswith(self.root):
-                            sip = self._map_include_to_sip(include)
-                            if sip:
-                                all_sip_imports.add(sip)
-                            else:
-                                logger.warn(_("Cannot find SIP for {}").format(include))
+                    all_sip_imports.update(direct_sips)
             elif os.path.isdir(srcname):
                 self._walk_tree(srcname)
         #
@@ -142,6 +137,12 @@ class SipBulkGenerator(SipGenerator):
                     f.write("%Include {}\n".format(sip_file))
 
     def _map_include_to_sip(self, include):
+        """
+        For a given include file, return the corresponding SIP module.
+
+        :param include:                 The name of a header file.
+        :return: The name of a SIP module which represents the header file.
+        """
         sip = self.include_to_sip_cache.get(include, None)
         if sip:
             return sip
@@ -152,15 +153,13 @@ class SipBulkGenerator(SipGenerator):
             if include.startswith(include_root):
                 i = include[len(include_root) + len(os.path.sep):]
                 parent = os.path.dirname(i)
-                parent_sip = os.path.join(parent, os.path.basename(parent) + MODULE_SIP)
-                vanilla_sip = os.path.splitext(i)[0] + ".sip"
-                lower_sip = os.path.join(os.path.dirname(vanilla_sip), os.path.basename(vanilla_sip).lower())
-                for sip in [parent_sip, vanilla_sip, lower_sip]:
-                    for sip_root in self.sips:
-                        p = os.path.join(sip_root, sip)
-                        if os.path.exists(p):
-                            self.include_to_sip_cache[include] = sip
-                            return sip
+                sip = os.path.join(parent, os.path.basename(parent) + MODULE_SIP)
+                for sip_root in self.sips:
+                    p = os.path.join(sip_root, sip)
+                    if os.path.exists(p):
+                        self.include_to_sip_cache[include] = sip
+                        return sip
+        logger.warn(_("Cannot find SIP for {}").format(include))
         return None
 
     def _process_one(self, source):
@@ -177,25 +176,37 @@ class SipBulkGenerator(SipGenerator):
             #
             try:
                 result, includes = self.create_sip(self.root, h_file)
-                direct_includes = [i for i in includes if i.depth == 1]
-                if not result:
+                direct_includes = [i.include.name for i in includes() if i.depth == 1]
+                if result:
+                    pass
+                elif len(direct_includes) == 1:
                     #
-                    # Attempt to create a renaming header.
+                    # A non-empty SIP file could not be created from the header file. That would be fine except that a
+                    # common pattern is to use a single #include to create a "renaming header" to map a legacy header
+                    # (usually lower case, and ending in .h) into a CamelCase header. Attempt to create a renaming
+                    # SIP header.
                     #
-                    if len(direct_includes) == 1:
-                        included_h_file = direct_includes[0].include.name[len(self.root) + len(os.path.sep):]
-                        sip_basename = os.path.basename(included_h_file)
-                        sip_basename = os.path.splitext(sip_basename)[0] + ".sip"
-                        module_path = os.path.dirname(included_h_file)
-                        output_file = os.path.join(module_path, sip_basename)
-                        result = "\n%Include {}\n".format(output_file)
+                    included_h_file = direct_includes[0][len(self.root) + len(os.path.sep):]
+                    sip_basename = os.path.basename(included_h_file)
+                    sip_basename = os.path.splitext(sip_basename)[0] + ".sip"
+                    module_path = os.path.dirname(included_h_file)
+                    output_file = os.path.join(module_path, sip_basename)
+                    result = "\n%Include {}\n".format(output_file)
+                    direct_includes = [i.include.name for i in includes() if i.depth == 2]
+                else:
+                    direct_includes = []
+                direct_sips = set()
+                for include in direct_includes:
+                    sip = self._map_include_to_sip(include)
+                    if sip:
+                        direct_sips.add(sip)
             except Exception as e:
                 logger.error("{} while processing {}".format(e, source))
                 raise
             if result:
                 #
-                # Generate a file header. We don't automatically use a .sip suffix because that could cause a clash with the
-                # legacy header on filesystems with case-insensitive lookups (NTFS).
+                # Generate a file header. We don't automatically use a .sip suffix because that could cause a clash
+                # with the legacy header on filesystems with case-insensitive lookups (NTFS).
                 #
                 sip_basename = os.path.basename(h_file)
                 if sip_basename.endswith(".h"):
@@ -216,13 +227,13 @@ class SipBulkGenerator(SipGenerator):
                 with open(full_output, "w") as f:
                     f.write(header)
                     f.write(result)
-                return output_file, set([i.include.name for i in direct_includes])
+                return output_file, set(direct_includes), direct_sips
             else:
                 logger.info(_("Not creating empty SIP for {}").format(source))
-                return None, set()
+                return None, None, None
         else:
             logger.debug(_("Selector discarded {}").format(source))
-            return None, set()
+            return None, None, None
 
     def header(self, output_file, h_file, module_path):
         """

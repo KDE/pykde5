@@ -169,7 +169,7 @@ class SipGenerator(object):
         # Run through the top level children in the translation unit.
         #
         body = self._container_get(self.tu.cursor, -1, h_file)
-        return body, self.tu.get_includes()
+        return body, self.tu.get_includes
 
     CONTAINER_SKIPPABLE_UNEXPOSED_DECL = re.compile("_DECLARE_PRIVATE|friend|;")
     CONTAINER_SKIPPABLE_ATTR = re.compile("_EXPORT")

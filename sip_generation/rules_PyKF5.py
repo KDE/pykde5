@@ -60,6 +60,7 @@ def container_rules():
         #
         # SIP does not seem to be able to handle empty containers.
         #
+        ["Akonadi::AkonadiCore", "Monitor|Protocol", ".*", ".*", ".*", container_discard],
         ["ScriptableExtension::KParts", "Null|Undefined", ".*", ".*", ".*", container_discard],
     ]
 

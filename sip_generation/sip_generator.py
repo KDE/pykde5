@@ -239,7 +239,7 @@ class SipGenerator(object):
                 #
                 base_specifiers.append(member.displayname.split(None, 2)[-1])
             elif member.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
-                template_type_parameters.append("typename " + member.displayname)
+                template_type_parameters.append(member.displayname)
             elif member.kind == CursorKind.TEMPLATE_NON_TYPE_PARAMETER:
                 template_type_parameters.append(member.type.spelling + " " + member.displayname)
             elif member.kind in [CursorKind.VAR_DECL, CursorKind.FIELD_DECL]:
@@ -424,7 +424,7 @@ class SipGenerator(object):
                 #
                 pass
             elif child.kind == CursorKind.TEMPLATE_TYPE_PARAMETER:
-                template_type_parameters.append("typename " + child.displayname)
+                template_type_parameters.append(child.displayname)
             elif child.kind == CursorKind.TEMPLATE_NON_TYPE_PARAMETER:
                 template_type_parameters.append(child.type.spelling + " " + child.displayname)
             elif child.kind == CursorKind.TEMPLATE_TEMPLATE_PARAMETER:

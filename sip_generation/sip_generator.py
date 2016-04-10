@@ -649,7 +649,6 @@ class SipGenerator(object):
         #
         pad = " " * (level * 4)
         if sip["name"]:
-            logger.error(str(typedef.underlying_typedef_type.kind))
             if typedef.underlying_typedef_type.kind == TypeKind.MEMBERPOINTER:
                 decl = pad + "typedef {}(*{})({})".format(sip["fn_result"], sip["name"], sip["decl"])
                 decl = decl.replace("* ", "*").replace("& ", "&")

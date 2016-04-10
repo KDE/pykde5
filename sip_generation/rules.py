@@ -36,6 +36,7 @@ class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescript
 
 logger = logging.getLogger(__name__)
 gettext.install(__name__)
+_SEPARATOR = "\x00"
 
 # Keep PyCharm happy.
 _ = _
@@ -58,7 +59,7 @@ class Rule(object):
         self.fn = fn
         try:
             groups = ["(?P<{}>{})".format(name, pattern) for pattern, name in pattern_zip]
-            groups = "-".join(groups)
+            groups = _SEPARATOR.join(groups)
             self.matcher = re.compile(groups)
         except Exception as e:
             groups = ["{} '{}'".format(name, pattern) for pattern, name in pattern_zip]
@@ -97,7 +98,7 @@ class AbstractCompiledRuleDb(object):
             z = zip(raw_rule[:-1], parameter_names)
             self.compiled_rules.append(Rule(db, i, raw_rule[-1], z))
         self.parameter_names = parameter_names
-        self.candidate_formatter = "-".join(["{}"] * len(parameter_names))
+        self.candidate_formatter = _SEPARATOR.join(["{}"] * len(parameter_names))
 
     def _match(self, *args):
         candidate = self.candidate_formatter.format(*args)

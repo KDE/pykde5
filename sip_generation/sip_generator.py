@@ -312,7 +312,7 @@ class SipGenerator(object):
             sip["body"] = body
             self.rule_set.container_rules().apply(container, sip)
             pad = " " * (level * 4)
-            if sip["decl"]:
+            if sip["name"]:
                 decl = pad + sip["decl"]
                 if sip["base_specifiers"]:
                     decl += ": " + sip["base_specifiers"]
@@ -456,7 +456,7 @@ class SipGenerator(object):
         # Now the rules have run, add any prefix/suffix.
         #
         pad = " " * (level * 4)
-        if sip["decl"]:
+        if sip["name"]:
             prefix, suffix = self._fn_get_keywords(function)
             decl = pad + prefix + sip["decl"] + suffix
             if sip["annotations"]:
@@ -570,14 +570,16 @@ class SipGenerator(object):
             :param text:            The raw source corresponding to the region of member.
             """
             if text.find("_DEPRECATED") != -1:
-                typedef.sip_annotations.add("Deprecated")
+                sip["annotations"].add("Deprecated")
                 return True
             if SipGenerator.TYPEDEF_SKIPPABLE_ATTR.search(text):
                 return True
             SipGenerator._report_ignoring(typedef, member, text)
 
-        pad = " " * (level * 4)
-        setattr(typedef, "sip_annotations", set())
+        sip = {
+            "name": typedef.displayname,
+            "annotations": set()
+        }
         args = []
         result_type = ""
         for child in typedef.get_children():
@@ -630,17 +632,37 @@ class SipGenerator(object):
                     pass
                 else:
                     SipGenerator._report_ignoring(typedef, child)
-        alias = typedef.displayname
+        #
+        # Flesh out the SIP context for the rules engine.
+        #
+        sip["fn_result"] = ""
         if typedef.underlying_typedef_type.kind == TypeKind.MEMBERPOINTER:
-            decl = pad + "typedef {}(*{})({})".format(result_type, alias, ", ".join(args), alias)
-            decl = decl.replace("* ", "*").replace("& ", "&")
+            sip["fn_result"] = result_type
+            sip["decl"] = ", ".join(args)
         elif typedef.underlying_typedef_type.kind == TypeKind.RECORD:
-            decl = pad + "typedef {} {}".format(result_type, alias)
+            sip["decl"] = result_type
         else:
-            decl = pad + "typedef {} {}".format(typedef.underlying_typedef_type.spelling, alias)
-        if typedef.sip_annotations:
-            decl += " /" + ",".join(typedef.sip_annotations) + "/"
-        return decl + ";\n"
+            sip["decl"] = typedef.underlying_typedef_type.spelling
+        self.rule_set.typedef_rules().apply(container, typedef, sip)
+        #
+        # Now the rules have run, add any prefix/suffix.
+        #
+        pad = " " * (level * 4)
+        if sip["name"]:
+            logger.error(str(typedef.underlying_typedef_type.kind))
+            if typedef.underlying_typedef_type.kind == TypeKind.MEMBERPOINTER:
+                decl = pad + "typedef {}(*{})({})".format(sip["fn_result"], sip["name"], sip["decl"])
+                decl = decl.replace("* ", "*").replace("& ", "&")
+            elif typedef.underlying_typedef_type.kind == TypeKind.RECORD:
+                decl = pad + "typedef {} {}".format(sip["decl"], sip["name"])
+            else:
+                decl = pad + "typedef {} {}".format(sip["decl"], sip["name"])
+            if sip["annotations"]:
+                decl += " /" + ",".join(sip["annotations"]) + "/"
+            decl += ";\n"
+        else:
+            decl = pad + "// Discarded {}\n".format(SipGenerator.describe(typedef))
+        return decl
 
     def _unexposed_decl_get(self, parent, decl):
         """
@@ -719,7 +741,7 @@ class SipGenerator(object):
         # Now the rules have run, add any prefix/suffix.
         #
         pad = " " * (level * 4)
-        if sip["decl"]:
+        if sip["name"]:
             prefix = self._var_get_keywords(variable)
             decl = prefix + sip["decl"]
             #

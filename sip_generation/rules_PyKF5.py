@@ -23,11 +23,11 @@ from clang.cindex import AccessSpecifier
 
 
 def container_discard(container, sip, matcher):
-    sip["decl"] = ""
+    sip["name"] = ""
 
 
 def function_discard(container, function, sip, matcher):
-    sip["decl"] = ""
+    sip["name"] = ""
 
 
 def parameter_out_kdatetime_negzero(container, function, parameter, sip, matcher):
@@ -41,13 +41,17 @@ def parameter_transfer_to_parent(container, function, parameter, sip, matcher):
         sip["annotations"].add("TransferThis")
 
 
+def typedef_rewrite_qflags(container, typedef, sip, matcher):
+    sip["decl"] = "int"
+
+
 def variable_discard(container, variable, sip, matcher):
-    sip["decl"] = ""
+    sip["name"] = ""
 
 
 def variable_discard_protected(container, variable, sip, matcher):
     if variable.access_specifier == AccessSpecifier.PROTECTED:
-        sip["decl"] = ""
+        sip["name"] = ""
 
 
 def container_rules():
@@ -87,6 +91,16 @@ def parameter_rules():
         #
         [".*", ".*", ".*", r"[KQ][A-Za-z_0-9]+\W*\*\W*parent", ".*", parameter_transfer_to_parent],
         ["KDateTime", "fromString", "negZero", ".*", ".*", parameter_out_kdatetime_negzero],
+    ]
+
+
+def typedef_rules():
+
+    return [
+        #
+        # Discard "private" variables (check they are protected!).
+        #
+        [".*", ".*", "QFlags<.*>", typedef_rewrite_qflags],
     ]
 
 

@@ -148,7 +148,7 @@ class ContainerRuleDb(AbstractCompiledRuleDb):
                                     groups corresponding to the key names above
                                     EXCEPT body and annotations.
 
-            :return: An updated set of sip.xxx values. Setting sip.decl to the
+            :return: An updated set of sip.xxx values. Setting sip.name to the
                      empty string will cause the container to be suppressed.
             '''
 
@@ -220,7 +220,7 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
                                     groups corresponding to the key names above
                                     EXCEPT annotations.
 
-            :return: An updated set of sip.xxx values. Setting sip.decl to the
+            :return: An updated set of sip.xxx values. Setting sip.name to the
                      empty string will cause the container to be suppressed.
             '''
 
@@ -316,6 +316,70 @@ class ParameterRuleDb(AbstractCompiledRuleDb):
             rule.trace_result(before, sip)
 
 
+class TypedefRuleDb(AbstractCompiledRuleDb):
+    """
+    THE RULES FOR TYPEDEFS.
+
+    These are used to customise the behaviour of the SIP generator by allowing
+    the declaration for any typedef to be customised, for example to add SIP
+    compiler annotations.
+
+    Each entry in the raw rule database must be a list with members as follows:
+
+        0. A regular expression which matches the class or namespace "container"
+        name enclosing the typedef.
+
+        1. A regular expression which matches the typedef name.
+
+        2. A regular expression which matches the typedef declaration (e.g.
+        "typedef int foo").
+
+        3. A function.
+
+    In use, the database is walked in order from the first entry. If the regular
+    expressions are matched, the function is called, and no further entries are
+    walked. The function is called with the following contract:
+
+        def typedef_xxx(container, typedef, sip, matcher):
+            '''
+            Return a modified declaration for the given function.
+
+            :param container:   The clang.cindex.Cursor for the container.
+            :param typedef:     The clang.cindex.Cursor for the typedef.
+            :param sip:         A dict with the following keys:
+
+                                    name                The name of the typedef.
+                                    decl                The declaration.
+                                    annotations         Any SIP annotations.
+
+            :param matcher:         The re.Match object. This contains named
+                                    groups corresponding to the key names above
+                                    EXCEPT annotations.
+
+            :return: An updated set of sip.xxx values. Setting sip.name to the
+                     empty string will cause the container to be suppressed.
+            '''
+
+    :return: The compiled form of the rules.
+    """
+    def __init__(self, db):
+        super(TypedefRuleDb, self).__init__(db, ["container", "typedef", "decl"])
+
+    def apply(self, container, typedef, sip):
+        """
+        Walk over the rules database for typedefs, applying the first matching transformation.
+
+        :param container:            The clang.cindex.Cursor for the container.
+        :param typedef:            The clang.cindex.Cursor for the typedef.
+        :param sip:                 The SIP dict.
+        """
+        matcher, rule = self._match(container.spelling, sip["name"], sip["decl"])
+        if matcher:
+            before = deepcopy(sip)
+            rule.fn(container, typedef, sip, matcher)
+            rule.trace_result(before, sip)
+
+
 class VariableRuleDb(AbstractCompiledRuleDb):
     """
     THE RULES FOR VARIABLES.
@@ -356,7 +420,7 @@ class VariableRuleDb(AbstractCompiledRuleDb):
                                     groups corresponding to the key names above
                                     EXCEPT annotations.
 
-            :return: An updated set of sip.xxx values. Setting sip.decl to the
+            :return: An updated set of sip.xxx values. Setting sip.name to the
                      empty string will cause the container to be suppressed.
             '''
 
@@ -385,6 +449,7 @@ class RuleSet(object):
         self._container_rules = ContainerRuleDb(rules_module.container_rules)
         self._fn_rules = FunctionRuleDb(rules_module.function_rules)
         self._param_rules = ParameterRuleDb(rules_module.parameter_rules)
+        self._typedef_rules = TypedefRuleDb(rules_module.typedef_rules)
         self._var_rules = VariableRuleDb(rules_module.variable_rules)
 
     def container_rules(self):
@@ -395,6 +460,9 @@ class RuleSet(object):
 
     def param_rules(self):
         return self._param_rules
+
+    def typedef_rules(self):
+        return self._typedef_rules
 
     def var_rules(self):
         return self._var_rules
@@ -422,7 +490,7 @@ def main(argv=None):
         #
         # Generate help!
         #
-        for db in [ContainerRuleDb, FunctionRuleDb, ParameterRuleDb, VariableRuleDb]:
+        for db in [ContainerRuleDb, FunctionRuleDb, ParameterRuleDb, TypedefRuleDb, VariableRuleDb]:
             print(inspect.getdoc(db))
             print()
     except Exception as e:

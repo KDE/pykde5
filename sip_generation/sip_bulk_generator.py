@@ -63,7 +63,7 @@ class SipBulkGenerator(SipGenerator):
         """
         super(SipBulkGenerator, self).__init__(includes, project_name, project_rules)
         self.includes = includes
-        self.sips = sips + [output_dir]
+        self.sips = sips
         self.root = project_root
         self.selector = selector
         self.output_dir = output_dir
@@ -154,12 +154,8 @@ class SipBulkGenerator(SipGenerator):
                 i = include[len(include_root) + len(os.path.sep):]
                 parent = os.path.dirname(i)
                 sip = os.path.join(parent, os.path.basename(parent) + MODULE_SIP)
-                for sip_root in self.sips:
-                    p = os.path.join(sip_root, sip)
-                    if os.path.exists(p):
-                        self.include_to_sip_cache[include] = sip
-                        return sip
-        logger.warn(_("Cannot find SIP for {}").format(include))
+                return sip
+        logger.debug(_("Cannot find SIP for {}").format(include))
         return None
 
     def _process_one(self, source):
@@ -195,11 +191,19 @@ class SipBulkGenerator(SipGenerator):
                     direct_includes = [i.include.name for i in includes() if i.depth == 2]
                 else:
                     direct_includes = []
+                #
+                # For each include, add the corresponding SIP module to the set to be %Import'd.
+                #
                 direct_sips = set()
                 for include in direct_includes:
                     sip = self._map_include_to_sip(include)
                     if sip:
                         direct_sips.add(sip)
+                #
+                # Trim the includes to omit ones from paths we did not explicity add. This should get rid of compiler
+                # added files and the like.
+                #
+                direct_includes = [i for i in direct_includes if i.startswith(tuple(self.includes))]
             except Exception as e:
                 logger.error("{} while processing {}".format(e, source))
                 raise
@@ -293,17 +297,17 @@ def main(argv=None):
     parser = argparse.ArgumentParser(epilog=inspect.getdoc(main),
                                      formatter_class=HelpFormatter)
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
-    parser.add_argument("--includes", default="/usr/include/x86_64-linux-gnu/qt5,/usr/include/KF5",
-                        help=_("Roots of C++ headers to include"))
+    parser.add_argument("--includes", default="/usr/include/x86_64-linux-gnu/qt5",
+                        help=_("Comma-separated roots of C++ headers to include"))
     parser.add_argument("--sips", default="/usr/share/sip/PyQt5",
-                        help=_("Roots of SIP modules to include"))
+                        help=_("Comma-separated roots of SIP modules to include"))
     parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
     parser.add_argument("--selector", default=".*", type=lambda s: re.compile(s, re.I),
                         help=_("Regular expression of C++ headers under sources to process"))
     parser.add_argument("sip", help=_("SIP output directory"))
-    parser.add_argument("sources", help=_("Root of C++ headers to process"))
+    parser.add_argument("sources", default="/usr/include/KF5", nargs="?", help=_("Root of C++ headers to process"))
     try:
         args = parser.parse_args(argv[1:])
         if args.verbose:
@@ -311,13 +315,15 @@ def main(argv=None):
         else:
             logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
         includes = args.includes.split(",")
+        includes = [i.strip() for i in includes] + [args.sources]
         for path in includes:
             if not os.path.isdir(path):
-                raise RuntimeError(_("--includes path '{}' is not a directory").format(path))
+                raise RuntimeError(_("Path '{}' is not a directory").format(path))
         sips = args.sips.split(",")
+        sips = [s.strip() for s in sips] + [args.sip]
         for path in sips:
             if not os.path.isdir(path):
-                raise RuntimeError(_("--sips path '{}' is not a directory").format(path))
+                raise RuntimeError(_("Path '{}' is not a directory").format(path))
         #
         # Generate!
         #

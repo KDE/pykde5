@@ -78,6 +78,7 @@ def container_rules():
         # SIP does not seem to be able to handle templated containers.
         #
         ["", "KUserOrGroupId<T>", ".*", ".*", ".*", container_discard],
+        ["KPluginFactory", "InheritanceChecker<impl>", ".*", ".*", ".*", container_discard],
     ]
 
 
@@ -101,6 +102,10 @@ def function_rules():
         # but we have not made them work yet.
         #
         [".*", ".*", ".*", ".*<.*>.*", function_discard],
+        #
+        # Strip protected functions which require private stuff to work.
+        #
+        ["KPluginFactory", "KPluginFactory", ".*", ".*KPluginFactoryPrivate", function_discard],
     ]
 
 

@@ -179,8 +179,8 @@ class SipGenerator(object):
 
     def _container_get(self, container, level, h_file):
         """
-        Recursive walk of a class or namespace.
-        
+        Generate the (recursive) translation for a class or namespace.
+
         :param container:           A class or namespace.
         :param h_file:              Name of header file being processed.
         :param level:               Recursion level controls indentation.
@@ -365,7 +365,7 @@ class SipGenerator(object):
 
     def _fn_get(self, container, function, level):
         """
-        Walk of a function.
+        Generate the translation for a function.
 
         :param container:           A class or namespace.
         :param function:            The function object.
@@ -562,6 +562,14 @@ class SipGenerator(object):
             return ""
 
     def _typedef_get(self, container, typedef, level):
+        """
+        Generate the translation for a typedef.
+
+        :param container:           A class or namespace.
+        :param typedef:             The typedef object.
+        :param level:               Recursion level controls indentation.
+        :return:                    A string.
+        """
         def skippable_attribute(member, text):
             """
             We don't seem to have access to the __attribute__(())s, but at least we can look for stuff we care about.
@@ -649,11 +657,9 @@ class SipGenerator(object):
         #
         pad = " " * (level * 4)
         if sip["name"]:
-            if typedef.underlying_typedef_type.kind == TypeKind.MEMBERPOINTER:
+            if sip["fn_result"]:
                 decl = pad + "typedef {}(*{})({})".format(sip["fn_result"], sip["name"], sip["decl"])
                 decl = decl.replace("* ", "*").replace("& ", "&")
-            elif typedef.underlying_typedef_type.kind == TypeKind.RECORD:
-                decl = pad + "typedef {} {}".format(sip["decl"], sip["name"])
             else:
                 decl = pad + "typedef {} {}".format(sip["decl"], sip["name"])
             if sip["annotations"]:
@@ -692,7 +698,7 @@ class SipGenerator(object):
 
     def _var_get(self, container, variable, level):
         """
-        Walk of a variable.
+        Generate the translation for a variable.
 
         :param container:           A class or namespace.
         :param variable:            The variable object.

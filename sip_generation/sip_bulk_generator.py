@@ -125,7 +125,8 @@ class SipBulkGenerator(SipGenerator):
                 # immediate fanout from this module.
                 #
                 for sip_import in sorted(all_sip_imports):
-                    f.write("%Import {}\n".format(sip_import))
+                    if sip_import != output_file:
+                        f.write("%Import {}\n".format(sip_import))
                 f.write("%Extract(id={})\n".format(INCLUDES_EXTRACT))
                 for include in sorted(all_include_roots):
                     f.write("{}\n".format(include))

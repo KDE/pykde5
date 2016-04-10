@@ -41,6 +41,16 @@ gettext.install(__name__)
 _ = _
 
 
+def _parents(container):
+    parents = []
+    parent = container.semantic_parent
+    while parent and parent.kind != CursorKind.TRANSLATION_UNIT:
+        parents.append(parent.spelling)
+        parent = parent.semantic_parent
+    parents = "::".join(reversed(parents))
+    return parents
+
+
 class Rule(object):
     def __init__(self, db, rule_number, fn, pattern_zip):
         self.db = db
@@ -58,9 +68,10 @@ class Rule(object):
     def match(self, candidate):
         return self.matcher.match(candidate)
 
-    def trace_result(self, original, modified):
-        if not modified["decl"]:
-            logger.debug(_("Rule {} suppressed {}").format(self, original))
+    def trace_result(self, parents, original, modified):
+        fqn = parents + "::" + original["name"]
+        if not modified["name"]:
+            logger.debug(_("Rule {} suppressed {}, {}").format(self, fqn, original))
         else:
             delta = False
             for k, v in original.iteritems():
@@ -68,9 +79,9 @@ class Rule(object):
                     delta = True
                     break
             if delta:
-                logger.debug(_("Rule {} modified {}->{}").format(self, original, modified))
+                logger.debug(_("Rule {} modified {}, {}->{}").format(self, fqn, original, modified))
             else:
-                logger.warn(_("Rule {} did not modify {}").format(self, original))
+                logger.warn(_("Rule {} did not modify {}, {}").format(self, fqn, original))
 
     def __str__(self):
         return "{}[{}],{}".format(self.db.__name__, self.rule_number, self.fn.__name__)
@@ -113,7 +124,8 @@ class ContainerRuleDb(AbstractCompiledRuleDb):
 
     Each entry in the raw rule database must be a list with members as follows:
 
-        0. A regular expression which matches the container's parent names.
+        0. A regular expression which matches the fully-qualified name of the
+        "container" enclosing the container.
 
         1. A regular expression which matches the container name.
 
@@ -164,17 +176,12 @@ class ContainerRuleDb(AbstractCompiledRuleDb):
         :param container:           The clang.cindex.Cursor for the container.
         :param sip:                 The SIP dict.
         """
-        parents = []
-        parent = container.semantic_parent
-        while parent.kind != CursorKind.TRANSLATION_UNIT:
-            parents.append(parent.spelling)
-            parent = parent.semantic_parent
-        parents = "::".join(parents)
+        parents = _parents(container)
         matcher, rule = self._match(parents, sip["name"], sip["template_parameters"], sip["decl"], sip["base_specifiers"])
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, sip, matcher)
-            rule.trace_result(before, sip)
+            rule.trace_result(parents, before, sip)
 
 
 class FunctionRuleDb(AbstractCompiledRuleDb):
@@ -187,8 +194,8 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
 
     Each entry in the raw rule database must be a list with members as follows:
 
-        0. A regular expression which matches the class or namespace "container"
-        name enclosing the function.
+        0. A regular expression which matches the fully-qualified name of the
+        "container" enclosing the function.
 
         1. A regular expression which matches the function name.
 
@@ -237,11 +244,12 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
         :param function:            The clang.cindex.Cursor for the function.
         :param sip:                 The SIP dict.
         """
-        matcher, rule = self._match(container.spelling, sip["name"], sip["template_parameters"], sip["decl"])
+        parents = _parents(function)
+        matcher, rule = self._match(parents, sip["name"], sip["template_parameters"], sip["decl"])
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, function, sip, matcher)
-            rule.trace_result(before, sip)
+            rule.trace_result(parents, before, sip)
 
 
 class ParameterRuleDb(AbstractCompiledRuleDb):
@@ -254,8 +262,8 @@ class ParameterRuleDb(AbstractCompiledRuleDb):
 
     Each entry in the raw rule database must be a list with members as follows:
 
-        0. A regular expression which matches the class or namespace "container"
-        name enclosing the function.
+        0. A regular expression which matches the fully-qualified name of the
+        "container" enclosing the function enclosing the parameter.
 
         1. A regular expression which matches the function name enclosing the
         parameter.
@@ -309,11 +317,12 @@ class ParameterRuleDb(AbstractCompiledRuleDb):
         :param parameter:           The clang.cindex.Cursor for the parameter.
         :param sip:                 The SIP dict.
         """
-        matcher, rule = self._match(container.spelling, function.spelling, sip["name"], sip["decl"], sip["init"])
+        parents = _parents(function)
+        matcher, rule = self._match(parents, function.spelling, sip["name"], sip["decl"], sip["init"])
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, function, parameter, sip, matcher)
-            rule.trace_result(before, sip)
+            rule.trace_result(parents, before, sip)
 
 
 class TypedefRuleDb(AbstractCompiledRuleDb):
@@ -326,8 +335,8 @@ class TypedefRuleDb(AbstractCompiledRuleDb):
 
     Each entry in the raw rule database must be a list with members as follows:
 
-        0. A regular expression which matches the class or namespace "container"
-        name enclosing the typedef.
+        0. A regular expression which matches the fully-qualified name of the
+        "container" enclosing the typedef.
 
         1. A regular expression which matches the typedef name.
 
@@ -369,15 +378,16 @@ class TypedefRuleDb(AbstractCompiledRuleDb):
         """
         Walk over the rules database for typedefs, applying the first matching transformation.
 
-        :param container:            The clang.cindex.Cursor for the container.
-        :param typedef:            The clang.cindex.Cursor for the typedef.
+        :param container:           The clang.cindex.Cursor for the container.
+        :param typedef:             The clang.cindex.Cursor for the typedef.
         :param sip:                 The SIP dict.
         """
-        matcher, rule = self._match(container.spelling, sip["name"], sip["decl"])
+        parents = _parents(typedef)
+        matcher, rule = self._match(parents, sip["name"], sip["decl"])
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, typedef, sip, matcher)
-            rule.trace_result(before, sip)
+            rule.trace_result(parents, before, sip)
 
 
 class VariableRuleDb(AbstractCompiledRuleDb):
@@ -390,8 +400,8 @@ class VariableRuleDb(AbstractCompiledRuleDb):
 
     Each entry in the raw rule database must be a list with members as follows:
 
-        0. A regular expression which matches the class or namespace "container"
-        name enclosing the variable.
+        0. A regular expression which matches the fully-qualified name of the
+        "container" enclosing the variable.
 
         1. A regular expression which matches the variable name.
 
@@ -437,11 +447,12 @@ class VariableRuleDb(AbstractCompiledRuleDb):
         :param variable:            The clang.cindex.Cursor for the variable.
         :param sip:                 The SIP dict.
         """
-        matcher, rule = self._match(container.spelling, sip["name"], sip["decl"])
+        parents = _parents(variable)
+        matcher, rule = self._match(parents, sip["name"], sip["decl"])
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, variable, sip, matcher)
-            rule.trace_result(before, sip)
+            rule.trace_result(parents, before, sip)
 
 
 class RuleSet(object):

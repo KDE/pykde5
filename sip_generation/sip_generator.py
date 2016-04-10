@@ -464,6 +464,11 @@ class SipGenerator(object):
             if sip["template_parameters"]:
                 decl = pad + sip["template_parameters"] + "\n" + decl
             decl += ";\n"
+            #
+            # SIP does not support templated functions.
+            #
+            if sip["template_parameters"]:
+                decl = pad + "// Discarded {}\n".format(SipGenerator.describe(function))
         else:
             decl = pad + "// Discarded {}\n".format(SipGenerator.describe(function))
         return decl

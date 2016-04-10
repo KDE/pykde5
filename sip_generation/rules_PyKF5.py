@@ -41,7 +41,15 @@ def parameter_transfer_to_parent(container, function, parameter, sip, matcher):
         sip["annotations"].add("TransferThis")
 
 
-def typedef_rewrite_qflags(container, typedef, sip, matcher):
+def parameter_set_max_int(container, function, parameter, sip, matcher):
+    sip["init"] = "(uint)-1"
+
+
+def parameter_strip_enum(container, function, parameter, sip, matcher):
+    sip["decl"] = "KAboutLicense::LicenseKey licenseType"
+
+
+def typedef_rewrite_as_int(container, typedef, sip, matcher):
     sip["decl"] = "int"
 
 
@@ -66,6 +74,10 @@ def container_rules():
         #
         ["Akonadi::AkonadiCore", "Monitor|Protocol", ".*", ".*", ".*", container_discard],
         ["ScriptableExtension::KParts", "Null|Undefined", ".*", ".*", ".*", container_discard],
+        #
+        # SIP does not seem to be able to handle templated containers.
+        #
+        ["", "KUserOrGroupId<T>", ".*", ".*", ".*", container_discard],
     ]
 
 
@@ -80,6 +92,15 @@ def function_rules():
         # SIP does not support operator=.
         #
         [".*", "operator=", ".*", ".*", function_discard],
+        #
+        # Protected functions which require access to private stuff.
+        #
+        ["KJob", ".*", ".*", ".*KJob::QPrivateSignal.*", function_discard],
+        #
+        # TODO: Temporarily remove any functions which require templates. SIP seems to support, e.g. QPairs,
+        # but we have not made them work yet.
+        #
+        [".*", ".*", ".*", ".*<.*>.*", function_discard],
     ]
 
 
@@ -91,6 +112,11 @@ def parameter_rules():
         #
         [".*", ".*", ".*", r"[KQ][A-Za-z_0-9]+\W*\*\W*parent", ".*", parameter_transfer_to_parent],
         ["KDateTime", "fromString", "negZero", ".*", ".*", parameter_out_kdatetime_negzero],
+        ["KUser|KUserGroup", ".*", "maxCount", ".*", ".*", parameter_set_max_int],
+        #
+        # TODO: Temporarily trim any parameters which start "enum".
+        #
+        ["KAboutData", ".*", "licenseType", ".*", ".*", parameter_strip_enum],
     ]
 
 
@@ -98,9 +124,13 @@ def typedef_rules():
 
     return [
         #
-        # Discard "private" variables (check they are protected!).
+        # Rewrite QFlags<> templates as int.
         #
-        [".*", ".*", "QFlags<.*>", typedef_rewrite_qflags],
+        [".*", ".*", "QFlags<.*>", typedef_rewrite_as_int],
+        #
+        # Rewrite uid_t, gid_t as int.
+        #
+        [".*", ".*", "uid_t|gid_t", typedef_rewrite_as_int],
     ]
 
 

@@ -119,7 +119,7 @@ class SipBulkGenerator(SipGenerator):
             logger.info(_("Creating {}").format(full_output))
             with open(full_output, "w") as f:
                 f.write(header)
-                f.write("%Module(name={})\n".format(h_dir.replace(os.path.sep, ".")))
+                f.write("%Module(name={}.{})\n".format(self.project_name, h_dir.replace(os.path.sep, ".")))
                 #
                 # Create something which the SIP compiler can process that includes what appears to be the
                 # immediate fanout from this module.

@@ -651,6 +651,17 @@ class SipGenerator(object):
             sip["decl"] = result_type
         else:
             sip["decl"] = typedef.underlying_typedef_type.spelling
+        #
+        # Working out if a typedef is for a function pointer seems hard if not impossible in many cases. For such
+        # cases, the only recourse right now is the following heristic (maybe it is safer to put this in the rules
+        # engine?)
+        #
+        if typedef.underlying_typedef_type.kind != TypeKind.MEMBERPOINTER:
+            if sip["decl"].endswith(")"):
+                parts = sip["decl"].split("(*)", 2)
+                if len(parts) == 2 and parts[1].startswith("("):
+                    sip["fn_result"] = parts[0]
+                    sip["decl"] = parts[1][1:-1]
         self.rule_set.typedef_rules().apply(container, typedef, sip)
         #
         # Now the rules have run, add any prefix/suffix.

@@ -203,7 +203,7 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
     expressions are matched, the function is called, and no further entries are
     walked. The function is called with the following contract:
 
-        def function_xxx(container, function, decl, matcher):
+        def function_xxx(container, function, sip, matcher):
             '''
             Return a modified declaration for the given function.
 
@@ -274,7 +274,7 @@ class ParameterRuleDb(AbstractCompiledRuleDb):
     expressions are matched, the function is called, and no further entries are
     walked. The function is called with the following contract:
 
-        def parameter_xxx(container, function, parameter, decl, init, matcher):
+        def parameter_xxx(container, function, parameter, sip, init, matcher):
             '''
             Return a modified declaration and initialiser for the given parameter.
 
@@ -340,7 +340,7 @@ class VariableRuleDb(AbstractCompiledRuleDb):
     expressions are matched, the function is called, and no further entries are
     walked. The function is called with the following contract:
 
-        def variable_xxx(container, variable, decl, matcher):
+        def variable_xxx(container, variable, sip, matcher):
             '''
             Return a modified declaration for the given function.
 

@@ -202,10 +202,12 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
 
         2. A regular expression which matches any template parameters.
 
-        3. A regular expression which matches the function declaration (e.g.
-        "int foo()").
+        3. A regular expression which matches the function result.
 
-        4. A function.
+        4. A regular expression which matches the function parameters (e.g.
+        "int a, void *b" for "int foo(int a, void *b)").
+
+        5. A function.
 
     In use, the database is walked in order from the first entry. If the regular
     expressions are matched, the function is called, and no further entries are
@@ -221,6 +223,7 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
 
                                     name                The name of the function.
                                     template_parameters Any template parameters.
+                                    fn_result           Result, if not a constructor.
                                     decl                The declaration.
                                     annotations         Any SIP annotations.
 
@@ -235,7 +238,7 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
     :return: The compiled form of the rules.
     """
     def __init__(self, db):
-        super(FunctionRuleDb, self).__init__(db, ["container", "function", "template_parameters", "decl"])
+        super(FunctionRuleDb, self).__init__(db, ["container", "function", "template_parameters", "fn_result", "decl"])
 
     def apply(self, container, function, sip):
         """
@@ -246,7 +249,10 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
         :param sip:                 The SIP dict.
         """
         parents = _parents(function)
-        matcher, rule = self._match(parents, sip["name"], sip["template_parameters"], sip["decl"])
+        if sip["name"] == "findSorted":
+            import pdb; pdb.set_trace()
+            pass
+        matcher, rule = self._match(parents, sip["name"], sip["template_parameters"], sip["fn_result"], sip["decl"])
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, function, sip, matcher)
@@ -359,6 +365,7 @@ class TypedefRuleDb(AbstractCompiledRuleDb):
             :param sip:         A dict with the following keys:
 
                                     name                The name of the typedef.
+                                    fn_result           Result, for a function pointer.
                                     decl                The declaration.
                                     annotations         Any SIP annotations.
 
@@ -373,7 +380,7 @@ class TypedefRuleDb(AbstractCompiledRuleDb):
     :return: The compiled form of the rules.
     """
     def __init__(self, db):
-        super(TypedefRuleDb, self).__init__(db, ["container", "typedef", "decl"])
+        super(TypedefRuleDb, self).__init__(db, ["container", "typedef", "fn_result", "decl"])
 
     def apply(self, container, typedef, sip):
         """
@@ -384,7 +391,7 @@ class TypedefRuleDb(AbstractCompiledRuleDb):
         :param sip:                 The SIP dict.
         """
         parents = _parents(typedef)
-        matcher, rule = self._match(parents, sip["name"], sip["decl"])
+        matcher, rule = self._match(parents, sip["name"], sip["fn_result"], sip["decl"])
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, typedef, sip, matcher)

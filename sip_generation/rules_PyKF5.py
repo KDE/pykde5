@@ -88,24 +88,27 @@ def function_rules():
         #
         # Discard functions emitted by QOBJECT.
         #
-        [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", ".*", function_discard],
+        [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", ".*", ".*", function_discard],
         #
         # SIP does not support operator=.
         #
-        [".*", "operator=", ".*", ".*", function_discard],
+        [".*", "operator=", ".*", ".*", ".*", function_discard],
         #
         # Protected functions which require access to private stuff.
         #
-        ["KJob", ".*", ".*", ".*KJob::QPrivateSignal.*", function_discard],
+        ["KJob", ".*", ".*", ".*", ".*KJob::QPrivateSignal.*", function_discard],
         #
         # TODO: Temporarily remove any functions which require templates. SIP seems to support, e.g. QPairs,
         # but we have not made them work yet.
         #
-        [".*", ".*", ".*", ".*<.*>.*", function_discard],
+        [".*", ".*", ".+", ".*", ".*", function_discard],
+        [".*", ".*", ".*", ".*", ".*<.*>.*", function_discard],
+        [".*", ".*", ".*", ".*<.*>.*", ".*", function_discard],
+        [".*", ".*<.*>.*", ".*", ".*", ".*", function_discard],
         #
         # Strip protected functions which require private stuff to work.
         #
-        ["KPluginFactory", "KPluginFactory", ".*", ".*KPluginFactoryPrivate", function_discard],
+        ["KPluginFactory", "KPluginFactory", ".*", ".*", ".*KPluginFactoryPrivate", function_discard],
     ]
 
 
@@ -131,11 +134,11 @@ def typedef_rules():
         #
         # Rewrite QFlags<> templates as int.
         #
-        [".*", ".*", "QFlags<.*>", typedef_rewrite_as_int],
+        [".*", ".*", ".*", "QFlags<.*>", typedef_rewrite_as_int],
         #
         # Rewrite uid_t, gid_t as int.
         #
-        [".*", ".*", "uid_t|gid_t", typedef_rewrite_as_int],
+        [".*", ".*", ".*", "uid_t|gid_t", typedef_rewrite_as_int],
     ]
 
 

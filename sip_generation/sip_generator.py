@@ -280,14 +280,6 @@ class SipGenerator(object):
             if text.endswith("}"):
                 body = "\n"
         if body and level >= 0:
-            if container.kind in [CursorKind.CLASS_TEMPLATE, CursorKind.CLASS_TEMPLATE_PARTIAL_SPECIALIZATION]:
-                template_type_parameters = "template <" + (", ".join(template_type_parameters)) + ">"
-            else:
-                template_type_parameters = ""
-            if base_specifiers:
-                base_specifiers = ", ".join(base_specifiers)
-            else:
-                base_specifiers = ""
             #
             # There does not seem to be an obvious way to tell a class from a struct. That should matter...
             #
@@ -306,9 +298,9 @@ class SipGenerator(object):
             #
             # Flesh out the SIP context for the rules engine.
             #
-            sip["template_parameters"] = template_type_parameters
+            sip["template_parameters"] = ", ".join(template_type_parameters)
             sip["decl"] = container_type
-            sip["base_specifiers"] = base_specifiers
+            sip["base_specifiers"] = ", ".join(base_specifiers)
             sip["body"] = body
             self.rule_set.container_rules().apply(container, sip)
             pad = " " * (level * 4)
@@ -319,7 +311,7 @@ class SipGenerator(object):
                 if sip["annotations"]:
                     decl += " /" + ",".join(sip["annotations"]) + "/"
                 if sip["template_parameters"]:
-                    decl = pad + sip["template_parameters"] + "\n" + decl
+                    decl = pad + "template <" + sip["template_parameters"] + ">\n" + decl
                 decl += "\n" + pad + "{\n"
                 if level == 0:
                     decl += "%TypeHeaderCode\n#include <{}>\n%End\n".format(h_file)
@@ -436,20 +428,16 @@ class SipGenerator(object):
                     pass
                 else:
                     SipGenerator._report_ignoring(function, child)
-        if function.kind == CursorKind.FUNCTION_TEMPLATE:
-            template_type_parameters = "template <" + (", ".join(template_type_parameters)) + ">"
-        else:
-            template_type_parameters = ""
-        parameters = ", ".join(parameters)
-        if function.kind in [CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR]:
-            decl = "{}({})".format(function.spelling, parameters)
-        else:
-            decl = "{} {}({})".format(function.result_type.spelling, function.spelling, parameters)
-        decl = decl.replace("* ", "*").replace("& ", "&")
         #
         # Flesh out the SIP context for the rules engine.
         #
-        sip["template_parameters"] = template_type_parameters
+        sip["template_parameters"] = ", ".join(template_type_parameters)
+        if function.kind in [CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR]:
+            sip["fn_result"] = ""
+        else:
+            sip["fn_result"] = function.result_type.spelling
+        decl = ", ".join(parameters)
+        decl = decl.replace("* ", "*").replace("& ", "&")
         sip["decl"] = decl
         self.rule_set.fn_rules().apply(container, function, sip)
         #
@@ -458,17 +446,18 @@ class SipGenerator(object):
         pad = " " * (level * 4)
         if sip["name"]:
             prefix, suffix = self._fn_get_keywords(function)
-            decl = pad + prefix + sip["decl"] + suffix
+            decl = sip["name"] + "(" + sip["decl"] + ")"
+            if sip["fn_result"]:
+                if sip["fn_result"][-1] in "*&":
+                    decl = sip["fn_result"] + decl
+                else:
+                    decl = sip["fn_result"] + " " + decl
+            decl = pad + prefix + decl + suffix
             if sip["annotations"]:
                 decl += " /" + ",".join(sip["annotations"]) + "/"
             if sip["template_parameters"]:
-                decl = pad + sip["template_parameters"] + "\n" + decl
+                decl = pad + "template <" + sip["template_parameters"] + ">\n" + decl
             decl += ";\n"
-            #
-            # SIP does not support templated functions.
-            #
-            if sip["template_parameters"]:
-                decl = pad + "// Discarded {}\n".format(SipGenerator.describe(function))
         else:
             decl = pad + "// Discarded {}\n".format(SipGenerator.describe(function))
         return decl
@@ -746,11 +735,11 @@ class SipGenerator(object):
                     pass
                 else:
                     SipGenerator._report_ignoring(variable, child)
-        decl = "{} {}".format(variable.type.spelling, variable.spelling)
-        decl = decl.replace("* ", "*").replace("& ", "&")
         #
         # Flesh out the SIP context for the rules engine.
         #
+        decl = "{} {}".format(variable.type.spelling, variable.spelling)
+        decl = decl.replace("* ", "*").replace("& ", "&")
         sip["decl"] = decl
         self.rule_set.var_rules().apply(container, variable, sip)
         #

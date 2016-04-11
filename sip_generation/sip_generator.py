@@ -593,7 +593,7 @@ class SipGenerator(object):
                     # Typedefs for inlined enums seem to be emitted twice. Refer back to original.
                     #
                     enum = child.type.get_declaration()
-                    decl = "enum {}".format("__enum{}".format(enum.extent.start.line))
+                    decl = "__enum{}".format(enum.extent.start.line)
                 else:
                     decl = self._enum_get(container, child, level)
                 args.append(decl)
@@ -603,7 +603,7 @@ class SipGenerator(object):
                     # Typedefs for inlined structs seem to be emitted twice. Refer back to original.
                     #
                     struct = child.type.get_declaration()
-                    decl = "struct {}".format("__struct{}".format(struct.extent.start.line))
+                    decl = "__struct{}".format(struct.extent.start.line)
                 else:
                     decl = self._container_get(child, level, None)
                 args.append(decl)
@@ -639,7 +639,7 @@ class SipGenerator(object):
         elif typedef.underlying_typedef_type.kind == TypeKind.RECORD:
             sip["decl"] = result_type
         else:
-            sip["decl"] = typedef.underlying_typedef_type.spelling
+            sip["decl"] = args[0] if args else typedef.underlying_typedef_type.spelling
         #
         # Working out if a typedef is for a function pointer seems hard if not impossible in many cases. For such
         # cases, the only recourse right now is the following heristic (maybe it is safer to put this in the rules

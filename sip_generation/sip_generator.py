@@ -662,6 +662,10 @@ class SipGenerator(object):
                 decl = decl.replace("* ", "*").replace("& ", "&")
             else:
                 decl = pad + "typedef {} {}".format(sip["decl"], sip["name"])
+            #
+            # SIP does not support deprecation of typedefs.
+            #
+            sip["annotations"].discard("Deprecated")
             if sip["annotations"]:
                 decl += " /" + ",".join(sip["annotations"]) + "/"
             decl += ";\n"
@@ -749,10 +753,6 @@ class SipGenerator(object):
         if sip["name"]:
             prefix = self._var_get_keywords(variable)
             decl = prefix + sip["decl"]
-            #
-            # SIP does not support deprecation of typedefs.
-            #
-            sip["annotations"].discard("Deprecated")
             if sip["annotations"]:
                 decl += " /" + ",".join(sip["annotations"]) + "/"
             #

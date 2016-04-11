@@ -249,9 +249,6 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
         :param sip:                 The SIP dict.
         """
         parents = _parents(function)
-        if sip["name"] == "findSorted":
-            import pdb; pdb.set_trace()
-            pass
         matcher, rule = self._match(parents, sip["name"], sip["template_parameters"], sip["fn_result"], sip["decl"])
         if matcher:
             before = deepcopy(sip)

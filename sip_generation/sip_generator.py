@@ -334,12 +334,12 @@ class SipGenerator(object):
         :return:
         """
         access_specifier = self._read_source(member.extent)
-        if access_specifier in ["Q_OBJECT", "Q_GADGET"]:
-            access_specifier = "public:"
-        elif access_specifier == "Q_SIGNALS:":
+        if access_specifier == "Q_SIGNALS:":
             access_specifier = "signals:"
         elif access_specifier.endswith("slots:") or access_specifier.endswith("Q_SLOTS:"):
             access_specifier = access_specifier.split()[0] + ":"
+        elif access_specifier.startswith("Q_"):
+            access_specifier = "public:"
         pad = " " * ((level - 1) * 4)
         decl = pad + access_specifier + "\n"
         return decl

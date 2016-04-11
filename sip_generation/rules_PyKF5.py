@@ -30,6 +30,11 @@ def function_discard(container, function, sip, matcher):
     sip["name"] = ""
 
 
+def function_discard_impl(container, function, sip, matcher):
+    if function.extent.start.column == 1:
+        sip["name"] = ""
+
+
 def parameter_out_kdatetime_negzero(container, function, parameter, sip, matcher):
     sip["annotations"].add("Out")
 
@@ -49,8 +54,16 @@ def parameter_strip_enum(container, function, parameter, sip, matcher):
     sip["decl"] = "KAboutLicense::LicenseKey licenseType"
 
 
+def typedef_discard(container, typedef, sip, matcher):
+    sip["name"] = ""
+
+
 def typedef_rewrite_as_int(container, typedef, sip, matcher):
     sip["decl"] = "int"
+
+
+def typedef_rewrite_without_colons(container, typedef, sip, matcher):
+    sip["decl"] = sip["decl"].strip(":")
 
 
 def variable_discard(container, variable, sip, matcher):
@@ -79,6 +92,11 @@ def container_rules():
         #
         ["", "KUserOrGroupId<T>", ".*", ".*", ".*", container_discard],
         ["KPluginFactory", "InheritanceChecker<impl>", ".*", ".*", ".*", container_discard],
+        ["", "KConfigSkeletonGenericItem<T>|KConfigCompilerSignallingItem", ".*", ".*", ".*", container_discard],
+        #
+        # This is pretty much a disaster area. TODO: can we rescue some parts?
+        #
+        ["ConversionCheck", ".*", ".*", ".*", ".*", container_discard],
     ]
 
 
@@ -109,6 +127,25 @@ def function_rules():
         # Strip protected functions which require private stuff to work.
         #
         ["KPluginFactory", "KPluginFactory", ".*", ".*", ".*KPluginFactoryPrivate", function_discard],
+        ["KJob", "KJob", ".*", ".*", "KJobPrivate.*", function_discard],
+        ["KCompositeJob", "KCompositeJob", ".*", ".*", "KCompositeJobPrivate.*", function_discard],
+        #
+        # This class has inline implementations in the header file.
+        #
+        ["KPluginName", ".*", ".*", ".*", ".*", function_discard_impl],
+        #
+        # kshell.h, kconfigbase.sip have inline operators.
+        #
+        [".*", "operator\|", ".*", ".*", "", function_discard],
+        #
+        # kuser.h has inline operators.
+        #
+        [".*", "operator!=", ".*", ".*", "const KUser(Group){0,1} &other", function_discard],
+        ["KFileItem", "operator QVariant", ".*", ".*", ".*", function_discard],
+        #
+        # SIP thinks there are duplicate signatures.
+        #
+        ["KMacroExpanderBase", "expandMacrosShellQuote", ".*", ".*", "QString &str", function_discard],
     ]
 
 
@@ -139,6 +176,15 @@ def typedef_rules():
         # Rewrite uid_t, gid_t as int.
         #
         [".*", ".*", ".*", "uid_t|gid_t", typedef_rewrite_as_int],
+        #
+        # Rewrite without leading "::".
+        #
+        ["org::kde", "KDirNotify", "", ".*", typedef_rewrite_without_colons],
+        ["org::kde", "KSSLDInterface", "", ".*", typedef_rewrite_without_colons],
+        #
+        # There are two version of KSharedConfigPtr in ksharedconfig.h and kconfiggroup.h. Remove the one on
+        #
+        ["", "KSharedConfigPtr", ".*", "QExplicitlySharedDataPointer<KSharedConfig>", typedef_discard],
     ]
 
 

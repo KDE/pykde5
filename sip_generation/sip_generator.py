@@ -639,7 +639,7 @@ class SipGenerator(object):
         elif typedef.underlying_typedef_type.kind == TypeKind.RECORD:
             sip["decl"] = result_type
         else:
-            sip["decl"] = args[0] if args else typedef.underlying_typedef_type.spelling
+            sip["decl"] = typedef.underlying_typedef_type.spelling
         #
         # Working out if a typedef is for a function pointer seems hard if not impossible in many cases. For such
         # cases, the only recourse right now is the following heristic (maybe it is safer to put this in the rules

@@ -219,6 +219,11 @@ class SipBulkGenerator(SipGenerator):
                 if sip_basename.endswith(".h"):
                     sip_basename = os.path.splitext(sip_basename)[0] + ".sip"
                 module_path = os.path.dirname(h_file)
+                #
+                # The SIP compiler ges very confused if you have a filename that matches a search path. Decollide...
+                #
+                if sip_basename == os.path.basename(module_path):
+                    sip_basename += "_"
                 output_file = os.path.join(module_path, sip_basename)
                 header = self.header(output_file, h_file, module_path)
                 #

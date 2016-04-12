@@ -49,7 +49,7 @@ MODULE_SIP = "mod.sip"
 INCLUDES_EXTRACT = "includes"
 
 class SipBulkGenerator(SipGenerator):
-    def __init__(self, includes, sips, project_name, project_rules, project_root, selector, output_dir):
+    def __init__(self, includes, sips, project_name, project_rules, project_root, selector, omitter, output_dir):
         """
         Constructor.
 
@@ -59,6 +59,7 @@ class SipBulkGenerator(SipGenerator):
         :param project_rules:       The rules file for the project.
         :param project_root:        The root of files for which to generate SIP.
         :param selector:            A regular expression which limits the files from project_root to be processed.
+        :param omitter:             A regular expression which sets the files from project_root NOT to be processed.
         :param output_dir:          The destination directory.
         """
         super(SipBulkGenerator, self).__init__(includes, project_name, project_rules)
@@ -66,6 +67,7 @@ class SipBulkGenerator(SipGenerator):
         self.sips = sips
         self.root = project_root
         self.selector = selector
+        self.omitter = omitter
         self.output_dir = output_dir
         self.include_to_sip_cache = {}
 
@@ -167,7 +169,7 @@ class SipBulkGenerator(SipGenerator):
         :return:                    (output_file, set(direct includes from this file))
         """
         h_file = source[len(self.root) + len(os.path.sep):]
-        if self.selector.search(h_file):
+        if self.selector.search(h_file) and not self.omitter.search(h_file):
             #
             # Make sure any errors mention the file that was being processed.
             #
@@ -305,8 +307,10 @@ def main(argv=None):
     parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
-    parser.add_argument("--selector", default=".*", type=lambda s: re.compile(s, re.I),
-                        help=_("Regular expression of C++ headers under sources to process"))
+    parser.add_argument("--select", default=".*", type=lambda s: re.compile(s, re.I),
+                        help=_("Regular expression of C++ headers under sources to be processed"))
+    parser.add_argument("--omit", default="KDELibs4Support", type=lambda s: re.compile(s, re.I),
+                        help=_("Regular expression of C++ headers under sources NOT to be processed"))
     parser.add_argument("sip", help=_("SIP output directory"))
     parser.add_argument("sources", default="/usr/include/KF5", nargs="?", help=_("Root of C++ headers to process"))
     try:
@@ -329,7 +333,7 @@ def main(argv=None):
         # Generate!
         #
         d = SipBulkGenerator(includes, sips, args.project_name, args.project_rules, args.sources,
-                             args.selector, args.sip)
+                             args.select, args.omit, args.sip)
         d.process_tree()
     except Exception as e:
         tbk = traceback.format_exc()

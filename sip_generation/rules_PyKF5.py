@@ -30,6 +30,10 @@ def function_discard(container, function, sip, matcher):
     sip["name"] = ""
 
 
+def function_discard_class(container, function, sip, matcher):
+    sip["fn_result"] = sip["fn_result"].replace("class ", "")
+
+
 def function_discard_impl(container, function, sip, matcher):
     if function.extent.start.column == 1:
         sip["name"] = ""
@@ -50,8 +54,8 @@ def parameter_set_max_int(container, function, parameter, sip, matcher):
     sip["init"] = "(uint)-1"
 
 
-def parameter_strip_enum(container, function, parameter, sip, matcher):
-    sip["decl"] = "KAboutLicense::LicenseKey licenseType"
+def parameter_strip_class_enum(container, function, parameter, sip, matcher):
+    sip["decl"] = sip["decl"].replace("class ", "").replace("enum ", "")
 
 
 def typedef_discard(container, typedef, sip, matcher):
@@ -64,6 +68,10 @@ def typedef_rewrite_as_int(container, typedef, sip, matcher):
 
 def typedef_rewrite_without_colons(container, typedef, sip, matcher):
     sip["decl"] = sip["decl"].strip(":")
+
+
+def typedef_rewrite_enums(container, typedef, sip, matcher):
+    sip["decl"] = sip["args"][0]
 
 
 def variable_discard(container, variable, sip, matcher):
@@ -90,12 +98,12 @@ def container_rules():
         #
         # SIP does not seem to be able to handle templated containers.
         #
-        ["", "KUserOrGroupId<T>", ".*", ".*", ".*", container_discard],
+        [".*", "(KUserOrGroupId|KConfigSkeletonGenericItem|KSortableItem|KSortableList|KDragWidgetDecorator)<.*", ".*", ".*", ".*", container_discard],
         ["KPluginFactory", "InheritanceChecker<impl>", ".*", ".*", ".*", container_discard],
-        ["", "KConfigSkeletonGenericItem<T>|KConfigCompilerSignallingItem", ".*", ".*", ".*", container_discard],
         #
         # This is pretty much a disaster area. TODO: can we rescue some parts?
         #
+        [".*", "KConfigCompilerSignallingItem", ".*", ".*", ".*", container_discard],
         ["ConversionCheck", ".*", ".*", ".*", ".*", container_discard],
     ]
 
@@ -142,10 +150,12 @@ def function_rules():
         #
         [".*", "operator!=", ".*", ".*", "const KUser(Group){0,1} &other", function_discard],
         ["KFileItem", "operator QVariant", ".*", ".*", ".*", function_discard],
+        ["KService", "operator KPluginName", ".*", ".*", ".*", function_discard],
         #
         # SIP thinks there are duplicate signatures.
         #
         ["KMacroExpanderBase", "expandMacrosShellQuote", ".*", ".*", "QString &str", function_discard],
+        ["KMultiTabBar", "button|tab", ".*", ".*", ".*", function_discard_class],
     ]
 
 
@@ -161,7 +171,8 @@ def parameter_rules():
         #
         # TODO: Temporarily trim any parameters which start "enum".
         #
-        ["KAboutData", ".*", "licenseType", ".*", ".*", parameter_strip_enum],
+        ["KAboutData", ".*", "licenseType", ".*", ".*", parameter_strip_class_enum],
+        ["KMultiTabBarButton", ".*Event", ".*", ".*", ".*", parameter_strip_class_enum],
     ]
 
 
@@ -182,9 +193,15 @@ def typedef_rules():
         ["org::kde", "KDirNotify", "", ".*", typedef_rewrite_without_colons],
         ["org::kde", "KSSLDInterface", "", ".*", typedef_rewrite_without_colons],
         #
-        # There are two version of KSharedConfigPtr in ksharedconfig.h and kconfiggroup.h. Remove the one on
         #
-        ["", "KSharedConfigPtr", ".*", "QExplicitlySharedDataPointer<KSharedConfig>", typedef_discard],
+        #
+        ["KProtocolInfo", "FileNameUsedForCopying", ".*", ".*", typedef_rewrite_enums],
+        ["KSycoca", "DatabaseType", ".*", ".*", typedef_rewrite_enums],
+        #
+        # There are two version of KSharedConfigPtr in ksharedconfig.h and kconfiggroup.h.
+        #
+        [".*", "KSharedConfigPtr", ".*", "QExplicitlySharedDataPointer<KSharedConfig>", typedef_discard],
+        ["kmimetypetrader.h", "KServiceOfferList", ".*", ".*", typedef_discard],
     ]
 
 

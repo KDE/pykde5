@@ -24,6 +24,7 @@ import argparse
 import gettext
 import inspect
 import logging
+import os
 import re
 import sys
 import traceback
@@ -48,7 +49,10 @@ def _parents(container):
     while parent and parent.kind != CursorKind.TRANSLATION_UNIT:
         parents.append(parent.spelling)
         parent = parent.semantic_parent
-    parents = "::".join(reversed(parents))
+    if parents:
+        parents = "::".join(reversed(parents))
+    else:
+        parents = os.path.basename(container.translation_unit.spelling)
     return parents
 
 

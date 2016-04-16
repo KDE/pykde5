@@ -210,6 +210,8 @@ class SipBulkGenerator(SipGenerator):
                 #
                 direct_sips = set()
                 for include in direct_includes:
+                    if self.omitter.search(include):
+                        continue
                     if include.endswith("_version.h"):
                         continue
                     sip = self._map_include_to_sip(include)

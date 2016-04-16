@@ -43,6 +43,10 @@ def parameter_out_kdatetime_negzero(container, function, parameter, sip, matcher
     sip["annotations"].add("Out")
 
 
+def parameter_rewrite_without_colons(container, function, parameter, sip, matcher):
+    sip["decl"] = sip["decl"].replace("::", "")
+
+
 def parameter_transfer_to_parent(container, function, parameter, sip, matcher):
     if function.is_static_method():
         sip["annotations"].add("Transfer")
@@ -94,11 +98,11 @@ def container_rules():
         # SIP does not seem to be able to handle empty containers.
         #
         ["Akonadi::AkonadiCore", "Monitor|Protocol", ".*", ".*", ".*", container_discard],
-        ["ScriptableExtension::KParts", "Null|Undefined", ".*", ".*", ".*", container_discard],
+        ["KParts::ScriptableExtension", "Null|Undefined", ".*", ".*", ".*", container_discard],
         #
         # SIP does not seem to be able to handle templated containers.
         #
-        [".*", "(KUserOrGroupId|KConfigSkeletonGenericItem|KSortableItem|KSortableList|KDragWidgetDecorator)<.*", ".*", ".*", ".*", container_discard],
+        [".*", ".*<.*", ".*", ".*", ".*", container_discard],
         ["KPluginFactory", "InheritanceChecker<impl>", ".*", ".*", ".*", container_discard],
         #
         # This is pretty much a disaster area. TODO: can we rescue some parts?
@@ -140,7 +144,8 @@ def function_rules():
         #
         # This class has inline implementations in the header file.
         #
-        ["KPluginName", ".*", ".*", ".*", ".*", function_discard_impl],
+        ["KIconEngine|KIconLoader::Group|KPluginName", ".*", ".*", ".*", ".*", function_discard_impl],
+        ["kiconloader.h", "operator\+\+", ".*", ".*", ".*", function_discard_impl],
         #
         # kshell.h, kconfigbase.sip have inline operators.
         #
@@ -167,12 +172,14 @@ def parameter_rules():
         #
         [".*", ".*", ".*", r"[KQ][A-Za-z_0-9]+\W*\*\W*parent", ".*", parameter_transfer_to_parent],
         ["KDateTime", "fromString", "negZero", ".*", ".*", parameter_out_kdatetime_negzero],
+        ["KPty", "tcGetAttr|tcSetAttr", "ttmode", ".*", ".*", parameter_rewrite_without_colons],
         ["KUser|KUserGroup", ".*", "maxCount", ".*", ".*", parameter_set_max_int],
         #
         # TODO: Temporarily trim any parameters which start "enum".
         #
         ["KAboutData", ".*", "licenseType", ".*", ".*", parameter_strip_class_enum],
         ["KMultiTabBarButton", ".*Event", ".*", ".*", ".*", parameter_strip_class_enum],
+        ["KRockerGesture", "KRockerGesture", ".*", ".*", ".*", parameter_strip_class_enum],
     ]
 
 
@@ -201,6 +208,10 @@ def typedef_rules():
         # There are two version of KSharedConfigPtr in ksharedconfig.h and kconfiggroup.h.
         #
         [".*", "KSharedConfigPtr", ".*", "QExplicitlySharedDataPointer<KSharedConfig>", typedef_discard],
+        #
+        # There are two version of Display in kstartupinfo.h and kxmessages.h.
+        #
+        ["kstartupinfo.h|kxmessages.h", "Display", ".*", ".*", typedef_discard],
         ["kmimetypetrader.h", "KServiceOfferList", ".*", ".*", typedef_discard],
     ]
 
@@ -216,4 +227,8 @@ def variable_rules():
         # Discard "private" variables (check they are protected!).
         #
         [".*", "d_ptr", ".*", variable_discard_protected],
+        #
+        # Discard variable emitted by QOBJECT.
+        #
+        [".*", "d", ".*Private.*", variable_discard],
     ]

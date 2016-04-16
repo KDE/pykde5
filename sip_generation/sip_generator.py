@@ -776,7 +776,10 @@ class SipGenerator(object):
         :return: prefix                     String containing any prefix keywords.
         """
         if variable.storage_class == StorageClass.STATIC:
-            prefix = "static "
+            #
+            # SIP does not support "static".
+            #
+            prefix = ""
         else:
             prefix = ""
         return prefix

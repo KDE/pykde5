@@ -122,8 +122,13 @@ class CxxDriver(object):
         # Make sure any errors mention the file that was being processed.
         #
         try:
-            logger.info(_("Creating {}").format(full_output))
-            self._run_command([self.sipconfig.sip_bin, "-c", full_output, "-b", build_file, "-X",
+            logger.info(_("Creating {} from {}").format(full_output, sip_file))
+            #
+            # Suppress the feature that corresponds to the SIP file being processed to avoid feeding
+            # SIP %Import clauses which recursively refer to module beng processed.
+            #
+            feature = sip_file.replace(os.path.sep, "_").replace(".", "_")
+            self._run_command([self.sipconfig.sip_bin, "-c", full_output, "-b", build_file, "-x", feature, "-X",
                                INCLUDES_EXTRACT + ":" + module_includes] + self.pyqt_sip_flags + sip_roots + [source])
             #
             # Create the Makefile.

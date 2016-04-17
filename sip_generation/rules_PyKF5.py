@@ -247,7 +247,9 @@ class RuleSet(rules_engine.RuleSet):
     SIP file generator rules. This is a set of (short, non-public) functions
     and regular expression-based matching rules.
     """
-    def __init__(self):
+    def __init__(self, includes, sips):
+        self._includes = super(RuleSet, self)._check_directory_list(includes)
+        self._sips = super(RuleSet, self)._check_directory_list(sips)
         self._container_db = rules_engine.ContainerRuleDb(container_rules)
         self._fn_db = rules_engine.FunctionRuleDb(function_rules)
         self._param_db = rules_engine.ParameterRuleDb(parameter_rules)
@@ -268,3 +270,13 @@ class RuleSet(rules_engine.RuleSet):
 
     def var_rules(self):
         return self._var_db
+
+    def includes(self):
+        return self._includes
+
+    def sips(self):
+        return self._sips
+
+    def project_name(self):
+        """Project name"""
+        return "PyKF5"

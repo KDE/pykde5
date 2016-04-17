@@ -49,25 +49,24 @@ MODULE_SIP = "mod.sip"
 INCLUDES_EXTRACT = "includes"
 
 class SipBulkGenerator(SipGenerator):
-    def __init__(self, includes, sips, project_name, project_rules, project_root, selector, omitter, output_dir):
+    def __init__(self, project_rules, includes, sips, omitter, selector, project_root, output_dir):
         """
         Constructor.
 
+        :param project_rules:       The rules file for the project.
         :param includes:            A list of roots of includes file, typically including the root for all Qt and
                                     the root for all KDE include files as well as any project-specific include files.
-        :param project_name:        The name of the project.
-        :param project_rules:       The rules file for the project.
-        :param project_root:        The root of files for which to generate SIP.
-        :param selector:            A regular expression which limits the files from project_root to be processed.
         :param omitter:             A regular expression which sets the files from project_root NOT to be processed.
+        :param selector:            A regular expression which limits the files from project_root to be processed.
+        :param project_root:        The root of files for which to generate SIP.
         :param output_dir:          The destination directory.
         """
-        super(SipBulkGenerator, self).__init__(includes, project_name, project_rules)
-        self.includes = includes
-        self.sips = sips
+        super(SipBulkGenerator, self).__init__(project_rules, includes, sips)
+        self.includes = self.rule_set.includes()
+        self.sips = self.rule_set.sips()
         self.root = project_root
-        self.selector = selector
         self.omitter = omitter
+        self.selector = selector
         self.output_dir = output_dir
         self.include_to_sip_cache = {}
 
@@ -121,7 +120,7 @@ class SipBulkGenerator(SipGenerator):
             logger.info(_("Creating {}").format(full_output))
             with open(full_output, "w") as f:
                 f.write(header)
-                f.write("%Module(name={}.{})\n".format(self.project_name, h_dir.replace(os.path.sep, ".")))
+                f.write("%Module(name={}.{})\n".format(self.rule_set.project_name(), h_dir.replace(os.path.sep, ".")))
                 #
                 # Create something which the SIP compiler can process that includes what appears to be the
                 # immediate fanout from this module.
@@ -294,7 +293,7 @@ class SipBulkGenerator(SipGenerator):
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 %End
 //
-""".format(output_file, self.project_name, h_file, datetime.datetime.utcnow().year)
+""".format(output_file, self.rule_set.project_name(), h_file, datetime.datetime.utcnow().year)
         return header
 
 
@@ -321,10 +320,9 @@ def main(argv=None):
                                      formatter_class=HelpFormatter)
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
     parser.add_argument("--includes", default="/usr/include/x86_64-linux-gnu/qt5",
-                        help=_("Comma-separated roots of C++ headers to include"))
+                        help=_("Comma-separated C++ header directories to use"))
     parser.add_argument("--sips", default="/usr/share/sip/PyQt5",
-                        help=_("Comma-separated roots of SIP modules to include"))
-    parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
+                        help=_("Comma-separated SIP module directories to use"))
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
     parser.add_argument("--select", default=".*", type=lambda s: re.compile(s, re.I),
@@ -332,28 +330,18 @@ def main(argv=None):
     parser.add_argument("--omit", default="KDELibs4Support", type=lambda s: re.compile(s, re.I),
                         help=_("Regular expression of C++ headers under sources NOT to be processed"))
     parser.add_argument("sip", help=_("SIP output directory"))
-    parser.add_argument("sources", default="/usr/include/KF5", nargs="?", help=_("Root of C++ headers to process"))
+    parser.add_argument("sources", default="/usr/include/KF5", nargs="?", help=_("C++ header directory to process"))
     try:
         args = parser.parse_args(argv[1:])
         if args.verbose:
             logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(levelname)s: %(message)s')
         else:
             logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
-        includes = args.includes.split(",")
-        includes = [i.strip() for i in includes] + [args.sources]
-        for path in includes:
-            if not os.path.isdir(path):
-                raise RuntimeError(_("Path '{}' is not a directory").format(path))
-        sips = args.sips.split(",")
-        sips = [s.strip() for s in sips] + [args.sip]
-        for path in sips:
-            if not os.path.isdir(path):
-                raise RuntimeError(_("Path '{}' is not a directory").format(path))
         #
         # Generate!
         #
-        d = SipBulkGenerator(includes, sips, args.project_name, args.project_rules, args.sources,
-                             args.select, args.omit, args.sip)
+        d = SipBulkGenerator(args.project_rules, args.includes + "," + args.sources, args.sips, args.omit,
+                             args.select, args.sources, args.sip)
         d.process_tree()
     except Exception as e:
         tbk = traceback.format_exc()

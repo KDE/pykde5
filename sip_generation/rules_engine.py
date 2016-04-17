@@ -515,6 +515,36 @@ class RuleSet(object):
         """
         raise NotImplemented(_("Missing subclass implementation"))
 
+    @abstractmethod
+    def includes(self):
+        """
+        List of C++ header directories to use.
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
+    @abstractmethod
+    def sips(self):
+        """
+        List of SIP module directories to use.
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
+    @abstractmethod
+    def project_name(self):
+        """
+        Project name.
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
+    def _check_directory_list(self, paths):
+        """Check a command separated list of path are all diectories."""
+        paths = paths.split(",")
+        paths = [i.strip() for i in paths if i]
+        for path in paths:
+            if not os.path.isdir(path):
+                raise RuntimeError(_("Path '{}' is not a directory").format(path))
+        return paths
+
 
 def main(argv=None):
     """

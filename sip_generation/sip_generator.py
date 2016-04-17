@@ -74,25 +74,17 @@ TEMPLATE_KINDS = [
 class SipGenerator(object):
     _libclang = None
 
-    def __init__(self, includes, project_name, project_rules, dump_includes=False, dump_privates=False):
+    def __init__(self, project_rules, includes, sips, dump_includes=False, dump_privates=False):
         """
         Constructor.
 
+        :param project_rules:       The rules file for the project.
         :param includes:            A list of roots of includes file, typically including the root for all Qt and
                                     the root for all KDE include files as well as any project-specific include files.
-        :param project_name:        The name of the project.
-        :param project_rules:       The rules file for the project.
         :param dump_includes:       Turn on diagnostics for include files.
         :param dump_privates:       Turn on diagnostics for omitted private items.
         """
         SipGenerator._find_libclang()
-        self.exploded_includes = set(includes)
-        for include_root in includes:
-            walk_directories(include_root, lambda d: self.exploded_includes.add(d))
-        if dump_includes:
-            for include in sorted(self.exploded_includes):
-                logger.debug(_("Using includes from {}").format(include))
-        self.project_name = project_name
         try:
             import imp
             imp.load_source("project_rules", project_rules)
@@ -104,7 +96,13 @@ class SipGenerator(object):
         #
         # Statically prepare the rule logic. This takes the rules provided by the user and turns them into code.
         #
-        self.rule_set = getattr(sys.modules["project_rules"], "RuleSet")()
+        self.rule_set = getattr(sys.modules["project_rules"], "RuleSet")(includes, sips)
+        self.exploded_includes = set(self.rule_set.includes())
+        for include_root in self.rule_set.includes():
+            walk_directories(include_root, lambda d: self.exploded_includes.add(d))
+        if dump_includes:
+            for include in sorted(self.exploded_includes):
+                logger.debug(_("Using includes from {}").format(include))
         self.dump_includes = dump_includes
         self.dump_privates = dump_privates
         self.diagnostics = set()
@@ -841,11 +839,10 @@ def main(argv=None):
                                      formatter_class=HelpFormatter)
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
     parser.add_argument("--includes", default="/usr/include/x86_64-linux-gnu/qt5",
-                        help=_("Roots of C++ headers to include"))
-    parser.add_argument("--project-name", default="PyKF5", help=_("Project name"))
+                        help=_("Comma-separated C++ header directories to use"))
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
-    parser.add_argument("--sources", default="/usr/include/KF5", help=_("Root of C++ headers to process"))
+    parser.add_argument("--sources", default="/usr/include/KF5", help=_("C++ header directory to process"))
     parser.add_argument("source", help=_("C++ header to process, relative to --project-root"))
     try:
         args = parser.parse_args(argv[1:])
@@ -853,15 +850,10 @@ def main(argv=None):
             logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(levelname)s: %(message)s')
         else:
             logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
-        includes = args.includes.split(",")
-        includes = [i.strip() for i in includes] + [args.sources]
-        for path in includes:
-            if not os.path.isdir(path):
-                raise RuntimeError(_("Path '{}' is not a directory").format(path))
         #
         # Generate!
         #
-        g = SipGenerator(includes, args.project_name, args.project_rules)
+        g = SipGenerator(args.project_rules, args.includes + "," + args.sources, "")
         body, includes = g.create_sip(args.sources, args.source)
         if body:
             print(body)

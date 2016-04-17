@@ -1,0 +1,33 @@
+Pre-requisites
+==============
+
+
+Ubuntu
+------
+
+    python-clang-3.9 clang-3.9 llvm-3.9
+
+        (Presently available from http://ppa.launchpad.net/paulo-miguel-dias/mesa/ubuntu)
+
+    sip pyqt5-dev python-pyqt5 
+
+To build Pyqt5
+==============
+
+    #
+    # 1. Run the SIP generation phase.
+    #
+    ./sip_bulk_generator.py tmp
+    #
+    # 2. Add import for KParts "%Import KParts/KParts/KPartsmod.sip" to this file:
+    #
+    vim tmp/KCoreAddons/KCoreAddonsmod.sip
+    #
+    # 3. Fixup missing bits.
+    #
+    touch tmp/KAuth/kauth.sip
+    #
+    # 4. Run the compiler...
+    #
+    ./sip_compiler.py tmp cxx
+

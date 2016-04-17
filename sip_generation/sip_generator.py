@@ -31,6 +31,8 @@ import traceback
 from clang import cindex
 from clang.cindex import AccessSpecifier, CursorKind, SourceRange, StorageClass, TokenKind, TypeKind
 
+import rules_engine
+
 
 class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
     pass
@@ -74,31 +76,18 @@ TEMPLATE_KINDS = [
 class SipGenerator(object):
     _libclang = None
 
-    def __init__(self, project_rules, includes, sips, dump_includes=False, dump_privates=False):
+    def __init__(self, project_rules, dump_includes=False, dump_privates=False):
         """
         Constructor.
 
-        :param project_rules:       The rules file for the project.
-        :param includes:            A list of roots of includes file, typically including the root for all Qt and
-                                    the root for all KDE include files as well as any project-specific include files.
+        :param project_rules:       The rules for the project.
         :param dump_includes:       Turn on diagnostics for include files.
         :param dump_privates:       Turn on diagnostics for omitted private items.
         """
         SipGenerator._find_libclang()
-        try:
-            import imp
-            imp.load_source("project_rules", project_rules)
-        except ImportError:
-            import importlib
-            spec = importlib.util.spec_from_file_location("project_rules", project_rules)
-            module = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(module)
-        #
-        # Statically prepare the rule logic. This takes the rules provided by the user and turns them into code.
-        #
-        self.rule_set = getattr(sys.modules["project_rules"], "RuleSet")(includes, sips)
-        self.exploded_includes = set(self.rule_set.includes())
-        for include_root in self.rule_set.includes():
+        self.rules = project_rules
+        self.exploded_includes = set(self.rules.includes())
+        for include_root in self.rules.includes():
             walk_directories(include_root, lambda d: self.exploded_includes.add(d))
         if dump_includes:
             for include in sorted(self.exploded_includes):
@@ -298,7 +287,7 @@ class SipGenerator(object):
             sip["decl"] = container_type
             sip["base_specifiers"] = ", ".join(base_specifiers)
             sip["body"] = body
-            self.rule_set.container_rules().apply(container, sip)
+            self.rules.container_rules().apply(container, sip)
             pad = " " * (level * 4)
             if sip["name"]:
                 decl = pad + sip["decl"]
@@ -393,7 +382,7 @@ class SipGenerator(object):
                     "init": self._fn_get_parameter_default(function, child),
                     "annotations": set()
                 }
-                self.rule_set.param_rules().apply(container, function, child, child_sip)
+                self.rules.param_rules().apply(container, function, child, child_sip)
                 decl = child_sip["decl"]
                 if child_sip["annotations"]:
                     decl += " /" + ",".join(child_sip["annotations"]) + "/"
@@ -435,7 +424,7 @@ class SipGenerator(object):
         decl = ", ".join(parameters)
         decl = decl.replace("* ", "*").replace("& ", "&")
         sip["decl"] = decl
-        self.rule_set.function_rules().apply(container, function, sip)
+        self.rules.function_rules().apply(container, function, sip)
         #
         # Now the rules have run, add any prefix/suffix.
         #
@@ -648,7 +637,7 @@ class SipGenerator(object):
                 if len(parts) == 2 and parts[1].startswith("("):
                     sip["fn_result"] = parts[0]
                     sip["decl"] = parts[1][1:-1]
-        self.rule_set.typedef_rules().apply(container, typedef, sip)
+        self.rules.typedef_rules().apply(container, typedef, sip)
         #
         # Now the rules have run, add any prefix/suffix.
         #
@@ -742,7 +731,7 @@ class SipGenerator(object):
         decl = "{} {}".format(variable.type.spelling, variable.spelling)
         decl = decl.replace("* ", "*").replace("& ", "&")
         sip["decl"] = decl
-        self.rule_set.var_rules().apply(container, variable, sip)
+        self.rules.var_rules().apply(container, variable, sip)
         #
         # Now the rules have run, add any prefix/suffix.
         #
@@ -853,7 +842,8 @@ def main(argv=None):
         #
         # Generate!
         #
-        g = SipGenerator(args.project_rules, args.includes + "," + args.sources, "")
+        rules = rules_engine.rules(args.project_rules, args.includes + "," + args.sources, "")
+        g = SipGenerator(rules)
         body, includes = g.create_sip(args.sources, args.source)
         if body:
             print(body)

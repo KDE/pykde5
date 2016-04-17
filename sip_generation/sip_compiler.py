@@ -25,6 +25,7 @@ import gettext
 import os
 import inspect
 import logging
+import re
 import sipconfig
 import subprocess
 import sys
@@ -33,6 +34,7 @@ import traceback
 from PyQt5.QtCore import PYQT_CONFIGURATION
 
 from sip_bulk_generator import INCLUDES_EXTRACT
+import rules_engine
 
 
 class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
@@ -47,19 +49,19 @@ _ = _
 
 
 class CxxDriver(object):
-    def __init__(self, includes, sips, output_dir, verbose):
+    def __init__(self, project_rules, input_dir, output_dir, verbose):
         """
         Constructor.
 
-        :param includes:            A list of roots of includes file, typically including the root for all Qt and
-                                    the root for all KDE include files as well as any project-specific include files.
-        :param sips:                A list of roots of SIP file, typically including the root for all Qt and
-                                    the root for all KDE SIP files as well as any project-specific SIP files.
-        :param output_dir:          The destination directory.
+        :param project_rules:       The rules for the project.
+        :param input_dir:           The source SIP directory.
+        :param output_dir:          The destination CXX directory.
         :param verbose:             Debug info.
         """
-        self.includes = includes
-        self.sips = sips
+        self.rules = project_rules
+        self.includes = self.rules.includes()
+        self.sips = self.rules.sips()
+        self.input_dir = input_dir
         self.output_dir = output_dir
         self.verbose = verbose
         #
@@ -68,38 +70,35 @@ class CxxDriver(object):
         self.sipconfig = sipconfig.Configuration()
         self.pyqt_sip_flags = PYQT_CONFIGURATION["sip_flags"].split()
 
-    def process_modules(self, root, sip_file):
+    def process_modules(self, selector):
         """
         Run a set of SIP files, but don't throw any errors. At the end, throw the first error.
 
-        :param root:                        The prefix for all SIP files.
-        :param sip_file:                    A SIP file name, or the name of a list of SIP files.
+        :param selector:            A regular expression which limits the files from project_root to be processed.
         """
         error = None
         if sip_file.startswith("@"):
             sources = open(sip_file[1:], "rU")
         else:
             sources = [sip_file]
-        for source in sources:
+        for source in [selector]:
             try:
-                self._process_one_module(root, source.strip())
+                 if selector.match(source):
+                     self.process_one_module(source.strip())
             except Exception as e:
                 if not error:
                     error = e
-        if isinstance(sources, file):
-            sources.close()
         if error:
             raise error
 
-    def _process_one_module(self, root, sip_file):
+    def process_one_module(self, sip_file):
         """
         Run a SIP file.
 
-        :param root:                        The prefix for the SIP files.
         :param sip_file:                    A SIP file name.
         """
-        source = os.path.join(root, sip_file)
-        sip_roots = self.sips + [root]
+        source = os.path.join(self.input_dir, sip_file)
+        sip_roots = self.sips + [self.input_dir]
         sip_roots = ["-I" + i for i in sip_roots]
         #
         # Generate a file header. We don't automatically use a .sip suffix because that could cause a clash with the
@@ -175,31 +174,30 @@ def main(argv=None):
                                      formatter_class=HelpFormatter)
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
     parser.add_argument("--includes", default="/usr/include/x86_64-linux-gnu/qt5,/usr/include/KF5",
-                        help=_("Roots of C++ headers to include"))
+                        help=_("Comma-separated C++ header directories to use"))
     parser.add_argument("--sips", default="/usr/share/sip/PyQt5",
-                        help=_("Roots of SIP modules to include"))
+                        help=_("Comma-separated SIP module directories to use"))
+    parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
+                        help=_("Project rules"))
+    parser.add_argument("--select", default=".*", type=lambda s: re.compile(s, re.I) if not s.startswith("@") else s[1:],
+                        help=_("Regular expression of SIP modules from '--project-rules' to be processed, or a filename starting with '@'"))
     parser.add_argument("cxx", help=_("C++ output directory"))
     parser.add_argument("sip", default="sip", help=_("Root of SIP modules to process"))
-    parser.add_argument("source", help=_("SIP module to process, relative to project-root; a leading '@' signifies a file listing SIP modules"))
     try:
         args = parser.parse_args(argv[1:])
         if args.verbose:
             logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(name)s %(levelname)s: %(message)s')
         else:
             logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
-        includes = args.includes.split(",")
-        for path in includes:
-            if not os.path.isdir(path):
-                raise RuntimeError(_("--includes path '{}' is not a directory").format(path))
-        sips = args.sips.split(",")
-        for path in sips:
-            if not os.path.isdir(path):
-                raise RuntimeError(_("--sips path '{}' is not a directory").format(path))
         #
-        # Generate!
+        # Compile!
         #
-        d = CxxDriver(includes, sips, args.cxx, args.verbose)
-        d.process_modules(args.sip, args.source)
+        rules = rules_engine.rules(args.project_rules, args.includes, args.sips)
+        d = CxxDriver(rules, args.sip, args.cxx, args.verbose)
+        if isinstance(args.select, str):
+            d.process_one_module(args.select)
+        else:
+            d.process_modules(args.select)
     except Exception as e:
         tbk = traceback.format_exc()
         print(tbk)

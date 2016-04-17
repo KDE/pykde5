@@ -31,6 +31,7 @@ import string
 import sys
 import traceback
 
+import rules_engine
 from sip_generator import SipGenerator
 
 
@@ -49,21 +50,19 @@ MODULE_SIP = "mod.sip"
 INCLUDES_EXTRACT = "includes"
 
 class SipBulkGenerator(SipGenerator):
-    def __init__(self, project_rules, includes, sips, omitter, selector, project_root, output_dir):
+    def __init__(self, project_rules, omitter, selector, project_root, output_dir):
         """
         Constructor.
 
-        :param project_rules:       The rules file for the project.
-        :param includes:            A list of roots of includes file, typically including the root for all Qt and
-                                    the root for all KDE include files as well as any project-specific include files.
+        :param project_rules:       The rules for the project.
         :param omitter:             A regular expression which sets the files from project_root NOT to be processed.
         :param selector:            A regular expression which limits the files from project_root to be processed.
         :param project_root:        The root of files for which to generate SIP.
-        :param output_dir:          The destination directory.
+        :param output_dir:          The destination SIP directory.
         """
-        super(SipBulkGenerator, self).__init__(project_rules, includes, sips)
-        self.includes = self.rule_set.includes()
-        self.sips = self.rule_set.sips()
+        super(SipBulkGenerator, self).__init__(project_rules)
+        self.includes = self.rules.includes()
+        self.sips = self.rules.sips()
         self.root = project_root
         self.omitter = omitter
         self.selector = selector
@@ -120,7 +119,7 @@ class SipBulkGenerator(SipGenerator):
             logger.info(_("Creating {}").format(full_output))
             with open(full_output, "w") as f:
                 f.write(header)
-                f.write("%Module(name={}.{})\n".format(self.rule_set.project_name(), h_dir.replace(os.path.sep, ".")))
+                f.write("%Module(name={}.{})\n".format(self.rules.project_name(), h_dir.replace(os.path.sep, ".")))
                 #
                 # Create something which the SIP compiler can process that includes what appears to be the
                 # immediate fanout from this module.
@@ -293,7 +292,7 @@ class SipBulkGenerator(SipGenerator):
 // 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 %End
 //
-""".format(output_file, self.rule_set.project_name(), h_file, datetime.datetime.utcnow().year)
+""".format(output_file, self.rules.project_name(), h_file, datetime.datetime.utcnow().year)
         return header
 
 
@@ -326,7 +325,7 @@ def main(argv=None):
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
                         help=_("Project rules"))
     parser.add_argument("--select", default=".*", type=lambda s: re.compile(s, re.I),
-                        help=_("Regular expression of C++ headers under sources to be processed"))
+                        help=_("Regular expression of C++ headers under 'sources' to be processed"))
     parser.add_argument("--omit", default="KDELibs4Support", type=lambda s: re.compile(s, re.I),
                         help=_("Regular expression of C++ headers under sources NOT to be processed"))
     parser.add_argument("sip", help=_("SIP output directory"))
@@ -340,8 +339,8 @@ def main(argv=None):
         #
         # Generate!
         #
-        d = SipBulkGenerator(args.project_rules, args.includes + "," + args.sources, args.sips, args.omit,
-                             args.select, args.sources, args.sip)
+        rules = rules_engine.rules(args.project_rules, args.includes + "," + args.sources, args.sips)
+        d = SipBulkGenerator(rules, args.omit, args.select, args.sources, args.sip)
         d.process_tree()
     except Exception as e:
         tbk = traceback.format_exc()

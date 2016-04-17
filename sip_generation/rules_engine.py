@@ -546,6 +546,30 @@ class RuleSet(object):
         return paths
 
 
+def rules(project_rules, includes, sips):
+    """
+    Constructor.
+
+    :param project_rules:       The rules file for the project.
+    :param includes:            A list of roots of includes file, typically including the root for all Qt and
+                                the root for all KDE include files as well as any project-specific include files.
+    :param sips:                A list of roots of SIP file, typically including the root for all Qt and
+                                the root for all KDE SIP files as well as any project-specific SIP files.
+    """
+    try:
+        import imp
+        imp.load_source("project_rules", project_rules)
+    except ImportError:
+        import importlib
+        spec = importlib.util.spec_from_file_location("project_rules", project_rules)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+    #
+    # Statically prepare the rule logic. This takes the rules provided by the user and turns them into code.
+    #
+    return getattr(sys.modules["project_rules"], "RuleSet")(includes, sips)
+
+
 def main(argv=None):
     """
     Rules engine for SIP file generation.

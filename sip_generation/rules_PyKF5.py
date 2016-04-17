@@ -25,7 +25,7 @@ SIP binding customisation for PyKF5. This modules describes:
 
 """
 
-import rules
+import rules_engine
 
 from clang.cindex import AccessSpecifier
 
@@ -242,17 +242,17 @@ def variable_rules():
     ]
 
 
-class RuleSet(rules.RuleSet):
+class RuleSet(rules_engine.RuleSet):
     """
     SIP file generator rules. This is a set of (short, non-public) functions
     and regular expression-based matching rules.
     """
     def __init__(self):
-        self._container_db = rules.ContainerRuleDb(container_rules)
-        self._fn_db = rules.FunctionRuleDb(function_rules)
-        self._param_db = rules.ParameterRuleDb(parameter_rules)
-        self._typedef_db = rules.TypedefRuleDb(typedef_rules)
-        self._var_db = rules.VariableRuleDb(variable_rules)
+        self._container_db = rules_engine.ContainerRuleDb(container_rules)
+        self._fn_db = rules_engine.FunctionRuleDb(function_rules)
+        self._param_db = rules_engine.ParameterRuleDb(parameter_rules)
+        self._typedef_db = rules_engine.TypedefRuleDb(typedef_rules)
+        self._var_db = rules_engine.VariableRuleDb(variable_rules)
 
     def container_rules(self):
         return self._container_db

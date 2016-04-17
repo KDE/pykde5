@@ -33,8 +33,8 @@ import traceback
 
 from PyQt5.QtCore import PYQT_CONFIGURATION
 
-from sip_bulk_generator import INCLUDES_EXTRACT
 import rules_engine
+from sip_bulk_generator import INCLUDES_EXTRACT, feature_for_sip_module
 
 
 class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
@@ -77,11 +77,7 @@ class CxxDriver(object):
         :param selector:            A regular expression which limits the files from project_root to be processed.
         """
         error = None
-        if sip_file.startswith("@"):
-            sources = open(sip_file[1:], "rU")
-        else:
-            sources = [sip_file]
-        for source in [selector]:
+        for source in self.rules.modules():
             try:
                  if selector.match(source):
                      self.process_one_module(source.strip())
@@ -112,6 +108,7 @@ class CxxDriver(object):
         build_file = os.path.join(full_output, "module.sbf")
         make_file = os.path.join(full_output, "module.Makefile")
         module_includes = os.path.join(full_output, "module.includes")
+        modified_source = os.path.join(full_output, os.path.basename(sip_file) + ".tmp")
         try:
             os.makedirs(full_output)
         except OSError as e:
@@ -121,14 +118,31 @@ class CxxDriver(object):
         # Make sure any errors mention the file that was being processed.
         #
         try:
-            logger.info(_("Creating {} from {}").format(full_output, sip_file))
+            logger.info(_("Creating {} from {}").format(full_output, source))
             #
-            # Suppress the feature that corresponds to the SIP file being processed to avoid feeding
-            # SIP %Import clauses which recursively refer to module beng processed.
+            # Suppress the feature that corresponds to the SIP file being processed to avoid feeding SIP %Import
+            # clauses which recursively refer to module beng processed. we do this by cloaking each in a %Feature,
+            # and then disabling the one for "this".
             #
+            # To avoid defining the %Feature multiple time, we put them inline in the current module.
+            #
+            with open(modified_source, "w") as o:
+                with open(source, "rU") as i:
+                    for line in i:
+                        o.write(line)
+                        if line.startswith("%Module"):
+                            feature_list = os.path.join(self.input_dir, "modules.features")
+                            tmp = set()
+                            with open(feature_list, "rU") as f:
+                                for feature in f:
+                                    if feature not in tmp:
+                                        tmp.add(feature)
+                                        o.write(feature)
+            logger.debug(modified_source)
             feature = sip_file.replace(os.path.sep, "_").replace(".", "_")
-            self._run_command([self.sipconfig.sip_bin, "-c", full_output, "-b", build_file, "-x", feature, "-X",
-                               INCLUDES_EXTRACT + ":" + module_includes] + self.pyqt_sip_flags + sip_roots + [source])
+            cmd = [self.sipconfig.sip_bin, "-c", full_output, "-b", build_file, "-x", feature, "-X",
+                   INCLUDES_EXTRACT + ":" + module_includes] + self.pyqt_sip_flags + sip_roots + [modified_source]
+            self._run_command(cmd)
             #
             # Create the Makefile.
             #

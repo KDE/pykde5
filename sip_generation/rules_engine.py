@@ -536,6 +536,13 @@ class RuleSet(object):
         """
         raise NotImplemented(_("Missing subclass implementation"))
 
+    @abstractmethod
+    def modules(self):
+        """
+        SIP modules.
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
     def _check_directory_list(self, paths):
         """Check a command separated list of path are all diectories."""
         paths = paths.split(",")

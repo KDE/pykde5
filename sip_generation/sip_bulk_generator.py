@@ -49,6 +49,12 @@ _ = _
 MODULE_SIP = "mod.sip"
 INCLUDES_EXTRACT = "includes"
 
+
+def feature_for_sip_module(module):
+    """Convert a SIP module name into a feature name."""
+    return module.replace(os.path.sep, "_").replace(".", "_").replace("+", "_")
+
+
 class SipBulkGenerator(SipGenerator):
     def __init__(self, project_rules, omitter, selector, project_root, output_dir):
         """
@@ -68,9 +74,18 @@ class SipBulkGenerator(SipGenerator):
         self.selector = selector
         self.output_dir = output_dir
         self.include_to_sip_cache = {}
+        self.all_features = None
 
     def process_tree(self):
+        self.all_features = set()
         self._walk_tree(self.root)
+        feature_list = os.path.join(self.output_dir, "modules.features")
+        #
+        # TODO, make sure the entries are unique.
+        #
+        with open(feature_list, "a") as f:
+            for feature in self.all_features:
+                f.write("%Feature(name={})\n".format(feature))
 
     def _walk_tree(self, root):
         """
@@ -126,7 +141,21 @@ class SipBulkGenerator(SipGenerator):
                 #
                 for sip_import in sorted(all_sip_imports):
                     if sip_import != output_file:
-                        f.write("%Import {}\n".format(sip_import))
+                        #
+                        # Protect each %Import with a feature. The point of this is that we often see module A and B
+                        # which need to %Import each other; this confuses the SIP compiler which does not like the
+                        # %Import A encountered in B while processing A's %Import of B. However, we cannot simply
+                        # declare the corresponding %Feature here because then we will end up withthe same %Feature in
+                        # both A and B which SIP also does not like.
+                        #
+                        if os.path.dirname(sip_import).lower() in [os.path.dirname(s).lower() for s in self.rules.modules()]:
+                            feature = feature_for_sip_module(sip_import)
+                            self.all_features.add(feature)
+                            f.write("%If ({})\n".format(feature))
+                            f.write("%Import {}\n".format(sip_import))
+                            f.write("%End\n".format(sip_import))
+                        else:
+                            f.write("%Import {}\n".format(sip_import))
                 f.write("%Extract(id={})\n".format(INCLUDES_EXTRACT))
                 for include in sorted(all_include_roots):
                     f.write("{}\n".format(include))

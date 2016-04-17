@@ -31,3 +31,10 @@ To build Pyqt5
     #
     ./sip_compiler.py tmp cxx
 
+To build your own bindings
+==========================
+
+See the output of running the rules_engine.py as a main program:
+
+    ./rules_engine.py
+

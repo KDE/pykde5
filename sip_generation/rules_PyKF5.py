@@ -16,73 +16,81 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301  USA.
 #
-"""SIP file generator rules for PyKF5."""
+"""
+SIP binding customisation for PyKF5. This modules describes:
 
+    * The SIP file generator rules.
+
+    * The SIP compilation rules.
+
+"""
+
+import rules
 
 from clang.cindex import AccessSpecifier
 
 
-def container_discard(container, sip, matcher):
+def _container_discard(container, sip, matcher):
     sip["name"] = ""
 
 
-def function_discard(container, function, sip, matcher):
+def _function_discard(container, function, sip, matcher):
     sip["name"] = ""
 
 
-def function_discard_class(container, function, sip, matcher):
+def _function_discard_class(container, function, sip, matcher):
     sip["fn_result"] = sip["fn_result"].replace("class ", "")
 
 
-def function_discard_impl(container, function, sip, matcher):
+def _function_discard_impl(container, function, sip, matcher):
     if function.extent.start.column == 1:
         sip["name"] = ""
 
 
-def parameter_out_kdatetime_negzero(container, function, parameter, sip, matcher):
+def _parameter_out_kdatetime_negzero(container, function, parameter, sip, matcher):
     sip["annotations"].add("Out")
 
 
-def parameter_rewrite_without_colons(container, function, parameter, sip, matcher):
+def _parameter_rewrite_without_colons(container, function, parameter, sip, matcher):
     sip["decl"] = sip["decl"].replace("::", "")
 
 
-def parameter_transfer_to_parent(container, function, parameter, sip, matcher):
+def _parameter_transfer_to_parent(container, function, parameter, sip, matcher):
     if function.is_static_method():
         sip["annotations"].add("Transfer")
     else:
         sip["annotations"].add("TransferThis")
 
 
-def parameter_set_max_int(container, function, parameter, sip, matcher):
+def _parameter_set_max_int(container, function, parameter, sip, matcher):
     sip["init"] = "(uint)-1"
 
 
-def parameter_strip_class_enum(container, function, parameter, sip, matcher):
+def _parameter_strip_class_enum(container, function, parameter, sip, matcher):
     sip["decl"] = sip["decl"].replace("class ", "").replace("enum ", "")
 
 
-def typedef_discard(container, typedef, sip, matcher):
+def _typedef_discard(container, typedef, sip, matcher):
     sip["name"] = ""
 
 
-def typedef_rewrite_as_int(container, typedef, sip, matcher):
+def _typedef_rewrite_as_int(container, typedef, sip, matcher):
     sip["decl"] = "int"
 
 
-def typedef_rewrite_without_colons(container, typedef, sip, matcher):
+def _typedef_rewrite_without_colons(container, typedef, sip, matcher):
     sip["decl"] = sip["decl"].strip(":")
 
 
-def typedef_rewrite_enums(container, typedef, sip, matcher):
+def _typedef_rewrite_enums(container, typedef, sip, matcher):
     sip["decl"] = sip["args"][0]
 
 
-def variable_discard(container, variable, sip, matcher):
+def _variable_discard(container, variable, sip, matcher):
     sip["name"] = ""
 
 
-def variable_discard_protected(container, variable, sip, matcher):
+def _variable_discard_protected(container, variable, sip, matcher):
     if variable.access_specifier == AccessSpecifier.PROTECTED:
         sip["name"] = ""
 
@@ -93,22 +101,22 @@ def container_rules():
         #
         # SIP does not seem to be able to handle these.
         #
-        [".*", "(QMetaTypeId|QTypeInfo)<.*>", ".*", ".*", ".*", container_discard],
+        [".*", "(QMetaTypeId|QTypeInfo)<.*>", ".*", ".*", ".*", _container_discard],
         #
         # SIP does not seem to be able to handle empty containers.
         #
-        ["Akonadi::AkonadiCore", "Monitor|Protocol", ".*", ".*", ".*", container_discard],
-        ["KParts::ScriptableExtension", "Null|Undefined", ".*", ".*", ".*", container_discard],
+        ["Akonadi::AkonadiCore", "Monitor|Protocol", ".*", ".*", ".*", _container_discard],
+        ["KParts::ScriptableExtension", "Null|Undefined", ".*", ".*", ".*", _container_discard],
         #
         # SIP does not seem to be able to handle templated containers.
         #
-        [".*", ".*<.*", ".*", ".*", ".*", container_discard],
-        ["KPluginFactory", "InheritanceChecker<impl>", ".*", ".*", ".*", container_discard],
+        [".*", ".*<.*", ".*", ".*", ".*", _container_discard],
+        ["KPluginFactory", "InheritanceChecker<impl>", ".*", ".*", ".*", _container_discard],
         #
         # This is pretty much a disaster area. TODO: can we rescue some parts?
         #
-        [".*", "KConfigCompilerSignallingItem", ".*", ".*", ".*", container_discard],
-        ["ConversionCheck", ".*", ".*", ".*", ".*", container_discard],
+        [".*", "KConfigCompilerSignallingItem", ".*", ".*", ".*", _container_discard],
+        ["ConversionCheck", ".*", ".*", ".*", ".*", _container_discard],
     ]
 
 
@@ -118,49 +126,49 @@ def function_rules():
         #
         # Discard functions emitted by QOBJECT.
         #
-        [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", ".*", ".*", function_discard],
+        [".*", "metaObject|qt_metacast|tr|trUtf8|qt_metacall|qt_check_for_QOBJECT_macro", ".*", ".*", ".*", _function_discard],
         #
         # SIP does not support operator=.
         #
-        [".*", "operator=", ".*", ".*", ".*", function_discard],
+        [".*", "operator=", ".*", ".*", ".*", _function_discard],
         #
         # Protected functions which require access to private stuff.
         #
-        ["KJob", ".*", ".*", ".*", ".*KJob::QPrivateSignal.*", function_discard],
+        ["KJob", ".*", ".*", ".*", ".*KJob::QPrivateSignal.*", _function_discard],
         #
         # TODO: Temporarily remove any functions which require templates. SIP seems to support, e.g. QPairs,
         # but we have not made them work yet.
         #
-        [".*", ".*", ".+", ".*", ".*", function_discard],
-        [".*", ".*", ".*", ".*", ".*<.*>.*", function_discard],
-        [".*", ".*", ".*", ".*<.*>.*", ".*", function_discard],
-        [".*", ".*<.*>.*", ".*", ".*", ".*", function_discard],
+        [".*", ".*", ".+", ".*", ".*", _function_discard],
+        [".*", ".*", ".*", ".*", ".*<.*>.*", _function_discard],
+        [".*", ".*", ".*", ".*<.*>.*", ".*", _function_discard],
+        [".*", ".*<.*>.*", ".*", ".*", ".*", _function_discard],
         #
         # Strip protected functions which require private stuff to work.
         #
-        ["KPluginFactory", "KPluginFactory", ".*", ".*", ".*KPluginFactoryPrivate", function_discard],
-        ["KJob", "KJob", ".*", ".*", "KJobPrivate.*", function_discard],
-        ["KCompositeJob", "KCompositeJob", ".*", ".*", "KCompositeJobPrivate.*", function_discard],
+        ["KPluginFactory", "KPluginFactory", ".*", ".*", ".*KPluginFactoryPrivate", _function_discard],
+        ["KJob", "KJob", ".*", ".*", "KJobPrivate.*", _function_discard],
+        ["KCompositeJob", "KCompositeJob", ".*", ".*", "KCompositeJobPrivate.*", _function_discard],
         #
         # This class has inline implementations in the header file.
         #
-        ["KIconEngine|KIconLoader::Group|KPluginName", ".*", ".*", ".*", ".*", function_discard_impl],
-        ["kiconloader.h", "operator\+\+", ".*", ".*", ".*", function_discard_impl],
+        ["KIconEngine|KIconLoader::Group|KPluginName", ".*", ".*", ".*", ".*", _function_discard_impl],
+        ["kiconloader.h", "operator\+\+", ".*", ".*", ".*", _function_discard_impl],
         #
         # kshell.h, kconfigbase.sip have inline operators.
         #
-        [".*", "operator\|", ".*", ".*", "", function_discard],
+        [".*", "operator\|", ".*", ".*", "", _function_discard],
         #
         # kuser.h has inline operators.
         #
-        [".*", "operator!=", ".*", ".*", "const KUser(Group){0,1} &other", function_discard],
-        ["KFileItem", "operator QVariant", ".*", ".*", ".*", function_discard],
-        ["KService", "operator KPluginName", ".*", ".*", ".*", function_discard],
+        [".*", "operator!=", ".*", ".*", "const KUser(Group){0,1} &other", _function_discard],
+        ["KFileItem", "operator QVariant", ".*", ".*", ".*", _function_discard],
+        ["KService", "operator KPluginName", ".*", ".*", ".*", _function_discard],
         #
         # SIP thinks there are duplicate signatures.
         #
-        ["KMacroExpanderBase", "expandMacrosShellQuote", ".*", ".*", "QString &str", function_discard],
-        ["KMultiTabBar", "button|tab", ".*", ".*", ".*", function_discard_class],
+        ["KMacroExpanderBase", "expandMacrosShellQuote", ".*", ".*", "QString &str", _function_discard],
+        ["KMultiTabBar", "button|tab", ".*", ".*", ".*", _function_discard_class],
     ]
 
 
@@ -170,16 +178,16 @@ def parameter_rules():
         #
         # Annotate with Transfer or TransferThis when we see a parent object.
         #
-        [".*", ".*", ".*", r"[KQ][A-Za-z_0-9]+\W*\*\W*parent", ".*", parameter_transfer_to_parent],
-        ["KDateTime", "fromString", "negZero", ".*", ".*", parameter_out_kdatetime_negzero],
-        ["KPty", "tcGetAttr|tcSetAttr", "ttmode", ".*", ".*", parameter_rewrite_without_colons],
-        ["KUser|KUserGroup", ".*", "maxCount", ".*", ".*", parameter_set_max_int],
+        [".*", ".*", ".*", r"[KQ][A-Za-z_0-9]+\W*\*\W*parent", ".*", _parameter_transfer_to_parent],
+        ["KDateTime", "fromString", "negZero", ".*", ".*", _parameter_out_kdatetime_negzero],
+        ["KPty", "tcGetAttr|tcSetAttr", "ttmode", ".*", ".*", _parameter_rewrite_without_colons],
+        ["KUser|KUserGroup", ".*", "maxCount", ".*", ".*", _parameter_set_max_int],
         #
         # TODO: Temporarily trim any parameters which start "enum".
         #
-        ["KAboutData", ".*", "licenseType", ".*", ".*", parameter_strip_class_enum],
-        ["KMultiTabBarButton", ".*Event", ".*", ".*", ".*", parameter_strip_class_enum],
-        ["KRockerGesture", "KRockerGesture", ".*", ".*", ".*", parameter_strip_class_enum],
+        ["KAboutData", ".*", "licenseType", ".*", ".*", _parameter_strip_class_enum],
+        ["KMultiTabBarButton", ".*Event", ".*", ".*", ".*", _parameter_strip_class_enum],
+        ["KRockerGesture", "KRockerGesture", ".*", ".*", ".*", _parameter_strip_class_enum],
     ]
 
 
@@ -189,30 +197,30 @@ def typedef_rules():
         #
         # Rewrite QFlags<> templates as int.
         #
-        [".*", ".*", ".*", "QFlags<.*>", typedef_rewrite_as_int],
+        [".*", ".*", ".*", "QFlags<.*>", _typedef_rewrite_as_int],
         #
         # Rewrite uid_t, gid_t as int.
         #
-        [".*", ".*", ".*", "uid_t|gid_t", typedef_rewrite_as_int],
+        [".*", ".*", ".*", "uid_t|gid_t", _typedef_rewrite_as_int],
         #
         # Rewrite without leading "::".
         #
-        ["org::kde", "KDirNotify", "", ".*", typedef_rewrite_without_colons],
-        ["org::kde", "KSSLDInterface", "", ".*", typedef_rewrite_without_colons],
+        ["org::kde", "KDirNotify", "", ".*", _typedef_rewrite_without_colons],
+        ["org::kde", "KSSLDInterface", "", ".*", _typedef_rewrite_without_colons],
         #
         #
         #
-        ["KProtocolInfo", "FileNameUsedForCopying", ".*", ".*", typedef_rewrite_enums],
-        ["KSycoca", "DatabaseType", ".*", ".*", typedef_rewrite_enums],
+        ["KProtocolInfo", "FileNameUsedForCopying", ".*", ".*", _typedef_rewrite_enums],
+        ["KSycoca", "DatabaseType", ".*", ".*", _typedef_rewrite_enums],
         #
         # There are two version of KSharedConfigPtr in ksharedconfig.h and kconfiggroup.h.
         #
-        [".*", "KSharedConfigPtr", ".*", "QExplicitlySharedDataPointer<KSharedConfig>", typedef_discard],
+        [".*", "KSharedConfigPtr", ".*", "QExplicitlySharedDataPointer<KSharedConfig>", _typedef_discard],
         #
         # There are two version of Display in kstartupinfo.h and kxmessages.h.
         #
-        ["kstartupinfo.h|kxmessages.h", "Display", ".*", ".*", typedef_discard],
-        ["kmimetypetrader.h", "KServiceOfferList", ".*", ".*", typedef_discard],
+        ["kstartupinfo.h|kxmessages.h", "Display", ".*", ".*", _typedef_discard],
+        ["kmimetypetrader.h", "KServiceOfferList", ".*", ".*", _typedef_discard],
     ]
 
 
@@ -222,13 +230,41 @@ def variable_rules():
         #
         # Discard variable emitted by QOBJECT.
         #
-        [".*", "staticMetaObject", ".*", variable_discard],
+        [".*", "staticMetaObject", ".*", _variable_discard],
         #
         # Discard "private" variables (check they are protected!).
         #
-        [".*", "d_ptr", ".*", variable_discard_protected],
+        [".*", "d_ptr", ".*", _variable_discard_protected],
         #
         # Discard variable emitted by QOBJECT.
         #
-        [".*", "d", ".*Private.*", variable_discard],
+        [".*", "d", ".*Private.*", _variable_discard],
     ]
+
+
+class RuleSet(rules.RuleSet):
+    """
+    SIP file generator rules. This is a set of (short, non-public) functions
+    and regular expression-based matching rules.
+    """
+    def __init__(self):
+        self._container_db = rules.ContainerRuleDb(container_rules)
+        self._fn_db = rules.FunctionRuleDb(function_rules)
+        self._param_db = rules.ParameterRuleDb(parameter_rules)
+        self._typedef_db = rules.TypedefRuleDb(typedef_rules)
+        self._var_db = rules.VariableRuleDb(variable_rules)
+
+    def container_rules(self):
+        return self._container_db
+
+    def function_rules(self):
+        return self._fn_db
+
+    def param_rules(self):
+        return self._param_db
+
+    def typedef_rules(self):
+        return self._typedef_db
+
+    def var_rules(self):
+        return self._var_db

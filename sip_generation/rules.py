@@ -19,7 +19,7 @@
 #
 """SIP file generator rules engine for PyKDE."""
 from __future__ import print_function
-
+from abc import *
 import argparse
 import gettext
 import inspect
@@ -93,6 +93,8 @@ class Rule(object):
 
 
 class AbstractCompiledRuleDb(object):
+    __metaclass__ = ABCMeta
+
     def __init__(self, db, parameter_names):
         self.db = db
         self.compiled_rules = []
@@ -115,6 +117,7 @@ class AbstractCompiledRuleDb(object):
                 return matcher, rule
         return None, None
 
+    @abstractmethod
     def apply(self, *args):
         raise NotImplemented(_("Missing subclass"))
 
@@ -465,27 +468,52 @@ class VariableRuleDb(AbstractCompiledRuleDb):
 
 
 class RuleSet(object):
-    def __init__(self, rules_module):
-        self._container_rules = ContainerRuleDb(rules_module.container_rules)
-        self._fn_rules = FunctionRuleDb(rules_module.function_rules)
-        self._param_rules = ParameterRuleDb(rules_module.parameter_rules)
-        self._typedef_rules = TypedefRuleDb(rules_module.typedef_rules)
-        self._var_rules = VariableRuleDb(rules_module.variable_rules)
+    __metaclass__ = ABCMeta
 
+    @abstractmethod
     def container_rules(self):
-        return self._container_rules
+        """
+        Return a compiled list of rules for containers.
 
-    def fn_rules(self):
-        return self._fn_rules
+        :return: A ContainerRuleDb instance
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
 
+    @abstractmethod
+    def function_rules(self):
+        """
+        Return a compiled list of rules for functions.
+
+        :return: A FunctionRuleDb instance
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
+    @abstractmethod
     def param_rules(self):
-        return self._param_rules
+        """
+        Return a compiled list of rules for function parameters.
 
+        :return: A ParameterRuleDb instance
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
+    @abstractmethod
     def typedef_rules(self):
-        return self._typedef_rules
+        """
+        Return a compiled list of rules for typedefs.
 
+        :return: A TypedefRuleDb instance
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
+    @abstractmethod
     def var_rules(self):
-        return self._var_rules
+        """
+        Return a compiled list of rules for variables.
+
+        :return: A VariableRuleDb instance
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
 
 
 def main(argv=None):

@@ -31,8 +31,6 @@ import traceback
 from clang import cindex
 from clang.cindex import AccessSpecifier, CursorKind, SourceRange, StorageClass, TokenKind, TypeKind
 
-from rules import RuleSet
-
 
 class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
     pass
@@ -106,7 +104,7 @@ class SipGenerator(object):
         #
         # Statically prepare the rule logic. This takes the rules provided by the user and turns them into code.
         #
-        self.rule_set = RuleSet(sys.modules["project_rules"])
+        self.rule_set = getattr(sys.modules["project_rules"], "RuleSet")()
         self.dump_includes = dump_includes
         self.dump_privates = dump_privates
         self.diagnostics = set()
@@ -439,7 +437,7 @@ class SipGenerator(object):
         decl = ", ".join(parameters)
         decl = decl.replace("* ", "*").replace("& ", "&")
         sip["decl"] = decl
-        self.rule_set.fn_rules().apply(container, function, sip)
+        self.rule_set.function_rules().apply(container, function, sip)
         #
         # Now the rules have run, add any prefix/suffix.
         #

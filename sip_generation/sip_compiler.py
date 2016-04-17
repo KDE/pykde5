@@ -195,8 +195,8 @@ def main(argv=None):
                         help=_("Project rules"))
     parser.add_argument("--select", default=".*", type=lambda s: re.compile(s, re.I) if not s.startswith("@") else s[1:],
                         help=_("Regular expression of SIP modules from '--project-rules' to be processed, or a filename starting with '@'"))
+    parser.add_argument("sip", help=_("Root of SIP modules to process"))
     parser.add_argument("cxx", help=_("C++ output directory"))
-    parser.add_argument("sip", default="sip", help=_("Root of SIP modules to process"))
     try:
         args = parser.parse_args(argv[1:])
         if args.verbose:

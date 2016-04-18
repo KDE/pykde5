@@ -47,6 +47,11 @@ def _function_discard_impl(container, function, sip, matcher):
         sip["name"] = ""
 
 
+def _function_discard_protected(container, function, sip, matcher):
+    if function.access_specifier == AccessSpecifier.PROTECTED:
+        sip["name"] = ""
+
+
 def _parameter_out_kdatetime_negzero(container, function, parameter, sip, matcher):
     sip["annotations"].add("Out")
 
@@ -177,6 +182,8 @@ def function_rules():
         #
         ["KMacroExpanderBase", "expandMacrosShellQuote", ".*", ".*", "QString &str", _function_discard],
         ["KMultiTabBar", "button|tab", ".*", ".*", ".*", _function_discard_class],
+        ["KCalCore::Duration", "operator bool|operator!", ".*", ".*", "", _function_discard],
+        [".*", ".*", ".*", ".*", ".*Private.*", _function_discard_protected],
     ]
 
 
@@ -259,10 +266,10 @@ def variable_rules():
         # Discard "private" variables (check they are protected!).
         #
         [".*", "d_ptr", ".*", _variable_discard_protected],
+        [".*", "d", ".*Private.*", _variable_discard_protected],
         #
-        # Discard variable emitted by QOBJECT.
+        # [] -> *
         #
-        [".*", "d", ".*Private.*", _variable_discard],
         ["Akonadi::Item", "FullPayload", ".*", _variable_array_to_star],
         ["Akonadi::Tag", "PLAIN|GENERIC", ".*", _variable_array_to_star],
     ]

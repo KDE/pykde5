@@ -99,6 +99,10 @@ def _variable_discard_protected(container, variable, sip, matcher):
         sip["name"] = ""
 
 
+def _variable_array_to_star(container, variable, sip, matcher):
+    sip["decl"] = sip["decl"].replace("[]", "*")
+
+
 def container_rules():
 
     return [
@@ -254,6 +258,7 @@ def variable_rules():
         # Discard variable emitted by QOBJECT.
         #
         [".*", "d", ".*Private.*", _variable_discard],
+        ["Akonadi::Item", "FullPayload", ".*", _variable_array_to_star],
     ]
 
 

@@ -118,7 +118,7 @@ class CxxDriver(object):
         # Make sure any errors mention the file that was being processed.
         #
         try:
-            logger.info(_("Creating {} from {}").format(full_output, source))
+            logger.info(_("Creating {}").format(full_output))
             #
             # Suppress the feature that corresponds to the SIP file being processed to avoid feeding SIP %Import
             # clauses which recursively refer to module beng processed. we do this by cloaking each in a %Feature,
@@ -156,7 +156,6 @@ class CxxDriver(object):
             #makefile.extra_libs = ["KParts"]
             #
             makefile.generate()
-            logger.info(_("Compiling {}").format(full_output))
             self._run_command(["make", "-f", os.path.basename(make_file)], cwd=full_output)
         except Exception as e:
             logger.error("{} while processing {}".format(e, source))

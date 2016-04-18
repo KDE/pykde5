@@ -229,6 +229,10 @@ def typedef_rules():
         #
         ["kstartupinfo.h|kxmessages.h", "Display", ".*", ".*", _typedef_discard],
         ["kmimetypetrader.h", "KServiceOfferList", ".*", ".*", _typedef_discard],
+        #
+        # Redundant typedef.
+        #
+        ["agenttype.h", "QVariantMap", ".*", ".*", _typedef_discard],
     ]
 
 

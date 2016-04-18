@@ -329,8 +329,8 @@ class SipGenerator(object):
             access_specifier = "signals:"
         elif access_specifier.endswith("slots:") or access_specifier.endswith("Q_SLOTS:"):
             access_specifier = access_specifier.split()[0] + ":"
-        elif access_specifier.startswith("Q_"):
-            access_specifier = "public:"
+        elif access_specifier not in ["public:", "protected:", "private:"]:
+            access_specifier = "public: // Mapped from " + access_specifier
         pad = " " * ((level - 1) * 4)
         decl = pad + access_specifier + "\n"
         return decl

@@ -243,7 +243,8 @@ def unexposed_rules():
         # Discard ....
         #
         ["Akonadi", ".*", ".*Item::setPayloadImpl.*", _unexposed_discard],
-        [".*", ".*", ".*AKONADI_EXCEPTION_MAKE_TRIVIAL_INSTANCE.*", _unexposed_discard],
+        ["Akonadi", ".*", ".*std::enable_if.*", _unexposed_discard],
+        ["exception.h", ".*", ".*AKONADI_EXCEPTION_MAKE_TRIVIAL_INSTANCE.*", _unexposed_discard],
     ]
 
 
@@ -263,6 +264,7 @@ def variable_rules():
         #
         [".*", "d", ".*Private.*", _variable_discard],
         ["Akonadi::Item", "FullPayload", ".*", _variable_array_to_star],
+        ["Akonadi::Tag", "PLAIN|GENERIC", ".*", _variable_array_to_star],
     ]
 
 

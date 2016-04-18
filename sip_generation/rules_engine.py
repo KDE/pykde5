@@ -73,8 +73,8 @@ class Rule(object):
     def match(self, candidate):
         return self.matcher.match(candidate)
 
-    def trace_result(self, parents, original, modified):
-        fqn = parents + "::" + original["name"]
+    def trace_result(self, parents, item, original, modified):
+        fqn = parents + "::" + original["name"] + "[" + str(item.extent.start.line) + "]"
         if not modified["name"]:
             logger.debug(_("Rule {} suppressed {}, {}").format(self, fqn, original))
         else:
@@ -189,7 +189,7 @@ class ContainerRuleDb(AbstractCompiledRuleDb):
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, sip, matcher)
-            rule.trace_result(parents, before, sip)
+            rule.trace_result(parents, container, before, sip)
 
 
 class FunctionRuleDb(AbstractCompiledRuleDb):
@@ -260,7 +260,7 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, function, sip, matcher)
-            rule.trace_result(parents, before, sip)
+            rule.trace_result(parents, function, before, sip)
 
 
 class ParameterRuleDb(AbstractCompiledRuleDb):
@@ -333,7 +333,7 @@ class ParameterRuleDb(AbstractCompiledRuleDb):
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, function, parameter, sip, matcher)
-            rule.trace_result(parents, before, sip)
+            rule.trace_result(parents, parameter, before, sip)
 
 
 class TypedefRuleDb(AbstractCompiledRuleDb):
@@ -399,7 +399,7 @@ class TypedefRuleDb(AbstractCompiledRuleDb):
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, typedef, sip, matcher)
-            rule.trace_result(parents, before, sip)
+            rule.trace_result(parents, typedef, before, sip)
 
 
 class UnexposedRuleDb(AbstractCompiledRuleDb):
@@ -528,7 +528,7 @@ class VariableRuleDb(AbstractCompiledRuleDb):
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, variable, sip, matcher)
-            rule.trace_result(parents, before, sip)
+            rule.trace_result(parents, variable, before, sip)
 
 
 class RuleSet(object):

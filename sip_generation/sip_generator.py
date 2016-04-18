@@ -76,7 +76,7 @@ TEMPLATE_KINDS = [
 class SipGenerator(object):
     _libclang = None
 
-    def __init__(self, project_rules, dump_includes=False, dump_privates=False):
+    def __init__(self, project_rules, verbose=False, dump_includes=False, dump_privates=False):
         """
         Constructor.
 
@@ -92,6 +92,7 @@ class SipGenerator(object):
         if dump_includes:
             for include in sorted(self.exploded_includes):
                 logger.debug(_("Using includes from {}").format(include))
+        self.verbose = verbose
         self.dump_includes = dump_includes
         self.dump_privates = dump_privates
         self.diagnostics = set()
@@ -258,6 +259,9 @@ class SipGenerator(object):
                 else:
                     SipGenerator._report_ignoring(container, member)
             if decl:
+                if self.verbose:
+                    pad = " " * ((level + 1) * 4)
+                    body += pad + "// {}\n".format(SipGenerator.describe(member))
                 body += decl
         #
         # Empty containers are still useful if they provide namespaces.
@@ -844,7 +848,7 @@ def main(argv=None):
         # Generate!
         #
         rules = rules_engine.rules(args.project_rules, args.includes + "," + args.sources, "")
-        g = SipGenerator(rules)
+        g = SipGenerator(rules, args.verbose)
         body, includes = g.create_sip(args.sources, args.source)
         if body:
             print(body)

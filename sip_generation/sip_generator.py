@@ -304,8 +304,7 @@ class SipGenerator(object):
                 if sip["template_parameters"]:
                     decl = pad + "template <" + sip["template_parameters"] + ">\n" + decl
                 decl += "\n" + pad + "{\n"
-                if level == 0:
-                    decl += "%TypeHeaderCode\n#include <{}>\n%End\n".format(h_file)
+                decl += "%TypeHeaderCode\n#include <{}>\n%End\n".format(h_file)
                 body = decl + sip["body"] + pad + "};\n"
             else:
                 body = pad + "// Discarded {}\n".format(SipGenerator.describe(container))

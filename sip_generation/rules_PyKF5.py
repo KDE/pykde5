@@ -86,6 +86,10 @@ def _typedef_rewrite_enums(container, typedef, sip, matcher):
     sip["decl"] = sip["args"][0]
 
 
+def _unexposed_discard(container, unexposed, sip, matcher):
+    sip["name"] = ""
+
+
 def _variable_discard(container, variable, sip, matcher):
     sip["name"] = ""
 
@@ -224,6 +228,17 @@ def typedef_rules():
     ]
 
 
+def unexposed_rules():
+
+    return [
+        #
+        # Discard ....
+        #
+        ["Akonadi", ".*", ".*Item::setPayloadImpl.*", _unexposed_discard],
+        [".*", ".*", ".*AKONADI_EXCEPTION_MAKE_TRIVIAL_INSTANCE.*", _unexposed_discard],
+    ]
+
+
 def variable_rules():
 
     return [
@@ -254,6 +269,7 @@ class RuleSet(rules_engine.RuleSet):
         self._fn_db = rules_engine.FunctionRuleDb(function_rules)
         self._param_db = rules_engine.ParameterRuleDb(parameter_rules)
         self._typedef_db = rules_engine.TypedefRuleDb(typedef_rules)
+        self._unexposed_db = rules_engine.UnexposedRuleDb(unexposed_rules)
         self._var_db = rules_engine.VariableRuleDb(variable_rules)
 
     def container_rules(self):
@@ -267,6 +283,9 @@ class RuleSet(rules_engine.RuleSet):
 
     def typedef_rules(self):
         return self._typedef_db
+
+    def unexposed_rules(self):
+        return self._unexposed_db
 
     def var_rules(self):
         return self._var_db

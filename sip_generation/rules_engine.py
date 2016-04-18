@@ -402,6 +402,70 @@ class TypedefRuleDb(AbstractCompiledRuleDb):
             rule.trace_result(parents, before, sip)
 
 
+class UnexposedRuleDb(AbstractCompiledRuleDb):
+    """
+    THE RULES FOR UNEXPOSED ITEMS.
+
+    These are used to customise the behaviour of the SIP generator by allowing
+    the declaration for any unexposed item to be customised, for example to
+    add SIP compiler annotations.
+
+    Each entry in the raw rule database must be a list with members as follows:
+
+        0. A regular expression which matches the fully-qualified name of the
+        "container" enclosing the unexposed item.
+
+        1. A regular expression which matches the unexposed item name.
+
+        2. A regular expression which matches the unexposed item declaration.
+
+        3. A function.
+
+    In use, the database is walked in order from the first entry. If the regular
+    expressions are matched, the function is called, and no further entries are
+    walked. The function is called with the following contract:
+
+        def unexposed_xxx(container, unexposed, sip, matcher):
+            '''
+            Return a modified declaration for the given container.
+
+            :param container:   The clang.cindex.Cursor for the container.
+            :param unexposed:   The clang.cindex.Cursor for the unexposed item.
+            :param sip:         A dict with the following keys:
+
+                                    name                The name of the unexposed item.
+                                    decl                The declaration.
+                                    annotations         Any SIP annotations.
+
+            :param matcher:         The re.Match object. This contains named
+                                    groups corresponding to the key names above
+                                    EXCEPT annotations.
+
+            :return: An updated set of sip.xxx values. Setting sip.name to the
+                     empty string will cause the unexposed item to be suppressed.
+            '''
+
+    :return: The compiled form of the rules.
+    """
+    def __init__(self, db):
+        super(UnexposedRuleDb, self).__init__(db, ["container", "unexposed", "decl"])
+
+    def apply(self, container, unexposed, sip):
+        """
+        Walk over the rules database for unexposed items, applying the first matching transformation.
+
+        :param container:           The clang.cindex.Cursor for the container.
+        :param unexposed:           The clang.cindex.Cursor for the unexposed item.
+        :param sip:                 The SIP dict.
+        """
+        parents = _parents(unexposed)
+        matcher, rule = self._match(parents, sip["name"], sip["decl"])
+        if matcher:
+            before = deepcopy(sip)
+            rule.fn(container, unexposed, sip, matcher)
+            rule.trace_result(parents, unexposed, before, sip)
+
+
 class VariableRuleDb(AbstractCompiledRuleDb):
     """
     THE RULES FOR VARIABLES.
@@ -515,6 +579,15 @@ class RuleSet(object):
         raise NotImplemented(_("Missing subclass implementation"))
 
     @abstractmethod
+    def unexposed_rules(self):
+        """
+        Return a compiled list of rules for unexposed itesm.
+
+        :return: An UnexposedRuleDb instance
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
+    @abstractmethod
     def var_rules(self):
         """
         Return a compiled list of rules for variables.
@@ -607,7 +680,8 @@ def main(argv=None):
         #
         # Generate help!
         #
-        for db in [RuleSet, ContainerRuleDb, FunctionRuleDb, ParameterRuleDb, TypedefRuleDb, VariableRuleDb]:
+        for db in [RuleSet, ContainerRuleDb, FunctionRuleDb, ParameterRuleDb, TypedefRuleDb, UnexposedRuleDb,
+                   VariableRuleDb]:
             print(inspect.getdoc(db))
             print()
     except Exception as e:

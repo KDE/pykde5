@@ -245,14 +245,16 @@ class SipGenerator(object):
                 pass
             else:
                 text = self._read_source(member.extent)
-                if member.kind in [CursorKind.UNEXPOSED_ATTR, CursorKind.VISIBILITY_ATTR] and skippable_attribute(
-                        member, text):
-                    pass
+                if member.kind in [CursorKind.UNEXPOSED_ATTR, CursorKind.VISIBILITY_ATTR]:
+                    if skippable_attribute(member, text):
+                        pass
+                    else:
+                        decl = self._unexposed_get(container, member, text, level + 1)
                 elif member.kind == CursorKind.UNEXPOSED_DECL:
                     if SipGenerator.CONTAINER_SKIPPABLE_UNEXPOSED_DECL.search(text):
                         pass
                     else:
-                        decl = self._unexposed_decl_get(container, member)
+                        decl = self._unexposed_get(container, member, text, level + 1)
                 else:
                     SipGenerator._report_ignoring(container, member)
             if decl:
@@ -659,32 +661,31 @@ class SipGenerator(object):
             decl = pad + "// Discarded {}\n".format(SipGenerator.describe(typedef))
         return decl
 
-    def _unexposed_decl_get(self, parent, decl):
+    def _unexposed_get(self, container, unexposed, text, level):
         """
         The parser does not seem to provide access to the complete text of an unexposed decl.
 
             1. Run the lexer from "here" to the end of the outer scope, bailing out when we see the ";"
             or a "{" marking the end.
         """
-        possible_extent = SourceRange.from_locations(decl.extent.start, parent.extent.end)
-        text = ""
-        found_end = False
-        was_punctuated = True
-        for token in self.tu.get_tokens(extent=possible_extent):
-            if token.spelling in [";", "{"]:
-                found_end = True
-                break
-            elif token.kind == TokenKind.PUNCTUATION:
-                was_punctuated = True
-                text += token.spelling
-            else:
-                if not was_punctuated:
-                    text += " "
-                text += token.spelling
-                was_punctuated = False
-        if not found_end and text:
-            RuntimeError(_("No end found for {}::{}, '{}'").format(parent.spelling, decl.spelling, text))
-        return text
+        sip = {
+            "name": unexposed.displayname,
+            "annotations": set()
+        }
+        #
+        # Flesh out the SIP context for the rules engine.
+        #
+        sip["decl"] = text
+        self.rules.unexposed_rules().apply(container, unexposed, sip)
+        #
+        # Now the rules have run, add any prefix/suffix.
+        #
+        pad = " " * (level * 4)
+        if sip["name"]:
+            decl = pad + sip["decl"] + "\n"
+        else:
+            decl = pad + "// Discarded {}\n".format(SipGenerator.describe(unexposed))
+        return decl
 
     def _var_get(self, container, variable, level):
         """

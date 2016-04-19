@@ -47,6 +47,11 @@ def _function_discard_impl(container, function, sip, matcher):
         sip["name"] = ""
 
 
+def _function_discard_non_const(container, function, sip, matcher):
+    if not sip["suffix"]:
+        sip["name"] = ""
+
+
 def _function_discard_protected(container, function, sip, matcher):
     if function.access_specifier == AccessSpecifier.PROTECTED:
         sip["name"] = ""
@@ -183,6 +188,7 @@ def function_rules():
         ["KMacroExpanderBase", "expandMacrosShellQuote", ".*", ".*", "QString &str", _function_discard],
         ["KMultiTabBar", "button|tab", ".*", ".*", ".*", _function_discard_class],
         ["KCalCore::Duration", "operator bool|operator!", ".*", ".*", "", _function_discard],
+        ["KPageDialog", "pageWidget|buttonBox", ".*", ".*", "", _function_discard_non_const],
         [".*", ".*", ".*", ".*", ".*Private.*", _function_discard_protected],
     ]
 

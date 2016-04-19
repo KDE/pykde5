@@ -232,6 +232,10 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
                                     template_parameters Any template parameters.
                                     fn_result           Result, if not a constructor.
                                     decl                The declaration.
+                                    prefix              Leading keyworks ("static", "const"). Separated by space,
+                                                        ends with a space.
+                                    suffix              Trailing keywords ("const"). Separated by space, starts with
+                                                        space.
                                     annotations         Any SIP annotations.
 
             :param matcher:         The re.Match object. This contains named

@@ -429,20 +429,17 @@ class SipGenerator(object):
         decl = ", ".join(parameters)
         decl = decl.replace("* ", "*").replace("& ", "&")
         sip["decl"] = decl
+        sip["prefix"], sip["suffix"] = self._fn_get_keywords(function)
         self.rules.function_rules().apply(container, function, sip)
-        #
-        # Now the rules have run, add any prefix/suffix.
-        #
         pad = " " * (level * 4)
         if sip["name"]:
-            prefix, suffix = self._fn_get_keywords(function)
             decl = sip["name"] + "(" + sip["decl"] + ")"
             if sip["fn_result"]:
                 if sip["fn_result"][-1] in "*&":
                     decl = sip["fn_result"] + decl
                 else:
                     decl = sip["fn_result"] + " " + decl
-            decl = pad + prefix + decl + suffix
+            decl = pad + sip["prefix"] + decl + sip["suffix"]
             if sip["annotations"]:
                 decl += " /" + ",".join(sip["annotations"]) + "/"
             if sip["template_parameters"]:

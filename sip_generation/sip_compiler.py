@@ -79,7 +79,7 @@ class CxxDriver(object):
         error = None
         for source in self.rules.modules():
             try:
-                 if selector.match(source):
+                 if selector.search(source):
                      self.process_one_module(source.strip())
             except Exception as e:
                 if not error:

@@ -205,12 +205,17 @@ class SipBulkGenerator(SipGenerator):
                     result, includes = "", lambda : []
                 elif h_file.endswith("_version.h"):
                     result, includes = "", lambda : []
-                    version_defines = re.compile("^#define\s+(?P<name>\S+_VERSION\S*)\s+(?P<value>.+)")
-                    with open(source, "rU") as f:
-                        for line in f:
-                            match = version_defines.match(line)
-                            if match:
-                                result += "{} = {}\n".format(match.group("name"), match.group("value"))
+                    #
+                    # It turns out that generating a SIP file is the wrong thing for version files. TODO: create
+                    # a .py file directly.
+                    #
+                    if False:
+                        version_defines = re.compile("^#define\s+(?P<name>\S+_VERSION\S*)\s+(?P<value>.+)")
+                        with open(source, "rU") as f:
+                            for line in f:
+                                match = version_defines.match(line)
+                                if match:
+                                    result += "{} = {}\n".format(match.group("name"), match.group("value"))
                 else:
                     result, includes = self.create_sip(self.root, h_file)
                 direct_includes = [i.include.name for i in includes() if i.depth == 1]

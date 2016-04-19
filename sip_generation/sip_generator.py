@@ -264,12 +264,16 @@ class SipGenerator(object):
                     body += pad + "// {}\n".format(SipGenerator.describe(member))
                 body += decl
         #
-        # Empty containers are still useful if they provide namespaces.
+        # Empty containers are still useful if they provide namespaces or forward declarations.
         #
         if not body:
+            body = "\n"
             text = self._read_source(container.extent)
-            if text.endswith("}"):
-                body = "\n"
+            if not text.endswith("}"):
+                #
+                # Forward declaration.
+                #
+                sip["annotations"].add("External")
         if body and level >= 0:
             #
             # There does not seem to be an obvious way to tell a class from a struct. That should matter...
@@ -297,15 +301,22 @@ class SipGenerator(object):
             pad = " " * (level * 4)
             if sip["name"]:
                 decl = pad + sip["decl"]
-                if sip["base_specifiers"]:
-                    decl += ": " + sip["base_specifiers"]
-                if sip["annotations"]:
-                    decl += " /" + ",".join(sip["annotations"]) + "/"
-                if sip["template_parameters"]:
-                    decl = pad + "template <" + sip["template_parameters"] + ">\n" + decl
-                decl += "\n" + pad + "{\n"
-                decl += "%TypeHeaderCode\n#include <{}>\n%End\n".format(h_file)
-                body = decl + sip["body"] + pad + "};\n"
+                if "External" in sip["annotations"]:
+                    #
+                    # SIP /External/ does not seem to work as one might wish. Suppress.
+                    #
+                    body = decl + " /External/;\n"
+                    body = pad + "// Discarded {}\n".format(SipGenerator.describe(container))
+                else:
+                    if sip["base_specifiers"]:
+                        decl += ": " + sip["base_specifiers"]
+                    if sip["annotations"]:
+                        decl += " /" + ",".join(sip["annotations"]) + "/"
+                    if sip["template_parameters"]:
+                        decl = pad + "template <" + sip["template_parameters"] + ">\n" + decl
+                    decl += "\n" + pad + "{\n"
+                    decl += "%TypeHeaderCode\n#include <{}>\n%End\n".format(h_file)
+                    body = decl + sip["body"] + pad + "};\n"
             else:
                 body = pad + "// Discarded {}\n".format(SipGenerator.describe(container))
         return body

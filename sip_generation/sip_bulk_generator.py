@@ -83,7 +83,7 @@ class SipBulkGenerator(SipGenerator):
         #
         # TODO, make sure the entries are unique.
         #
-        with open(feature_list, "a") as f:
+        with open(feature_list, "w") as f:
             for feature in self.all_features:
                 f.write("%Feature(name={})\n".format(feature))
 

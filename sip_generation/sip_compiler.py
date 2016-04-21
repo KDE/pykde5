@@ -79,8 +79,8 @@ class CxxDriver(object):
         error = None
         for source in self.rules.modules():
             try:
-                 if selector.search(source):
-                     self.process_one_module(source.strip())
+                if selector.search(source):
+                    self.process_one_module(source.strip())
             except Exception as e:
                 if not error:
                     error = e
@@ -153,7 +153,10 @@ class CxxDriver(object):
             # Add the library we are wrapping.  The name doesn't include any platform
             # specific prefixes or extensions (e.g. the "lib" prefix on UNIX, or the
             # ".dll" extension on Windows).
-            #makefile.extra_libs = ["KParts"]
+            #
+            # TODO: replace this hardcoded list of libraries with some more apposite.
+            #
+            makefile.extra_libs = ["KF5DBusAddons", "KF5QuickAddons", "KF5ItemModels", "KF5Parts", "KF5People","KF5UnitConversion", "KF5Wallet", "KF5SonnetCore"]
             #
             makefile.generate()
             self._run_command(["make", "-f", os.path.basename(make_file)], cwd=full_output)

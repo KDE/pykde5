@@ -26,6 +26,7 @@ import os
 import inspect
 import logging
 import re
+import shutil
 import sipconfig
 import subprocess
 import sys
@@ -69,6 +70,16 @@ class CxxDriver(object):
         #
         self.sipconfig = sipconfig.Configuration()
         self.pyqt_sip_flags = PYQT_CONFIGURATION["sip_flags"].split()
+        #
+        # Set up the project output directory.
+        #
+        try:
+            os.makedirs(self.output_dir)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+        with open(os.path.join(self.output_dir, "__init__.py"), "w") as f:
+            pass
 
     def process_modules(self, selector):
         """
@@ -104,7 +115,7 @@ class CxxDriver(object):
         #
         # Write the header and the body.
         #
-        full_output = os.path.join(self.output_dir, module_path)
+        full_output = os.path.join(self.output_dir, "tmp", module_path)
         build_file = os.path.join(full_output, "module.sbf")
         make_file = os.path.join(full_output, "module.Makefile")
         module_includes = os.path.join(full_output, "module.includes")
@@ -160,6 +171,15 @@ class CxxDriver(object):
             #
             makefile.generate()
             self._run_command(["make", "-f", os.path.basename(make_file)], cwd=full_output)
+            #
+            # TODO: this is not portable.
+            #
+            cpython_module = os.path.join(full_output, module_path + ".so")
+            #
+            # Publish the module.
+            #
+            logger.info(_("Publishing {}.{}").format(self.output_dir, module_path))
+            shutil.copy(cpython_module, self.output_dir)
         except Exception as e:
             logger.error("{} while processing {}".format(e, source))
             raise
@@ -198,7 +218,7 @@ def main(argv=None):
     parser.add_argument("--select", default=".*", type=lambda s: re.compile(s, re.I) if not s.startswith("@") else s[1:],
                         help=_("Regular expression of SIP modules from '--project-rules' to be processed, or a filename starting with '@'"))
     parser.add_argument("sip", help=_("Root of SIP modules to process"))
-    parser.add_argument("cxx", help=_("C++ output directory"))
+    parser.add_argument("cxx", nargs="?", help=_("C++ output directory, default is project name from '--project-rules'"))
     try:
         args = parser.parse_args(argv[1:])
         if args.verbose:
@@ -209,6 +229,10 @@ def main(argv=None):
         # Compile!
         #
         rules = rules_engine.rules(args.project_rules, args.includes, args.sips)
+        if not args.cxx:
+            args.cxx = rules.project_name()
+        if args.cxx != rules.project_name():
+            logger.warn(_("{} must be renamed to {} before use").format(args.cxx, rules.project_name()))
         d = CxxDriver(rules, args.sip, args.cxx, args.verbose)
         if isinstance(args.select, str):
             d.process_one_module(args.select)

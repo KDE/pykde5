@@ -266,7 +266,7 @@ class SipGenerator(object):
         #
         # Empty containers are still useful if they provide namespaces or forward declarations.
         #
-        if not body:
+        if not body and level >= 0:
             body = "\n"
             text = self._read_source(container.extent)
             if not text.endswith("}"):

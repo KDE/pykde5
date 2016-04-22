@@ -5,7 +5,7 @@ Pre-requisites
 Ubuntu
 ------
 
-    python-clang-3.9 clang-3.9 llvm-3.9
+    python-clang-3.9 libclang-3.9
 
         (Presently available from http://ppa.launchpad.net/paulo-miguel-dias/mesa/ubuntu)
 

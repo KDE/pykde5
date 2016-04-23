@@ -105,8 +105,6 @@ class CxxDriver(object):
             if e.errno != errno.ENOENT:
                 raise
         shutil.copytree(self.input_dir, shippable_sips)
-        with open(os.path.join(self.output_dir, "__init__.py"), "w") as f:
-            pass
         #
         #
         error = None
@@ -194,18 +192,26 @@ class CxxDriver(object):
             makefile.generate()
             self._run_command(["make", "-f", os.path.basename(make_file)], cwd=full_output)
             #
+            # Publish the module.
             # TODO: The hardcoded ".so" is not portable.
             #
-            if module_path:
-                cpython_module = os.path.join(full_output, module_path, package + ".so")
-                logger.info(_("Publishing {}.{}").format(self.rules.project_name(), module_path.replace(os.path.sep, ".")))
+            cpython_module = os.path.join(full_output, package + ".so")
+            package_path = os.path.dirname(module_path)
+            if package_path:
+                logger.info(_("Publishing {}.{}.{}").format(self.rules.project_name(),
+                                                            package_path.replace(os.path.sep, "."), package))
+                package_path = os.path.join(self.output_dir, package_path)
             else:
-                cpython_module = os.path.join(full_output, package + ".so")
                 logger.info(_("Publishing {}.{}").format(self.rules.project_name(), package))
-            #
-            # Publish the module.
-            #
-            shutil.copy(cpython_module, self.output_dir)
+                package_path = self.output_dir
+            try:
+                os.makedirs(package_path)
+            except OSError as e:
+                if e.errno != errno.EEXIST:
+                    raise
+            with open(os.path.join(package_path, "__init__.py"), "w") as f:
+                pass
+            shutil.copy(cpython_module, package_path)
         except Exception as e:
             logger.error("{} while processing {}".format(e, source))
             raise

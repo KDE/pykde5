@@ -99,7 +99,11 @@ class CxxDriver(object):
         # package of .sip files and bindings.
         #
         shippable_sips = os.path.join(self.output_dir, "sip")
-        shutil.rmtree(shippable_sips)
+        try:
+            shutil.rmtree(shippable_sips)
+        except OSError as e:
+            if e.errno != errno.ENOENT:
+                raise
         shutil.copytree(self.input_dir, shippable_sips)
         with open(os.path.join(self.output_dir, "__init__.py"), "w") as f:
             pass

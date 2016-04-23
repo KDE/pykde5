@@ -1,0 +1,187 @@
+HOWTO
+=====
+
+See the separate HOWTO on how to build PyKF5 or your own bindings.
+
+
+THE PROBLEM
+===========
+
+In the olden days, there was a set of Python bindings for Qt4, known as 
+PyQt(4) using a tool called SIP which requies as input .sip files which are 
+similar to the .h files they stand in for. People liked these, and so a 
+corresponding set of PyKDE(4) bindings was developed. When Qt5 came 
+out, it was followed by PyQt5, but the effort of maintaining the .sip files
+for KF5 proved to be a roadblock for the KDE side of things.
+
+One of the key issues was the difficulty of maintaining a tool which could 
+(partially) automate the generation of .sip files from the .h files as the
+C++ syntax evolved.
+
+This project aims to provide a fully automated process for:
+
+    # The .sip generation step.
+    # Compiling the .sip files into ready-to-use bindings.
+
+The two steps are separate just in case the first step is not quite complete 
+:-). The .sip files and bindings are intended to be shippable as-is.
+
+
+THE SOLUTION
+============
+
+The key points are:
+
+    # Using the Python binding to Clang, build tools which use a rules-driven
+      approach to generating the .sip files for *any* C++ project (with a
+      minimal bias to Qt/KDE projects). It is expected that Clang will likely
+      be able to keep up as C++ evolves.
+    # The rules are defined on a "project" (think KF5) basis using regular
+      expressions to define where 2-3 line code fragments to do all
+      customisations and any injection of manual code.
+    # (TODO) Allow manual code to be cleanly injected into the generated code.
+    # (TODO) Figure out if something smart/automatic can be done for some
+      usages of templates (e.g. functions taking QPair<>s).
+
+sip_generator.py, rules_engine.py and rules_xxx.py
+--------------------------------------------------
+
+The core logic is in sip_generator.py. The purpose is to generate a .sip file
+content from a .h file, using a project-specific rules_xxx.py. Typically, the
+rules:
+
+    # Fixup bits of syntax the core logic did not get right.
+    # Discard syntax which SIP cannot handle.
+    # (TODO) Inject any custom code.
+
+The sip_generator has few references to anything Qt or KDE specific (these
+should be generally non-intrusive, and they could be factored out if needed).
+The CLI defaults are suitable for KF5, and will need overriding for other
+projects.
+
+For normal sized projects with a sane number of .h files, this may be all you
+need, along with your custom rules_xxx.py.
+
+sip_bulk_generator.py
+---------------------
+
+The next layer on the generator side is sip_bulk_generator.py. This takes the
+output from sip_generator for a while tree of .f files and renders then into
+"individual" .sip files.
+
+First, various types of "individual" .h files are handled. We either:
+
+    # Generate a non-empty "normal" .sip files containing useful definitions.
+    # Detect an empty .h file which contains exactly one "#include". This is
+      understood to be a "forwarding" header, and generate a "forwarding"
+      .sip.
+    # (TODO) Detect a _version.h file and generate appropriate .py code.
+
+
+At this stage, there is a close 1:1 mapping between the .h hierachy and
+the .sip hierarchy.
+
+Then, for each set of "individual" .sip files in a directory ("normal" or
+"forwarding"), we generate a "module" .sip. This %Includes the "individual"
+.sip files into a %Module, which translates the directory-based namespace on
+the .h side into a Python package (and mirrors what PyQt does).
+
+So far, all this is automatic, driven purely off the .h file directory
+hierarchy.
+
+Finally, rules are then used to select a set of the "module" .sip files (e.g.
+you might only want the ones which conform to the new namespace-style
+convention) to actually generate binding C++ code. In the case of KF5, this
+reduces the ~2000 "individual" .sip files to ~120 .so files which are the new,
+namespaced, bindings which support the "from PyKF5 import KDBusAddons" idiom.
+
+The sip_bulk_generator has no references to anything Qt or KDE specific, but
+does exploit certain patterns that these projects observe, and which are
+expected to be generally applicible. The CLI defaults are suitable for KF5,
+and will need overriding for other projects.
+
+sip_compiler.py
+---------------
+
+This actualy runs the SIP compler, and then the C++ compiler to create the
+bindings.
+
+The sip_compiler side should be fully Qt/KDE agnostic. The CLI defaults are
+suitable for KF5, and will need overriding for other projects.
+
+
+HOW IT WORKS
+============
+
+The sip_generator uses Clang, i.e. a real compiler front end, to parse the
+code into an internal representation exposed through a Python binding. This is
+then walked using the binding to generate the .sip output.
+
+The walk is split into several categories:
+
+    # Containers (the top level "translation unit", C++ namespaces, classes
+      structs, unions).
+    # Functions, including method and constructors.
+    # Function parameters.
+    # enums, typedefs, variable
+
+For each item in each category, and before the corresponding output is
+emitted, the rules_engine is consulted for a matching rule using a system
+based on regular expressions; the first matching rule found invokes a
+project-defined function which can do pretty much anything imaginable to the
+item.
+
+The sip_bulk_generator is where things get interesting. As noted above, it
+runs th sip_compiler over an entire directory tree, and so it has to solve
+certain problems that arise when packaging the "individual" .sip files
+using the "module" .sip files.
+
+Recursive %Import clauses
+-------------------------
+
+It is common in C++ code to have #includes which imply a recursive
+relationship at the SIP module level. For example:
+
+    * KIOCore/kidskfreespaceinfo.h depends on kio/global.h
+    * KIOCore/kio/directorysizejob.h depends on KIOCore/kfileitem.h
+
+which implies that KIOCore/KIOCoremod.sip and KIOCore/kio/kiomod.sip need to
+%Import each other. This is not supported (or likely to be supported) by SIP.
+We solve this by having sip_bulk_generator first:
+
+    # Wrap each %Import in a %Feature.
+    # Create a project-wide list of features in a file "module.features".
+
+and then the sip_compiler uses the SIP compiler's -x (lower case X) option to
+disable the %Feature which guards the unwanted %Import, thus breaking the
+recursion.
+
+Automatic -I generation
+-----------------------
+
+In order for the code generated by the SIP compiler to be successfully
+compiled by the C++ compiler, it is typically necessary to specify a set of
+-I options. Now the exact set of these needed is known to sip_bulk_compiler,
+so it stashes the needed paths using the SIP compiler's %Extract facility.
+Thus, the path data is not seen by the SIP compiler, yet can be extracted
+by the sip_compiler using the SIP compiler's -X (upper case X) option when
+it is run.
+
+After the SIP compiler has been run, the extracted path data is read and then
+passed as -I options into the C++ compiler.
+
+Duplicate forward declarations
+------------------------------
+
+TODO: implement this.
+
+It is common in C++ code to forward declare a class "class Foo;". This is
+supported by the SIP compiler using the /External/ annotation. However, if
+multiple "individual" .sip files which are %Included into a single "module"
+.sip, then SIP complains about the duplicate definitions.
+
+Thus, the sip_generator and sip_bulk_generator conspire to move all such
+forward declarations into the "module" .sip.
+
+
+

@@ -22,6 +22,7 @@ from __future__ import print_function
 import argparse
 import errno
 import gettext
+import glob
 import os
 import inspect
 import logging
@@ -35,7 +36,7 @@ import traceback
 from PyQt5.QtCore import PYQT_CONFIGURATION
 
 import rules_engine
-from sip_bulk_generator import INCLUDES_EXTRACT, feature_for_sip_module
+from sip_bulk_generator import INCLUDES_EXTRACT, MODULE_SIP
 
 
 class HelpFormatter(argparse.ArgumentDefaultsHelpFormatter, argparse.RawDescriptionHelpFormatter):
@@ -50,13 +51,14 @@ _ = _
 
 
 class CxxDriver(object):
-    def __init__(self, project_rules, input_dir, output_dir, verbose):
+    def __init__(self, project_rules, input_dir, output_dir, library_globs, verbose):
         """
         Constructor.
 
         :param project_rules:       The rules for the project.
         :param input_dir:           The source SIP directory.
         :param output_dir:          The destination CXX directory.
+        :param library_globs:       Comma-separated globs of library files.
         :param verbose:             Debug info.
         """
         self.rules = project_rules
@@ -64,6 +66,11 @@ class CxxDriver(object):
         self.sips = self.rules.sips()
         self.input_dir = input_dir
         self.output_dir = output_dir
+        self.libraries = []
+        for lg in library_globs.split(","):
+            lg = lg.strip()
+            libs = [":" + os.path.basename(l) for l in glob.glob(lg)]
+            self.libraries.extend(libs)
         self.verbose = verbose
         #
         # Get the SIP configuration information.
@@ -73,13 +80,12 @@ class CxxDriver(object):
         #
         # Set up the project output directory.
         #
+        self.tmp = os.path.join(self.output_dir, "tmp")
         try:
-            os.makedirs(self.output_dir)
+            os.makedirs(self.tmp)
         except OSError as e:
             if e.errno != errno.EEXIST:
                 raise
-        with open(os.path.join(self.output_dir, "__init__.py"), "w") as f:
-            pass
 
     def process_modules(self, selector):
         """
@@ -87,39 +93,67 @@ class CxxDriver(object):
 
         :param selector:            A regular expression which limits the files from project_root to be processed.
         """
+        #
+        # We are going to process a whole set of modules. We therefore assume
+        # we will need to fixup recursive %Imports and create a shippable
+        # package of .sip files and bindings.
+        #
+        shippable_sips = os.path.join(self.output_dir, "sip")
+        shutil.rmtree(shippable_sips)
+        shutil.copytree(self.input_dir, shippable_sips)
+        with open(os.path.join(self.output_dir, "__init__.py"), "w") as f:
+            pass
+        #
+        #
         error = None
         for source in self.rules.modules():
             try:
+                source = source.strip()
                 if selector.search(source):
-                    self.process_one_module(source.strip())
+                    #
+                    # Suppress the feature that corresponds to the SIP file being processed to avoid feeding SIP
+                    # %Import clauses which recursively refer to module beng processed. we do this by cloaking each
+                    # in a %Feature, and then disabling the one for "this".
+                    #
+                    # To avoid defining the %Feature multiple time, we put them inline in the current module.
+                    #
+                    modified_source = source + ".tmp"
+                    with open(os.path.join(self.input_dir, modified_source), "w") as o:
+                        with open(os.path.join(self.input_dir, source), "rU") as i:
+                            for line in i:
+                                o.write(line)
+                                if line.startswith("%Module"):
+                                    o.write("%Include modules.features\n")
+                    self.process_one_module(modified_source, standalone=False)
             except Exception as e:
                 if not error:
-                    error = e
+                    error = sys.exc_info()
         if error:
-            raise error
+            raise error[1], None, error[2]
 
-    def process_one_module(self, sip_file):
+    def process_one_module(self, sip_file, standalone):
         """
         Run a SIP file.
 
-        :param sip_file:                    A SIP file name.
+        :param sip_file:            A SIP file name.
+        :param standalone:          Are we running a single file, or part of a whole batch?
         """
         source = os.path.join(self.input_dir, sip_file)
         sip_roots = self.sips + [self.input_dir]
         sip_roots = ["-I" + i for i in sip_roots]
         #
-        # Generate a file header. We don't automatically use a .sip suffix because that could cause a clash with the
-        # legacy header on filesystems with case-insensitive lookups (NTFS).
-        #
-        module_path = os.path.dirname(sip_file)
-        #
         # Write the header and the body.
         #
-        full_output = os.path.join(self.output_dir, "tmp", module_path)
+        module_path = os.path.dirname(sip_file)
+        package = os.path.basename(sip_file).split(MODULE_SIP)[0]
+        package = os.path.splitext(package)[0]
+        if module_path:
+            full_output = self.tmp
+        else:
+            full_output = os.path.join(self.tmp, module_path)
         build_file = os.path.join(full_output, "module.sbf")
         make_file = os.path.join(full_output, "module.Makefile")
         module_includes = os.path.join(full_output, "module.includes")
-        modified_source = os.path.join(full_output, os.path.basename(sip_file) + ".tmp")
         try:
             os.makedirs(full_output)
         except OSError as e:
@@ -129,56 +163,44 @@ class CxxDriver(object):
         # Make sure any errors mention the file that was being processed.
         #
         try:
-            logger.info(_("Creating {}").format(full_output))
-            #
-            # Suppress the feature that corresponds to the SIP file being processed to avoid feeding SIP %Import
-            # clauses which recursively refer to module beng processed. we do this by cloaking each in a %Feature,
-            # and then disabling the one for "this".
-            #
-            # To avoid defining the %Feature multiple time, we put them inline in the current module.
-            #
-            with open(modified_source, "w") as o:
-                with open(source, "rU") as i:
-                    for line in i:
-                        o.write(line)
-                        if line.startswith("%Module"):
-                            feature_list = os.path.join(self.input_dir, "modules.features")
-                            tmp = set()
-                            with open(feature_list, "rU") as f:
-                                for feature in f:
-                                    if feature not in tmp:
-                                        tmp.add(feature)
-                                        o.write(feature)
-            logger.debug(modified_source)
+            logger.info(_("Compiling {}").format(source))
             feature = sip_file.replace(os.path.sep, "_").replace(".", "_")
-            cmd = [self.sipconfig.sip_bin, "-c", full_output, "-b", build_file, "-x", feature, "-X",
-                   INCLUDES_EXTRACT + ":" + module_includes] + self.pyqt_sip_flags + sip_roots + [modified_source]
+            if standalone:
+                includes_extract = []
+            else:
+                includes_extract = ["-X", INCLUDES_EXTRACT + ":" + module_includes]
+            cmd = [self.sipconfig.sip_bin, "-c", full_output, "-b", build_file, "-x", feature]
+            cmd += includes_extract + self.pyqt_sip_flags + sip_roots + [source]
             self._run_command(cmd)
             #
             # Create the Makefile.
             #
-            module_includes = self.includes + open(module_includes, "rU").read().split("\n")
+            if standalone:
+                module_includes = self.includes
+            else:
+                module_includes = self.includes + open(module_includes, "rU").read().split("\n")
             self.sipconfig._macros["INCDIR"] = " ".join(module_includes)
             makefile = sipconfig.SIPModuleMakefile(self.sipconfig, build_file, makefile=make_file)
             #
-            # Add the library we are wrapping.  The name doesn't include any platform
-            # specific prefixes or extensions (e.g. the "lib" prefix on UNIX, or the
-            # ".dll" extension on Windows).
+            # Link against the user-specified libraries. Typically, any one module won't need them all, but this
+            # is better than having to specify them by hand.
             #
-            # TODO: replace this hardcoded list of libraries with some more apposite.
-            #
-            makefile.extra_libs = ["KF5DBusAddons", "KF5QuickAddons", "KF5ItemModels", "KF5Parts", "KF5People","KF5UnitConversion", "KF5Wallet", "KF5SonnetCore"]
+            makefile.extra_libs = self.libraries
             #
             makefile.generate()
             self._run_command(["make", "-f", os.path.basename(make_file)], cwd=full_output)
             #
-            # TODO: this is not portable.
+            # TODO: The hardcoded ".so" is not portable.
             #
-            cpython_module = os.path.join(full_output, module_path + ".so")
+            if module_path:
+                cpython_module = os.path.join(full_output, module_path, package + ".so")
+                logger.info(_("Publishing {}.{}").format(self.rules.project_name(), module_path.replace(os.path.sep, ".")))
+            else:
+                cpython_module = os.path.join(full_output, package + ".so")
+                logger.info(_("Publishing {}.{}").format(self.rules.project_name(), package))
             #
             # Publish the module.
             #
-            logger.info(_("Publishing {}.{}").format(self.output_dir, module_path))
             shutil.copy(cpython_module, self.output_dir)
         except Exception as e:
             logger.error("{} while processing {}".format(e, source))
@@ -198,11 +220,20 @@ class CxxDriver(object):
 
 def main(argv=None):
     """
-    Run the SIP compiler, and the "make" the generated code.
+    Run the SIP compiler, and the "make" the generated code. By default, all
+    the modules specified in the rules file will be processed. The set of files
+    can be restricted using the --select option, or a single standalone file
+    specified using the "@" prefix to the --select option.
+
+    The standalone mode also bypasses all of the special processing associated
+    with the bulk processing of modules (see README) because it is assumed the
+    user knows best.
 
     Examples:
 
-        sip_compiler.py cxx sip KParts/kparts/module.sip
+        sip_compiler.py --includes "/usr/include/x86_64-linux-gnu/qt5,/usr/include/x86_64-linux-gnu/qt5/QtCore" --select @kitemmodelsmod.sip sip
+        sip_compiler.py --select KDBusAddons sip 
+        sip_compiler.py sip 
     """
     if argv is None:
         argv = sys.argv
@@ -211,6 +242,8 @@ def main(argv=None):
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
     parser.add_argument("--includes", default="/usr/include/x86_64-linux-gnu/qt5,/usr/include/KF5",
                         help=_("Comma-separated C++ header directories to use"))
+    parser.add_argument("--links", default="/usr/lib/x86_64-linux-gnu/libKF5*.so",
+                        help=_("Comma-separated globs of libraries to use"))
     parser.add_argument("--sips", default="/usr/share/sip/PyQt5",
                         help=_("Comma-separated SIP module directories to use"))
     parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
@@ -233,9 +266,9 @@ def main(argv=None):
             args.cxx = rules.project_name()
         if args.cxx != rules.project_name():
             logger.warn(_("{} must be renamed to {} before use").format(args.cxx, rules.project_name()))
-        d = CxxDriver(rules, args.sip, args.cxx, args.verbose)
+        d = CxxDriver(rules, args.sip, args.cxx, args.links, args.verbose)
         if isinstance(args.select, str):
-            d.process_one_module(args.select)
+            d.process_one_module(args.select, standalone=True)
         else:
             d.process_modules(args.select)
     except Exception as e:

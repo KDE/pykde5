@@ -11,17 +11,17 @@ Ubuntu
 
     sip pyqt5-dev python-pyqt5 
 
-To build Pyqt5
+To build PyKF5
 ==============
 
     #
     # 1. Run the SIP generation phase.
     #
-    ./sip_bulk_generator.py tmp
+    ./sip_bulk_generator.py sip
     #
     # 2. Add import for KParts "%Import KParts/KParts/KPartsmod.sip" to this file:
     #
-    vim tmp/KCoreAddons/KCoreAddonsmod.sip
+    vim sip/KCoreAddons/KCoreAddonsmod.sip
     #
     # 3. Fixup missing bits.
     #
@@ -29,7 +29,15 @@ To build Pyqt5
     #
     # 4. Run the compiler...
     #
-    ./sip_compiler.py tmp cxx
+    ./sip_compiler.py sip
+
+The output is:
+
+    # A "tmp" directory containing .sip files.
+    # A "PyKF5" directory (set as the project name in rules_PyKF5.py) with:
+        * The bindings comprising a __init__.py, and all the .so files
+          such as KItemModels.so.
+        * A disposable "tmp" directory
 
 To build your own bindings
 ==========================
@@ -38,3 +46,9 @@ See the output of running the rules_engine.py as a main program:
 
     ./rules_engine.py
 
+Run the sip_bulk_generator.py and the sip_compiler.py as above but with command 
+line options overriding the defaults (which are intended for PyKF5 and similar 
+frameworks). Optionally, use sip_generator.py if you want a more manual 
+approach.
+
+Each tool has online help accessed via the -h option.

@@ -73,7 +73,7 @@ class SipBulkGenerator(SipGenerator):
         self.omitter = omitter
         self.selector = selector
         self.output_dir = output_dir
-        self.include_to_sip_cache = {}
+        self.include_to_import_cache = {}
         self.all_features = None
 
     def process_tree(self):
@@ -175,14 +175,14 @@ class SipBulkGenerator(SipGenerator):
                 for sip_file in sip_files:
                     f.write("%Include {}\n".format(sip_file))
 
-    def _map_include_to_sip(self, include):
+    def _map_include_to_import(self, include):
         """
         For a given include file, return the corresponding SIP module.
 
         :param include:                 The name of a header file.
         :return: The name of a SIP module which represents the header file.
         """
-        sip = self.include_to_sip_cache.get(include, None)
+        sip = self.include_to_import_cache.get(include, None)
         if sip:
             return sip
         for include_root in self.includes:
@@ -259,7 +259,7 @@ class SipBulkGenerator(SipGenerator):
                         continue
                     if include.endswith("_version.h"):
                         continue
-                    sip = self._map_include_to_sip(include)
+                    sip = self._map_include_to_import(include)
                     if sip:
                         direct_sips.add(sip)
                 #

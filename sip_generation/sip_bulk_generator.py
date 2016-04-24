@@ -113,6 +113,17 @@ class SipBulkGenerator(SipGenerator):
             elif os.path.isdir(srcname):
                 self._walk_tree(srcname)
         #
+        # If a given directory contains forwarding headers and legay headers, the corresponding SIP files
+        # will clash. So, for any forwarding header SIPs, remove any clashing legacy header SIP.
+        #
+        new_style_sips = [s for s in sip_files if not s.endswith(".sip")]
+        old_style_sips = [s for s in sip_files if s.endswith(".sip")]
+        print("Before",old_style_sips, new_style_sips)
+        for n in new_style_sips:
+            old_style_sips = [s for s in old_style_sips if s.lower() != n.lower() + ".sip"]
+        print("After",old_style_sips, new_style_sips)
+        sip_files = set(new_style_sips + old_style_sips)
+        #
         # Create a SIP module including all the SIP files in this directory.
         #
         # NOTE: this is really only best-effort; the output here might have to be edited, or indeed

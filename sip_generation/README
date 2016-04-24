@@ -43,6 +43,7 @@ The key points are:
     # (TODO) Figure out if something smart/automatic can be done for some
       usages of templates (e.g. functions taking QPair<>s).
 
+
 sip_generator.py, rules_engine.py and rules_xxx.py
 --------------------------------------------------
 
@@ -61,6 +62,7 @@ projects.
 
 For normal sized projects with a sane number of .h files, this may be all you
 need, along with your custom rules_xxx.py.
+
 
 sip_bulk_generator.py
 ---------------------
@@ -100,6 +102,7 @@ does exploit certain patterns that these projects observe, and which are
 expected to be generally applicible. The CLI defaults are suitable for KF5,
 and will need overriding for other projects.
 
+
 sip_compiler.py
 ---------------
 
@@ -136,6 +139,7 @@ runs th sip_compiler over an entire directory tree, and so it has to solve
 certain problems that arise when packaging the "individual" .sip files
 using the "module" .sip files.
 
+
 Recursive %Import clauses
 -------------------------
 
@@ -156,6 +160,7 @@ and then the sip_compiler uses the SIP compiler's -x (lower case X) option to
 disable the %Feature which guards the unwanted %Import, thus breaking the
 recursion.
 
+
 Automatic -I generation
 -----------------------
 
@@ -170,6 +175,29 @@ it is run.
 After the SIP compiler has been run, the extracted path data is read and then
 passed as -I options into the C++ compiler.
 
+
+Renaming headers
+-----------------
+
+A common pattern in C++ headers is to have a "legacy" header pointed to by a
+"forwarding" header. The latter #includes the former. This can easily be
+rendered in SIP using a %Include, but that then causes the following practical
+issues:
+
+    * The forwarding SIP's binding depends on the legacy SIP's binding at
+      both link time (which is annoying to automate) and run time (doubling
+      the number of .so files).
+    * The two sets of bindings have names which usually differ only in case
+      (lowercase versus CamelCase) which is a problem on some filesystems,
+      and causes confusion.
+    * It perpetuates the presence of the legacy binding (PyKDE4 -> PyKF5
+      already requires any software being ported to revisit their import
+      clauses, so this is the perfect moment to break that chain).
+
+Instead, we just render the forwarding SIP as a copy of the legacy/real
+content.
+
+
 Duplicate forward declarations
 ------------------------------
 
@@ -182,6 +210,4 @@ multiple "individual" .sip files which are %Included into a single "module"
 
 Thus, the sip_generator and sip_bulk_generator conspire to move all such
 forward declarations into the "module" .sip.
-
-
 

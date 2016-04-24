@@ -224,15 +224,18 @@ class SipBulkGenerator(SipGenerator):
                 elif len(direct_includes) == 1:
                     #
                     # A non-empty SIP file could not be created from the header file. That would be fine except that a
-                    # common pattern is to use a single #include to create a "renaming header" to map a legacy header
-                    # (usually lower case, and ending in .h) into a CamelCase header. Attempt to create a renaming
-                    # SIP header.
+                    # common pattern is to use a single #include to create a "forwarding header" to map a legacy header
+                    # (usually lower case, and ending in .h) into a CamelCase header. Handle the forwarding case...
                     #
                     included_h_file = direct_includes[0][len(self.root) + len(os.path.sep):]
                     #
-                    # We could just %Include the other file, but that would ignore the issue that the two filenames
-                    # usually only differ in case; actually expanding inline sidesteps the problems that woukd cause
-                    # on filesystems without case sensitive semantics (NTFS).
+                    # We could just %Include the other file, but that would ignore the issues that:
+                    #
+                    #    - On filesystems without case sensitive semantics (NTFS) the two filenames usually only
+                    #      differ in case; actually expanding inline avoids making this problem worse (even if it is
+                    #      not  full solution).
+                    #    - The forwarding SIP's .so binding needs the legacy SIP's .so on the system, doubling
+                    #      the number of libraries (and adding to overall confusion, and the case-sensitivity issue).
                     #
                     result, includes = self.create_sip(self.root, included_h_file)
                     direct_includes = [i.include.name for i in includes() if i.depth == 1]

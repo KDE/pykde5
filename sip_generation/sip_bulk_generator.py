@@ -229,12 +229,13 @@ class SipBulkGenerator(SipGenerator):
                     # SIP header.
                     #
                     included_h_file = direct_includes[0][len(self.root) + len(os.path.sep):]
-                    sip_basename = os.path.basename(included_h_file)
-                    sip_basename = os.path.splitext(sip_basename)[0] + ".sip"
-                    module_path = os.path.dirname(included_h_file)
-                    output_file = os.path.join(module_path, sip_basename)
-                    result = "\n%Include {}\n".format(output_file)
-                    direct_includes = [i.include.name for i in includes() if i.depth == 2]
+                    #
+                    # We could just %Include the other file, but that would ignore the issue that the two filenames
+                    # usually only differ in case; actually expanding inline sidesteps the problems that woukd cause
+                    # on filesystems without case sensitive semantics (NTFS).
+                    #
+                    result, includes = self.create_sip(self.root, included_h_file)
+                    direct_includes = [i.include.name for i in includes() if i.depth == 1]
                 else:
                     direct_includes = []
                 #

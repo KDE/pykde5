@@ -97,10 +97,11 @@ class SipBulkGenerator(SipGenerator):
         all_include_roots = set()
         names = sorted(os.listdir(root))
         sip_files = []
+        forwards = []
         for name in names:
             srcname = os.path.join(root, name)
             if os.path.isfile(srcname):
-                sip_file, direct_includes, direct_sips = self._process_one(srcname)
+                sip_file, direct_includes, direct_sips, forwardee = self._process_one(srcname)
                 if sip_file:
                     sip_files.append(sip_file)
                     #
@@ -110,17 +111,19 @@ class SipBulkGenerator(SipGenerator):
                     for include in direct_includes:
                         all_include_roots.add(os.path.dirname(include))
                     all_sip_imports.update(direct_sips)
+                    if forwardee:
+                        forwards.append(forwardee)
             elif os.path.isdir(srcname):
                 self._walk_tree(srcname)
         #
         # If a given directory contains forwarding headers and legay headers, the corresponding SIP files
         # will clash. So, for any forwarding header SIPs, remove any clashing legacy header SIP.
         #
-        new_style_sips = [s for s in sip_files if not s.endswith(".sip")]
-        old_style_sips = [s for s in sip_files if s.endswith(".sip")]
-        for n in new_style_sips:
-            old_style_sips = [s for s in old_style_sips if s.lower() != n.lower() + ".sip"]
-        sip_files = set(new_style_sips + old_style_sips)
+        for f in forwards:
+            try:
+                sip_files.remove(f)
+            except ValueError as e:
+                pass
         #
         # Create a SIP module including all the SIP files in this directory.
         #
@@ -205,6 +208,7 @@ class SipBulkGenerator(SipGenerator):
         :return:                    (output_file, set(direct includes from this file))
         """
         h_file = source[len(self.root) + len(os.path.sep):]
+        forwardee = None
         if self.selector.search(h_file) and not self.omitter.search(h_file):
             #
             # Make sure any errors mention the file that was being processed.
@@ -236,18 +240,21 @@ class SipBulkGenerator(SipGenerator):
                     # common pattern is to use a single #include to create a "forwarding header" to map a legacy header
                     # (usually lower case, and ending in .h) into a CamelCase header. Handle the forwarding case...
                     #
-                    included_h_file = direct_includes[0][len(self.root) + len(os.path.sep):]
-                    #
-                    # We could just %Include the other file, but that would ignore the issues that:
-                    #
-                    #    - On filesystems without case sensitive semantics (NTFS) the two filenames usually only
-                    #      differ in case; actually expanding inline avoids making this problem worse (even if it is
-                    #      not  full solution).
-                    #    - The forwarding SIP's .so binding needs the legacy SIP's .so on the system, doubling
-                    #      the number of libraries (and adding to overall confusion, and the case-sensitivity issue).
-                    #
-                    result, includes = self.create_sip(self.root, included_h_file)
-                    direct_includes = [i.include.name for i in includes() if i.depth == 1]
+                    forwardee = direct_includes[0][len(self.root) + len(os.path.sep):]
+                    if forwardee.lower().startswith(h_file.lower()):
+                        #
+                        # We could just %Include the other file, but that would ignore the issues that:
+                        #
+                        #    - On filesystems without case sensitive semantics (NTFS) the two filenames usually only
+                        #      differ in case; actually expanding inline avoids making this problem worse (even if it
+                        #      is not a full solution).
+                        #    - The forwarding SIP's .so binding needs the legacy SIP's .so on the system, doubling the
+                        #      number of libraries (and adding to overall confusion, and the case-sensitivity issue).
+                        #
+                        result, includes = self.create_sip(self.root, forwardee)
+                        direct_includes = [i.include.name for i in includes() if i.depth == 1]
+                        if forwardee.endswith(".h"):
+                            forwardee = os.path.splitext(forwardee)[0] + ".sip"
                 else:
                     direct_includes = []
                 #
@@ -299,13 +306,12 @@ class SipBulkGenerator(SipGenerator):
                 with open(full_output, "w") as f:
                     f.write(header)
                     f.write(result)
-                return output_file, set(direct_includes), direct_sips
+                return output_file, set(direct_includes), direct_sips, forwardee
             else:
                 logger.info(_("Not creating empty SIP for {}").format(source))
-                return None, None, None
         else:
             logger.debug(_("Selector discarded {}").format(source))
-            return None, None, None
+        return None, None, None, None
 
     def header(self, output_file, h_file, module_path):
         """

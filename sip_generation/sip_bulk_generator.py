@@ -240,8 +240,9 @@ class SipBulkGenerator(SipGenerator):
                     # common pattern is to use a single #include to create a "forwarding header" to map a legacy header
                     # (usually lower case, and ending in .h) into a CamelCase header. Handle the forwarding case...
                     #
-                    forwardee = direct_includes[0][len(self.root) + len(os.path.sep):]
-                    if forwardee.lower().startswith(h_file.lower()):
+                    forwardee = direct_includes[0]
+                    if forwardee.startswith(self.root):
+                        forwardee = forwardee[len(self.root) + len(os.path.sep):]
                         #
                         # We could just %Include the other file, but that would ignore the issues that:
                         #

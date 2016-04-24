@@ -164,10 +164,10 @@ class SipBulkGenerator(SipGenerator):
                             feature = feature_for_sip_module(sip_import)
                             self.all_features.add(feature)
                             f.write("%If ({})\n".format(feature))
-                            f.write("%Import {}\n".format(sip_import))
+                            f.write("%Import(name={})\n".format(sip_import))
                             f.write("%End\n".format(sip_import))
                         else:
-                            f.write("%Import {}\n".format(sip_import))
+                            f.write("%Import(name={})\n".format(sip_import))
                 f.write("%Extract(id={})\n".format(INCLUDES_EXTRACT))
                 for include in sorted(all_include_roots):
                     f.write("{}\n".format(include))
@@ -176,7 +176,7 @@ class SipBulkGenerator(SipGenerator):
                 # Add all peer .sip files.
                 #
                 for sip_file in sip_files:
-                    f.write("%Include {}\n".format(sip_file))
+                    f.write("%Include(name={})\n".format(sip_file))
 
     def _map_include_to_import(self, include):
         """

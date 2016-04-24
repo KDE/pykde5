@@ -99,19 +99,14 @@ class CxxDriver(object):
         # package of .sip files and bindings.
         #
         shippable_sips = os.path.join(self.output_dir, "sip")
-        try:
-            shutil.rmtree(shippable_sips)
-        except OSError as e:
-            if e.errno != errno.ENOENT:
-                raise
-        shutil.copytree(self.input_dir, shippable_sips)
-        #
-        #
+        self.copy_sip("modules.features", shippable_sips)
+        include_re = re.compile("%Include\s*(\(\s*name\s*=\s*){0,1}(?P<name>[^\s,)]+).*")
         error = None
         for source in self.rules.modules():
             try:
                 source = source.strip()
                 if selector.search(source):
+                    self.copy_sip(source, shippable_sips)
                     #
                     # Suppress the feature that corresponds to the SIP file being processed to avoid feeding SIP
                     # %Import clauses which recursively refer to module beng processed. we do this by cloaking each
@@ -125,13 +120,27 @@ class CxxDriver(object):
                             for line in i:
                                 o.write(line)
                                 if line.startswith("%Module"):
-                                    o.write("%Include modules.features\n")
+                                    o.write("%Include(name=modules.features)\n")
+                                else:
+                                    m = include_re.match(line)
+                                    if m:
+                                        self.copy_sip(m.group("name"), shippable_sips)
                     self.process_one_module(modified_source, standalone=False)
             except Exception as e:
                 if not error:
                     error = sys.exc_info()
         if error:
             raise error[1], None, error[2]
+
+    def copy_sip(self, source, shippable_sips):
+        output_sip = os.path.join(shippable_sips, source)
+        try:
+            os.makedirs(os.path.dirname(output_sip))
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+        input_sip = os.path.join(self.input_dir, source)
+        shutil.copy(input_sip, output_sip)
 
     def process_one_module(self, sip_file, standalone):
         """

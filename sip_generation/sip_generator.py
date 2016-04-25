@@ -456,6 +456,7 @@ class SipGenerator(object):
             if sip["template_parameters"]:
                 decl = pad + "template <" + sip["template_parameters"] + ">\n" + decl
             decl += ";\n"
+            decl += self.rules.methodcode(function, sip["name"])
         else:
             decl = pad + "// Discarded {}\n".format(SipGenerator.describe(function))
         return decl

@@ -27,6 +27,7 @@ import logging
 import os
 import re
 import sys
+import textwrap
 import traceback
 from copy import deepcopy
 from clang.cindex import CursorKind
@@ -535,6 +536,44 @@ class VariableRuleDb(AbstractCompiledRuleDb):
             rule.trace_result(parents, variable, before, sip)
 
 
+class AbstractCompiledCodeDb(object):
+    __metaclass__ = ABCMeta
+
+    def __init__(self, directive, db):
+        self.directive = directive + "\n"
+        self.db = db
+
+    @abstractmethod
+    def get(self, item, name):
+        #
+        # Lookup any parent-level entries.
+        #
+        parents = _parents(item)
+        entries = self.db.get(parents, None)
+        if not entries:
+            return ""
+        #
+        # Now look for an actual hit.
+        #
+        entry = entries.get(name, None)
+        if not entry:
+            return ""
+        text = textwrap.dedent(entry).strip()
+        text = ["    " + t for t in text.split("\n")]
+        text = self.directive + "\n".join(text) + "\n%End\n"
+        return text
+
+
+class MethodCodeDb(AbstractCompiledCodeDb):
+    __metaclass__ = ABCMeta
+
+    def __init__(self, db):
+        super(MethodCodeDb, self).__init__("%Methodcode", db)
+
+    def get(self, container, function):
+        return super(MethodCodeDb, self).get(container, function)
+
+
 class RuleSet(object):
     """
     To implement your own binding, create a subclass of RuleSet, also called
@@ -625,6 +664,13 @@ class RuleSet(object):
     def modules(self):
         """
         SIP modules.
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
+    @abstractmethod
+    def methodcode(self, container, function):
+        """
+        %Methodcode.
         """
         raise NotImplemented(_("Missing subclass implementation"))
 

@@ -267,7 +267,7 @@ class SipBulkGenerator(SipGenerator):
                 for include in direct_includes:
                     if self.omitter.search(include):
                         continue
-                    if include.endswith("_version.h"):
+                    if include.endswith(("_export.h", "_version.h")):
                         continue
                     sip = self._map_include_to_import(include)
                     if sip and sip != forwardee_import:

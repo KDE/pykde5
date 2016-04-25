@@ -209,6 +209,7 @@ class SipBulkGenerator(SipGenerator):
         """
         h_file = source[len(self.root) + len(os.path.sep):]
         forwardee = None
+        forwardee_import = None
         if self.selector.search(h_file) and not self.omitter.search(h_file):
             #
             # Make sure any errors mention the file that was being processed.
@@ -240,8 +241,9 @@ class SipBulkGenerator(SipGenerator):
                     # common pattern is to use a single #include to create a "forwarding header" to map a legacy header
                     # (usually lower case, and ending in .h) into a CamelCase header. Handle the forwarding case...
                     #
-                    forwardee = direct_includes[0]
-                    if forwardee.startswith(self.root):
+                    if direct_includes[0].startswith(self.root):
+                        forwardee = direct_includes[0]
+                        forwardee_import = self._map_include_to_import(forwardee)
                         forwardee = forwardee[len(self.root) + len(os.path.sep):]
                         #
                         # We could just %Include the other file, but that would ignore the issues that:
@@ -268,7 +270,7 @@ class SipBulkGenerator(SipGenerator):
                     if include.endswith("_version.h"):
                         continue
                     sip = self._map_include_to_import(include)
-                    if sip:
+                    if sip and sip != forwardee_import:
                         direct_sips.add(sip)
                 #
                 # Trim the includes to omit ones from paths we did not explicity add. This should get rid of compiler

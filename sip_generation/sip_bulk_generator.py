@@ -274,9 +274,18 @@ class SipBulkGenerator(SipGenerator):
                         direct_sips.add(sip)
                 #
                 # Trim the includes to omit ones from paths we did not explicity add. This should get rid of compiler
-                # added files and the like.
+                # added files and the like. Also, add any parent paths to deal with common include handling.
                 #
-                direct_includes = [i for i in direct_includes if i.startswith(tuple(self.includes))]
+                tmp = []
+                for di in direct_includes:
+                    for si in self.includes:
+                        if di.startswith(si):
+                            di = di[len(si) + len(os.path.sep):]
+                            while di:
+                                tmp.append(os.path.join(si, di))
+                                di = os.path.dirname(di)
+                            break
+                direct_includes = tmp
             except Exception as e:
                 logger.error("{} while processing {}".format(e, source))
                 raise

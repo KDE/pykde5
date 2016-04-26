@@ -842,7 +842,7 @@ def main(argv=None):
     parser.add_argument("-v", "--verbose", action="store_true", default=False, help=_("Enable verbose output"))
     parser.add_argument("--includes", default="/usr/include/x86_64-linux-gnu/qt5",
                         help=_("Comma-separated C++ header directories to use"))
-    parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "rules_PyKF5.py"),
+    parser.add_argument("--project-rules", default=os.path.join(os.path.dirname(__file__), "PyKF5_rules.py"),
                         help=_("Project rules"))
     parser.add_argument("--sources", default="/usr/include/KF5", help=_("C++ header directory to process"))
     parser.add_argument("source", help=_("C++ header to process, relative to --project-root"))

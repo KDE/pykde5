@@ -26,6 +26,7 @@ SIP binding customisation for PyKF5. This modules describes:
 """
 
 import rules_engine
+import PyKF5_methodcode
 
 from clang.cindex import AccessSpecifier
 
@@ -1200,7 +1201,7 @@ class RuleSet(rules_engine.RuleSet):
         self._typedef_db = rules_engine.TypedefRuleDb(typedef_rules)
         self._unexposed_db = rules_engine.UnexposedRuleDb(unexposed_rules)
         self._var_db = rules_engine.VariableRuleDb(variable_rules)
-        self._methodcode = rules_engine.MethodCodeDb(methodcode)
+        self._methodcode = rules_engine.MethodCodeDb(PyKF5_methodcode.code)
 
     def container_rules(self):
         return self._container_db

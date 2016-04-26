@@ -542,6 +542,20 @@ class AbstractCompiledCodeDb(object):
     def __init__(self, directive, db):
         self.directive = directive + "\n"
         self.db = db
+        #
+        # Add a usage count for each item in the database.
+        #
+        for k, v in self.db.items():
+            for l in v.keys():
+                v[l]["usage"] = 0
+
+    def dump_usage(self, fn):
+        """ Dump the usage counts."""
+        for k in sorted(self.db.keys()):
+            vk = self.db[k]
+            for l in sorted(vk.keys()):
+                vl = vk[l]
+                fn(type(self).__name__, k + "::" + l, vl["usage"])
 
     @abstractmethod
     def get(self, item, name):
@@ -558,7 +572,8 @@ class AbstractCompiledCodeDb(object):
         entry = entries.get(name, None)
         if not entry:
             return ""
-        text = textwrap.dedent(entry).strip()
+        entry["usage"] += 1
+        text = textwrap.dedent(entry["code"]).strip()
         text = ["    " + t for t in text.split("\n")]
         text = self.directive + "\n".join(text) + "\n%End\n"
         return text
@@ -568,7 +583,7 @@ class MethodCodeDb(AbstractCompiledCodeDb):
     __metaclass__ = ABCMeta
 
     def __init__(self, db):
-        super(MethodCodeDb, self).__init__("%Methodcode", db)
+        super(MethodCodeDb, self).__init__("%MethodCode", db)
 
     def get(self, container, function):
         return super(MethodCodeDb, self).get(container, function)
@@ -673,6 +688,12 @@ class RuleSet(object):
         %Methodcode.
         """
         raise NotImplemented(_("Missing subclass implementation"))
+
+    def dump_unused(self):
+        def dumper(db_name, rule, usage):
+            logger.error(_("{}, rule {}, used {}".format(db_name, rule, usage)))
+        for db in [self._methodcode]:
+            db.dump_usage(dumper)
 
     def _check_directory_list(self, paths):
         """Check a command separated list of path are all diectories."""

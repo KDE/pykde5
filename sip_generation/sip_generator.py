@@ -392,9 +392,11 @@ class SipGenerator(object):
                 #
                 # So far so good, but we need any default value.
                 #
+                decl = "{} {}".format(child.type.spelling, parameter)
+                decl = decl.replace("* ", "*").replace("& ", "&")
                 child_sip = {
                     "name": parameter,
-                    "decl": "{} {}".format(child.type.spelling, parameter),
+                    "decl": decl,
                     "init": self._fn_get_parameter_default(function, child),
                     "annotations": set()
                 }
@@ -432,19 +434,32 @@ class SipGenerator(object):
         #
         # Flesh out the SIP context for the rules engine.
         #
-        sip["template_parameters"] = ", ".join(template_type_parameters)
+        sip["template_parameters"] = template_type_parameters
         if function.kind in [CursorKind.CONSTRUCTOR, CursorKind.DESTRUCTOR]:
             sip["fn_result"] = ""
         else:
             sip["fn_result"] = function.result_type.spelling
-        decl = ", ".join(parameters)
-        decl = decl.replace("* ", "*").replace("& ", "&")
-        sip["decl"] = decl
+        sip["decl"] = parameters
         sip["prefix"], sip["suffix"] = self._fn_get_keywords(function)
         self.rules.function_rules().apply(container, function, sip)
         pad = " " * (level * 4)
         if sip["name"]:
+            #
+            # Any %MethodCode?
+            #
+            sip["template_parameters"] = ", ".join(sip["template_parameters"])
+            sip["decl"] = ", ".join(sip["decl"])
+            sip["annotations"] = ",".join(sip["annotations"])
+            self.rules.methodcode(function, sip)
             decl = sip["name"] + "(" + sip["decl"] + ")"
+            if sip["decl2"]:
+                decl += "\n    " + pad + "["
+                if sip["fn_result2"]:
+                    if sip["fn_result2"][-1] in "*&":
+                        decl += sip["fn_result2"]
+                    else:
+                        decl += sip["fn_result2"] + " "
+                decl += "(" + sip["decl2"] + ")]"
             if sip["fn_result"]:
                 if sip["fn_result"][-1] in "*&":
                     decl = sip["fn_result"] + decl
@@ -452,11 +467,11 @@ class SipGenerator(object):
                     decl = sip["fn_result"] + " " + decl
             decl = pad + sip["prefix"] + decl + sip["suffix"]
             if sip["annotations"]:
-                decl += " /" + ",".join(sip["annotations"]) + "/"
+                decl += " /" + sip["annotations"] + "/"
             if sip["template_parameters"]:
                 decl = pad + "template <" + sip["template_parameters"] + ">\n" + decl
             decl += ";\n"
-            decl += self.rules.methodcode(function, sip["name"])
+            decl += sip["code"]
         else:
             decl = pad + "// Discarded {}\n".format(SipGenerator.describe(function))
         return decl

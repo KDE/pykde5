@@ -26,8 +26,8 @@ code = {
 {
     "createNewWindow":
     {
-        "decl": "void createNewWindow (const KUrl& url, const KParts::OpenUrlArguments& arguments = KParts::OpenUrlArguments(), const KParts::BrowserArguments& browserArguments = KParts::BrowserArguments(), const KParts::WindowArgs& windowArgs = KParts::WindowArgs(), KParts::ReadOnlyPart** part = 0)",
-        "decl2": "void (const KUrl&, const KParts::OpenUrlArguments& = KParts::OpenUrlArguments(), const KParts::BrowserArguments& = KParts::BrowserArguments(), const KParts::WindowArgs& = KParts::WindowArgs(), KParts::ReadOnlyPart** = 0)",
+        "decl": "const KUrl& url, const KParts::OpenUrlArguments& arguments = KParts::OpenUrlArguments(), const KParts::BrowserArguments& browserArguments = KParts::BrowserArguments(), const KParts::WindowArgs& windowArgs = KParts::WindowArgs(), KParts::ReadOnlyPart** part = 0",
+        "fn_result": "void",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -40,7 +40,6 @@ code = {
 {
     "i18n":
     {
-        "decl": "QString i18n (const char* text, ...)",
         "code":
         """
         QString result = klocalizedstring_i18n_template(ki18n(a0),a1,&sipIsErr);
@@ -51,7 +50,6 @@ code = {
     },
     "i18nc":
     {
-        "decl": "QString i18nc (const char* ctxt, const char* text, ...)",
         "code":
         """
         QString result = klocalizedstring_i18n_template(ki18nc(a0,a1),a2,&sipIsErr);
@@ -62,7 +60,6 @@ code = {
     },
     "i18np":
     {
-        "decl": "QString i18np (const char* sing, const char* plur, ...)",
         "code":
         """
         QString result = klocalizedstring_i18n_template(ki18np(a0,a1),a2,&sipIsErr);
@@ -73,7 +70,6 @@ code = {
     },
     "i18ncp":
     {
-        "decl": "QString i18ncp (const char* ctxt, const char* sing, const char* plur, ...)",
         "code":
         """
         QString result = klocalizedstring_i18n_template(ki18ncp(a0,a1,a2),a3,&sipIsErr);
@@ -87,7 +83,6 @@ code = {
 {
     "__len__":
     {
-        "decl": "int __len__ ()",
         "code":
         """
         //returns (int)
@@ -98,7 +93,6 @@ code = {
     },
     "__setitem__":
     {
-        "decl": "void __setitem__ (int, const KUrl&)",
         "code":
         """
         //takes index | (int) | value | (KUrl)
@@ -114,7 +108,6 @@ code = {
     },
     "__setitem__":
     {
-        "decl": "void __setitem__ (SIP_PYSLICE, const KUrl::List&)",
         "code":
         """
         //takes range | (a Python slice) | urlList | (KUrl.List)
@@ -147,7 +140,6 @@ code = {
     },
     "__delitem__":
     {
-        "decl": "void __delitem__ (int)",
         "code":
         """
         //takes index | (int)
@@ -163,7 +155,6 @@ code = {
     },
     "__delitem__":
     {
-        "decl": "void __delitem__ (SIP_PYSLICE)",
         "code":
         """
         //takes range | (a Python slice)
@@ -180,7 +171,7 @@ code = {
             }
         """
     },
-    "[]":
+    "operator[]":
     {
         "decl": "KUrl operator",
         "decl2": "[] (int)",
@@ -198,7 +189,7 @@ code = {
             sipRes = new KUrl((*sipCpp)[a0]);
         """
     },
-    "[]":
+    "operator[]":
     {
         "decl": "KUrl::List operator",
         "decl2": "[] (SIP_PYSLICE)",
@@ -224,9 +215,8 @@ code = {
         }
         """
     },
-    "+":
+    "operator+":
     {
-        "decl": "KUrl::List operator + (const KUrl::List&)",
         "code":
         """
         //returns (KUrl.List)
@@ -238,9 +228,8 @@ code = {
         Py_END_ALLOW_THREADS
         """
     },
-    "*":
+    "operator*":
     {
-        "decl": "KUrl::List operator * (int)",
         "code":
         """
         sipRes = new KUrl::List();
@@ -249,9 +238,8 @@ code = {
             (*sipRes) += (*sipCpp);
         """
     },
-    "*=":
+    "operator*=":
     {
-        "decl": "KUrl::List& operator *= (int)",
         "code":
         """
         //returns (KUrl.List)
@@ -266,7 +254,6 @@ code = {
     },
     "__contains__":
     {
-        "decl": "int __contains__ (KUrl)",
         "code":
         """
         //returns (bool)
@@ -280,8 +267,9 @@ code = {
 {
     "ItemBool":
     {
-        "decl": "ItemBool (const QString& _group, const QString& _key, bool reference, bool defaultValue = 1)",
-        "decl2": "void (const QString& _group, const QString& _key, bool& reference, bool defaultValue = 1)",
+        "decl": "const QString& _group, const QString& _key, bool reference, bool defaultValue = 1",
+        "decl2": "const QString& _group, const QString& _key, bool& reference, bool defaultValue = 1",
+        "fn_result2": "void",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -295,8 +283,9 @@ code = {
 {
     "ItemInt":
     {
-        "decl": "ItemInt (const QString& _group, const QString& _key, qint32 reference, qint32 defaultValue = 0)",
-        "decl2": "void (const QString& _group, const QString& _key, qint32& reference, qint32 defaultValue = 0)",
+        "decl": "const QString& _group, const QString& _key, qint32 reference, qint32 defaultValue = 0",
+        "decl2": "const QString& _group, const QString& _key, qint32& reference, qint32 defaultValue = 0",
+        "fn_result2": "void",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -310,8 +299,9 @@ code = {
 {
     "ItemLongLong":
     {
-        "decl": "ItemLongLong (const QString& _group, const QString& _key, qint64 reference, qint64 defaultValue = 0)",
-        "decl2": "void (const QString& _group, const QString& _key, qint64& reference, qint64 defaultValue = 0)",
+        "decl": "const QString& _group, const QString& _key, qint64 reference, qint64 defaultValue = 0",
+        "decl2": "const QString& _group, const QString& _key, qint64& reference, qint64 defaultValue = 0",
+        "fn_result2": "void",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -325,8 +315,9 @@ code = {
 {
     "ItemEnum":
     {
-        "decl": "ItemEnum (const QString& _group, const QString& _key, qint32 reference, const QList<KCoreConfigSkeleton::ItemEnum::Choice> choices, qint32 defaultValue = 0)",
-        "decl2": "void (const QString& _group, const QString& _key, qint32& reference, const QList<KCoreConfigSkeleton::ItemEnum::Choice>& choices, qint32 defaultValue = 0)",
+        "decl": "const QString& _group, const QString& _key, qint32 reference, const QList<KCoreConfigSkeleton::ItemEnum::Choice> choices, qint32 defaultValue = 0",
+        "decl2": "const QString& _group, const QString& _key, qint32& reference, const QList<KCoreConfigSkeleton::ItemEnum::Choice>& choices, qint32 defaultValue = 0",
+        "fn_result2": "void",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -340,8 +331,9 @@ code = {
 {
     "ItemUInt":
     {
-        "decl": "ItemUInt (const QString& _group, const QString& _key, quint32 reference, quint32 defaultValue = 0)",
-        "decl2": "void (const QString& _group, const QString& _key, quint32& reference, quint32 defaultValue = 0)",
+        "decl": "const QString& _group, const QString& _key, quint32 reference, quint32 defaultValue = 0",
+        "decl2": "const QString& _group, const QString& _key, quint32& reference, quint32 defaultValue = 0",
+        "fn_result2": "void",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -355,8 +347,9 @@ code = {
 {
     "ItemULongLong":
     {
-        "decl": "ItemULongLong (const QString& _group, const QString& _key, quint64 reference, quint64 defaultValue = 0)",
-        "decl2": "void (const QString& _group, const QString& _key, quint64& reference, quint64 defaultValue = 0)",
+        "decl": "const QString& _group, const QString& _key, quint64 reference, quint64 defaultValue = 0",
+        "decl2": "const QString& _group, const QString& _key, quint64& reference, quint64 defaultValue = 0",
+        "fn_result2": "void",
         "code":
         """
             Py_BEGIN_ALLOW_THREADS
@@ -370,8 +363,9 @@ code = {
 {
     "ItemDouble":
     {
-        "decl": "ItemDouble (const QString& _group, const QString& _key, double reference, double defaultValue = 0)",
-        "decl2": "void (const QString& _group, const QString& _key, double& reference, double defaultValue = 0)",
+        "decl": "const QString& _group, const QString& _key, double reference, double defaultValue = 0",
+        "decl2": "const QString& _group, const QString& _key, double& reference, double defaultValue = 0",
+        "fn_result2": "void",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -385,7 +379,6 @@ code = {
 {
     "addItemBool":
     {
-        "decl": "KCoreConfigSkeleton::ItemBool* addItemBool (const QString& name, bool& reference /In/, bool defaultValue = 0, const QString& key = QString())",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -396,7 +389,6 @@ code = {
     },
     "addItemInt":
     {
-        "decl": "KCoreConfigSkeleton::ItemInt* addItemInt (const QString& name, qint32& reference /In/, qint32 defaultValue = 0, const QString& key = QString())",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -407,7 +399,6 @@ code = {
     },
     "addItemUInt":
     {
-        "decl": "KCoreConfigSkeleton::ItemUInt* addItemUInt (const QString& name, quint32& reference /In/, quint32 defaultValue = 0, const QString& key = QString())",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -418,7 +409,6 @@ code = {
     },
     "addItemLongLong":
     {
-        "decl": "KCoreConfigSkeleton::ItemLongLong* addItemLongLong (const QString& name, qint64& reference /In/, qint64 defaultValue = 0, const QString& key = QString())",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -429,7 +419,6 @@ code = {
     },
     "addItemInt64":
     {
-        "decl": "KCoreConfigSkeleton::ItemLongLong* addItemInt64 (const QString& name, qint64& reference /In/, qint64 defaultValue = 0, const QString& key = QString())",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -440,7 +429,6 @@ code = {
     },
     "addItemULongLong":
     {
-        "decl": "KCoreConfigSkeleton::ItemULongLong* addItemULongLong (const QString& name, quint64& reference /In/, quint64 defaultValue = 0, const QString& key = QString())",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -451,7 +439,6 @@ code = {
     },
     "addItemUInt64":
     {
-        "decl": "KCoreConfigSkeleton::ItemULongLong* addItemUInt64 (const QString& name, quint64& reference /In/, quint64 defaultValue = 0, const QString& key = QString())",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -462,7 +449,6 @@ code = {
     },
     "addItemDouble":
     {
-        "decl": "KCoreConfigSkeleton::ItemDouble* addItemDouble (const QString& name, double& reference /In/, double defaultValue = 0.0, const QString& key = QString())",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -473,8 +459,8 @@ code = {
     },
     "init":
     {
-        "decl": "static void init (SIP_PYLIST argv, const QByteArray& appname, const QByteArray& catalog, const KLocalizedString& programName, const QByteArray& version, const KLocalizedString& description = KLocalizedString(), int stdargs = 3)",
-        "decl2": "void (int, char**, const QByteArray&, const QByteArray&, const KLocalizedString&, const QByteArray&, const KLocalizedString& = KLocalizedString(), KCmdLineArgs::StdCmdLineArgs = 3)",
+        "decl": "SIP_PYLIST argv, const QByteArray& appname, const QByteArray& catalog, const KLocalizedString& programName, const QByteArray& version, const KLocalizedString& description = KLocalizedString(), int stdargs = 3",
+        "decl2": "int, char**, const QByteArray&, const QByteArray&, const KLocalizedString&, const QByteArray&, const KLocalizedString& = KLocalizedString(), KCmdLineArgs::StdCmdLineArgs = 3",
         "code":
         """
         KCmdLineArgs::StdCmdLineArgs cmdLineArgs = (KCmdLineArgs::StdCmdLineArgs) a6;
@@ -500,8 +486,8 @@ code = {
     },
     "init":
     {
-        "decl": "static void init (SIP_PYLIST argv, const KAboutData* about, int stdargs = 3)",
-        "decl2": "void (int, char**, const KAboutData*, KCmdLineArgs::StdCmdLineArgs = 3)",
+        "decl": "SIP_PYLIST argv, const KAboutData* about, int stdargs = 3",
+        "decl2": "int, char**, const KAboutData*, KCmdLineArgs::StdCmdLineArgs = 3",
         "code":
         """
         KCmdLineArgs::StdCmdLineArgs cmdLineArgs = (KCmdLineArgs::StdCmdLineArgs) a2;
@@ -527,7 +513,6 @@ code = {
     },
     "version":
     {
-        "decl": "unsigned int version ()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -537,7 +522,6 @@ code = {
     },
     "versionMajor":
     {
-        "decl": "unsigned int versionMajor ()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -547,7 +531,6 @@ code = {
     },
     "versionMinor":
     {
-        "decl": "unsigned int versionMinor ()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -557,7 +540,6 @@ code = {
     },
     "versionRelease":
     {
-        "decl": "unsigned int versionRelease ()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -567,7 +549,6 @@ code = {
     },
     "versionString":
     {
-        "decl": "const char* versionString ()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -577,7 +558,6 @@ code = {
     },
     "pykde_version":
     {
-        "decl": "unsigned int pykde_version ()",
         "code":
         """
         //version
@@ -586,7 +566,6 @@ code = {
     },
     "pykde_versionMajor":
     {
-        "decl": "unsigned int pykde_versionMajor ()",
         "code":
         """
         //major
@@ -595,7 +574,6 @@ code = {
     },
     "pykde_versionMinor":
     {
-        "decl": "unsigned int pykde_versionMinor ()",
         "code":
         """
         //minor
@@ -604,7 +582,6 @@ code = {
     },
     "pykde_versionRelease":
     {
-        "decl": "unsigned int pykde_versionRelease ()",
         "code":
         """
         //release
@@ -613,7 +590,6 @@ code = {
     },
     "pykde_versionString":
     {
-        "decl": "const char* pykde_versionString ()",
         "code":
         """
         //string
@@ -625,7 +601,6 @@ code = {
 {
     "__len__":
     {
-        "decl": "int __len__ ()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -635,7 +610,6 @@ code = {
     },
     "__setitem__":
     {
-        "decl": "void __setitem__ (int, const KFileItem&)",
         "code":
         """
         int len;
@@ -650,7 +624,6 @@ code = {
     },
     "__setitem__":
     {
-        "decl": "void __setitem__ (SIP_PYSLICE, const KFileItemList&)",
         "code":
         """
         SIP_SSIZE_T len, start, stop, step, slicelength, i;
@@ -682,7 +655,6 @@ code = {
     },
     "__delitem__":
     {
-        "decl": "void __delitem__ (int)",
         "code":
         """
         int len;
@@ -697,7 +669,6 @@ code = {
     },
     "__delitem__":
     {
-        "decl": "void __delitem__ (SIP_PYSLICE)",
         "code":
         """
         SIP_SSIZE_T len, start, stop, step, slicelength, i;
@@ -759,8 +730,9 @@ code = {
     },
     "Predicate":
     {
-        "decl": "explicit Predicate (const Solid::DeviceInterface::Type ifaceType)",
-        "decl2": "void (const Solid::DeviceInterface::Type&)",
+        "decl": "const Solid::DeviceInterface::Type ifaceType",
+        "decl2": "const Solid::DeviceInterface::Type&",
+        "fn_result2": "void",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -773,7 +745,6 @@ code = {
 {
     "start":
     {
-        "decl": "KTextEditor::MovingCursor* start ()",
         "code":
         """
         // Returning a ref of this class is problematic.
@@ -783,7 +754,6 @@ code = {
     },
     "end":
     {
-        "decl": "KTextEditor::MovingCursor* end ()",
         "code":
         """
         // Returning a ref of this class is problematic.
@@ -793,7 +763,6 @@ code = {
     },
     "codeCompletionInterface":
     {
-        "decl": "KTextEditor::CodeCompletionInterface *codeCompletionInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -803,7 +772,6 @@ code = {
     },
     "sessionConfigInterface":
     {
-        "decl": "KTextEditor::SessionConfigInterface *sessionConfigInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -813,7 +781,6 @@ code = {
     },
     "textHintInterface":
     {
-        "decl": "KTextEditor::TextHintInterface *textHintInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -823,7 +790,6 @@ code = {
     },
     "annotationViewInterface":
     {
-        "decl": "KTextEditor::AnnotationViewInterface *annotationViewInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -833,7 +799,6 @@ code = {
     },
     "configInterface":
     {
-        "decl": "KTextEditor::ConfigInterface *configInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -843,7 +808,6 @@ code = {
     },
     "coordinatesToCursorInterface":
     {
-        "decl": "KTextEditor::CoordinatesToCursorInterface *coordinatesToCursorInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -853,7 +817,6 @@ code = {
     },
     "templateInterface":
     {
-        "decl": "KTextEditor::TemplateInterface *templateInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -863,7 +826,6 @@ code = {
     },
     "templateInterface2":
     {
-        "decl": "KTextEditor::TemplateInterface2 *templateInterface2()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -876,7 +838,6 @@ code = {
 {
     "commandInterface":
     {
-        "decl": "KTextEditor::CommandInterface *commandInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -886,7 +847,6 @@ code = {
     },
     "containerInterface":
     {
-        "decl": "KTextEditor::ContainerInterface *containerInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -899,7 +859,6 @@ code = {
 {
     "annotationInterface":
     {
-        "decl": "KTextEditor::AnnotationInterface *annotationInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -909,7 +868,6 @@ code = {
     },
     "markInterface":
     {
-        "decl": "KTextEditor::MarkInterface *markInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -919,7 +877,6 @@ code = {
     },
     "modificationInterface":
     {
-        "decl": "KTextEditor::ModificationInterface *modificationInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -929,7 +886,6 @@ code = {
     },
     "searchInterface":
     {
-        "decl": "KTextEditor::SearchInterface *searchInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -939,7 +895,6 @@ code = {
     },
     "variableInterface":
     {
-        "decl": "KTextEditor::VariableInterface *variableInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -949,7 +904,6 @@ code = {
     },
     "movingInterface":
     {
-        "decl": "KTextEditor::MovingInterface *movingInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -959,7 +913,6 @@ code = {
     },
     "highlightInterface":
     {
-        "decl": "KTextEditor::HighlightInterface *highlightInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -969,7 +922,6 @@ code = {
     },
     "configInterface":
     {
-        "decl": "KTextEditor::ConfigInterface *configInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -979,7 +931,6 @@ code = {
     },
     "parameterizedSessionConfigInterface":
     {
-        "decl": "KTextEditor::ParameterizedSessionConfigInterface *parameterizedSessionConfigInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -989,7 +940,6 @@ code = {
     },
     "sessionConfigInterface":
     {
-        "decl": "KTextEditor::SessionConfigInterface *sessionConfigInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -999,7 +949,6 @@ code = {
     },
     "recoveryInterface":
     {
-        "decl": "KTextEditor::RecoveryInterface *recoveryInterface()",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -1009,8 +958,9 @@ code = {
     },
     "KApplication":
     {
-        "decl": "KApplication (Display* display, SIP_PYLIST list, const QByteArray& rAppName, bool GUIenabled = 1)",
-        "decl2": "void (Display*, int&, char**, const QByteArray&, bool = 1)",
+        "decl": "Display* display, SIP_PYLIST list, const QByteArray& rAppName, bool GUIenabled = 1",
+        "decl2": "Display*, int&, char**, const QByteArray&, bool = 1",
+        "fn_result2": "void",
         "code":
         """
         // The Python interface is a list of argument strings that is modified.
@@ -1041,8 +991,9 @@ code = {
 {
     "NETRootInfo":
     {
-        "decl": "NETRootInfo (Display* display, Window supportWindow, const char* wmName, SIP_PYLIST properties, int screen = -1, bool doACtivate = 1)",
-        "decl2": "void (Display*, Window, const char*, const unsigned long*, int, int = -1, bool = 1)",
+        "decl": "Display* display, Window supportWindow, const char* wmName, SIP_PYLIST properties, int screen = -1, bool doACtivate = 1",
+        "decl2": "Display*, Window, const char*, const unsigned long*, int, int = -1, bool = 1",
+        "fn_result2": "void",
         "code":
         """
         int count   = PyList_Size (a3);
@@ -1064,8 +1015,9 @@ code = {
     },
     "NETRootInfo":
     {
-        "decl": "NETRootInfo (Display* display, SIP_PYLIST properties, int screen = -1, bool doActivate = 1)",
-        "decl2": "void (Display*, const unsigned long*, int, int = -1, bool = 1)",
+        "decl": "Display* display, SIP_PYLIST properties, int screen = -1, bool doActivate = 1",
+        "decl2": "Display*, const unsigned long*, int, int = -1, bool = 1",
+        "fn_result2": "void",
         "code":
         """
         int count   = PyList_Size (a1);
@@ -1090,8 +1042,9 @@ code = {
 {
     "NETWinInfo":
     {
-        "decl": "NETWinInfo (Display* display, Window window, Window rootWindow, SIP_PYLIST properties, NET::Role role = NET::Client)",
-        "decl2": "void (Display*, Window, Window, const unsigned long*, int, Role = Client)",
+        "decl": "Display* display, Window window, Window rootWindow, SIP_PYLIST properties, NET::Role role = NET::Client",
+        "decl2": "Display*, Window, Window, const unsigned long*, int, Role = Client",
+        "fn_result2": "void",
         "code":
         """
         int count   = PyList_Size (a3);
@@ -1114,8 +1067,9 @@ code = {
     },
     "KFontChooser":
     {
-        "decl": "explicit KFontChooser (QWidget* parent /TransferThis/ = 0, const KFontChooser::DisplayFlags& flags = KFontChooser::DisplayFrame, const QStringList& fontList = QStringList(), int visibleListSize = 8, Qt::CheckState* sizeIsRelativeState = 0)",
-        "decl2": "void (QWidget* = 0, const KFontChooser::DisplayFlags& = KFontChooser::DisplayFrame, const QStringList& = QStringList(), int = 8, Qt::CheckState* = 0)",
+        "decl": "QWidget* parent /TransferThis/ = 0, const KFontChooser::DisplayFlags& flags = KFontChooser::DisplayFrame, const QStringList& fontList = QStringList(), int visibleListSize = 8, Qt::CheckState* sizeIsRelativeState = 0",
+        "decl2": "QWidget* = 0, const KFontChooser::DisplayFlags& = KFontChooser::DisplayFrame, const QStringList& = QStringList(), int = 8, Qt::CheckState* = 0",
+        "fn_result2": "void",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -1128,8 +1082,9 @@ code = {
 {
     "KFontChooser":
     {
-        "decl": "explicit KFontDialog (QWidget* parent /TransferThis/ = 0, const KFontChooser::DisplayFlags& flags = KFontChooser::NoDisplayFlags, const QStringList& fontlist = QStringList(), Qt::CheckState* sizeIsRelativeState = 0)",
-        "decl2": "void (QWidget* = 0, const KFontChooser::DisplayFlags& = KFontChooser::NoDisplayFlags, const QStringList& = QStringList(), Qt::CheckState* = 0)",
+        "decl": "QWidget* parent /TransferThis/ = 0, const KFontChooser::DisplayFlags& flags = KFontChooser::NoDisplayFlags, const QStringList& fontlist = QStringList(), Qt::CheckState* sizeIsRelativeState = 0",
+        "decl2": "QWidget* = 0, const KFontChooser::DisplayFlags& = KFontChooser::NoDisplayFlags, const QStringList& = QStringList(), Qt::CheckState* = 0",
+        "fn_result2": "void",
         "code":
         """
         Py_BEGIN_ALLOW_THREADS
@@ -1139,8 +1094,10 @@ code = {
     },
     "getFont":
     {
-        "decl": "static SIP_PYTUPLE getFont (QFont& theFont, const KFontChooser::DisplayFlags& flags = KFontChooser::NoDisplayFlags, QWidget* parent /Transfer/ = 0, Qt::CheckState* sizeIsRelativeState = Qt::Unchecked)",
-        "decl2": "int (QFont&, const KFontChooser::DisplayFlags& = KFontChooser::NoDisplayFlags, QWidget* = 0, Qt::CheckState* = 0)",
+        "decl": "QFont& theFont, const KFontChooser::DisplayFlags& flags = KFontChooser::NoDisplayFlags, QWidget* parent /Transfer/ = 0, Qt::CheckState* sizeIsRelativeState = Qt::Unchecked",
+        "fn_result": "SIP_PYTUPLE",
+        "decl2": "QFont&, const KFontChooser::DisplayFlags& = KFontChooser::NoDisplayFlags, QWidget* = 0, Qt::CheckState* = 0",
+        "fn_result2": "int",
         "code":
         """
         int result;
@@ -1156,8 +1113,10 @@ code = {
     },
     "getFontDiff":
     {
-        "decl": "static SIP_PYTUPLE getFontDiff (QFont& theFont, KFontChooser::FontDiffFlags& diffFlags, const KFontChooser::DisplayFlags& flags = KFontChooser::NoDisplayFlags, QWidget* parent /Transfer/ = 0, Qt::CheckState sizeIsRelativeState = Qt::Unchecked)",
-        "decl2": "int (QFont&, KFontChooser::FontDiffFlags&, const KFontChooser::DisplayFlags& = KFontChooser::NoDisplayFlags, QWidget* = 0, Qt::CheckState* = 0)",
+        "decl": "QFont& theFont, KFontChooser::FontDiffFlags& diffFlags, const KFontChooser::DisplayFlags& flags = KFontChooser::NoDisplayFlags, QWidget* parent /Transfer/ = 0, Qt::CheckState sizeIsRelativeState = Qt::Unchecked",
+        "fn_result": "SIP_PYTUPLE",
+        "decl2": "QFont&, KFontChooser::FontDiffFlags&, const KFontChooser::DisplayFlags& = KFontChooser::NoDisplayFlags, QWidget* = 0, Qt::CheckState* = 0",
+        "fn_result2": "int",
         "code":
         """
         int result;
@@ -1174,8 +1133,10 @@ code = {
     },
     "getFontAndText":
     {
-        "decl": "static SIP_PYTUPLE getFontAndText (QFont& theFont, QString& theString, const KFontChooser::DisplayFlags& flags = KFontChooser::NoDisplayFlags, QWidget* parent /Transfer/ = 0, Qt::CheckState sizeIsRelativeState = Qt::Unchecked)",
-        "decl2": "int (QFont&, QString&, const KFontChooser::DisplayFlags& = KFontChooser::NoDisplayFlags, QWidget* = 0, Qt::CheckState* = 0)",
+        "decl": "QFont& theFont, QString& theString, const KFontChooser::DisplayFlags& flags = KFontChooser::NoDisplayFlags, QWidget* parent /Transfer/ = 0, Qt::CheckState sizeIsRelativeState = Qt::Unchecked",
+        "fn_result": "SIP_PYTUPLE",
+        "decl2": "QFont&, QString&, const KFontChooser::DisplayFlags& = KFontChooser::NoDisplayFlags, QWidget* = 0, Qt::CheckState* = 0",
+        "fn_result2": "int",
         "code":
         """
         int result;
@@ -1191,12 +1152,14 @@ code = {
         """
     },
 },
-"KXmlGuiWindow":
+"KXMLGUIBuilder":
 {
     "createContainer":
     {
-        "decl": "virtual SIP_PYTUPLE createContainer (QWidget* parent /Transfer/, int index, const QDomElement& element)",
-        "decl2": "QWidget* (QWidget* parent /Transfer/, int index, const QDomElement& element, QAction*& containerAction)",
+        "decl": "QWidget* parent /Transfer/, int index, const QDomElement& element",
+        "fn_result": "SIP_PYTUPLE",
+        "decl2": "QWidget* parent /Transfer/, int index, const QDomElement& element, QAction*& containerAction",
+        "fn_result2": "QWidget*",
         "code":
         """
         QAction *containerAction;

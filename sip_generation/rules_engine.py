@@ -261,7 +261,7 @@ class FunctionRuleDb(AbstractCompiledRuleDb):
         :param sip:                 The SIP dict.
         """
         parents = _parents(function)
-        matcher, rule = self._match(parents, sip["name"], sip["template_parameters"], sip["fn_result"], sip["decl"])
+        matcher, rule = self._match(parents, sip["name"], ", ".join(sip["template_parameters"]), sip["fn_result"], ", ".join(sip["decl"]))
         if matcher:
             before = deepcopy(sip)
             rule.fn(container, function, sip, matcher)
@@ -557,26 +557,22 @@ class AbstractCompiledCodeDb(object):
                 vl = vk[l]
                 fn(type(self).__name__, k + "::" + l, vl["usage"])
 
-    @abstractmethod
-    def get(self, item, name):
+    def _get(self, item, name):
         #
         # Lookup any parent-level entries.
         #
         parents = _parents(item)
         entries = self.db.get(parents, None)
         if not entries:
-            return ""
+            return None
         #
         # Now look for an actual hit.
         #
         entry = entries.get(name, None)
         if not entry:
-            return ""
+            return None
         entry["usage"] += 1
-        text = textwrap.dedent(entry["code"]).strip()
-        text = ["    " + t for t in text.split("\n")]
-        text = self.directive + "\n".join(text) + "\n%End\n"
-        return text
+        return entry
 
 
 class MethodCodeDb(AbstractCompiledCodeDb):
@@ -585,8 +581,31 @@ class MethodCodeDb(AbstractCompiledCodeDb):
     def __init__(self, db):
         super(MethodCodeDb, self).__init__("%MethodCode", db)
 
-    def get(self, container, function):
-        return super(MethodCodeDb, self).get(container, function)
+    def apply(self, function, sip):
+        entry = self._get(function, sip["name"])
+        #
+        # SIP supports the notion of a second C++ signature as well as the normal signature. By default, this
+        # is not present.
+        #
+        sip["decl2"] = ""
+        sip["fn_result2"] = ""
+        sip["code"] = ""
+        if entry:
+            sip["decl"] = entry.get("decl", sip["decl"])
+            sip["fn_result"] = entry.get("fn_result", sip["fn_result"])
+            #
+            # The user might provide one or other or both of decl2 and fn_result2 to signify a C++ signature. If
+            # needed, default a missing value from decl/fn_result.
+            #
+            if sip["decl2"] or sip["fn_result2"]:
+                sip["decl2"] = entry.get("decl2", sip["decl"])
+                sip["fn_result2"] = entry.get("fn_result2", sip["fn_result2"])
+            #
+            # Fetch/format the code.
+            #
+            text = textwrap.dedent(entry["code"]).strip()
+            text = ["    " + t for t in text.split("\n")]
+            sip["code"] = self.directive + "\n".join(text) + "\n%End\n"
 
 
 class RuleSet(object):

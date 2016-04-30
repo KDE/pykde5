@@ -1065,6 +1065,9 @@ code = {
         delete list;
         """
     },
+},
+"KFontChooser":
+{
     "KFontChooser":
     {
         "decl": "QWidget* parent /TransferThis/ = 0, const KFontChooser::DisplayFlags& flags = KFontChooser::DisplayFrame, const QStringList& fontList = QStringList(), int visibleListSize = 8, Qt::CheckState* sizeIsRelativeState = 0",
@@ -1077,9 +1080,6 @@ code = {
         Py_END_ALLOW_THREADS
         """
     },
-},
-"KFontChooser":
-{
     "KFontChooser":
     {
         "decl": "QWidget* parent /TransferThis/ = 0, const KFontChooser::DisplayFlags& flags = KFontChooser::NoDisplayFlags, const QStringList& fontlist = QStringList(), Qt::CheckState* sizeIsRelativeState = 0",

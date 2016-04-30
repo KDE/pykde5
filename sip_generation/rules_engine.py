@@ -574,6 +574,21 @@ class AbstractCompiledCodeDb(object):
         entry["usage"] += 1
         return entry
 
+    def trace_result(self, parents, item, original, modified):
+        fqn = parents + "::" + original["name"] + "[" + str(item.extent.start.line) + "]"
+        if not modified["name"]:
+            logger.debug(_("Rule {} suppressed {}, {}").format(self, fqn, original))
+        else:
+            delta = False
+            for k, v in original.iteritems():
+                if v != modified[k]:
+                    delta = True
+                    break
+            if delta:
+                logger.debug(_("Rule {} modified {}, {}->{}").format(self, fqn, original, modified))
+            else:
+                logger.warn(_("Rule {} did not modify {}, {}").format(self, fqn, original))
+
 
 class MethodCodeDb(AbstractCompiledCodeDb):
     __metaclass__ = ABCMeta
@@ -591,6 +606,7 @@ class MethodCodeDb(AbstractCompiledCodeDb):
         sip["fn_result2"] = ""
         sip["code"] = ""
         if entry:
+            before = deepcopy(sip)
             sip["decl"] = entry.get("decl", sip["decl"])
             sip["fn_result"] = entry.get("fn_result", sip["fn_result"])
             #
@@ -606,6 +622,7 @@ class MethodCodeDb(AbstractCompiledCodeDb):
             text = textwrap.dedent(entry["code"]).strip()
             text = ["    " + t for t in text.split("\n")]
             sip["code"] = self.directive + "\n".join(text) + "\n%End\n"
+            self.trace_result(_parents(function), function, before, sip)
 
 
 class RuleSet(object):
@@ -710,7 +727,10 @@ class RuleSet(object):
 
     def dump_unused(self):
         def dumper(db_name, rule, usage):
-            logger.error(_("{}, rule {}, used {}".format(db_name, rule, usage)))
+            if usage:
+                logger.info(_("Used rule {}::{} {} times".format(db_name, rule, usage)))
+            else:
+                logger.error(_("Did not use rule {}::{}".format(db_name, rule)))
         for db in [self._methodcode]:
             db.dump_usage(dumper)
 

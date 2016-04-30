@@ -407,6 +407,8 @@ def main(argv=None):
         rules = rules_engine.rules(args.project_rules, args.includes + "," + args.sources, args.sips)
         d = SipBulkGenerator(rules, args.omit, args.select, args.sources, args.sip)
         d.process_tree()
+        if args.verbose:
+            rules.dump_unused()
     except Exception as e:
         tbk = traceback.format_exc()
         print(tbk)

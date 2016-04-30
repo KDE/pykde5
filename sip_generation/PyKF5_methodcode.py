@@ -21,6 +21,31 @@ SIP binding custom %MethodCode for PyKF5.
 
 """
 
+
+from copy import deepcopy
+
+
+def _kcoreconfigskeleton_item_xxx(function, sip, entry):
+    sip["decl2"] = deepcopy(sip["decl"])
+    sip["fn_result2"] = "void"
+    sip["code"] = """
+        Py_BEGIN_ALLOW_THREADS
+        //    sipCpp = new sipKCoreConfigSkeleton_Item{} (PyItem{} (*a0, *a1, a2, a3));
+        sipCpp = new sipKCoreConfigSkeleton_Item{} (*a0, *a1, a2, a3);
+        Py_END_ALLOW_THREADS
+        """.replace("{}", entry["ctx"])
+    sip["decl"][2] = sip["decl"][2].replace("&", "")
+
+
+def _kcoreconfigskeleton_add_item_xxx(function, sip, entry):
+    sip["code"] = """
+        Py_BEGIN_ALLOW_THREADS
+        sipRes = new PyItem{} (sipCpp->currentGroup(), a3->isNull() ? *a0 : *a3, a1, a2);
+        sipCpp->addItem(sipRes, *a0);
+        Py_END_ALLOW_THREADS
+        """.format(entry["ctx"])
+
+
 code = {
 "KParts::BrowserExtension": #"kparts/browserextension.h"
 {
@@ -267,195 +292,99 @@ code = {
 {
     "ItemBool":
     {
-        "decl": "const QString& _group, const QString& _key, bool reference, bool defaultValue = 1",
-        "decl2": "const QString& _group, const QString& _key, bool& reference, bool defaultValue = 1",
-        "fn_result2": "void",
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        //    sipCpp = new sipKCoreConfigSkeleton_ItemBool (PyItemBool (*a0, *a1, a2, a3));
-        sipCpp = new sipKCoreConfigSkeleton_ItemBool (*a0, *a1, a2, a3);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_item_xxx,
+        "ctx": "Bool",
     },
 },
 "KCoreConfigSkeleton::ItemInt": #"kdecore/kcoreconfigskeleton.h"
 {
     "ItemInt":
     {
-        "decl": "const QString& _group, const QString& _key, qint32 reference, qint32 defaultValue = 0",
-        "decl2": "const QString& _group, const QString& _key, qint32& reference, qint32 defaultValue = 0",
-        "fn_result2": "void",
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        //    sipCpp = new sipKCoreConfigSkeleton_ItemInt (PyItemInt (*a0, *a1, a2, a3));
-        sipCpp = new sipKCoreConfigSkeleton_ItemInt (*a0, *a1, a2, a3);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_item_xxx,
+        "ctx": "Int",
     },
 },
 "KCoreConfigSkeleton::ItemLongLong": #"kdecore/kcoreconfigskeleton.h"
 {
     "ItemLongLong":
     {
-        "decl": "const QString& _group, const QString& _key, qint64 reference, qint64 defaultValue = 0",
-        "decl2": "const QString& _group, const QString& _key, qint64& reference, qint64 defaultValue = 0",
-        "fn_result2": "void",
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        //    sipCpp = new sipKCoreConfigSkeleton_ItemLongLong (PyItemLongLong (*a0, *a1, a2, a3));
-        sipCpp = new sipKCoreConfigSkeleton_ItemLongLong (*a0, *a1, a2, a3);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_item_xxx,
+        "ctx": "LongLong",
     },
 },
 "KCoreConfigSkeleton::ItemEnum": #"kdecore/kcoreconfigskeleton.h"
 {
     "ItemEnum":
     {
-        "decl": "const QString& _group, const QString& _key, qint32 reference, const QList<KCoreConfigSkeleton::ItemEnum::Choice> choices, qint32 defaultValue = 0",
-        "decl2": "const QString& _group, const QString& _key, qint32& reference, const QList<KCoreConfigSkeleton::ItemEnum::Choice>& choices, qint32 defaultValue = 0",
-        "fn_result2": "void",
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        sipCpp = new sipKCoreConfigSkeleton_ItemEnum (*a0, *a1, a2, *a3, a4);
-        //    sipCpp = new sipKCoreConfigSkeleton_ItemEnum (PyItemEnum (*a0, *a1, a2, *a3, a4));
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_item_xxx,
+        "ctx": "Enum",
     },
 },
 "KCoreConfigSkeleton::ItemUInt": #"kdecore/kcoreconfigskeleton.h"
 {
     "ItemUInt":
     {
-        "decl": "const QString& _group, const QString& _key, quint32 reference, quint32 defaultValue = 0",
-        "decl2": "const QString& _group, const QString& _key, quint32& reference, quint32 defaultValue = 0",
-        "fn_result2": "void",
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        //    sipCpp = new sipKCoreConfigSkeleton_ItemUInt (PyItemUInt (*a0, *a1, a2, a3));
-        sipCpp = new sipKCoreConfigSkeleton_ItemUInt (*a0, *a1, a2, a3);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_item_xxx,
+        "ctx": "UInt",
     },
 },
 "KCoreConfigSkeleton::ItemULongLong": #"kdecore/kcoreconfigskeleton.h"
 {
     "ItemULongLong":
     {
-        "decl": "const QString& _group, const QString& _key, quint64 reference, quint64 defaultValue = 0",
-        "decl2": "const QString& _group, const QString& _key, quint64& reference, quint64 defaultValue = 0",
-        "fn_result2": "void",
-        "code":
-        """
-            Py_BEGIN_ALLOW_THREADS
-        //    sipCpp = new sipKCoreConfigSkeleton_ItemULongLong (PyItemULongLong (*a0, *a1, a2, a3));
-            sipCpp = new sipKCoreConfigSkeleton_ItemULongLong (*a0, *a1, a2, a3);
-            Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_item_xxx,
+        "ctx": "ULongLong",
     },
 },
 "KCoreConfigSkeleton::ItemDouble": #"kdecore/kcoreconfigskeleton.h"
 {
     "ItemDouble":
     {
-        "decl": "const QString& _group, const QString& _key, double reference, double defaultValue = 0",
-        "decl2": "const QString& _group, const QString& _key, double& reference, double defaultValue = 0",
-        "fn_result2": "void",
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        //    sipCpp = new sipKCoreConfigSkeleton_ItemDouble (PyItemDouble (*a0, *a1, a2, a3));
-        sipCpp = new sipKCoreConfigSkeleton_ItemDouble (*a0, *a1, a2, a3);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_item_xxx,
+        "ctx": "Double",
     },
 },
 "KCoreConfigSkeleton": #"kdecore/kcoreconfigskeleton.h"
 {
     "addItemBool":
     {
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        sipRes = new PyItemBool (sipCpp->currentGroup(), a3->isNull() ? *a0 : *a3, a1, a2);
-        sipCpp->addItem(sipRes, *a0);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_add_item_xxx,
+        "ctx": "Bool",
     },
     "addItemInt":
     {
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        sipRes = new PyItemInt (sipCpp->currentGroup(), a3->isNull() ? *a0 : *a3, a1, a2);
-        sipCpp->addItem(sipRes, *a0);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_add_item_xxx,
+        "ctx": "Int",
     },
     "addItemUInt":
     {
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        sipRes = new PyItemUInt (sipCpp->currentGroup(), a3->isNull() ? *a0 : *a3, a1, a2);
-        sipCpp->addItem(sipRes, *a0);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_add_item_xxx,
+        "ctx": "UInt",
     },
     "addItemLongLong":
     {
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        sipRes = new PyItemLongLong (sipCpp->currentGroup(), a3->isNull() ? *a0 : *a3, a1, a2);
-        sipCpp->addItem(sipRes, *a0);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_add_item_xxx,
+        "ctx": "LongLong",
     },
     "addItemInt64":
     {
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        sipRes = new PyItemLongLong (sipCpp->currentGroup(), a3->isNull() ? *a0 : *a3, a1, a2);
-        sipCpp->addItem(sipRes, *a0);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_add_item_xxx,
+        "ctx": "LongLong",
     },
     "addItemULongLong":
     {
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        sipRes = new PyItemULongLong (sipCpp->currentGroup(), a3->isNull() ? *a0 : *a3, a1, a2);
-        sipCpp->addItem(sipRes, *a0);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_add_item_xxx,
+        "ctx": "ULongLong",
     },
     "addItemUInt64":
     {
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        sipRes = new PyItemULongLong (sipCpp->currentGroup(), a3->isNull() ? *a0 : *a3, a1, a2);
-        sipCpp->addItem(sipRes, *a0);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_add_item_xxx,
+        "ctx": "ULongLong",
     },
     "addItemDouble":
     {
-        "code":
-        """
-        Py_BEGIN_ALLOW_THREADS
-        sipRes = new PyItemDouble (sipCpp->currentGroup(), a3->isNull() ? *a0 : *a3, a1, a2);
-        sipCpp->addItem(sipRes, *a0);
-        Py_END_ALLOW_THREADS
-        """
+        "code": _kcoreconfigskeleton_add_item_xxx,
+        "ctx": "Double",
     },
     "init":
     {

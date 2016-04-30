@@ -447,12 +447,15 @@ class SipGenerator(object):
             #
             # Any %MethodCode?
             #
-            sip["template_parameters"] = ", ".join(sip["template_parameters"])
-            sip["decl"] = ", ".join(sip["decl"])
-            sip["annotations"] = ",".join(sip["annotations"])
             self.rules.methodcode(function, sip)
+            sip["template_parameters"] = ", ".join(sip["template_parameters"])
+            if not isinstance(sip["decl"], str):
+                sip["decl"] = ", ".join(sip["decl"])
+            sip["annotations"] = ",".join(sip["annotations"])
             decl = sip["name"] + "(" + sip["decl"] + ")"
             if sip["decl2"]:
+                if not isinstance(sip["decl2"], str):
+                    sip["decl2"] = ", ".join(sip["decl2"])
                 decl += "\n    " + pad + "["
                 if sip["fn_result2"]:
                     if sip["fn_result2"][-1] in "*&":

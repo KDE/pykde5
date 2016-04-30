@@ -607,19 +607,23 @@ class MethodCodeDb(AbstractCompiledCodeDb):
         sip["code"] = ""
         if entry:
             before = deepcopy(sip)
-            sip["decl"] = entry.get("decl", sip["decl"])
-            sip["fn_result"] = entry.get("fn_result", sip["fn_result"])
-            #
-            # The user might provide one or other or both of decl2 and fn_result2 to signify a C++ signature. If
-            # needed, default a missing value from decl/fn_result.
-            #
-            if "decl2" in entry or "fn_result2" in entry:
-                sip["decl2"] = entry.get("decl2", sip["decl"])
-                sip["fn_result2"] = entry.get("fn_result2", sip["fn_result2"])
+            sip["code"] = entry["code"]
+            if callable(sip["code"]):
+                sip["code"](function, sip, entry)
+            else:
+                sip["decl"] = entry.get("decl", sip["decl"])
+                sip["fn_result"] = entry.get("fn_result", sip["fn_result"])
+                #
+                # The user might provide one or other or both of decl2 and fn_result2 to signify a C++ signature. If
+                # needed, default a missing value from decl/fn_result.
+                #
+                if "decl2" in entry or "fn_result2" in entry:
+                    sip["decl2"] = entry.get("decl2", sip["decl"])
+                    sip["fn_result2"] = entry.get("fn_result2", sip["fn_result2"])
             #
             # Fetch/format the code.
             #
-            text = textwrap.dedent(entry["code"]).strip()
+            text = textwrap.dedent(sip["code"]).strip()
             text = ["    " + t for t in text.split("\n")]
             sip["code"] = self.directive + "\n".join(text) + "\n%End\n"
             self.trace_result(_parents(function), function, before, sip)

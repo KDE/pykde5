@@ -613,7 +613,7 @@ class MethodCodeDb(AbstractCompiledCodeDb):
             # The user might provide one or other or both of decl2 and fn_result2 to signify a C++ signature. If
             # needed, default a missing value from decl/fn_result.
             #
-            if sip["decl2"] or sip["fn_result2"]:
+            if "decl2" in entry or "fn_result2" in entry:
                 sip["decl2"] = entry.get("decl2", sip["decl"])
                 sip["fn_result2"] = entry.get("fn_result2", sip["fn_result2"])
             #

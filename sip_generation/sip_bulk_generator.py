@@ -393,6 +393,8 @@ def main(argv=None):
                         help=_("Regular expression of C++ headers under 'sources' to be processed"))
     parser.add_argument("--omit", default="KDELibs4Support", type=lambda s: re.compile(s, re.I),
                         help=_("Regular expression of C++ headers under sources NOT to be processed"))
+    parser.add_argument("--dump-rule-usage", action="store_true", default=False,
+                        help=_("Debug dump rule usage statistics"))
     parser.add_argument("sip", help=_("SIP output directory"))
     parser.add_argument("sources", default="/usr/include/KF5", nargs="?", help=_("C++ header directory to process"))
     try:
@@ -407,7 +409,7 @@ def main(argv=None):
         rules = rules_engine.rules(args.project_rules, args.includes + "," + args.sources, args.sips)
         d = SipBulkGenerator(rules, args.omit, args.select, args.sources, args.sip)
         d.process_tree()
-        if args.verbose:
+        if args.dump_rule_usage:
             rules.dump_unused()
     except Exception as e:
         tbk = traceback.format_exc()

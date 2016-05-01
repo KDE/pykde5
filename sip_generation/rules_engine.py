@@ -62,6 +62,7 @@ class Rule(object):
         self.db = db
         self.rule_number = rule_number
         self.fn = fn
+        self.usage = 0
         try:
             groups = ["(?P<{}>{})".format(name, pattern) for pattern, name in pattern_zip]
             groups = _SEPARATOR.join(groups)
@@ -90,7 +91,7 @@ class Rule(object):
                 logger.warn(_("Rule {} did not modify {}, {}").format(self, fqn, original))
 
     def __str__(self):
-        return "{}[{}],{}".format(self.db.__name__, self.rule_number, self.fn.__name__)
+        return "[{},{}]".format(self.rule_number, self.fn.__name__)
 
 
 class AbstractCompiledRuleDb(object):
@@ -115,12 +116,18 @@ class AbstractCompiledRuleDb(object):
                 #
                 # Only use the first matching rule.
                 #
+                rule.usage += 1
                 return matcher, rule
         return None, None
 
     @abstractmethod
     def apply(self, *args):
         raise NotImplemented(_("Missing subclass"))
+
+    def dump_usage(self, fn):
+        """ Dump the usage counts."""
+        for rule in self.compiled_rules:
+            fn(self.__class__.__name__, str(rule), rule.usage)
 
 
 class ContainerRuleDb(AbstractCompiledRuleDb):
@@ -497,7 +504,7 @@ class VariableRuleDb(AbstractCompiledRuleDb):
 
         def variable_xxx(container, variable, sip, matcher):
             '''
-            Return a modified declaration for the given function.
+            Return a modified declaration for the given variable.
 
             :param container:   The clang.cindex.Cursor for the container.
             :param variable:    The clang.cindex.Cursor for the variable.
@@ -555,7 +562,7 @@ class AbstractCompiledCodeDb(object):
             vk = self.db[k]
             for l in sorted(vk.keys()):
                 vl = vk[l]
-                fn(type(self).__name__, k + "::" + l, vl["usage"])
+                fn(type(self).__name__, "[" + k + "," + l + "]", vl["usage"])
 
     def _get(self, item, name):
         #
@@ -591,6 +598,55 @@ class AbstractCompiledCodeDb(object):
 
 
 class MethodCodeDb(AbstractCompiledCodeDb):
+    """
+    THE RULES FOR INJECTING %MethodCode.
+
+    These are used to customise the behaviour of the SIP generator by allowing
+    %MethodCode injection.
+
+    The raw rule database must be an outer dictionary as follows:
+
+        0. Each key is the fully-qualified name of a "container" enclosing
+        methods.
+
+        1. Each value is an inner dictionary, each of whose keys is the name
+        of a method.
+
+    Each inner dictionary has entries which update the declaration as follows:
+
+        "decl":         Optional string. If present, update the argument list.
+
+        "fn_result":    Optional string. If present, update the return type.
+
+        "decl2", "fn_result2"
+                        Both optional. If either is present, the SIP method's
+                        optional C++ declaration is added (if only one is
+                        present, "decl2" is defaulted from "decl" and
+                        "fn_result2" is defaulted from "fn_result").
+
+        "code":         Required. Either a string, with the %MethodCode
+                        contents, or is a callable.
+
+    In use, the database is directly indexed by "container" and then method
+    name. If "code" entry is a string, then the other optional keys are
+    interpreted as above. If "code" is a callable, it is called with the
+    following contract:
+
+        def methodcode_xxx(function, sip, entry):
+            '''
+            Return a modified declaration for the given function.
+
+            :param function:    The clang.cindex.Cursor for the function.
+            :param sip:         A dict with keys as for function rules
+                                plus the "decl2", "fn_result2" and (string)
+                                "code" keys described above.
+            :param sip:         The inner dictionary entry.
+
+            :return: An updated set of sip.xxx values.
+            '''
+
+    :return: The compiled form of the rules.
+    """
     __metaclass__ = ABCMeta
 
     def __init__(self, db):
@@ -659,7 +715,7 @@ class RuleSet(object):
         raise NotImplemented(_("Missing subclass implementation"))
 
     @abstractmethod
-    def param_rules(self):
+    def parameter_rules(self):
         """
         Return a compiled list of rules for function parameters.
 
@@ -686,11 +742,20 @@ class RuleSet(object):
         raise NotImplemented(_("Missing subclass implementation"))
 
     @abstractmethod
-    def var_rules(self):
+    def variable_rules(self):
         """
         Return a compiled list of rules for variables.
 
         :return: A VariableRuleDb instance
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
+    @abstractmethod
+    def methodcode_rules(self):
+        """
+        Return a compiled list of rules for %MethodCode.
+
+        :return: A MethodCodeDb instance
         """
         raise NotImplemented(_("Missing subclass implementation"))
 
@@ -730,12 +795,14 @@ class RuleSet(object):
         raise NotImplemented(_("Missing subclass implementation"))
 
     def dump_unused(self):
+        """Usage statistics, to identify unused rules."""
         def dumper(db_name, rule, usage):
             if usage:
-                logger.info(_("Used rule {}::{} {} times".format(db_name, rule, usage)))
+                logger.info(_("Rule {}::{} used {} times".format(db_name, rule, usage)))
             else:
-                logger.error(_("Did not use rule {}::{}".format(db_name, rule)))
-        for db in [self._methodcode]:
+                logger.warn(_("Rule {}::{} unused".format(db_name, rule)))
+        for db in [self.container_rules(), self.function_rules(), self.parameter_rules(), self.typedef_rules(),
+                   self.unexposed_rules(), self.variable_rules(), self.methodcode_rules()]:
             db.dump_usage(dumper)
 
     def _check_directory_list(self, paths):
@@ -795,7 +862,7 @@ def main(argv=None):
         # Generate help!
         #
         for db in [RuleSet, ContainerRuleDb, FunctionRuleDb, ParameterRuleDb, TypedefRuleDb, UnexposedRuleDb,
-                   VariableRuleDb]:
+                   VariableRuleDb, MethodCodeDb]:
             print(inspect.getdoc(db))
             print()
     except Exception as e:

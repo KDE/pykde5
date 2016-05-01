@@ -309,7 +309,7 @@ class RuleSet(rules_engine.RuleSet):
     def function_rules(self):
         return self._fn_db
 
-    def param_rules(self):
+    def parameter_rules(self):
         return self._param_db
 
     def typedef_rules(self):
@@ -318,8 +318,11 @@ class RuleSet(rules_engine.RuleSet):
     def unexposed_rules(self):
         return self._unexposed_db
 
-    def var_rules(self):
+    def variable_rules(self):
         return self._var_db
+
+    def methodcode_rules(self):
+        return self._methodcode
 
     def includes(self):
         return self._includes

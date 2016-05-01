@@ -400,7 +400,7 @@ class SipGenerator(object):
                     "init": self._fn_get_parameter_default(function, child),
                     "annotations": set()
                 }
-                self.rules.param_rules().apply(container, function, child, child_sip)
+                self.rules.parameter_rules().apply(container, function, child, child_sip)
                 decl = child_sip["decl"]
                 if child_sip["annotations"]:
                     decl += " /" + ",".join(child_sip["annotations"]) + "/"
@@ -762,7 +762,7 @@ class SipGenerator(object):
         decl = "{} {}".format(variable.type.spelling, variable.spelling)
         decl = decl.replace("* ", "*").replace("& ", "&")
         sip["decl"] = decl
-        self.rules.var_rules().apply(container, variable, sip)
+        self.rules.variable_rules().apply(container, variable, sip)
         #
         # Now the rules have run, add any prefix/suffix.
         #

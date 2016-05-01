@@ -546,8 +546,7 @@ class VariableRuleDb(AbstractCompiledRuleDb):
 class AbstractCompiledCodeDb(object):
     __metaclass__ = ABCMeta
 
-    def __init__(self, directive, db):
-        self.directive = directive + "\n"
+    def __init__(self, db):
         self.db = db
         #
         # Add a usage count for each item in the database.
@@ -599,7 +598,8 @@ class AbstractCompiledCodeDb(object):
 
 class MethodCodeDb(AbstractCompiledCodeDb):
     """
-    THE RULES FOR INJECTING %MethodCode.
+    THE RULES FOR INJECTING METHOD-RELATED CODE (%MethodCode as well as
+    %VirtualCatcherCode and %VirtualCallCode).
 
     These are used to customise the behaviour of the SIP generator by allowing
     %MethodCode injection.
@@ -650,7 +650,7 @@ class MethodCodeDb(AbstractCompiledCodeDb):
     __metaclass__ = ABCMeta
 
     def __init__(self, db):
-        super(MethodCodeDb, self).__init__("%MethodCode", db)
+        super(MethodCodeDb, self).__init__(db)
 
     def apply(self, function, sip):
         entry = self._get(function, sip["name"])
@@ -679,9 +679,7 @@ class MethodCodeDb(AbstractCompiledCodeDb):
             #
             # Fetch/format the code.
             #
-            text = textwrap.dedent(sip["code"]).strip()
-            text = ["    " + t for t in text.split("\n")]
-            sip["code"] = self.directive + "\n".join(text) + "\n%End\n"
+            sip["code"] = textwrap.dedent(sip["code"]).strip() + "\n"
             self.trace_result(_parents(function), function, before, sip)
 
 

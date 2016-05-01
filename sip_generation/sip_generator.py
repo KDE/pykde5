@@ -445,7 +445,7 @@ class SipGenerator(object):
         pad = " " * (level * 4)
         if sip["name"]:
             #
-            # Any %MethodCode?
+            # Any method-related code (%MethodCode as well as %VirtualCatcherCode and %VirtualCallCode)?
             #
             self.rules.methodcode(function, sip)
             sip["template_parameters"] = ", ".join(sip["template_parameters"])

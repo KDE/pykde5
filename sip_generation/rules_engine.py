@@ -548,37 +548,10 @@ class AbstractCompiledCodeDb(object):
 
     def __init__(self, db):
         self.db = db
-        #
-        # Add a usage count for each item in the database.
-        #
-        for k, v in self.db.items():
-            for l in v.keys():
-                v[l]["usage"] = 0
 
-    def dump_usage(self, fn):
-        """ Dump the usage counts."""
-        for k in sorted(self.db.keys()):
-            vk = self.db[k]
-            for l in sorted(vk.keys()):
-                vl = vk[l]
-                fn(type(self).__name__, "[" + k + "," + l + "]", vl["usage"])
-
-    def _get(self, item, name):
-        #
-        # Lookup any parent-level entries.
-        #
-        parents = _parents(item)
-        entries = self.db.get(parents, None)
-        if not entries:
-            return None
-        #
-        # Now look for an actual hit.
-        #
-        entry = entries.get(name, None)
-        if not entry:
-            return None
-        entry["usage"] += 1
-        return entry
+    @abstractmethod
+    def apply(self, function, sip):
+        raise NotImplemented(_("Missing subclass"))
 
     def trace_result(self, parents, item, original, modified):
         fqn = parents + "::" + original["name"] + "[" + str(item.extent.start.line) + "]"
@@ -595,6 +568,10 @@ class AbstractCompiledCodeDb(object):
             else:
                 logger.warn(_("Rule {} did not modify {}, {}").format(self, fqn, original))
 
+    @abstractmethod
+    def dump_usage(self, fn):
+        raise NotImplemented(_("Missing subclass"))
+
 
 class MethodCodeDb(AbstractCompiledCodeDb):
     """
@@ -602,7 +579,7 @@ class MethodCodeDb(AbstractCompiledCodeDb):
     %VirtualCatcherCode and %VirtualCallCode).
 
     These are used to customise the behaviour of the SIP generator by allowing
-    %MethodCode injection.
+    method-level code injection.
 
     The raw rule database must be an outer dictionary as follows:
 
@@ -624,8 +601,8 @@ class MethodCodeDb(AbstractCompiledCodeDb):
                         present, "decl2" is defaulted from "decl" and
                         "fn_result2" is defaulted from "fn_result").
 
-        "code":         Required. Either a string, with the %MethodCode
-                        contents, or is a callable.
+        "code":         Required. Either a string, with the %XXXCode content,
+                        or a callable.
 
     In use, the database is directly indexed by "container" and then method
     name. If "code" entry is a string, then the other optional keys are
@@ -640,7 +617,7 @@ class MethodCodeDb(AbstractCompiledCodeDb):
             :param sip:         A dict with keys as for function rules
                                 plus the "decl2", "fn_result2" and (string)
                                 "code" keys described above.
-            :param sip:         The inner dictionary entry.
+            :param entry:       The inner dictionary entry.
 
             :return: An updated set of sip.xxx values.
             '''
@@ -651,6 +628,29 @@ class MethodCodeDb(AbstractCompiledCodeDb):
 
     def __init__(self, db):
         super(MethodCodeDb, self).__init__(db)
+        #
+        # Add a usage count for each item in the database.
+        #
+        for k, v in self.db.items():
+            for l in v.keys():
+                v[l]["usage"] = 0
+
+    def _get(self, item, name):
+        #
+        # Lookup any parent-level entries.
+        #
+        parents = _parents(item)
+        entries = self.db.get(parents, None)
+        if not entries:
+            return None
+        #
+        # Now look for an actual hit.
+        #
+        entry = entries.get(name, None)
+        if not entry:
+            return None
+        entry["usage"] += 1
+        return entry
 
     def apply(self, function, sip):
         entry = self._get(function, sip["name"])
@@ -681,6 +681,101 @@ class MethodCodeDb(AbstractCompiledCodeDb):
             #
             sip["code"] = textwrap.dedent(sip["code"]).strip() + "\n"
             self.trace_result(_parents(function), function, before, sip)
+
+    def dump_usage(self, fn):
+        """ Dump the usage counts."""
+        for k in sorted(self.db.keys()):
+            vk = self.db[k]
+            for l in sorted(vk.keys()):
+                vl = vk[l]
+                fn(type(self).__name__, "[" + k + "," + l + "]", vl["usage"])
+
+
+class TypeCodeDb(AbstractCompiledCodeDb):
+    """
+    THE RULES FOR INJECTING TYPE-RELATED CODE (%BIGetBufferCode,
+    %BIGetReadBufferCode, %BIGetWriteBufferCode, %BIGetSegCountCode,
+    %BIGetCharBufferCode, %BIReleaseBufferCode, %ConvertFromTypeCode,
+    %ConvertToSubClassCode, %ConvertToTypeCode, %GCClearCode, %GCTraverseCode,
+    %InstanceCode, %PickleCode, %TypeCode or %TypeHeaderCode).
+
+    These are used to customise the behaviour of the SIP generator by allowing
+    type-level code injection.
+
+    The raw rule database must be a dictionary as follows:
+
+        0. Each key is the fully-qualified name of a "container" class,
+        struct, namespace etc.
+
+        1. Each value has entries which update the declaration as follows:
+
+        "code":         Required. Either a string, with the %XXXCode content,
+                        or a callable.
+
+    In use, the database is directly indexed by "container". If "code" entry
+    is a string, it is used directly. Note that the use of any of
+    %TypeHeaderCode, %ConvertToTypeCode or %ConvertFromTypeCode will cause the
+    container type to be marked as a %MappedType. If "code" is a callable,
+    it is called with the following contract:
+
+        def typecode_xxx(container, sip, entry):
+            '''
+            Return a modified declaration for the given function.
+
+            :param container:   The clang.cindex.Cursor for the container.
+            :param sip:         A dict with keys as for container rules
+                                plus the "code" key described above.
+            :param entry:       The dictionary entry.
+
+            :return: An updated set of sip.xxx values.
+            '''
+
+    :return: The compiled form of the rules.
+    """
+    __metaclass__ = ABCMeta
+
+    def __init__(self, db):
+        super(TypeCodeDb, self).__init__(db)
+        #
+        # Add a usage count for each item in the database.
+        #
+        for k, v in self.db.items():
+            v["usage"] = 0
+        self.mapped_type_re = re.compile("^%(TypeHeaderCode|ConvertToTypeCode|ConvertFromTypeCode)", re.MULTILINE)
+
+    def _get(self, item, name):
+        #
+        # Lookup for an actual hit.
+        #
+        parents = _parents(item)
+        entry = self.db.get(parents + "::" + name, None)
+        if not entry:
+            return None
+        entry["usage"] += 1
+        return entry
+
+    def apply(self, container, sip):
+        entry = self._get(container, sip["name"])
+        sip["code"] = ""
+        if entry:
+            before = deepcopy(sip)
+            sip["code"] = entry["code"]
+            if callable(sip["code"]):
+                sip["code"](container, sip, entry)
+            #
+            # Fetch/format the code.
+            #
+            sip["code"] = textwrap.dedent(sip["code"]).strip() + "\n"
+            self.trace_result(_parents(container), container, before, sip)
+            return self.mapped_type_re.search(sip["code"])
+        else:
+            return False
+
+    def dump_usage(self, fn):
+        """ Dump the usage counts."""
+        for k in sorted(self.db.keys()):
+            v = self.db[k]
+            fn(type(self).__name__, "[" + k + "," + v + "]", v["usage"])
 
 
 class RuleSet(object):
@@ -751,9 +846,33 @@ class RuleSet(object):
     @abstractmethod
     def methodcode_rules(self):
         """
-        Return a compiled list of rules for %MethodCode.
+        Return a compiled list of rules for method-related code.
 
         :return: A MethodCodeDb instance
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
+    @abstractmethod
+    def typecode_rules(self):
+        """
+        Return a compiled list of rules for type-related code.
+
+        :return: A TypeCodeDb instance
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
+    @abstractmethod
+    def methodcode(self, container, function):
+        """
+        Lookup %MethodCode.
+        """
+        raise NotImplemented(_("Missing subclass implementation"))
+
+    @abstractmethod
+    def typecode(self, container, function):
+        """
+        Lookup %TypeCode. Return True or False depending on whether a
+        %MappedType is implied.
         """
         raise NotImplemented(_("Missing subclass implementation"))
 
@@ -785,13 +904,6 @@ class RuleSet(object):
         """
         raise NotImplemented(_("Missing subclass implementation"))
 
-    @abstractmethod
-    def methodcode(self, container, function):
-        """
-        %Methodcode.
-        """
-        raise NotImplemented(_("Missing subclass implementation"))
-
     def dump_unused(self):
         """Usage statistics, to identify unused rules."""
         def dumper(db_name, rule, usage):
@@ -800,7 +912,7 @@ class RuleSet(object):
             else:
                 logger.warn(_("Rule {}::{} unused".format(db_name, rule)))
         for db in [self.container_rules(), self.function_rules(), self.parameter_rules(), self.typedef_rules(),
-                   self.unexposed_rules(), self.variable_rules(), self.methodcode_rules()]:
+                   self.unexposed_rules(), self.variable_rules(), self.methodcode_rules(), self.typecode_rules()]:
             db.dump_usage(dumper)
 
     def _check_directory_list(self, paths):
@@ -860,7 +972,11 @@ def main(argv=None):
         # Generate help!
         #
         for db in [RuleSet, ContainerRuleDb, FunctionRuleDb, ParameterRuleDb, TypedefRuleDb, UnexposedRuleDb,
-                   VariableRuleDb, MethodCodeDb]:
+                   VariableRuleDb, MethodCodeDb, TypeCodeDb]:
+            name = db.__name__
+            print(name)
+            print("=" * len(name))
+            print()
             print(inspect.getdoc(db))
             print()
     except Exception as e:

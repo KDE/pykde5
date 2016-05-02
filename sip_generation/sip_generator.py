@@ -300,7 +300,17 @@ class SipGenerator(object):
             self.rules.container_rules().apply(container, sip)
             pad = " " * (level * 4)
             if sip["name"]:
-                decl = pad + sip["decl"]
+                #
+                # Any type-related code (%BIGetBufferCode, %BIGetReadBufferCode, %BIGetWriteBufferCode,
+                # %BIGetSegCountCode, %BIGetCharBufferCode, %BIReleaseBufferCode, %ConvertToSubClassCode,
+                # %ConvertToTypeCode, %GCClearCode, %GCTraverseCode, %InstanceCode, %PickleCode, %TypeCode
+                # or %TypeHeaderCode)?
+                #
+                mapped_type = self.rules.typecode(container, sip)
+                if mapped_type:
+                    decl = pad + "%MappedType " + sip["decl"]
+                else:
+                    decl = pad + sip["decl"]
                 if "External" in sip["annotations"]:
                     #
                     # SIP /External/ does not seem to work as one might wish. Suppress.
@@ -316,6 +326,7 @@ class SipGenerator(object):
                         decl = pad + "template <" + sip["template_parameters"] + ">\n" + decl
                     decl += "\n" + pad + "{\n"
                     decl += "%TypeHeaderCode\n#include <{}>\n%End\n".format(h_file)
+                    decl += sip["code"]
                     body = decl + sip["body"] + pad + "};\n"
             else:
                 body = pad + "// Discarded {}\n".format(SipGenerator.describe(container))

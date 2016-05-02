@@ -17,7 +17,7 @@
 # 02110-1301  USA.
 #
 """
-SIP binding custom %MethodCode for PyKF5.
+SIP binding custom method-related code for PyKF5.
 """
 
 
@@ -50,7 +50,8 @@ def _kcoreconfigskeleton_add_item_xxx(function, sip, entry):
 
 
 code = {
-"KParts::BrowserExtension": #"kparts/browserextension.h"
+# ./kparts/browserextension.sip
+"KParts::BrowserExtension":
 {
     "createNewWindow":
     {
@@ -66,7 +67,8 @@ code = {
         """
     },
 },
-"klocalizedstring.h": # KLocalizedString
+# ./kdecore/klocalizedstring.sip
+"klocalizedstring.h":
 {
     "i18n":
     {
@@ -117,7 +119,8 @@ code = {
         """
     },
 },
-"kdecore/kurl.h": #"kdecore/kurl.h"
+# ./kdecore/kurl.sip
+"kdecore/kurl.h":
 {
     "__len__":
     {
@@ -323,7 +326,8 @@ code = {
         """
     },
 },
-"KCoreConfigSkeleton::ItemBool": #"kdecore/kcoreconfigskeleton.h"
+# ./kdecore/kcoreconfigskeleton.sip
+"KCoreConfigSkeleton::ItemBool":
 {
     "ItemBool":
     {
@@ -331,7 +335,7 @@ code = {
         "ctx": "Bool",
     },
 },
-"KCoreConfigSkeleton::ItemInt": #"kdecore/kcoreconfigskeleton.h"
+"KCoreConfigSkeleton::ItemInt":
 {
     "ItemInt":
     {
@@ -339,7 +343,7 @@ code = {
         "ctx": "Int",
     },
 },
-"KCoreConfigSkeleton::ItemLongLong": #"kdecore/kcoreconfigskeleton.h"
+"KCoreConfigSkeleton::ItemLongLong":
 {
     "ItemLongLong":
     {
@@ -347,7 +351,7 @@ code = {
         "ctx": "LongLong",
     },
 },
-"KCoreConfigSkeleton::ItemEnum": #"kdecore/kcoreconfigskeleton.h"
+"KCoreConfigSkeleton::ItemEnum":
 {
     "ItemEnum":
     {
@@ -355,7 +359,7 @@ code = {
         "ctx": "Enum",
     },
 },
-"KCoreConfigSkeleton::ItemUInt": #"kdecore/kcoreconfigskeleton.h"
+"KCoreConfigSkeleton::ItemUInt":
 {
     "ItemUInt":
     {
@@ -363,7 +367,7 @@ code = {
         "ctx": "UInt",
     },
 },
-"KCoreConfigSkeleton::ItemULongLong": #"kdecore/kcoreconfigskeleton.h"
+"KCoreConfigSkeleton::ItemULongLong":
 {
     "ItemULongLong":
     {
@@ -371,7 +375,7 @@ code = {
         "ctx": "ULongLong",
     },
 },
-"KCoreConfigSkeleton::ItemDouble": #"kdecore/kcoreconfigskeleton.h"
+"KCoreConfigSkeleton::ItemDouble":
 {
     "ItemDouble":
     {
@@ -379,7 +383,7 @@ code = {
         "ctx": "Double",
     },
 },
-"KCoreConfigSkeleton": #"kdecore/kcoreconfigskeleton.h"
+"KCoreConfigSkeleton":
 {
     "addItemBool":
     {
@@ -421,6 +425,10 @@ code = {
         "code": _kcoreconfigskeleton_add_item_xxx,
         "ctx": "Double",
     },
+},
+# ./kdecore/kcmdlineargs.sip
+"KCmdLineArgs::StdCmdLineArgs":
+{
     "init":
     {
         "decl": "SIP_PYLIST argv, const QByteArray& appname, const QByteArray& catalog, const KLocalizedString& programName, const QByteArray& version, const KLocalizedString& description = KLocalizedString(), int stdargs = 3",
@@ -479,6 +487,10 @@ code = {
         %End
         """
     },
+},
+# ./kdecore/typedefs.sip
+"kdecore/typedefs.h":
+{
     "version":
     {
         "code":
@@ -585,7 +597,8 @@ code = {
         """
     },
 },
-"KFileItem": #"kio/kfileitem.h"
+# ./kio/kfileitem.sip
+"KFileItem":
 {
     "__len__":
     {
@@ -730,6 +743,10 @@ code = {
         %End
         """
     },
+},
+# ./solid/predicate.sip
+"Predicate":
+{
     "Predicate":
     {
         "decl": "const Solid::DeviceInterface::Type ifaceType",
@@ -745,7 +762,8 @@ code = {
         """
     },
 },
-"KTextEditor::MovingRange": #"ktexteditor/movingrange.h"
+# ./ktexteditor/movingrange.sip
+"KTextEditor::MovingRange":
 {
     "start":
     {
@@ -769,6 +787,10 @@ code = {
         %End
         """
     },
+},
+# ./ktexteditor/view.sip
+"./ktexteditor/view.h":
+{
     "codeCompletionInterface":
     {
         "code":
@@ -858,7 +880,8 @@ code = {
         """
     },
 },
-"KTextEditor/ktexteditor/editor.h": # "KTextEditor::Editor": #
+# ./ktexteditor/editor.sip
+"KTextEditor/ktexteditor/editor.h":
 {
     "commandInterface":
     {
@@ -883,7 +906,8 @@ code = {
         """
     },
 },
-"KTextEditor::Document": #"ktexteditor/document.h"
+# ./ktexteditor/document.sip
+"KTextEditor::Document":
 {
     "annotationInterface":
     {
@@ -1006,6 +1030,10 @@ code = {
         %End
         """
     },
+},
+# ./kdeui/kapplication.sip
+"/kdeui/kapplication.h":
+{
     "KApplication":
     {
         "decl": "Display* display, SIP_PYLIST list, const QByteArray& rAppName, bool GUIenabled = 1",
@@ -1039,7 +1067,8 @@ code = {
         """
     },
 },
-"NETRootInfo": #"kdeui/netwm.h"
+# ./kdeui/netwm.sip
+"NETRootInfo":
 {
     "NETRootInfo":
     {
@@ -1094,7 +1123,8 @@ code = {
         """
     },
 },
-"NETWinInfo": #"kdeui/netwm.h"
+# ./kdeui/netwm.sip
+"NETWinInfo":
 {
     "NETWinInfo":
     {
@@ -1124,6 +1154,8 @@ code = {
         """
     },
 },
+# ./kdeui/kfontchooser.sip
+# ./kdeui/kfontdialog.sip
 "KFontChooser":
 {
     "KFontChooser":
@@ -1140,7 +1172,11 @@ code = {
         %End
         """
     },
-    "KFontChooser":
+},
+# ./kdeui/kfontdialog.sip
+"KFontDialog":
+{
+    "KFontDialog":
     {
         "decl": "QWidget* parent /TransferThis/ = 0, const KFontChooser::DisplayFlags& flags = KFontChooser::NoDisplayFlags, const QStringList& fontlist = QStringList(), Qt::CheckState* sizeIsRelativeState = 0",
         "decl2": "QWidget* = 0, const KFontChooser::DisplayFlags& = KFontChooser::NoDisplayFlags, const QStringList& = QStringList(), Qt::CheckState* = 0",
@@ -1220,6 +1256,7 @@ code = {
         """
     },
 },
+# ./kdeui/kxmlguibuilder.sip
 "KXMLGUIBuilder":
 {
     "createContainer":

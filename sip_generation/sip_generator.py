@@ -361,8 +361,12 @@ class SipGenerator(object):
         decl = pad + "enum {} {{\n".format(enum.displayname or "__enum{}".format(enum.extent.start.line))
         enumerations = []
         for enum in enum.get_children():
-            enumerations.append(pad + "    {}".format(enum.displayname))
-            assert enum.kind == CursorKind.ENUM_CONSTANT_DECL
+            #
+            # Skip visibility attributes and the like.
+            #
+            if enum.kind == CursorKind.ENUM_CONSTANT_DECL:
+                enumerations.append(pad + "    {}".format(enum.displayname))
+                break
         decl += ",\n".join(enumerations) + "\n"
         decl += pad + "}"
         return decl

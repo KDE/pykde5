@@ -837,7 +837,7 @@ class SipGenerator(object):
             lines = subprocess.check_output(["/sbin/ldconfig", "-p"])
             for line in lines.split("\n"):
                 fields = line.split()
-                if fields and fields[0].startswith("libclang.so"):
+                if fields and re.match("libclang.*\.so", fields[0]):
                     SipGenerator._libclang = fields[-1]
                     logger.debug(_("Found libclang at {}").format(SipGenerator._libclang))
         if SipGenerator._libclang:

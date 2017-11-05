@@ -486,28 +486,39 @@ function(get_binding_info_kf5)
     set(link_libraries ${_LINK_LIBRARIES} PARENT_SCOPE)
 endfunction(get_binding_info_kf5)
 
+#
+# The key design choice is that building and installing Python components
+# should be driven using Pythonic-facilities.
+#
+# Internally, those can and do use generic, non-KDE-specific CMake logic
+# to drive the C++ part of the build. Generic logic should be fine since
+# we are building cppyy artefacts, with definitions taken from KDE headers
+# (and not bulk KDE code). Famous last words...
+#
 function(create_binding_targets pkg target setup_py)
     #
     # TODO: Proper Python2/3 support.
     #
-    add_custom_command(
-        OUTPUT ${target}
-        COMMAND python2 ${setup_py} build
-        COMMAND python3 ${setup_py} build)
     install(CODE "
-execute_process(COMMAND python2 ${setup_py} install
+execute_process(
+    COMMAND pip wheel .
+    COMMAND pip3 wheel .
     ERROR_VARIABLE _stderr
     RESULT_VARIABLE _rc
     OUTPUT_STRIP_TRAILING_WHITESPACE
     WORKING_DIRECTORY ${pkg})
-if(NOT \"${_rc}\" STREQUAL \"0\")
-    message(FATAL_ERROR \"Error during install: (${_rc}) ${_stderr}\")
+if(NOT \"$\{_rc\}\" STREQUAL \"0\")
+    message(FATAL_ERROR \"Error building wheels: ($\{_rc\}) $\{_stderr\}\")
 endif()
-execute_process(COMMAND python3 ${setup_py} install
+file(GLOB wheels RELATIVE ${CMAKE_CURRENT_BINARY_DIR} ${pkg}/*.whl)
+execute_process(
+    COMMAND pip install --pre $\{wheels\}
+    COMMAND pip3 install --pre $\{wheels\}
     ERROR_VARIABLE _stderr
     RESULT_VARIABLE _rc
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-if(NOT \"${_rc}\" STREQUAL \"0\")
-    message(FATAL_ERROR \"Error during install: (${_rc}) ${_stderr}\")
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    WORKING_DIRECTORY ${pkg})
+if(NOT \"$\{_rc\}\" STREQUAL \"0\")
+    message(FATAL_ERROR \"Error during install: ($\{_rc\}) $\{_stderr\}\")
 endif()")
 endfunction(create_binding_targets)

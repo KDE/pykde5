@@ -1,0 +1,59 @@
+# Copyright 2017 Shaheed Haque <srhaque@theiet.org>
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+# 1. Redistributions of source code must retain the copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products
+#    derived from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+set(_pkg "KF5.Akonadi")
+project(${_pkg})
+
+#
+# Get the information needed to create create bindings for a set of related
+# KF5 components.
+#
+get_binding_info_kf5(
+    COMPONENTS KF5Akonadi KF5AkonadiCalendar KF5AkonadiContact KF5AkonadiMime KF5AkonadiNotes KF5AkonadiSearch
+    NATIVE_COMPONENTS KF5AkonadiSearch
+    DEPENDENCIES KF5Konq KF5Attica)
+#
+# Customise the automatically generated information.
+#
+list(FILTER h_files EXCLUDE REGEX ".*_export.h")
+list(FILTER h_files EXCLUDE REGEX ".*_version.h")
+list(FILTER h_files EXCLUDE REGEX ".*/qtest_akonadi.h")
+list(APPEND include_dirs ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5)
+set(linkdefs, "#include <QString>\n")
+#
+# Generate the bindings.
+#
+cppyy_add_bindings(
+    ${_pkg} "${version}" "Shaheed Haque" "srhaque@theiet.org"
+    LANGUAGE_STANDARD "14"
+    GENERATE_OPTIONS "-D__PIC__;-Wno-macro-redefined"
+    COMPILE_OPTIONS "-Wno-deprecated-declarations;-Wno-overloaded-virtual;-fstack-protector-strong"
+    INCLUDE_DIRS ${include_dirs}
+    LINK_LIBRARIES ${link_libraries}
+    LINKDEFS ${linkdefs}
+    H_DIRS ${h_dirs}
+    H_FILES ${h_files})
+create_binding_targets(${_pkg} ${target} ${setup_py})
+unset(_pkg)

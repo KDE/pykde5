@@ -45,15 +45,5 @@ set(linkdefs, "#include <QString>\n")
 #
 # Generate the bindings.
 #
-cppyy_add_bindings(
-    ${_pkg} "${version}" "Shaheed Haque" "srhaque@theiet.org"
-    LANGUAGE_STANDARD "14"
-    GENERATE_OPTIONS "-D__PIC__;-Wno-macro-redefined"
-    COMPILE_OPTIONS "-Wno-deprecated-declarations;-Wno-overloaded-virtual;-fstack-protector-strong"
-    INCLUDE_DIRS ${include_dirs}
-    LINK_LIBRARIES ${link_libraries}
-    LINKDEFS ${linkdefs}
-    H_DIRS ${h_dirs}
-    H_FILES ${h_files})
-create_binding_targets(${_pkg} ${target} ${setup_py})
+add_bindings(${_pkg} "Shaheed Haque" "srhaque@theiet.org" "${include_dirs}" "${linkdefs}" "${h_dirs}" "${h_files}")
 unset(_pkg)

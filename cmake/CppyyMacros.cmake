@@ -495,7 +495,17 @@ endfunction(get_binding_info_kf5)
 # we are building cppyy artefacts, with definitions taken from KDE headers
 # (and not bulk KDE code). Famous last words...
 #
-function(create_binding_targets pkg target setup_py)
+function(add_bindings pkg author author_email include_dirs linkdefs h_dirs h_files)
+    cppyy_add_bindings(
+        ${_pkg} "${version}" "${author}" "${author_email}"
+        LANGUAGE_STANDARD "14"
+        GENERATE_OPTIONS "-D__PIC__;-Wno-macro-redefined"
+        COMPILE_OPTIONS "-Wno-deprecated-declarations;-Wno-overloaded-virtual;-fstack-protector-strong"
+        INCLUDE_DIRS ${include_dirs}
+        LINK_LIBRARIES ${link_libraries}
+        LINKDEFS ${linkdefs}
+        H_DIRS ${h_dirs}
+        H_FILES ${h_files})
     #
     # TODO: Proper Python2/3 support.
     #
@@ -521,4 +531,4 @@ execute_process(
 if(NOT \"$\{_rc\}\" STREQUAL \"0\")
     message(FATAL_ERROR \"Error during install: ($\{_rc\}) $\{_stderr\}\")
 endif()")
-endfunction(create_binding_targets)
+endfunction(add_bindings)

@@ -48,7 +48,6 @@
 # list(FILTER h_files EXCLUDE REGEX ".*_export.h")
 # list(FILTER h_files EXCLUDE REGEX ".*_version.h")
 # list(FILTER h_files EXCLUDE REGEX ".*/qtest_akonadi.h")
-# list(APPEND include_dirs ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5)
 # #
 # # Generate the bindings for KF5.Akonadi.
 # #
@@ -297,7 +296,8 @@ function(get_targets_info component targets)
     if(DEFINED includes)
         list(REMOVE_DUPLICATES includes)
         #
-        # Not sure why the headers seem to include this.
+        # Not sure why the headers seem to include this. Having them here
+        # causes too wide a search space.
         #
         list(REMOVE_ITEM includes "${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}")
         list(REMOVE_ITEM includes "${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5")
@@ -451,6 +451,10 @@ function(get_binding_info_kf5)
         endforeach(tmp3)
     endforeach(include)
     set(_H_DIRS ${tmp})
+    #
+    # Restore this removed item.
+    #
+    list(APPEND _H_DIRS ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5)
     #
     # Add dependencies.
     #

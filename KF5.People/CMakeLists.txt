@@ -23,7 +23,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-set(_pkg "KF5.Akonadi")
+set(_pkg "KF5.People")
 project(${_pkg})
 
 #
@@ -31,16 +31,13 @@ project(${_pkg})
 # KF5 components.
 #
 get_binding_info_kf5(
-    COMPONENTS KF5Akonadi KF5AkonadiCalendar KF5AkonadiContact KF5AkonadiMime KF5AkonadiNotes KF5AkonadiSearch
-    NATIVE_COMPONENTS KF5AkonadiSearch
-    DEPENDENCIES KF5Konq KF5Attica)
+    COMPONENTS KF5People)
 #
 # Customise the automatically generated information.
 #
-list(FILTER h_files EXCLUDE REGEX ".*_export.h")
-list(FILTER h_files EXCLUDE REGEX ".*_version.h")
-list(FILTER h_files EXCLUDE REGEX ".*/qtest_akonadi.h")
-set(linkdefs, "#include <QString>\n")
+list(APPEND include_dirs ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople)
+file(GLOB_RECURSE h_files LIST_DIRECTORIES false ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople/*)
+set(linkdefs, "")
 #
 # Generate the bindings.
 #

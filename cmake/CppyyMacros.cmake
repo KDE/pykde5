@@ -76,7 +76,6 @@ endif()
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${_stdout})
 find_package(Cppyy 0.8.4 REQUIRED)
 
-#include(FeatureSummary)
 include(FindPkgConfig)
 include(CMakeFindDependencyMacro)
 
@@ -321,6 +320,8 @@ endfunction(get_targets_info)
 #
 # Arguments and options:
 #
+#   VERBOSE             Turn on diagnostics
+#
 #   COMPONENTS component
 #                       The CMake packages to include in the bindings.
 #
@@ -351,7 +352,7 @@ endfunction(get_targets_info)
 function(get_binding_info_kf5)
     cmake_parse_arguments(
         ARG
-        ""
+        "VERBOSE"
         ""
         "COMPONENTS;NATIVE_COMPONENTS;DEPENDENCIES"
         ${ARGN})
@@ -382,6 +383,15 @@ function(get_binding_info_kf5)
         # Other info.
         #
         get_targets_info(${component} ${targets})
+        if(ARG_VERBOSE)
+            message("COMPONENTS ${component}:
+    targets=${targets}
+    dependencies=${dependencies}
+    include=${includes}
+    libraries=${libraries}
+    compile_flags=${compile_flags}
+")
+        endif()
         list(APPEND _H_DIRS ${includes})
         list(APPEND _LINK_LIBRARIES ${libraries})
         list(APPEND _COMPILE_OPTIONS "${compile_flags}")
@@ -397,6 +407,15 @@ function(get_binding_info_kf5)
     endforeach(component)
     foreach(component IN LISTS ARG_NATIVE_COMPONENTS)
         get_kf5_native_info(${component})
+        if(ARG_VERBOSE)
+            message("NATIVE_COMPONENTs ${component}:
+    targets=${targets}
+    dependencies=${dependencies}
+    include=${includes}
+    libraries=${libraries}
+    compile_flags=${compile_flags}
+")
+        endif()
         #
         # Other info.
         #
@@ -444,6 +463,15 @@ function(get_binding_info_kf5)
             get_qt5_cmake_info(${component})
         endif()
         get_targets_info(${component} "${targets}")
+        if(ARG_VERBOSE)
+            message("DEPENDENCIES ${component}:
+    targets=${targets}
+    dependencies=${dependencies}
+    include=${includes}
+    libraries=${libraries}
+    compile_flags=${compile_flags}
+")
+        endif()
         list(APPEND _INCLUDE_DIRS ${includes})
         list(APPEND _LINK_LIBRARIES ${libraries})
         list(APPEND _COMPILE_OPTIONS "${compile_flags}")

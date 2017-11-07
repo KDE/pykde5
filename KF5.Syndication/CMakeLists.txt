@@ -31,7 +31,8 @@ project(${_pkg})
 # KF5 components.
 #
 get_binding_info_kf5(
-    COMPONENTS KF5Syndication)
+    COMPONENTS KF5Syndication
+    DEPENDENCIES Qt5Core)
 #
 # Customise the automatically generated information.
 #

@@ -31,7 +31,8 @@ project(${_pkg})
 # KF5 components.
 #
 get_binding_info_kf5(
-    COMPONENTS KF5IdentityManagement)
+    COMPONENTS KF5IdentityManagement
+    DEPENDENCIES KF5Completion)
 #
 # Customise the automatically generated information.
 #

@@ -31,7 +31,8 @@ project(${_pkg})
 # KF5 components.
 #
 get_binding_info_kf5(
-    COMPONENTS KF5Libkdepim)
+    COMPONENTS KF5Libkdepim
+    DEPENDENCIES Qt5Gui KF5Completion KF5ConfigGui)
 #
 # Customise the automatically generated information.
 #

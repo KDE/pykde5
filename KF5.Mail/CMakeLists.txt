@@ -31,7 +31,7 @@ project(${_pkg})
 # KF5 components.
 #
 get_binding_info_kf5(
-    COMPONENTS KF5MailCommon KF5MailImporter KF5MailTransport)
+    COMPONENTS KF5MailCommon KF5MailImporter KF5MailTransport KF5MailTransportAkonadi)
 #
 # Customise the automatically generated information.
 #

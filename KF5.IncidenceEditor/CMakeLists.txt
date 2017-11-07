@@ -31,7 +31,8 @@ project(${_pkg})
 # KF5 components.
 #
 get_binding_info_kf5(
-    COMPONENTS KF5IncidenceEditor)
+    COMPONENTS KF5IncidenceEditor
+    DEPENDENCIES KF5MailTransportAkonadi)
 #
 # Customise the automatically generated information.
 #

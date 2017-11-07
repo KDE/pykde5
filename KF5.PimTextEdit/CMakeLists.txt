@@ -31,7 +31,8 @@ project(${_pkg})
 # KF5 components.
 #
 get_binding_info_kf5(
-    COMPONENTS KF5PimTextEdit)
+    COMPONENTS KF5PimTextEdit
+    DEPENDENCIES Qt5Core KF5WidgetsAddons)
 #
 # Customise the automatically generated information.
 #

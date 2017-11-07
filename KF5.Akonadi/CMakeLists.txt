@@ -33,14 +33,11 @@ project(${_pkg})
 get_binding_info_kf5(
     COMPONENTS KF5Akonadi KF5AkonadiCalendar KF5AkonadiContact KF5AkonadiMime KF5AkonadiNotes KF5AkonadiSearch
     NATIVE_COMPONENTS KF5AkonadiSearch
-    DEPENDENCIES KF5Konq KF5Attica)
+    DEPENDENCIES KF5Konq KF5Attica Qt5Core)
 #
 # Customise the automatically generated information.
 #
-list(FILTER h_files EXCLUDE REGEX ".*_export.h")
-list(FILTER h_files EXCLUDE REGEX ".*_version.h")
 list(FILTER h_files EXCLUDE REGEX ".*/qtest_akonadi.h")
-set(linkdefs, "#include <QString>\n")
 #
 # Generate the bindings.
 #

@@ -42,7 +42,7 @@ list(FILTER h_files EXCLUDE REGEX ".*glib/glib-.*.h")
 list(FILTER h_files EXCLUDE REGEX ".*glib/g(i18n-lib|win32).h")
 list(FILTER h_files EXCLUDE REGEX ".*gobject/gobject-.*.h")
 list(FILTER h_files EXCLUDE REGEX ".*gobject/gobjectnotifyqueue.c")
-set(linkdefs, "")
+set(linkdefs "")
 #
 # Generate the bindings.
 #

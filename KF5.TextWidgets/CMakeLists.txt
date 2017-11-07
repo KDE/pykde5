@@ -35,7 +35,7 @@ get_binding_info_kf5(
 #
 # Customise the automatically generated information.
 #
-set(linkdefs, "")
+set(linkdefs "")
 #
 # Generate the bindings.
 #

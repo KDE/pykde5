@@ -37,7 +37,7 @@ get_binding_info_kf5(
 #
 list(APPEND include_dirs ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople)
 file(GLOB_RECURSE h_files LIST_DIRECTORIES false ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople/*)
-set(linkdefs, "")
+set(linkdefs "")
 #
 # Generate the bindings.
 #

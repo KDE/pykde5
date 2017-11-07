@@ -77,6 +77,8 @@ find_package(Cppyy 0.8.4 REQUIRED)
 
 include(FindPkgConfig)
 include(CMakeFindDependencyMacro)
+include(CppyyMacrosQt5)
+include(CppyyMacrosKF5)
 
 #
 # Find the includes, libraries etc. for a pkg-config component.
@@ -93,127 +95,6 @@ function(get_pkgconfig_info component)
     set(includes "${includes}" PARENT_SCOPE)
     set(compile_flags "${compile_flags}" PARENT_SCOPE)
 endfunction(get_pkgconfig_info)
-
-#
-# Find the targets and dependencies for a CMake KDE component.
-#
-set(_DEPENDENCIES)
-function(get_kf5_cmake_info component)
-    find_dependency(${component})
-    set(real_targets)
-    set(real_dependencies)
-    #
-    # Loop over all cmake files.
-    #
-    set(file_glob  ${${component}_DIR}/*.cmake)
-    file(GLOB files ${file_glob})
-    foreach(f ${files})
-        #
-        # Targets.
-        #
-        file(STRINGS ${f} matches REGEX "^ *add_library\\(.*\\) *")
-        if(NOT matches STREQUAL "")
-            foreach(target ${matches})
-                string(REGEX REPLACE " *add_library\\(([^ \\)]+).*" "\\1" target ${target})
-                if(TARGET ${target})
-                    list(APPEND real_targets ${target})
-                    if(real_targets)
-                        list(REMOVE_DUPLICATES real_targets)
-                    endif()
-                else()
-                    message(STATUS "Ignoring invalid target \"${target}\" for ${component} in ${f}")
-                endif()
-            endforeach()
-        endif()
-        #
-        # Dependencies.
-        #
-        file(STRINGS ${f} matches REGEX "^ *find_dependency\\(.*\\) *")
-        if(NOT matches STREQUAL "")
-            foreach(dependency ${matches})
-                string(REGEX REPLACE " *find_dependency\\(([^ \\)]+).*" "\\1" dependency ${dependency})
-                if(NOT ${dependency} STREQUAL "")
-                    list(APPEND real_dependencies ${dependency})
-                    list(REMOVE_DUPLICATES real_dependencies)
-                    #
-                    # Recurse...if we have not been here before.
-                    #
-                    string(FIND ${dependency} "KF5" found)
-                    if(found EQUAL 0 AND NOT dependency IN_LIST _DEPENDENCIES)
-                        get_kf5_cmake_info(${dependency})
-                        list(APPEND real_dependencies ${dependencies})
-                        list(REMOVE_DUPLICATES real_dependencies)
-                    endif()
-                else()
-                    message(STATUS "Ignoring invalid dependency \"${dependency}\" for ${component} in ${f}")
-                endif()
-            endforeach()
-        endif()
-    endforeach()
-    set(targets "${real_targets}" PARENT_SCOPE)
-    set(dependencies "${real_dependencies}" PARENT_SCOPE)
-endfunction(get_kf5_cmake_info)
-
-#
-# Find the targets (and not dependencies!) for a native KDE component.
-#
-function(get_kf5_native_info component)
-    set(_INCLUDE_DIRS)
-    string(REGEX REPLACE "^KF5" "" tmp ${component})
-    foreach(dir IN LISTS CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES)
-        set(dir ${dir}/KF5)
-        file(GLOB tmp2 LIST_DIRECTORIES true ${dir}/${tmp}*)
-        foreach(tmp3 IN LISTS tmp2)
-            if(IS_DIRECTORY ${tmp3})
-              if(NOT ${tmp3} IN_LIST _INCLUDE_DIRS)
-                list(APPEND _INCLUDE_DIRS ${tmp3})
-              endif()
-            endif()
-        endforeach(tmp3)
-        file(GLOB_RECURSE tmp2 LIST_DIRECTORIES true ${dir}/${tmp}/*)
-        foreach(tmp3 IN LISTS tmp2)
-            if(IS_DIRECTORY ${tmp3})
-              if(NOT ${tmp3} IN_LIST _INCLUDE_DIRS)
-                list(APPEND _INCLUDE_DIRS ${tmp3})
-              endif()
-            endif()
-        endforeach(tmp3)
-    endforeach(dir)
-    set(_LIBRARIES)
-    foreach(dir IN LISTS CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES)
-        file(GLOB_RECURSE tmp2 LIST_DIRECTORIES true ${dir}/${CMAKE_SHARED_LIBRARY_PREFIX}${component}*${CMAKE_SHARED_LIBRARY_SUFFIX})
-        foreach(tmp3 IN LISTS tmp2)
-            if(NOT IS_DIRECTORY ${tmp3})
-              if(NOT ${tmp3} IN_LIST _LIBRARIES)
-                list(APPEND _LIBRARIES ${tmp3})
-              endif()
-            endif()
-        endforeach(tmp3)
-    endforeach(dir)
-    set(libraries "${_LIBRARIES}" PARENT_SCOPE)
-    set(includes "${_INCLUDE_DIRS}" PARENT_SCOPE)
-    set(compile_flags "" PARENT_SCOPE)
-endfunction(get_kf5_native_info)
-
-#
-# Find the targets (and not dependencies!) for a CMake Qt component.
-#
-function(get_qt5_cmake_info component)
-    find_dependency(${component})
-    #
-    # Targets.
-    #
-    string(REPLACE "Qt5" "Qt5::" target ${component})
-    if(NOT TARGET ${target})
-        message(STATUS "Ignoring invalid target \"${target}\" for ${component}")
-        set(target "")
-    endif()
-    set(targets "${target}" PARENT_SCOPE)
-    #
-    # Dependencies.
-    #
-    set(dependencies "" PARENT_SCOPE)
-endfunction(get_qt5_cmake_info)
 
 #
 # Fetch a target property, recursing if necessary.
@@ -314,13 +195,14 @@ endfunction(get_targets_info)
 # Return the information required to create the bindings for a set of KF5 components.
 #
 #   get_binding_info_kf5(
+#       VERBOSE level
 #       COMPONENTS components
 #       NATIVE_COMPONENTS components
 #       DEPENDENCIES extras)
 #
 # Arguments and options:
 #
-#   VERBOSE             Turn on diagnostics
+#   VERBOSE level       Greater than zero to turn on diagnostics
 #
 #   COMPONENTS component
 #                       The CMake packages to include in the bindings.
@@ -352,8 +234,8 @@ endfunction(get_targets_info)
 function(get_binding_info_kf5)
     cmake_parse_arguments(
         ARG
-        "VERBOSE"
         ""
+        "VERBOSE"
         "COMPONENTS;NATIVE_COMPONENTS;DEPENDENCIES"
         ${ARGN})
     if(NOT "${ARG_UNPARSED_ARGUMENTS}" STREQUAL "")
@@ -371,7 +253,8 @@ function(get_binding_info_kf5)
     set(_INCLUDE_DIRS)
     set(_LINK_LIBRARIES)
     foreach(component IN LISTS ARG_COMPONENTS)
-        get_kf5_cmake_info(${component})
+        get_kf5_cmake_info(${component}
+            VERBOSE ${ARG_VERBOSE})
         #
         # Automatic dependencies.
         #
@@ -459,12 +342,12 @@ function(get_binding_info_kf5)
     # Add dependencies.
     #
     foreach(component IN LISTS _DEPENDENCIES ARG_DEPENDENCIES)
-        string(FIND ${component} "KF5" found_kf5)
-        string(FIND ${component} "Qt5" found_qt5)
         if(component MATCHES "^KF5")
-            get_kf5_cmake_info(${component})
+            get_kf5_cmake_info(${component}
+                VERBOSE ${ARG_VERBOSE})
         elseif(component MATCHES "^Qt5")
-            get_qt5_cmake_info(${component})
+            get_qt5_cmake_info(${component}
+                VERBOSE ${ARG_VERBOSE})
         endif()
         get_targets_info(${component} "${targets}")
         if(ARG_VERBOSE)

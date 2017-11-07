@@ -31,6 +31,7 @@ project(${_pkg})
 # KF5 components.
 #
 get_binding_info_kf5(
+    VERBOSE 0
     COMPONENTS KF5JS KF5JsEmbed)
 #
 # Customise the automatically generated information.

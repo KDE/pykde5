@@ -31,6 +31,7 @@ project(${_pkg})
 # KF5 components.
 #
 get_binding_info_kf5(
+    VERBOSE 0
     COMPONENTS KF5CalendarCore KF5CalendarSupport KF5CalendarUtils)
 #
 # Customise the automatically generated information.

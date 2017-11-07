@@ -31,6 +31,7 @@ project(${_pkg})
 # KF5 components.
 #
 get_binding_info_kf5(
+    VERBOSE 0
     COMPONENTS KF5Akonadi KF5AkonadiCalendar KF5AkonadiContact KF5AkonadiMime KF5AkonadiNotes KF5AkonadiSearch)
 #
 # Customise the automatically generated information.

@@ -31,6 +31,7 @@ project(${_pkg})
 # KF5 components.
 #
 get_binding_info_kf5(
+    VERBOSE 0
     COMPONENTS KF5Libkdepim
     DEPENDENCIES Qt5Gui KF5Completion KF5Config KF5WidgetsAddons KF5ConfigWidgets KF5Ldap KF5Contacts)
 #

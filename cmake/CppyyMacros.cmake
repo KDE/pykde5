@@ -529,15 +529,15 @@ endfunction(get_binding_info_kf5)
 #
 function(add_bindings pkg author author_email include_dirs linkdefs h_dirs h_files)
     cppyy_add_bindings(
-        ${_pkg} "${version}" "${author}" "${author_email}"
+        "${pkg}" "${version}" "${author}" "${author_email}"
         LANGUAGE_STANDARD "14"
         GENERATE_OPTIONS "-D__PIC__;-Wno-macro-redefined"
         COMPILE_OPTIONS "-Wno-deprecated-declarations;-Wno-overloaded-virtual;-fstack-protector-strong"
-        INCLUDE_DIRS ${include_dirs}
-        LINK_LIBRARIES ${link_libraries}
-        LINKDEFS ${linkdefs}
-        H_DIRS ${h_dirs}
-        H_FILES ${h_files})
+        INCLUDE_DIRS "${include_dirs}"
+        LINK_LIBRARIES "${link_libraries}"
+        LINKDEFS "${linkdefs}"
+        H_DIRS "${h_dirs}"
+        H_FILES "${h_files}")
     #
     # TODO: Proper Python2/3 support.
     #

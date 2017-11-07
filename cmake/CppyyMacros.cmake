@@ -28,7 +28,7 @@
 # platform-dependent items for use in creating Python bindings based on
 # https://pypi.python.org/pypi/cppyy.
 #
-# The main content is the function get_binding_info_kf5() which simplifies
+# The main content is the function get_binding_info_KF5() which simplifies
 # gathering the information needed by the CMake support code packaged with
 # https://pypi.python.org/pypi/cppyy-backend as CPPYY_ADD_BINDINGS().
 #
@@ -38,7 +38,7 @@
 # # Get the information needed to create create bindings for a set of related
 # # KF5 components.
 # #
-# get_binding_info_kf5(
+# get_binding_info_KF5(
 #     COMPONENTS KF5Akonadi KF5AkonadiCalendar KF5AkonadiContact KF5AkonadiMime KF5AkonadiNotes KF5AkonadiSearch
 #     NATIVE_COMPONENTS KF5AkonadiSearch
 #     DEPENDENCIES KF5Konq KF5Attica)
@@ -194,7 +194,7 @@ endfunction(get_targets_info)
 #
 # Return the information required to create the bindings for a set of KF5 components.
 #
-#   get_binding_info_kf5(
+#   get_binding_info_KF5(
 #       VERBOSE level
 #       COMPONENTS components
 #       NATIVE_COMPONENTS components
@@ -231,7 +231,7 @@ endfunction(get_targets_info)
 #   link_libraries      All libraries for targets in COMPONENTS and
 #                       NATIVE_COMPONENTS and DEPENDENCIES.
 #
-function(get_binding_info_kf5)
+function(get_binding_info)
     cmake_parse_arguments(
         ARG
         ""
@@ -253,8 +253,13 @@ function(get_binding_info_kf5)
     set(_INCLUDE_DIRS)
     set(_LINK_LIBRARIES)
     foreach(component IN LISTS ARG_COMPONENTS)
-        get_kf5_cmake_info(${component}
-            VERBOSE ${ARG_VERBOSE})
+        if(component MATCHES "^KF5")
+            get_kf5_cmake_info(${component}
+                VERBOSE ${ARG_VERBOSE})
+        elseif(component MATCHES "^Qt5")
+            get_qt5_cmake_info(${component}
+                VERBOSE ${ARG_VERBOSE})
+        endif()
         #
         # Automatic dependencies.
         #
@@ -399,7 +404,7 @@ function(get_binding_info_kf5)
     set(include_dirs ${_INCLUDE_DIRS} PARENT_SCOPE)
     set(compile_options ${_COMPILE_OPTIONS} PARENT_SCOPE)
     set(link_libraries ${_LINK_LIBRARIES} PARENT_SCOPE)
-endfunction(get_binding_info_kf5)
+endfunction(get_binding_info)
 
 #
 # The key design choice is that building and installing Python components

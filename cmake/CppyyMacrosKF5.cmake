@@ -28,10 +28,6 @@
 # platform-dependent items for use in creating Python bindings based on
 # https://pypi.python.org/pypi/cppyy.
 #
-# The main content is the function get_binding_info_kf5() which simplifies
-# gathering the information needed by the CMake support code packaged with
-# https://pypi.python.org/pypi/cppyy-backend as CPPYY_ADD_BINDINGS().
-#
 # Example:
 #
 

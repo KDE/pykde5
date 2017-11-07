@@ -27,10 +27,10 @@ set(_pkg "KF5.LibKSieve")
 project(${_pkg})
 
 #
-# Get the information needed to create create bindings for a set of related
-# KF5 components.
+# Get the information needed to create bindings for a set of related components.
+# Increase the VERBOSE setting for diagnostics.
 #
-get_binding_info_kf5(
+get_binding_info(
     VERBOSE 0
     COMPONENTS KF5LibKSieve
     DEPENDENCIES Qt5Core Qt5Gui)

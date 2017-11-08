@@ -36,6 +36,7 @@
 #
 #   get_qt5_cmake_info(
 #       component
+#       existing_dependencies
 #       VERBOSE level)
 #
 # Arguments and options:
@@ -48,8 +49,7 @@
 #
 #   dependencies        The targets of dependencies of component.
 #
-set(_QT5_DEPENDENCIES)
-function(get_qt5_cmake_info component)
+function(get_qt5_cmake_info component existing_dependencies)
     cmake_parse_arguments(
         ARG
         ""
@@ -109,22 +109,25 @@ function(get_qt5_cmake_info component)
                     # Add the prefix.
                     #
                     set(dependency "${pfx}${dependency}")
-                    if(NOT dependency IN_LIST real_dependencies)
+                    #
+                    # Recurse...if we have not been here before.
+                    #
+                    if(NOT dependency IN_LIST existing_dependencies AND NOT dependency IN_LIST real_dependencies)
                         list(APPEND real_dependencies ${dependency})
-                        #
-                        # Recurse...if we have not been here before.
-                        #
-                        if(NOT dependency IN_LIST _QT5_DEPENDENCIES)
-                            if(dependency MATCHES "^${pfx}")
-                                get_qt5_cmake_info(${dependency}
-                                    RECURSION_LEVEL ${ARG_RECURSION_LEVEL}
-                                    VERBOSE ${ARG_VERBOSE})
-                                list(APPEND real_dependencies ${dependencies})
-                                list(REMOVE_DUPLICATES real_dependencies)
-                            else()
-                                message(STATUS "Cannot recurse into dependency \"${dependency}\" for ${component} in ${f}")
-                            endif()
+                        if(dependency MATCHES "^${pfx}")
+                            get_qt5_cmake_info(${dependency} "${existing_dependencies}"
+                                RECURSION_LEVEL ${ARG_RECURSION_LEVEL}
+                                VERBOSE ${ARG_VERBOSE})
+                            list(APPEND real_dependencies ${dependencies})
+                            list(REMOVE_DUPLICATES real_dependencies)
+                            list(APPEND existing_dependencies ${dependencies})
+                            list(REMOVE_DUPLICATES existing_dependencies)
+                        else()
+                            list(APPEND existing_dependencies ${dependencies})
+                            list(REMOVE_DUPLICATES existing_dependencies)
+                            message(STATUS "Cannot recurse into dependency \"${dependency}\" for ${component} in ${f}")
                         endif()
+                        #message(STATUS "Skip duplicate dependency \"${dependency}\"")
                     endif()
                 else()
                     message(STATUS "Ignoring invalid dependencies \"${match}\" for ${component} in ${f}")

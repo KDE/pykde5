@@ -262,8 +262,9 @@ function(get_binding_info)
         message(SEND_ERROR "No COMPONENTS specified")
     endif()
     #
-    # Find dependencies and other info.
+    # Find dependencies and other info for CMake components.
     #
+    set(_DEPENDENCIES)
     set(_H_DIRS)
     set(_H_FILES)
     set(_COMPILE_OPTIONS)
@@ -272,10 +273,10 @@ function(get_binding_info)
     set(_REMOVED_INCLUDES)
     foreach(component IN LISTS ARG_COMPONENTS)
         if(component MATCHES "^KF5")
-            get_kf5_cmake_info(${component}
+            get_kf5_cmake_info(${component} "${_DEPENDENCIES}"
                 VERBOSE ${ARG_VERBOSE})
         elseif(component MATCHES "^Qt5")
-            get_qt5_cmake_info(${component}
+            get_qt5_cmake_info(${component} "${_DEPENDENCIES}"
                 VERBOSE ${ARG_VERBOSE})
         endif()
         #
@@ -316,6 +317,9 @@ function(get_binding_info)
             list(REMOVE_DUPLICATES _REMOVED_INCLUDES)
         endif()
     endforeach(component)
+    #
+    # Find other info for non-CMake components.
+    #
     foreach(component IN LISTS ARG_NATIVE_COMPONENTS)
         get_kf5_native_info(${component})
         if(ARG_VERBOSE)
@@ -371,10 +375,10 @@ function(get_binding_info)
     #
     foreach(component IN LISTS _DEPENDENCIES ARG_DEPENDENCIES)
         if(component MATCHES "^KF5")
-            get_kf5_cmake_info(${component}
+            get_kf5_cmake_info(${component} "${_DEPENDENCIES}"
                 VERBOSE ${ARG_VERBOSE})
         elseif(component MATCHES "^Qt5")
-            get_qt5_cmake_info(${component}
+            get_qt5_cmake_info(${component} "${_DEPENDENCIES}"
                 VERBOSE ${ARG_VERBOSE})
         endif()
         get_targets_info(${component} "${targets}")

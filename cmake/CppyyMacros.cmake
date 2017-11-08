@@ -177,7 +177,6 @@ function(get_targets_info component targets)
     if(DEFINED includes)
         set(tmp)
         foreach(include ${includes})
-            string(REGEX REPLACE "//+" "/" include ${include})
             #
             # Not sure why the headers seem to include this. Having them here
             # causes too wide a search space.

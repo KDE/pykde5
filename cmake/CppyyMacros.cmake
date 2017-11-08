@@ -28,17 +28,16 @@
 # platform-dependent items for use in creating Python bindings based on
 # https://pypi.python.org/pypi/cppyy.
 #
-# The main content is the function get_binding_info_KF5() which simplifies
+# The main content is the function get_binding_info() which simplifies
 # gathering the information needed by the CMake support code packaged with
 # https://pypi.python.org/pypi/cppyy-backend as CPPYY_ADD_BINDINGS().
 #
 # Example:
 #
 # #
-# # Get the information needed to create create bindings for a set of related
-# # KF5 components.
+# # Get the information needed to create bindings for a set of related components.
 # #
-# get_binding_info_KF5(
+# get_binding_info(
 #     COMPONENTS KF5Akonadi KF5AkonadiCalendar KF5AkonadiContact KF5AkonadiMime KF5AkonadiNotes KF5AkonadiSearch
 #     NATIVE_COMPONENTS KF5AkonadiSearch
 #     DEPENDENCIES KF5Konq KF5Attica)
@@ -145,6 +144,7 @@ function(get_targets_info component targets)
     set(libraries)
     set(includes)
     set(compile_flags)
+    set(removed_includes)
     foreach(target ${targets})
         if(TARGET ${target})
             get_target_property(tmp ${target} LOCATION)
@@ -175,13 +175,29 @@ function(get_targets_info component targets)
     # De-duplicate and write results.
     #
     if(DEFINED includes)
-        list(REMOVE_DUPLICATES includes)
-        #
-        # Not sure why the headers seem to include this. Having them here
-        # causes too wide a search space.
-        #
-        list(REMOVE_ITEM includes "${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}")
-        list(REMOVE_ITEM includes "${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5")
+        set(tmp)
+        foreach(include ${includes})
+            string(REGEX REPLACE "//+" "/" include ${include})
+            #
+            # Not sure why the headers seem to include this. Having them here
+            # causes too wide a search space.
+            #
+            if(include STREQUAL "${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}")
+                #
+                # Discard.
+                #
+            elseif(include STREQUAL "${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5")
+                list(APPEND removed_includes ${include})
+                list(REMOVE_DUPLICATES removed_includes)
+            elseif(include MATCHES ".*/qt5$")
+                list(APPEND removed_includes ${include})
+                list(REMOVE_DUPLICATES removed_includes)
+            else()
+                list(APPEND tmp ${include})
+                list(REMOVE_DUPLICATES tmp)
+            endif()
+        endforeach()
+        set(includes ${tmp})
     endif()
     if(DEFINED compile_flags)
         list(REMOVE_DUPLICATES compile_flags)
@@ -189,12 +205,13 @@ function(get_targets_info component targets)
     set(libraries "${libraries}" PARENT_SCOPE)
     set(includes "${includes}" PARENT_SCOPE)
     set(compile_flags "${compile_flags}" PARENT_SCOPE)
+    set(removed_includes "${removed_includes}" PARENT_SCOPE)
 endfunction(get_targets_info)
 
 #
-# Return the information required to create the bindings for a set of KF5 components.
+# Return the information required to create the bindings for a set of components.
 #
-#   get_binding_info_KF5(
+#   get_binding_info(
 #       VERBOSE level
 #       COMPONENTS components
 #       NATIVE_COMPONENTS components
@@ -252,6 +269,7 @@ function(get_binding_info)
     set(_COMPILE_OPTIONS)
     set(_INCLUDE_DIRS)
     set(_LINK_LIBRARIES)
+    set(_REMOVED_INCLUDES)
     foreach(component IN LISTS ARG_COMPONENTS)
         if(component MATCHES "^KF5")
             get_kf5_cmake_info(${component}
@@ -278,11 +296,13 @@ function(get_binding_info)
     include=${includes}
     libraries=${libraries}
     compile_flags=${compile_flags}
+    removed_includes=${removed_includes}
 ")
         endif()
         list(APPEND _H_DIRS ${includes})
         list(APPEND _LINK_LIBRARIES ${libraries})
         list(APPEND _COMPILE_OPTIONS "${compile_flags}")
+        list(APPEND _REMOVED_INCLUDES "${removed_includes}")
         if(_H_DIRS)
             list(REMOVE_DUPLICATES _H_DIRS)
         endif()
@@ -291,6 +311,9 @@ function(get_binding_info)
         endif()
         if(_COMPILE_OPTIONS)
             list(REMOVE_DUPLICATES _COMPILE_OPTIONS)
+        endif()
+        if(_REMOVED_INCLUDES)
+            list(REMOVE_DUPLICATES _REMOVED_INCLUDES)
         endif()
     endforeach(component)
     foreach(component IN LISTS ARG_NATIVE_COMPONENTS)
@@ -342,7 +365,7 @@ function(get_binding_info)
     #
     # Restore this removed item.
     #
-    list(APPEND _H_DIRS ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5)
+    set(_H_DIRS ${_H_DIRS} ${removed_includes})
     #
     # Add dependencies.
     #
@@ -362,11 +385,13 @@ function(get_binding_info)
     include=${includes}
     libraries=${libraries}
     compile_flags=${compile_flags}
+    removed_includes=${removed_includes}
 ")
         endif()
         list(APPEND _INCLUDE_DIRS ${includes})
         list(APPEND _LINK_LIBRARIES ${libraries})
         list(APPEND _COMPILE_OPTIONS "${compile_flags}")
+        list(APPEND _REMOVED_INCLUDES "${removed_includes}")
         if(_INCLUDE_DIRS)
             list(REMOVE_DUPLICATES _INCLUDE_DIRS)
         endif()
@@ -376,11 +401,14 @@ function(get_binding_info)
         if(_COMPILE_OPTIONS)
             list(REMOVE_DUPLICATES _COMPILE_OPTIONS)
         endif()
+        if(_REMOVED_INCLUDES)
+            list(REMOVE_DUPLICATES _REMOVED_INCLUDES)
+        endif()
     endforeach(component)
     #
     # Find all include dirs.
     #
-    set(tmp ${_INCLUDE_DIRS})
+    set(tmp ${_INCLUDE_DIRS} ${_REMOVED_INCLUDES})
     foreach(include IN LISTS _INCLUDE_DIRS)
         file(GLOB_RECURSE tmp2 LIST_DIRECTORIES true ${include}/*)
         foreach(tmp3 IN LISTS tmp2)

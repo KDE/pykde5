@@ -32,7 +32,8 @@ project(${_pkg})
 #
 get_binding_info(
     VERBOSE 0
-    COMPONENTS KF5KaddressbookGrantlee)
+    COMPONENTS KF5KaddressbookGrantlee
+    DEPENDENCIES Qt5Core KF5Akonadi Qt5Widgets KF5Contacts)
 #
 # Customise the automatically generated information.
 #

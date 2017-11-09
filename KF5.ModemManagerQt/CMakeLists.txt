@@ -32,7 +32,8 @@ project(${_pkg})
 #
 get_binding_info(
     VERBOSE 0
-    COMPONENTS KF5ModemManagerQt)
+    COMPONENTS KF5ModemManagerQt
+    DEPENDENCIES Qt5DBus)
 #
 # Customise the automatically generated information.
 #

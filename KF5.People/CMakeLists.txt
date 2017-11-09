@@ -32,7 +32,8 @@ project(${_pkg})
 #
 get_binding_info(
     VERBOSE 0
-    COMPONENTS KF5People)
+    COMPONENTS KF5People
+    DEPENDENCIES Qt5Gui)
 #
 # Customise the automatically generated information.
 #

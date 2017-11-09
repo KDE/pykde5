@@ -33,7 +33,7 @@ project(${_pkg})
 get_binding_info(
     VERBOSE 0
     COMPONENTS KF5TextEditor
-    DEPENDENCIES Qt5Core KF5Completion KF5Parts KF5XmlGui)
+    DEPENDENCIES Qt5Core KF5Completion KF5Parts KF5XmlGui Qt5Gui Qt5Widgets)
 #
 # Customise the automatically generated information.
 #

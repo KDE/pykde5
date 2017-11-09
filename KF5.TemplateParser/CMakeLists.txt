@@ -33,7 +33,7 @@ project(${_pkg})
 get_binding_info(
     VERBOSE 0
     COMPONENTS KF5TemplateParser
-    DEPENDENCIES Qt5Widgets KF5Mime KF5PimTextEdit)
+    DEPENDENCIES Qt5Widgets KF5Mime KF5PimTextEdit Qt5Core)
 #
 # Customise the automatically generated information.
 #

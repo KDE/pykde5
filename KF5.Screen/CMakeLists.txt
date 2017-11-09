@@ -32,7 +32,8 @@ project(${_pkg})
 #
 get_binding_info(
     VERBOSE 0
-    COMPONENTS KF5Screen)
+    COMPONENTS KF5Screen
+    DEPENDENCIES Qt5Gui Qt5DBus)
 #
 # Customise the automatically generated information.
 #

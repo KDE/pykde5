@@ -33,7 +33,7 @@ project(${_pkg})
 get_binding_info(
     VERBOSE 0
     COMPONENTS KF5Gravatar
-    DEPENDENCIES Qt5Gui)
+    DEPENDENCIES Qt5Gui Qt5Widgets Qt5Core Qt5Network)
 #
 # Customise the automatically generated information.
 #

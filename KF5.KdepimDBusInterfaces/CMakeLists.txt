@@ -32,7 +32,8 @@ project(${_pkg})
 #
 get_binding_info(
     VERBOSE 0
-    COMPONENTS KF5KdepimDBusInterfaces)
+    COMPONENTS KF5KdepimDBusInterfaces
+    DEPENDENCIES Qt5Core)
 #
 # Customise the automatically generated information.
 #

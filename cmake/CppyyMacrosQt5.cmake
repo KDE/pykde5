@@ -138,23 +138,3 @@ function(get_qt5_cmake_info component existing_dependencies)
     set(targets "${target}" PARENT_SCOPE)
     set(dependencies "${real_dependencies}" PARENT_SCOPE)
 endfunction(get_qt5_cmake_info)
-
-#
-# Find the targets (and not dependencies!) for a CMake Qt component.
-#
-function(get_qt5_cmake_info2 component)
-    find_dependency(${component})
-    #
-    # Targets.
-    #
-    string(REPLACE "Qt5" "Qt5::" target ${component})
-    if(NOT TARGET ${target})
-        message(STATUS "Ignoring invalid target \"${target}\" for ${component}")
-        set(target "")
-    endif()
-    set(targets "${target}" PARENT_SCOPE)
-    #
-    # Dependencies.
-    #
-    set(dependencies "" PARENT_SCOPE)
-endfunction(get_qt5_cmake_info2)

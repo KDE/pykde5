@@ -178,6 +178,11 @@ function(get_targets_info component targets)
         set(tmp)
         foreach(include ${includes})
             #
+            # Clean up malformed paths.
+            #
+            string(REGEX REPLACE "/$" "" include ${include})
+            string(REGEX REPLACE "//+" "/" include ${include})
+            #
             # Not sure why the headers seem to include this. Having them here
             # causes too wide a search space.
             #
@@ -366,10 +371,6 @@ function(get_binding_info)
     endforeach(include)
     set(_H_DIRS ${tmp})
     #
-    # Restore this removed item.
-    #
-    set(_H_DIRS ${_H_DIRS} ${removed_includes})
-    #
     # Add dependencies.
     #
     foreach(component IN LISTS _DEPENDENCIES ARG_DEPENDENCIES)
@@ -411,7 +412,7 @@ function(get_binding_info)
     #
     # Find all include dirs.
     #
-    set(tmp ${_INCLUDE_DIRS} ${_REMOVED_INCLUDES})
+    set(tmp ${_INCLUDE_DIRS})
     foreach(include IN LISTS _INCLUDE_DIRS)
         file(GLOB_RECURSE tmp2 LIST_DIRECTORIES true ${include}/*)
         foreach(tmp3 IN LISTS tmp2)
@@ -421,6 +422,11 @@ function(get_binding_info)
         endforeach(tmp3)
     endforeach(include)
     set(_INCLUDE_DIRS ${tmp})
+    #
+    # Restore any removed items. By putting them last, we reduce the chance
+    # that a legacy header gets picked up ahead of specific dependencies.
+    #
+    list(APPEND _INCLUDE_DIRS ${_REMOVED_INCLUDES})
     #
     # Find the version from the first component.
     #

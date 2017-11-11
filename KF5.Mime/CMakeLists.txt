@@ -32,7 +32,8 @@ project(${_pkg})
 #
 get_binding_info(
     VERBOSE 0
-    COMPONENTS KF5Mime)
+    COMPONENTS KF5Mime
+    DEPENDENCIES KF5Akonadi)
 #
 # Customise the automatically generated information.
 #

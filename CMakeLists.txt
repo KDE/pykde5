@@ -16,80 +16,36 @@ include(CppyyMacros)
 #
 # Tier1.
 #
-add_subdirectory(KF5.Attica)
-add_subdirectory(KF5.BluezQt)
 #BreezeIcons
 #ECM
 #KApiDox
-add_subdirectory(KF5.Archive)
-add_subdirectory(KF5.Codecs)
-add_subdirectory(KF5.Config)
-add_subdirectory(KF5.CoreAddons)
-add_subdirectory(KF5.DBusAddons)
-add_subdirectory(KF5.DNSSD)
-add_subdirectory(KF5.GuiAddons)
-add_subdirectory(KF5.I18n)
-add_subdirectory(KF5.IdleTime)
-#add_subdirectory(KF5.Kirigami2)
-add_subdirectory(KF5.ItemModels)
-add_subdirectory(KF5.ItemViews)
-add_subdirectory(KF5.Plotting)
-add_subdirectory(KF5.SyntaxHighlighting)
+#KF5.Kirigami2
 #KUserFeedback
-add_subdirectory(KF5.Wayland)
-add_subdirectory(KF5.WidgetsAddons)
-add_subdirectory(KF5.WindowSystem)
-add_subdirectory(KF5.ModemManagerQt)
-add_subdirectory(KF5.NetworkManagerQt)
-add_subdirectory(KF5.Prison)
-add_subdirectory(KF5.Solid)
-add_subdirectory(KF5.Sonnet)
-add_subdirectory(KF5.ThreadWeaver)
+list(APPEND components KF5.Attica KF5.BluezQt KF5.Archive KF5.Codecs KF5.Config
+    KF5.CoreAddons KF5.DBusAddons KF5.DNSSD KF5.GuiAddons KF5.I18n 
+    KF5.IdleTime KF5.ItemModels KF5.ItemViews KF5.Plotting 
+    KF5.SyntaxHighlighting KF5.Wayland KF5.WidgetsAddons KF5.WindowSystem 
+    KF5.ModemManagerQt KF5.NetworkManagerQt KF5.Prison KF5.Solid KF5.Sonnet 
+    KF5.ThreadWeaver)
 #
 # Tier 2.
 #
-add_subdirectory(KF5.Activities)
-add_subdirectory(KF5.Auth)
-add_subdirectory(KF5.Completion)
-add_subdirectory(KF5.Crash)
-add_subdirectory(KF5.DocTools)
-add_subdirectory(KF5.FileMetaData)
 #KImageFormats
-add_subdirectory(KF5.JobWidgets)
-add_subdirectory(KF5.Notifications)
-add_subdirectory(KF5.Package)
-add_subdirectory(KF5.Pty)
-add_subdirectory(KF5.UnitConversion)
+list(APPEND components KF5.Activities KF5.Auth KF5.Completion KF5.Crash
+    KF5.DocTools KF5.FileMetaData KF5.JobWidgets KF5.Notifications
+    KF5.Package KF5.Pty KF5.UnitConversion)
 #
 # Tier 3.
 #
-add_subdirectory(KF5.Baloo)
-add_subdirectory(KF5.ActivitiesStats)
-add_subdirectory(KF5.Bookmarks)
-add_subdirectory(KF5.KCMUtils)
-add_subdirectory(KF5.ConfigWidgets)
-add_subdirectory(KF5.Declarative)
 #KDED
-#add_subdirectory(KF5.DesignerPlugin)
-add_subdirectory(KF5.Su)
-add_subdirectory(KF5.WebKit)
-add_subdirectory(KF5.Emoticons)
-add_subdirectory(KF5.GlobalAccel)
-add_subdirectory(KF5.IconThemes)
-#add_subdirectory(KF5.Init)
-add_subdirectory(KF5.KIO)
-add_subdirectory(KF5.NewStuff)
-add_subdirectory(KF5.NotifyConfig)
-add_subdirectory(KF5.Parts)
-add_subdirectory(KF5.People)
-add_subdirectory(KF5.Runner)
-add_subdirectory(KF5.Service)
-add_subdirectory(KF5.TextEditor)
-add_subdirectory(KF5.TextWidgets)
-add_subdirectory(KF5.Wallet)
-add_subdirectory(KF5.XmlGui)
-add_subdirectory(KF5.XmlRpcClient)
-add_subdirectory(KF5.Plasma)
+#KF5.DesignerPlugin
+#KF5.Init
+list(APPEND components KF5.Baloo KF5.ActivitiesStats KF5.Bookmarks
+    KF5.KCMUtils KF5.ConfigWidgets KF5.Declarative KF5.Su KF5.WebKit
+    KF5.Emoticons KF5.GlobalAccel KF5.IconThemes KF5.KIO KF5.NewStuff
+    KF5.NotifyConfig KF5.Parts KF5.People KF5.Runner KF5.Service
+    KF5.TextEditor KF5.TextWidgets KF5.Wallet KF5.XmlGui KF5.XmlRpcClient
+    KF5.Plasma)
 #
 # Tier 4.
 #
@@ -97,57 +53,30 @@ add_subdirectory(KF5.Plasma)
 #
 # Porting Aids.
 #
-add_subdirectory(KF5.KDELibs4Support)
-add_subdirectory(KF5.KHtml)
-add_subdirectory(KF5.JS)
-add_subdirectory(KF5.MediaPlayer)
-add_subdirectory(KF5.Kross)
+list(APPEND components KF5.KDELibs4Support KF5.KHtml KF5.JS KF5.MediaPlayer
+    KF5.Kross)
 #
 # Other.
 #
-add_subdirectory(KF5.Akonadi)
-add_subdirectory(KF5.AlarmCalendar)
-add_subdirectory(KF5.Blog)
-add_subdirectory(KF5.Calendar)
-#add_subdirectory(KF5.ComposerEditorNG)
-add_subdirectory(KF5.Contacts)
-add_subdirectory(KF5.EventViews)
-#add_subdirectory(KF5.FollowupReminder)
-add_subdirectory(KF5.FrameworkIntegration)
-#add_subdirectory(KF5.GAPI)
-add_subdirectory(KF5.Gpgmepp)
-add_subdirectory(KF5.GrantleeTheme)
-add_subdirectory(KF5.Gravatar)
-add_subdirectory(KF5.Holidays)
-add_subdirectory(KF5.IdentityManagement)
-add_subdirectory(KF5.IMAP)
-add_subdirectory(KF5.IncidenceEditor)
-add_subdirectory(KF5.KaddressbookGrantlee)
-add_subdirectory(KF5.KDcraw)
-add_subdirectory(KF5.KDEGames)
-add_subdirectory(KF5.KdepimDBusInterfaces)
-add_subdirectory(KF5.KDGantt2)
-add_subdirectory(KF5.KExiv2)
-#add_subdirectory(KF5.KFace)
-#add_subdirectory(KF5.KGeoMap)
-add_subdirectory(KF5.Kipi)
-add_subdirectory(KF5.KMahjongglib)
-add_subdirectory(KF5.KontactInterface)
-#add_subdirectory(KF5.Ldap)
-add_subdirectory(KF5.Libkdepim)
-add_subdirectory(KF5.Libkleo)
-add_subdirectory(KF5.LibKSieve)
-#add_subdirectory(KF5.Mail)
-add_subdirectory(KF5.Mbox)
-#add_subdirectory(KF5.Message)
-add_subdirectory(KF5.Mime)
-#add_subdirectory(KF5.PimCommon)
-add_subdirectory(KF5.PimTextEdit)
-add_subdirectory(KF5.Sane)
-add_subdirectory(KF5.Screen)
-add_subdirectory(KF5.SendLater)
-add_subdirectory(KF5.Syndication)
-add_subdirectory(KF5.TemplateParser)
-add_subdirectory(KF5.Tnef)
+#KF5.ComposerEditorNG
+#KF5.FollowupReminder
+#KF5.GAPI
+#KF5.KFace
+#KF5.KGeoMap
+#KF5.Ldap
+#KF5.Mail
+#KF5.Message
+#KF5.PimCommon
+list(APPEND components KF5.Akonadi KF5.AlarmCalendar KF5.Blog KF5.Calendar
+    KF5.Contacts KF5.EventViews KF5.FrameworkIntegration KF5.Gpgmepp
+    KF5.GrantleeTheme KF5.Gravatar KF5.Holidays KF5.IdentityManagement KF5.IMAP
+    KF5.IncidenceEditor KF5.KaddressbookGrantlee KF5.KDcraw KF5.KDEGames
+    KF5.KdepimDBusInterfaces KF5.KDGantt2 KF5.KExiv2 KF5.Kipi KF5.KMahjongglib
+    KF5.KontactInterface KF5.Libkdepim KF5.Libkleo KF5.LibKSieve KF5.Mbox
+    KF5.Mime KF5.PimTextEdit KF5.Sane KF5.Screen KF5.SendLater KF5.Syndication
+    KF5.TemplateParser KF5.Tnef)
 
+foreach(component IN LISTS components)
+    add_subdirectory(${component})
+endforeach()
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

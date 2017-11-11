@@ -80,3 +80,14 @@ foreach(component IN LISTS components)
     add_subdirectory(${component})
 endforeach()
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
+
+###############################################################################
+# Testing.
+###############################################################################
+enable_testing()
+foreach(component IN LISTS components)
+    string(REPLACE "." "/" subdir ${component})
+    add_test(NAME ${component}
+        COMMAND pytest test.py
+        WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${component}")
+endforeach()

@@ -49,7 +49,7 @@ list(APPEND components KF5.Baloo KF5.ActivitiesStats KF5.Bookmarks
 #
 # Tier 4.
 #
-#FrameworkIntegration
+list(APPEND components KF5.FrameworkIntegration)
 #
 # Porting Aids.
 #
@@ -68,7 +68,7 @@ list(APPEND components KF5.KDELibs4Support KF5.KHtml KF5.JS KF5.MediaPlayer
 #KF5.Message
 #KF5.PimCommon
 list(APPEND components KF5.Akonadi KF5.AlarmCalendar KF5.Blog KF5.Calendar
-    KF5.Contacts KF5.EventViews KF5.FrameworkIntegration KF5.Gpgmepp
+    KF5.Contacts KF5.EventViews KF5.Gpgmepp
     KF5.GrantleeTheme KF5.Gravatar KF5.Holidays KF5.IdentityManagement KF5.IMAP
     KF5.IncidenceEditor KF5.KaddressbookGrantlee KF5.KDcraw KF5.KDEGames
     KF5.KdepimDBusInterfaces KF5.KDGantt2 KF5.KExiv2 KF5.Kipi KF5.KMahjongglib

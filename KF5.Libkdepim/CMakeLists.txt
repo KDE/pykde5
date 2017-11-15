@@ -37,7 +37,10 @@ get_binding_info(
 #
 # Customise the automatically generated information.
 #
-set(linkdefs "")
+set(linkdefs "#pragma link off class KPIM::TransactionItemView\;
+#pragma link off class KPIM::TransactionItem\;
+#pragma link off class KPIM::LogItemDelegate\;
+#pragma link off class KPIM::IndicatorProgress\;")
 #
 # Generate the bindings.
 #

@@ -453,11 +453,14 @@ endfunction(get_binding_info)
 # (and not bulk KDE code). Famous last words...
 #
 function(add_bindings pkg author author_email include_dirs linkdefs h_dirs h_files)
+    string(REPLACE "\\" "\\\\\\" linkdefs "${linkdefs}")
+    file(GLOB extra_cpp INCLUDE_DIRECTORIES false ${CMAKE_CURRENT_LIST_DIR}/*.cpp)
     cppyy_add_bindings(
         "${pkg}" "${version}" "${author}" "${author_email}"
         LANGUAGE_STANDARD "14"
         GENERATE_OPTIONS "-D__PIC__;-Wno-macro-redefined"
         COMPILE_OPTIONS "-Wno-deprecated-declarations;-Wno-overloaded-virtual;-fstack-protector-strong"
+        EXTRA_CODES "${extra_cpp}"
         INCLUDE_DIRS "${include_dirs}"
         LINK_LIBRARIES "${link_libraries}"
         LINKDEFS "${linkdefs}"

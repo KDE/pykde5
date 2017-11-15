@@ -36,7 +36,10 @@ get_binding_info(
 #
 # Customise the automatically generated information.
 #
-set(linkdefs "")
+set(linkdefs "#pragma link off class EventViews::WhatsNextTextBrowser\;
+#pragma link off class EventViews::MultiViewCalendar\;
+#pragma link off class EventViews::AkonadiViewCalendar\;
+#pragma link off class EventViews::EventIndicator\;")
 #
 # Generate the bindings.
 #

@@ -36,7 +36,7 @@ get_binding_info(
 #
 # Customise the automatically generated information.
 #
-set(linkdefs "")
+set(linkdefs "#pragma link off class Attica::PlatformDependentV2\;")
 #
 # Generate the bindings.
 #

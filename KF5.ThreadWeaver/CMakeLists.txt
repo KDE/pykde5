@@ -36,7 +36,14 @@ get_binding_info(
 #
 # Customise the automatically generated information.
 #
-set(linkdefs "")
+set(linkdefs "#pragma link off class ThreadWeaver::DestructedState\;
+#pragma link off class ThreadWeaver::InConstructionState\;
+#pragma link off class ThreadWeaver::ShuttingDownState\;
+#pragma link off class ThreadWeaver::SuspendedState\;
+#pragma link off class ThreadWeaver::SuspendingState\;
+#pragma link off class ThreadWeaver::WeaverImplState\;
+#pragma link off class ThreadWeaver::WorkingHardState\;
+#pragma link off class ThreadWeaver::QueueAPI\;")
 #
 # Generate the bindings.
 #

@@ -37,7 +37,14 @@ get_binding_info(
 #
 # Customise the automatically generated information.
 #
-set(linkdefs "")
+set(linkdefs "#pragma link off class IncidenceEditorNG::IndividualMessageQueueJob\;
+#pragma link off class IncidenceEditorNG::OpenComposerJob\;
+#pragma link off class IncidenceEditorNG::EditorItemManager\;
+#pragma link off class IncidenceEditorNG::CategoryEditDialog\;
+#pragma link off class IncidenceEditorNG::IncidenceAttendee\;
+#pragma link off class IncidenceEditorNG::ItemEditorUi\;
+#pragma link off class IncidenceEditorNG::IncidenceEditorSettingsBase\;
+#pragma link off class IncidenceEditorNG::IndividualMailITIPHandlerDialogDelegate\;")
 #
 # Generate the bindings.
 #

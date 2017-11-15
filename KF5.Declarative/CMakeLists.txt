@@ -32,7 +32,8 @@ project(${_pkg})
 #
 get_binding_info(
     VERBOSE 0
-    COMPONENTS KF5Declarative)
+    COMPONENTS KF5Declarative
+    NATIVE_COMPONENTS KF5CalendarEvents KF5QuickAddons)
 #
 # Customise the automatically generated information.
 #

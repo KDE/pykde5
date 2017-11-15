@@ -72,7 +72,7 @@ if(_rc)
     message(FATAL_ERROR "Error finding cling's CMake support: (${_rc}) ${_stderr}")
 endif()
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${_stdout})
-find_package(Cppyy 0.8.4 REQUIRED)
+find_package(Cppyy 6.10.4 REQUIRED)
 
 include(FindPkgConfig)
 include(CMakeFindDependencyMacro)

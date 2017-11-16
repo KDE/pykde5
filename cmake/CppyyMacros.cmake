@@ -74,9 +74,44 @@ include(CppyyMacrosKF5)
 #
 # Find the includes, libraries etc. for a pkg-config component.
 #
-function(get_pkgconfig_info component)
+#   get_pkgconfig_info(
+#       component
+#       existing_dependencies
+#       VERBOSE level)
+#
+# Arguments and options:
+#
+#   VERBOSE level       Greater than zero to turn on diagnostics
+#
+# Returns via PARENT_SCOPE variables:
+#
+#   libraries           The libraries of component.
+#
+#   includes            The includes of component.
+#
+#   compile_flags       The compile flags of component.
+#
+function(get_pkgconfig_info component existing_dependencies)
+    cmake_parse_arguments(
+        ARG
+        ""
+        "RECURSION_LEVEL;VERBOSE"
+        ""
+        ${ARGN})
+    if(NOT "${ARG_UNPARSED_ARGUMENTS}" STREQUAL "")
+        message(SEND_ERROR "Unexpected arguments specified '${ARG_UNPARSED_ARGUMENTS}'")
+    endif()
+    if("${ARG_RECURSION_LEVEL}" STREQUAL "")
+        set(ARG_RECURSION_LEVEL 0)
+    else()
+        math(EXPR ARG_RECURSION_LEVEL "${ARG_RECURSION_LEVEL}+1")
+    endif()
+    if("${ARG_VERBOSE}" STREQUAL "")
+        set(ARG_VERBOSE 0)
+    endif()
+    pkg_check_modules(${component} ${component})
     set(libraries)
-    set(includes ${${component}_INCLUDEDIR})
+    set(includes ${${component}_INCLUDE_DIRS})
     set(compile_flags ${${component}_CFLAGS})
     foreach(tmp ${${component}_LIBRARIES})
         find_library(lib${tmp} NAMES ${tmp} PATHS ${${component}_LIBRARIES})
@@ -227,6 +262,9 @@ endfunction(get_targets_info)
 #                       Any CMake packages not detected by the automatic
 #                       dependency extraction logic.
 #
+#   PKGCONFIG_DEPENDENCIES dependency
+#                       Any pkgconfig dependencies.
+#
 # Returns via PARENT_SCOPE variables:
 #
 #   version             The version of the first of the COMPONENTS.
@@ -249,7 +287,7 @@ function(get_binding_info)
         ARG
         ""
         "VERBOSE"
-        "COMPONENTS;NATIVE_COMPONENTS;DEPENDENCIES"
+        "COMPONENTS;NATIVE_COMPONENTS;DEPENDENCIES;PKGCONFIG_DEPENDENCIES"
         ${ARGN})
     if(NOT "${ARG_UNPARSED_ARGUMENTS}" STREQUAL "")
         message(SEND_ERROR "Unexpected arguments specified '${ARG_UNPARSED_ARGUMENTS}'")
@@ -374,6 +412,36 @@ function(get_binding_info)
                 VERBOSE ${ARG_VERBOSE})
         endif()
         get_targets_info(${component} "${targets}")
+        if(ARG_VERBOSE)
+            message("DEPENDENCIES ${component}:
+    targets=${targets}
+    dependencies=${dependencies}
+    include=${includes}
+    libraries=${libraries}
+    compile_flags=${compile_flags}
+    removed_includes=${removed_includes}
+")
+        endif()
+        list(APPEND _INCLUDE_DIRS ${includes})
+        list(APPEND _LINK_LIBRARIES ${libraries})
+        list(APPEND _COMPILE_OPTIONS "${compile_flags}")
+        list(APPEND _REMOVED_INCLUDES "${removed_includes}")
+        if(_INCLUDE_DIRS)
+            list(REMOVE_DUPLICATES _INCLUDE_DIRS)
+        endif()
+        if(_LINK_LIBRARIES)
+            list(REMOVE_DUPLICATES _LINK_LIBRARIES)
+        endif()
+        if(_COMPILE_OPTIONS)
+            list(REMOVE_DUPLICATES _COMPILE_OPTIONS)
+        endif()
+        if(_REMOVED_INCLUDES)
+            list(REMOVE_DUPLICATES _REMOVED_INCLUDES)
+        endif()
+    endforeach(component)
+    foreach(component IN LISTS ARG_PKGCONFIG_DEPENDENCIES)
+        get_pkgconfig_info(${component} "${_DEPENDENCIES}"
+            VERBOSE ${ARG_VERBOSE})
         if(ARG_VERBOSE)
             message("DEPENDENCIES ${component}:
     targets=${targets}

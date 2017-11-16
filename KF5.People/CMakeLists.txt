@@ -33,12 +33,17 @@ project(${_pkg})
 get_binding_info(
     VERBOSE 0
     COMPONENTS KF5People
-    DEPENDENCIES Qt5Gui)
+    DEPENDENCIES Qt5Gui Qt5Widgets)
 #
 # Customise the automatically generated information.
 #
+message("h_dirs ${h_dirs}")
+message("include_dirs ${include_dirs}")
+list(APPEND h_dirs ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople/kpeople
+    ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople/kpeoplebackend)
+file(GLOB_RECURSE h_files LIST_DIRECTORIES false ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople/kpeople/*
+    ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople/kpeoplebackend/*)
 list(APPEND include_dirs ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople)
-file(GLOB_RECURSE h_files LIST_DIRECTORIES false ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople/*)
 set(linkdefs "")
 #
 # Generate the bindings.

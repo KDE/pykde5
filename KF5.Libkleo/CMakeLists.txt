@@ -33,7 +33,7 @@ project(${_pkg})
 get_binding_info(
     VERBOSE 0
     COMPONENTS KF5Libkleo
-    DEPENDENCIES Qt5Core Qt5Widgets)
+    DEPENDENCIES Qt5Core Qt5Widgets KF5Config KF5WidgetsAddons Qt5Gui KF5ItemModels)
 #
 # Customise the automatically generated information.
 #

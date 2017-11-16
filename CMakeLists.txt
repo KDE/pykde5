@@ -53,8 +53,9 @@ list(APPEND components KF5.FrameworkIntegration)
 #
 # Porting Aids.
 #
-list(APPEND components KF5.KDELibs4Support KF5.KHtml KF5.JS KF5.MediaPlayer
-    KF5.Kross)
+#KF5.KDELibs4Support
+#KF5.JS
+list(APPEND components KF5.KHtml KF5.MediaPlayer KF5.Kross)
 #
 # Other.
 #

@@ -50,16 +50,8 @@
 # #
 # # Generate the bindings for KF5.Akonadi.
 # #
-# CPPYY_ADD_BINDINGS(
-#     "KF5.Akonadi" "${version}" "Shaheed" "srhaque@theiet.org"
-#     LANGUAGE_STANDARD "14"
-#     GENERATE_OPTIONS "-D__PIC__;-Wno-macro-redefined"
-#     INCLUDE_DIRS ${include_dirs}
-#     COMPILE_OPTIONS "-Wno-deprecated-declarations"
-#     LINK_LIBRARIES ${link_libraries}
-#     LINKDEFS "#include <QString>\n"
-#     H_DIRS ${h_dirs}
-#     H_FILES ${h_files})
+# add_bindings("KF5.Akonadi" "Shaheed" "srhaque@theiet.org" "${version}"
+#     "${include_dirs}" "${link_libraries}" "${linkdefs}" "${h_dirs}" "${h_files}")
 #
 cmake_minimum_required(VERSION 3.9)
 
@@ -452,7 +444,7 @@ endfunction(get_binding_info)
 # we are building cppyy artefacts, with definitions taken from KDE headers
 # (and not bulk KDE code). Famous last words...
 #
-function(add_bindings pkg author author_email include_dirs linkdefs h_dirs h_files)
+function(add_bindings pkg author author_email version include_dirs link_libraries linkdefs h_dirs h_files)
     string(REPLACE "\\" "\\\\\\" linkdefs "${linkdefs}")
     file(GLOB extra_cpp INCLUDE_DIRECTORIES false ${CMAKE_CURRENT_LIST_DIR}/*.cpp)
     cppyy_add_bindings(

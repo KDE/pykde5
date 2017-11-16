@@ -48,5 +48,5 @@ set(linkdefs "#pragma link off class IncidenceEditorNG::IndividualMessageQueueJo
 #
 # Generate the bindings.
 #
-add_bindings(${_pkg} "Shaheed Haque" "srhaque@theiet.org" "${include_dirs}" "${linkdefs}" "${h_dirs}" "${h_files}")
+add_bindings(${_pkg} "Shaheed Haque" "srhaque@theiet.org" "${version}" "${include_dirs}" "${link_libraries}" "${linkdefs}" "${h_dirs}" "${h_files}")
 unset(_pkg)

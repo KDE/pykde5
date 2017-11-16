@@ -37,7 +37,6 @@ get_binding_info(
 #
 # Customise the automatically generated information.
 #
-message("include_dirs ${include_dirs}")
 list(APPEND h_dirs ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople/kpeople
     ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople/kpeoplebackend)
 file(GLOB_RECURSE h_files LIST_DIRECTORIES false ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES}/KF5/KPeople/kpeople/*

@@ -23,14 +23,22 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+set(_pkg "Qt5.Positioning")
+project(${_pkg})
+
 #
-# Cppyy-based bindings.
+# Get the information needed to create bindings for a set of related components.
+# Increase the VERBOSE setting for diagnostics.
 #
-cmake_minimum_required(VERSION 3.9)
-
-project(pykde5)
-
-add_subdirectory(KF5)
-add_subdirectory(Qt5)
-
-enable_testing()
+get_binding_info(
+    VERBOSE 0
+    COMPONENTS Qt5Positioning)
+#
+# Customise the automatically generated information.
+#
+set(linkdefs "")
+#
+# Generate the bindings.
+#
+add_bindings(${_pkg} "Shaheed Haque" "srhaque@theiet.org" "${include_dirs}" "${linkdefs}" "${h_dirs}" "${h_files}")
+unset(_pkg)

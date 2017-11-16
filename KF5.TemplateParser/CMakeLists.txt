@@ -37,7 +37,9 @@ get_binding_info(
 #
 # Customise the automatically generated information.
 #
-set(linkdefs "")
+set(linkdefs "#pragma link off class TemplateParser::CustomTemplateItemDelegate\;
+#pragma link off class TemplateParser::CustomTemplateItem\;
+#pragma link off class TemplateParser::TemplatesInsertCommand\;")
 #
 # Generate the bindings.
 #

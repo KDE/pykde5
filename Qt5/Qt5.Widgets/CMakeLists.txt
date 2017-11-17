@@ -36,6 +36,8 @@ get_binding_info(
 #
 # Customise the automatically generated information.
 #
+list(FILTER h_files EXCLUDE REGEX ".*/QMac.*")
+list(FILTER h_files EXCLUDE REGEX ".*/qmac.*.h")
 set(linkdefs "")
 #
 # Generate the bindings.

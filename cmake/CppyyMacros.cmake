@@ -514,13 +514,15 @@ endfunction(get_binding_info)
 #
 function(add_bindings pkg author author_email version include_dirs link_libraries linkdefs h_dirs h_files)
     string(REPLACE "\\" "\\\\\\" linkdefs "${linkdefs}")
-    file(GLOB extra_cpp INCLUDE_DIRECTORIES false ${CMAKE_CURRENT_LIST_DIR}/*.cpp)
+    file(GLOB extra_codes INCLUDE_DIRECTORIES false ${CMAKE_CURRENT_LIST_DIR}/extra_*.cpp)
+    file(GLOB extra_headers INCLUDE_DIRECTORIES false ${CMAKE_CURRENT_LIST_DIR}/extra_*.h)
     cppyy_add_bindings(
         "${pkg}" "${version}" "${author}" "${author_email}"
         LANGUAGE_STANDARD "14"
         GENERATE_OPTIONS "-D__PIC__;-Wno-macro-redefined"
         COMPILE_OPTIONS "-Wno-deprecated-declarations;-Wno-overloaded-virtual;-fstack-protector-strong"
-        EXTRA_CODES "${extra_cpp}"
+        EXTRA_CODES "${extra_codes}"
+        EXTRA_HEADERS "${extra_headers}"
         INCLUDE_DIRS "${include_dirs}"
         LINK_LIBRARIES "${link_libraries}"
         LINKDEFS "${linkdefs}"

@@ -32,11 +32,16 @@ project(${_pkg})
 #
 get_binding_info(
     VERBOSE 0
-    COMPONENTS Qt5Gui)
+    COMPONENTS Qt5Gui
+    PKGCONFIG_DEPENDENCIES egl)
 #
 # Customise the automatically generated information.
 #
-set(linkdefs "")
+set(tmp ${h_files})
+list(FILTER tmp INCLUDE REGEX ".*/qopengles2ext.h")
+list(FILTER h_files EXCLUDE REGEX ".*/qopengles2ext.h")
+list(APPEND h_files "${CMAKE_CURRENT_LIST_DIR}/fixup_qopengles2ext.h")
+set(linkdefs "#pragma link C++ defined_in ${tmp}\;")
 #
 # Generate the bindings.
 #

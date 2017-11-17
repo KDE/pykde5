@@ -45,7 +45,7 @@ list(FILTER h_files EXCLUDE REGEX ".*/Q_.*")
 #
 # Including qlist.h causes rootcling to crash.
 #
-#list(FILTER h_files EXCLUDE REGEX ".*/qlist.h")
+list(FILTER h_files EXCLUDE REGEX ".*/qlist.h")
 set(linkdefs "#pragma link off class QAbstractAnimationPrivate\;
 #pragma link off class QAbstractEventDispatcherPrivate\;
 #pragma link off class QAbstractItemModelPrivate\;

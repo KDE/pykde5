@@ -37,7 +37,8 @@ get_binding_info(
 # Customise the automatically generated information.
 #
 list(FILTER h_files EXCLUDE REGEX ".*/qwaylandexport.h")
-set(linkdefs "")
+set(linkdefs "#pragma link off class QWaylandTextInput\;
+#pragma link off class QWaylandInputMethodControl\;")
 #
 # Generate the bindings.
 #

@@ -32,7 +32,8 @@ project(${_pkg})
 #
 get_binding_info(
     VERBOSE 0
-    COMPONENTS Qt5WebView)
+    COMPONENTS Qt5WebView
+    DEPENDENCIES Qt5Core)
 #
 # Customise the automatically generated information.
 #

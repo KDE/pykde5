@@ -37,12 +37,15 @@ get_binding_info(
 # Customise the automatically generated information.
 #
 list(FILTER h_files EXCLUDE REGEX ".*/qatomic_.*.h")
-#list(FILTER h_files EXCLUDE REGEX ".*/qfunctions_.*.h")
+list(FILTER h_files EXCLUDE REGEX ".*/qfunctions_.*.h")
 list(FILTER h_files EXCLUDE REGEX ".*/.*_impl.h")
 list(FILTER h_files EXCLUDE REGEX ".*/qt_windows.h")
 list(FILTER h_files EXCLUDE REGEX ".*/.*.conf")
 list(FILTER h_files EXCLUDE REGEX ".*/Q_.*")
-list(FILTER h_files INCLUDE REGEX "Q.*|q(abstract.*|algorithms|animationgroup|arraydata.*|atomic|basictimer|bitarray|buffer|bytearray.*|cache|char|collator|commandline.*|compilerdetection|config|containerfwd|contiguouscache|core.*|cryptographichash|datastream|datetime|deadlinetimer|debug|dir.*|easingcurve|elapsedtimer|endian|event.*|exception|factoryinterface|file.*|finalstate|flags|float16|future.*|genericatomic|global.*|hash.*|historystate|identityproxymodel|iodevice|isenum|itemselectionmodel|iterator|json.*|library.*|line|linkedlist|list|locale|lockfile|logging.*|map|margins|math|messageauthenticationcode|meta.*|mime.*|mutex|namespace|numeric|object.*|operatingsystemversion|pair|parallelanimationgroup|pauseanimation|plugin.*|pointer|point|process|processordetection|propertyanimation|queue|readwritelock|rect|refcount|regexp|regularexpression|resource|resultstore|runnable|savefile|scoped.*|semaphore|sequentialanimationgroup|set|settings|shared.*|signalmapper|signaltransition|size|socketnotifier|sortfilterproxymodel|stack|standardpaths|state.*|storageinfo|string.*|sysinfo|system.*|tcoreversion|temporary.*|text.*|thread.*|timeline|timer|timezone|translator|typeinfo|typetraits|url.*|uuid|variant.*|varlengtharray|vector|version.*|waitcondition|wineventnotifier|xmlstream).h")
+#
+# Including qlist.h causes rootcling to crash.
+#
+#list(FILTER h_files EXCLUDE REGEX ".*/qlist.h")
 set(linkdefs "#pragma link off class QAbstractAnimationPrivate\;
 #pragma link off class QAbstractEventDispatcherPrivate\;
 #pragma link off class QAbstractItemModelPrivate\;

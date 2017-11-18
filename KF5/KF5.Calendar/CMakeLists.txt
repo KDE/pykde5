@@ -32,10 +32,20 @@ project(${_pkg})
 #
 get_binding_info(
     VERBOSE 0
-    COMPONENTS KF5CalendarCore KF5CalendarSupport KF5CalendarUtils)
+    COMPONENTS KF5CalendarCore KF5CalendarSupport KF5CalendarUtils
+    PKGCONFIG_DEPENDENCIES libical)
 #
 # Customise the automatically generated information.
 #
+list(FILTER h_files EXCLUDE REGEX ".*/libical/.*.h")
+set(missing_cxx_libs)
+foreach(lib IN LISTS link_libraries)
+    if(lib MATCHES ".*/${CMAKE_SHARED_LIBRARY_PREFIX}(ical|icalss)${CMAKE_SHARED_LIBRARY_SUFFIX}")
+        string(REGEX REPLACE "(.*/${CMAKE_SHARED_LIBRARY_PREFIX})(ical|icalss)(${CMAKE_SHARED_LIBRARY_SUFFIX})" "\\1\\2_cxx\\3" lib ${lib})
+        list(APPEND missing_cxx_libs ${lib})
+    endif()
+endforeach()
+list(APPEND link_libraries ${missing_cxx_libs})
 set(linkdefs "")
 #
 # Generate the bindings.

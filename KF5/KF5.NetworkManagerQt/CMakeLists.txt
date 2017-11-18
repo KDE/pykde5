@@ -37,13 +37,8 @@ get_binding_info(
 #
 # Customise the automatically generated information.
 #
-list(FILTER h_files EXCLUDE REGEX ".*nm/nm-.*.h")
-list(FILTER h_files EXCLUDE REGEX ".*gio/gio-.*.h")
-list(FILTER h_files EXCLUDE REGEX ".*gio/g(settingsbackend|subprocess.*).h")
-list(FILTER h_files EXCLUDE REGEX ".*glib/glib-.*.h")
-list(FILTER h_files EXCLUDE REGEX ".*glib/g(i18n-lib|win32).h")
-list(FILTER h_files EXCLUDE REGEX ".*gobject/gobject-.*.h")
-list(FILTER h_files EXCLUDE REGEX ".*gobject/gobjectnotifyqueue.c")
+list(FILTER h_files EXCLUDE REGEX ".*/libnm/.*.h")
+list(FILTER h_files EXCLUDE REGEX ".*/glib-2.0/.*.[ch]")
 set(linkdefs "")
 #
 # Generate the bindings.

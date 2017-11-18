@@ -532,24 +532,27 @@ function(add_bindings pkg author author_email version include_dirs link_librarie
     # TODO: Proper Python2/3 support.
     #
     install(CODE "
+set(pkg ${pkg})
+string(REPLACE \".\" \"/\" pkg_dir $\{pkg\})
+set(pkg_dir $\{CMAKE_CURRENT_BINARY_DIR\}/$\{pkg_dir\})
 execute_process(
     COMMAND pip wheel .
     COMMAND pip3 wheel .
     ERROR_VARIABLE _stderr
     RESULT_VARIABLE _rc
     OUTPUT_STRIP_TRAILING_WHITESPACE
-    WORKING_DIRECTORY ${pkg})
+    WORKING_DIRECTORY $\{pkg_dir\})
 if(NOT \"$\{_rc\}\" STREQUAL \"0\")
     message(FATAL_ERROR \"Error building wheels: ($\{_rc\}) $\{_stderr\}\")
 endif()
-file(GLOB wheels RELATIVE ${CMAKE_CURRENT_BINARY_DIR} ${pkg}/*.whl)
+file(GLOB wheels RELATIVE $\{pkg_dir\} $\{pkg_dir\}/*.whl)
 execute_process(
     COMMAND pip install --pre $\{wheels\}
     COMMAND pip3 install --pre $\{wheels\}
     ERROR_VARIABLE _stderr
     RESULT_VARIABLE _rc
     OUTPUT_STRIP_TRAILING_WHITESPACE
-    WORKING_DIRECTORY ${pkg})
+    WORKING_DIRECTORY $\{pkg_dir\})
 if(NOT \"$\{_rc\}\" STREQUAL \"0\")
     message(FATAL_ERROR \"Error during install: ($\{_rc\}) $\{_stderr\}\")
 endif()")

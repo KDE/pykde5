@@ -28,7 +28,7 @@
 #
 cmake_minimum_required(VERSION 3.9)
 
-project(qt5)
+project(Qt5)
 
 find_package(ECM 5.38.0 REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${ECM_KDE_MODULE_DIR})
@@ -44,20 +44,20 @@ include(CppyyMacros)
 #
 # Qt Essentials.
 #
-list(APPEND components Qt5.Core Qt5.Gui Qt5.Network Qt5.Qml Qt5.Quick Qt5.Sql
-    Qt5.Test Qt5.Widgets)
+list(APPEND components Core Gui Network Qml Quick Sql
+    Test Widgets)
 #
 # Qt Addons.
 #
-list(APPEND components Qt5.Concurrent Qt5.DBus Qt5.OpenGL Qt5.Positioning
-    Qt5.PrintSupport Qt5.Script Qt5.Sensors Qt5.SerialPort Qt5.Svg
-    Qt5.WebChannel Qt5.WebEngine Qt5.WebSockets Qt5.WebView Qt5.X11Extras
-    Qt5.Xml Qt5.WaylandCompositor Qt5.Charts)
+list(APPEND components Concurrent DBus OpenGL Positioning
+    PrintSupport Script Sensors SerialPort Svg
+    WebChannel WebEngine WebSockets WebView X11Extras
+    Xml WaylandCompositor Charts)
 #
 # Other stuff.
 #
-#Qt5.WebKit
-list(APPEND components Qt5.TextToSpeech)
+#WebKit
+list(APPEND components TextToSpeech)
 
 foreach(component IN LISTS components)
     add_subdirectory(${component})
@@ -69,7 +69,6 @@ feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 ###############################################################################
 enable_testing()
 foreach(component IN LISTS components)
-    string(REPLACE "." "/" subdir ${component})
     add_test(NAME ${component}
         COMMAND pytest test.py
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${component}")

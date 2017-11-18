@@ -115,7 +115,7 @@ feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)
 ###############################################################################
 enable_testing()
 foreach(component IN LISTS components)
-    add_test(NAME ${component}
+    add_test(NAME KF5${component}Cppyy
         COMMAND pytest test.py
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${component}")
 endforeach()

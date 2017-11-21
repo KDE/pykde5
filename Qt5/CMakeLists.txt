@@ -37,6 +37,7 @@ include(FeatureSummary)
 
 
 include(CppyyMacros)
+cppyy_find_pips()
 
 ###############################################################################
 # Qt5 from http://doc.qt.io/qt-5/qtmodules.html

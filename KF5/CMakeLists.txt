@@ -37,6 +37,7 @@ include(FeatureSummary)
 
 
 include(CppyyMacros)
+cppyy_find_pips()
 
 ###############################################################################
 # KF5 from https://api.kde.org/frameworks

@@ -531,31 +531,40 @@ function(add_bindings pkg author author_email version include_dirs link_librarie
         H_DIRS "${h_dirs}"
         H_FILES "${h_files}")
     #
-    # TODO: Proper Python2/3 support.
+    # Create the wheel using pip2/pip3 support as a post-build step.
     #
+    foreach(pip IN LISTS PIP_EXECUTABLES)
+        add_custom_command(
+            TARGET ${target} POST_BUILD
+            COMMAND ${pip} wheel .
+            WORKING_DIRECTORY ${pkg_dir}
+            COMMENT "Create universal wheel")
+        #
+        # Since the wheel is universal, we only need create it once.
+        #
+        break()
+    endforeach()
+    #
+    # The install consists of pip2/pip3 installs.
+    #
+    string(REPLACE "." "/" pkg_dir ${pkg})
+    set(pkg_dir ${CMAKE_CURRENT_BINARY_DIR})
     install(CODE "
-set(pkg ${pkg})
-string(REPLACE \".\" \"/\" pkg_dir $\{pkg\})
-set(pkg_dir $\{CMAKE_CURRENT_BINARY_DIR\}/$\{pkg_dir\})
-execute_process(
-    COMMAND pip wheel .
-    COMMAND pip3 wheel .
-    ERROR_VARIABLE _stderr
-    RESULT_VARIABLE _rc
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-    WORKING_DIRECTORY $\{pkg_dir\})
-if(NOT \"$\{_rc\}\" STREQUAL \"0\")
-    message(FATAL_ERROR \"Error building wheels: ($\{_rc\}) $\{_stderr\}\")
-endif()
-file(GLOB wheels RELATIVE $\{pkg_dir\} $\{pkg_dir\}/*.whl)
-execute_process(
-    COMMAND pip install --pre $\{wheels\}
-    COMMAND pip3 install --pre $\{wheels\}
-    ERROR_VARIABLE _stderr
-    RESULT_VARIABLE _rc
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-    WORKING_DIRECTORY $\{pkg_dir\})
-if(NOT \"$\{_rc\}\" STREQUAL \"0\")
-    message(FATAL_ERROR \"Error during install: ($\{_rc\}) $\{_stderr\}\")
-endif()")
+set(pkg_dir ${pkg_dir})
+set(PIP_EXECUTABLES ${PIP_EXECUTABLES})
+#
+# What are the wheel names? We don't need to know.
+#
+foreach(pip IN LISTS PIP_EXECUTABLES)
+    message(\"$\{pip\} install wheel\")
+    execute_process(
+        COMMAND $\{pip\} install --force-reinstall --pre .
+        ERROR_VARIABLE _stderr
+        RESULT_VARIABLE _rc
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        WORKING_DIRECTORY $\{pkg_dir\})
+    if(NOT \"$\{_rc\}\" STREQUAL \"0\")
+        message(FATAL_ERROR \"Error during install: ($\{_rc\}) $\{_stderr\}\")
+    endif()
+endforeach()")
 endfunction(add_bindings)

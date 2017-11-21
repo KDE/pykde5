@@ -30,7 +30,7 @@ import sys
 try:
     import builtins
 except ImportError:
-    import __builtins__ as builtins
+    import __builtin__ as builtins
 
 import cppyy
 from Qt5.Core import QCommandLineParser, QString

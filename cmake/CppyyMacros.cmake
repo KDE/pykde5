@@ -516,6 +516,7 @@ function(add_bindings pkg author author_email version include_dirs link_librarie
     string(REPLACE "\\" "\\\\\\" linkdefs "${linkdefs}")
     file(GLOB extra_codes INCLUDE_DIRECTORIES false ${CMAKE_CURRENT_LIST_DIR}/extra_*.cpp)
     file(GLOB extra_headers INCLUDE_DIRECTORIES false ${CMAKE_CURRENT_LIST_DIR}/extra_*.h)
+    file(GLOB extra_pythons INCLUDE_DIRECTORIES false RELATIVE ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/extra_*.py)
     cppyy_add_bindings(
         "${pkg}" "${version}" "${author}" "${author_email}"
         LANGUAGE_STANDARD "14"
@@ -523,6 +524,7 @@ function(add_bindings pkg author author_email version include_dirs link_librarie
         COMPILE_OPTIONS "-Wno-deprecated-declarations;-Wno-overloaded-virtual;-fstack-protector-strong"
         EXTRA_CODES "${extra_codes}"
         EXTRA_HEADERS "${extra_headers}"
+        EXTRA_PYTHONS "${extra_pythons}"
         INCLUDE_DIRS "${include_dirs}"
         LINK_LIBRARIES "${link_libraries}"
         LINKDEFS "${linkdefs}"

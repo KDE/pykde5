@@ -41,7 +41,7 @@ from KF5.WidgetsAddons import KGuiItem, KMessageBox
 
 logger = logging.getLogger(__name__)
 gettext.install("tutorial1")
-globals()["_"] = lambda i18n: QString(builtins._(i18n))
+_ = lambda i18n: QString(builtins._(i18n))
 
 help_text = """This short program is the basic KDE application.
 

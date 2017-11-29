@@ -37,6 +37,7 @@ get_binding_info(
 # Customise the automatically generated information.
 #
 list(FILTER h_files EXCLUDE REGEX ".*/qatomic_.*.h")
+list(FILTER h_files EXCLUDE REGEX ".*/q.*atomic.h")
 list(FILTER h_files EXCLUDE REGEX ".*/qfunctions_.*.h")
 list(FILTER h_files EXCLUDE REGEX ".*/.*_impl.h")
 list(FILTER h_files EXCLUDE REGEX ".*/qt_windows.h")

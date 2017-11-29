@@ -100,7 +100,7 @@ function(get_kf5_cmake_info component existing_dependencies)
                     list(REMOVE_DUPLICATES real_targets)
                 endif()
             else()
-                message(STATUS "Ignoring invalid target \"${match}\" for ${component} in ${f}")
+                #message(STATUS "Ignoring invalid target \"${match}\" for ${component} in ${f}")
             endif()
         endforeach()
         #

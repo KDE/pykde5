@@ -74,7 +74,7 @@ function(get_qt5_cmake_info component existing_dependencies)
     #
     string(REPLACE "${pfx}" "${pfx}::" target ${component})
     if(NOT TARGET ${target})
-        message(STATUS "Ignoring invalid target \"${target}\" for ${component}")
+        #message(STATUS "Ignoring invalid target \"${target}\" for ${component}")
         set(target "")
     endif()
     #

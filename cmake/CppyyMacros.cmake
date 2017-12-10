@@ -558,7 +558,7 @@ set(PIP_EXECUTABLES ${PIP_EXECUTABLES})
 foreach(pip IN LISTS PIP_EXECUTABLES)
     message(\"$\{pip\} install wheel\")
     execute_process(
-        COMMAND $\{pip\} install --force-reinstall --pre .
+        COMMAND $\{pip\} install --upgrade --force-reinstall --pre .
         ERROR_VARIABLE _stderr
         RESULT_VARIABLE _rc
         OUTPUT_STRIP_TRAILING_WHITESPACE

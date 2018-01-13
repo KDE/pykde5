@@ -520,7 +520,7 @@ function(add_bindings pkg author author_email version include_dirs link_librarie
     cppyy_add_bindings(
         "${pkg}" "${version}" "${author}" "${author_email}"
         LANGUAGE_STANDARD "14"
-        GENERATE_OPTIONS "-D__PIC__;-Wno-macro-redefined"
+        GENERATE_OPTIONS "-fvisibility=hidden;-D__PIC__;-Wno-macro-redefined"
         COMPILE_OPTIONS "-Wno-deprecated-declarations;-Wno-overloaded-virtual;-fstack-protector-strong"
         EXTRA_CODES "${extra_codes}"
         EXTRA_HEADERS "${extra_headers}"
